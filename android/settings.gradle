@@ -1,0 +1,10 @@
+rootProject.name = 'BrownceCustomer'
+include ':react-native-google-places'
+project(':react-native-google-places').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-google-places/android')
+include ':react-native-paypal'
+project(':react-native-paypal').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-paypal/android')
+
+include ':react-native-twilio-chat'
+project(':react-native-twilio-chat').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-twilio-chat/android')
+apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
+include ':app'

@@ -1,0 +1,8 @@
+export const montserratBold = 'Montserrat-Bold'
+export const montserratBoldItalic = 'Montserrat-BoldItalic'
+export const montserratItalic = 'Montserrat-Italic'
+export const montserratMedium = 'Montserrat-Medium'
+export const montserratMediumItalic = 'Montserrat-MediumItalic'
+export const montserrat = 'Montserrat-Regular'
+export const montserratSemiBold = 'Montserrat-SemiBold'
+export const montserratSemiBoldItalic = 'Montserrat-SemiBoldItalic'

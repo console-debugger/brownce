@@ -1,0 +1,48 @@
+require_relative '../node_modules/react-native/scripts/react_native_pods'
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+
+# $RNAdMobAsStaticFramework = true
+
+platform :ios, '11.0'
+
+target 'BrownceCustomer' do
+  config = use_native_modules!
+
+  use_react_native!(:path => config["reactNativePath"])
+  rn_maps_path = '../node_modules/react-native-maps'
+  pod 'react-native-google-maps', :path => rn_maps_path
+  pod 'GoogleMaps'
+  pod 'Google-Maps-iOS-Utils'
+  pod 'Braintree', '~> 4.35.0'
+  pod 'RNPaypal', :path => '../node_modules/react-native-paypal'
+  pod 'Braintree/DataCollector'
+  pod 'Google-Mobile-Ads-SDK'
+
+
+  target 'BrownceCustomerTests' do
+    inherit! :complete
+    # Pods for testing
+  end
+
+  # Enables Flipper.
+  #
+  # Note that if you have use_frameworks! enabled, Flipper will not work and
+  # you should disable these next few lines.
+  # use_flipper!
+  # post_install do |installer|
+  #   flipper_post_install(installer)
+  # end
+end
+
+target 'BrownceCustomer-tvOS' do
+  # Pods for BrownceCustomer-tvOS
+
+  target 'BrownceCustomer-tvOSTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+end
+
+target 'OneSignalNotificationServiceExtension' do
+  pod 'OneSignalXCFramework', '>= 3.0', '< 4.0'
+end

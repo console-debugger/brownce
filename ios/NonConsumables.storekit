@@ -1,0 +1,101 @@
+{
+  "products" : [
+
+  ],
+  "settings" : {
+
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "F987759C",
+      "localizations" : [
+
+      ],
+      "name" : "Brownce Monthly",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "displayPrice" : "21.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "F0545751",
+          "introductoryOffer" : {
+            "internalID" : "4CB96B65",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P2M"
+          },
+          "localizations" : [
+            {
+              "description" : "Removal of in-app ads",
+              "displayName" : "1 MONTH",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.brownce.monthly.subscription",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "1 Monthly",
+          "subscriptionGroupID" : "F987759C",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "displayPrice" : "204.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "88C4FA2D",
+          "introductoryOffer" : {
+            "internalID" : "CC844D4C",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P2M"
+          },
+          "localizations" : [
+            {
+              "description" : "Removal of in-app ads",
+              "displayName" : "12 MONTHS",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.brownce.3monthly.subscription",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "3 Monthly",
+          "subscriptionGroupID" : "F987759C",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "displayPrice" : "107.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "4A1880C2",
+          "introductoryOffer" : {
+            "internalID" : "222D0560",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P2M"
+          },
+          "localizations" : [
+            {
+              "description" : "Removal of in-app ads",
+              "displayName" : "6 MONTHS",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.brownce.6monthly.subscription",
+          "recurringSubscriptionPeriod" : "P6M",
+          "referenceName" : "6 Monthly",
+          "subscriptionGroupID" : "F987759C",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 1,
+    "minor" : 0
+  }
+}

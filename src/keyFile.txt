@@ -1,0 +1,6 @@
+PaypalProductionToken = "production_pghqn67m_w5y3myhv64sjgpz2" //production token
+PaypalSandboxToken = "sandbox_hcbk4ftm_wc53n2v46zgrss5n" // sandbox token
+Api Base URL =  'https://admin.brownceapp.com'
+SOCKET BASE URL = 'http://54.160.37.157:3007/'
+Google MAP API Key = 'AIzaSyBGC2LZ3gHpHOIoDzrbEt8y6tabEAOhu1s'
+ios Paypal URL scheme = 'com.brownceapp.brownce.payments'
