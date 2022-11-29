@@ -144,7 +144,7 @@ const ProfileSetupThree = ({ navigation }) => {
     const closeMapModalFuntion = async () => {
         closeMapModal()
         // const lat = 40.335725019928844, -75.92821932920248
-        const response = await reverseGeocode({ latitude: 40.335725019928844, longitude: -75.92821932920248 })
+        const response = await reverseGeocode({ latitude, longitude })
         if (response.status == 'OK') {
             const place = response?.result?.[0]
             console.log('place==>', place?.address_components)
