@@ -495,7 +495,7 @@ const TabZero = () => {
   const { BROWNCE, PROFILE } = state['localeReducer']['locale'];
   return (
     <Stack.Navigator headerMode="screen">
-      <Stack.Screen
+      {/* <Stack.Screen
         name="profileSetupThree"
         component={ProfileSetupThree}
         options={{
@@ -503,7 +503,7 @@ const TabZero = () => {
             <Header navigation={navigation} isBack title={'PROFILE_SETUP'} />
           ),
         }}
-      />
+      /> */}
       <Stack.Screen
         name="tabZero"
         component={isCustomer() ? MyProfile : ProviderProfile}
