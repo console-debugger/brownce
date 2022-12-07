@@ -4,7 +4,7 @@ import { ChangePasswordSaga, ForgotSaga, LoginSaga, OTPVerification, Registratio
 import { GetHairTypes, SaveHairTypeSaga, UpdateTenderHeadLevelSaga } from './hair.Saga';
 import { GetAllServicesSaga, SaveEditServicesPriceSaga, GetProfileQuestionSaga, GetProfileSaga, DeleteProviderPortfolioSaga, SaveProviderPortfolioSaga, GetSavedServicesSaga, ProfileOneSetup, ProfileTwoSetup, ProviderProfileSetupThree, ProviderSaveDepositeFeesSaga, SaveGenderSaga, SaveProfileSaga, SaveProviderProfileSaga, SaveQuestionAnswerSaga, SaveServicesPriceSaga, UpdateServicesSaga, SaveServicesSaga, SaveLicenseSaga, ProviderBioSaga, GetCustomerDetailSaga, GetSpDetailSaga, GetCustomServicesSaga, AddCustomServicesSaga, GetSpCustomServicesSaga, OpenTimeSaga, NotificationListSaga, NotificationCountSaga, GetProfessionsListSaga, GetServicesByProfessionSaga, AddProviderProfessionSaga, DeleteAccountSaga } from './profileSetup.Saga';
 import { CancelPlanSaga, GetSubscriptionPlanSaga, SaveSubscriptionPlanSaga } from './subscriptionPlan.Saga';
-import { GetProviderListSaga, GetProviderProfileSaga, GetCompleteProviderDetailSaga, GetFiltePriceListSaga } from "./providerlist.Saga"
+import { GetProviderListSaga, GetProviderProfileSaga, GetCompleteProviderDetailSaga, GetFiltePriceListSaga, AddRemoveToFavouriteSaga, GetFavProviderListSaga } from "./providerlist.Saga"
 import { BookingSaga, SupportSaga, PaymentSaga, RequestFundSaga, FundListSaga } from './booking.Saga';
 import { CustomerAppointmentSaga, CancelAppointmentSaga, ProviderAppointmentSaga, AvailabilitySaga, ApproveRejectSaga, AppointmentCompleteSaga, AppointmentHistorySaga, AppointmentDetailSaga, StartServiceSaga, UpdateServicePriceSaga } from './appointment.Saga';
 import { AllQuestionSaga, AddQuestionSaga, CommonQuestionSaga, DeleteQuestionSaga, LikeDislikeQuestionSaga, LikeDislikeCommentSaga, QuestionByQuestionIdSaga } from './question.Saga';
@@ -133,6 +133,8 @@ export function* rootSaga() {
         fork(AddProviderProfessionSaga),
         fork(DeleteAccountSaga),
         fork(GetFiltePriceListSaga),
-        fork(getAllCityListSaga)
+        fork(getAllCityListSaga),
+        fork(AddRemoveToFavouriteSaga),
+        fork(GetFavProviderListSaga)
     ])
 }

@@ -81,3 +81,5 @@ export const likeBlack = require('../assets/icons/likeBlack.png');
 export const dislikeBlack = require('../assets/icons/dislikeBlack.png');
 export const shareIcon = require('../assets/icons/shareIcon.png');
 export const filterIcon = require('../assets/icons/filter.png')
+export const activeFavHeartIcon = require('../assets/icons/activeFavHeart.png')
+export const inactiveFavHeartIcon = require('../assets/icons/inactiveFavHeart.png')

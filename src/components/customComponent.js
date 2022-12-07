@@ -25,6 +25,7 @@ import {
   LIGHT_BROWN,
   TRANSPARENT_LIGHT_BLACK,
   WHITE,
+  MID_GRAY,
 } from '../utils/colors';
 import commonStyle from './commonStyle';
 import { dismissKeyboard, SCREEN_HEIGHT, SCREEN_WIDTH, isIOS } from './helper';
@@ -54,6 +55,7 @@ import {
 } from './icons';
 import Slider from 'react-native-slider';
 import { editIcon } from '../components/icons';
+import { Pagination } from 'react-native-snap-carousel';
 
 export const SafeArea = (props) => {
   const { children, style } = props;
@@ -981,3 +983,31 @@ export const MultiSelectDropdown = forwardRef((props, ref) => {
   )
 
 })
+
+export const MyPagination = props => {
+  const { length, activeSlideIndex } = props
+  return (
+    <Pagination
+      dotsLength={length}
+      activeDotIndex={activeSlideIndex}
+      dotContainerStyle={{ marginHorizontal: dynamicSize(1) }}
+      containerStyle={{
+        paddingVertical: dynamicSize(10),
+      }}
+      dotStyle={{
+        width: 15,
+        height: 15,
+        borderRadius: 10,
+        paddingVertical: 0,
+        paddingHorizontal: 0,
+        marginHorizontal: 0,
+        backgroundColor: THEME
+      }}
+      inactiveDotStyle={{
+        backgroundColor: 'grey'
+      }}
+      inactiveDotOpacity={0.4}
+      inactiveDotScale={1}
+    />
+  )
+}

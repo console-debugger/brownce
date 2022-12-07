@@ -10,7 +10,7 @@ import { getFontSize } from '../../utils/responsive'
 import { apiKey } from '../../services/serviceConstant'
 import { MyAlert } from '../../components/alert'
 import { CANCEL_SUBSCRIPTION_SUCCESS_ACTION } from '../../redux/action/type'
-import { isCustomer, isIOS, locationMapping } from '../../components/helper'
+import { isCustomer, isIOS, locationMapping, validateUrl } from '../../components/helper'
 
 // @ provider profile UI
 
@@ -72,8 +72,13 @@ const ProviderProfile = ({ navigation }) => {
     }
     const _onNoPress = () => setcancelModal(false)
 
-    const _openLink = () => {
-        if (providerprofile['Weblink'] !== null || providerprofile['Weblink'] !== '') Linking.openURL(providerprofile['Weblink'])
+    const _openLink = async () => {
+        try {
+            const url = validateUrl(providerprofile?.['Weblink'])
+            if (url) Linking.openURL(url)
+        } catch (error) {
+            console.log('err-->', error)
+        }
     }
 
     const getPlanTitle = () => {
@@ -98,15 +103,17 @@ const ProviderProfile = ({ navigation }) => {
                 <CurveView />
                 <Loader isVisible={loading} />
 
-                <MyText onPress={_navToEditProfile} style={[styles['editText'],{alignSelf:'flex-end'}]}>{EDIT}</MyText>
+                <MyText onPress={_navToEditProfile} style={[styles['editText'], { alignSelf: 'flex-end' }]}>{EDIT}</MyText>
                 <MyImage source={{ uri: state.profileReducer.providerprofile?.['ProfilePic'] }} style={styles['image']} />
                 <MyText style={[styles['name']]}>{providerprofile?.['FirstName'] ? providerprofile?.['FirstName'] : LOADING}</MyText>
 
                 <MyText style={styles['name']}>{providerprofile?.['Username'] ? providerprofile?.['Username'] : LOADING}</MyText>
                 <MyText style={styles['detail']}>{`${LOCATION}: ${locationMapping(providerprofile)}`}</MyText>
-                <TouchableOpacity activeOpacity={0.7} onPress={_openLink}>
-                    <MyText style={[styles['detail'], { textDecorationLine: 'underline' }]}>{`${'Website Link'}: ${providerprofile?.['Weblink'] === null ? '' : providerprofile?.['Weblink']}`}</MyText>
+                {providerprofile?.['Weblink'] ? <TouchableOpacity activeOpacity={0.7} onPress={_openLink}>
+                    <MyText style={[styles['detail'], { textDecorationLine: 'underline' }]}>{providerprofile?.['Weblink'] || ''}</MyText>
                 </TouchableOpacity>
+                    :
+                    null}
                 <MyText style={styles['detail']}>{`${'Hours'}: ${providerprofile?.['OpeningTime'] === null ? '--' : providerprofile['OpeningTime']} To ${providerprofile?.['ClosingTime'] === null ? '--' : providerprofile['ClosingTime']}`}</MyText>
 
                 <CurveView style={styles['curveMain']} innerStyle={styles['innerStyle']} />

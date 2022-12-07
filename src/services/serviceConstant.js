@@ -114,6 +114,7 @@ export const FORGOT_PASSWORD_URL = `${BASE_URL}/api/account/forgotpassword`
 export const RESET_PASSWORD_URL = `${BASE_URL}/api/account/ResetPassword`
 export const CHANGE_PASSWORD_URL = `${BASE_URL}/api/account/ChangePassword`
 export const UPDATE_EMAIL_URL = `${BASE_URL}/api/account/UpdateEmailRequest`
+export const APP_REMOVE_FAVOURITE_URl = `${BASE_URL}/api/FavoriteProvider/add-remove-favorite`
 
 export const VALIDATE_EMAIL_OTP_URL = `${BASE_URL}/api/account/ValidateUpdateEmailRequest`
 
@@ -300,3 +301,5 @@ export const GET_SERVICES_BY_PROFESSION_URL = data => {
 
 export const ADD_PROVIDER_PROFESSION_URL = `${BASE_URL}/api/sp/AddProviderProfessionals`
 export const DELETE_ACCOUNT_URL = `${BASE_URL}/api/account/DeleteAccount`
+
+export const FAV_PROVIDER_LIST_URL = (data) => `${BASE_URL}/APi/FavoriteProvider/favorite-providers?pageno=${data.page}&recordsPerPage=20`

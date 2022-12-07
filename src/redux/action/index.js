@@ -826,3 +826,11 @@ export const getFilterPriceListAction = (callBack) => ({
 export const getAllCityListAction = (payload, callBack) => ({
     type: TYPES.GET_ALL_CITY_LIST_ACTION, payload, callBack
 })
+
+export const addRemoveProfileToFavourite = (payload, callBack) => ({
+    type: TYPES.ADD_REMOVE_PROFILE_TO_FAVOURITE, payload, callBack
+})
+
+export const getfavProviderListAction = (payload, callBack) => ({
+    type: TYPES.GET_FAV_PROVIDER_LIST_ACTION, payload, callBack
+})

@@ -29,6 +29,7 @@ import {
   SCREEN_HEIGHT,
   SCREEN_WIDTH,
   onShare,
+  validateUrl,
 } from '../../components/helper';
 import Swiper from 'react-native-swiper';
 import { LicensePopup } from '../../components/alert';
@@ -162,13 +163,14 @@ const ProviderDetail = (props) => {
     );
   };
 
-  const _openLink = () => {
-    if (
-      completeprovider?.['Weblink'] === null ||
-      completeprovider?.['Weblink'] === ''
-    )
-      Linking.openURL(completeprovider?.['Weblink']);
-  };
+  const _openLink = async () => {
+    try {
+      const url = validateUrl(completeprovider?.['Weblink'])
+      if (url) Linking.openURL(url)
+    } catch (error) {
+      console.log('err-->', error)
+    }
+  }
 
   const _changeCategory = (cat, index) => {
     setCategory({
@@ -297,19 +299,17 @@ const ProviderDetail = (props) => {
             <MyText style={styles['description']}>
               {completeprovider['Bio']}
             </MyText>
-            <MyText
+            {completeprovider?.['Weblink'] ? <MyText
               onPress={_openLink}
               style={[
                 styles['title'],
                 { textDecorationLine: 'underline' },
-              ]}>{`${'Website Link '}: ${completeprovider?.['Weblink'] === null
-                  ? ''
-                  : completeprovider?.['Weblink']
-                }`}</MyText>
+              ]}>{completeprovider?.['Weblink']}</MyText>
+              : null}
 
             <MyText style={[styles['title'], { marginTop: 10 }]}>{`${'Timing'}: ${completeprovider?.['OpeningTime'] === null
-                ? '--'
-                : completeprovider?.['OpeningTime']
+              ? '--'
+              : completeprovider?.['OpeningTime']
               } To ${completeprovider?.['ClosingTime'] === null
                 ? '--'
                 : completeprovider?.['ClosingTime']

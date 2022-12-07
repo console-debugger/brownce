@@ -4,7 +4,7 @@ import { FlatList, Linking, ScrollView } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useSelector, useDispatch } from 'react-redux'
 import { Button, Loader, MyImage, MyText, MyView, RatingWithLabel, SafeArea, SecondaryButton, Touchable } from '../../components/customComponent'
-import { isAndroid, locationMapping, SCREEN_HEIGHT, SCREEN_WIDTH } from '../../components/helper'
+import { isAndroid, locationMapping, SCREEN_HEIGHT, SCREEN_WIDTH, validateUrl } from '../../components/helper'
 import { LIGHT_WHITE, THEME } from '../../utils/colors'
 import { montserratBold } from '../../utils/fontFamily'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
@@ -104,9 +104,15 @@ const ProviderCompleteProfile = ({ navigation }) => {
         )
     }
 
-    const _openLink = () => {
-        if (providerprofile['Weblink'] === null || providerprofile['Weblink'] === '') Linking.openURL(providerprofile['Weblink'])
+    const _openLink = async () => {
+        try {
+            const url = validateUrl(providerprofile?.['Weblink'])
+            if (url) Linking.openURL(url)
+        } catch (error) {
+            console.log('err-->', error)
+        }
     }
+
 
     return (
         <SafeArea style={{ paddingTop: -useSafeAreaInsets().top }}>
@@ -131,7 +137,7 @@ const ProviderCompleteProfile = ({ navigation }) => {
                                 <MyText style={[styles['name'], { fontSize: getFontSize(14) }]}>{providerprofile?.Username ? providerprofile.Username : LOADING}</MyText>
                                 <MyText onPress={() => setmodalVisible(true)} style={[styles['detail'], { textDecorationLine: "underline", color: THEME }]}>{"View License"}</MyText>
                                 <MyText style={styles['detail']}>{`${LOCATION}:  ${locationMapping(providerprofile)}`}</MyText>
-                                <MyText onPress={_openLink} style={[styles['detail'], { textDecorationLine: 'underline' }]}>{`${'Website Link'}: ${providerprofile?.['Weblink'] === null ? "" : providerprofile?.['Weblink']}`}</MyText>
+                                {providerprofile?.['Weblink'] ? <MyText onPress={_openLink} style={[styles['detail'], { textDecorationLine: 'underline' }]}>{providerprofile?.['Weblink'] || ''}</MyText> : null}
                                 <MyText style={styles['detail']}>{`${'Timing'}: ${providerprofile?.['OpeningTime'] === null ? '--' : providerprofile['OpeningTime']} To ${providerprofile?.['ClosingTime'] === null ? '--' : providerprofile['ClosingTime']}`}</MyText>
                                 <MyView style={[styles['lowerInnerCurve']]}>
                                     <RatingWithLabel style={{ marginTop: dynamicSize(7), }} labelStyle={{ fontFamily: montserratBold }} isRateCount label={RATING} mytext={`${providerprofile['OverallRating']}/5`} />

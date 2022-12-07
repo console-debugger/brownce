@@ -1,6 +1,6 @@
-import {StyleSheet} from 'react-native';
-import {SCREEN_HEIGHT, SCREEN_WIDTH, isAndroid} from '../../components/helper';
-import {dynamicSize, getFontSize} from '../../utils/responsive';
+import { StyleSheet } from 'react-native';
+import { SCREEN_HEIGHT, SCREEN_WIDTH, isAndroid } from '../../components/helper';
+import { dynamicSize, getFontSize } from '../../utils/responsive';
 import {
   MID_LIGHT_GRAY,
   LIGHT_BROWN,
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
   hairTypeFlatList: {
     paddingVertical: SCREEN_HEIGHT * 0.02,
     width: SCREEN_WIDTH,
-    paddingHorizontal: dynamicSize(35),
+    paddingHorizontal: dynamicSize(25),
   },
   productImage: {
     width: SCREEN_WIDTH * 0.44,
@@ -179,6 +179,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   shareContainer: {
+    alignItems: 'center',
     width: SCREEN_WIDTH,
     flexDirection: 'row',
     justifyContent: 'space-between',

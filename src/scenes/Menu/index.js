@@ -59,6 +59,9 @@ const Menu = ({ navigation }) => {
       label: MY_QUESTIONS,
     },
     {
+      label: 'Favourite Provider'
+    },
+    {
       label: 'FAQ & Community guidelines',
     },
     {
@@ -101,19 +104,19 @@ const Menu = ({ navigation }) => {
     // navigation.navigate('editProfile') //
     else if (index === 1) navigation.navigate('appointments');
     else if (index === 2) navigation.navigate('myQuestions');
-    else if (index === 3)
-      navigation.navigate('webView', { id: 5, title: 'Community guidelines' });
-    else if (index === 4) navigation.navigate('editProfile');
+    else if (index === 3) navigation.navigate('favProvider');
+
+    else if (index === 4) navigation.navigate('webView', { id: 5, title: 'Community guidelines' });
     // navigation.navigate('settings')
-    else if (index === 5) navigation.navigate('myorders');
-    else if (index === 6) navigation.navigate('referral');
-    else if (index === 7) navigation.navigate('support');
-    else if (index === 8)
-      navigation.navigate('webView', { id: 1, title: 'Terms & Conditions' });
-    else if (index === 9)
-      navigation.navigate('webView', { id: 2, title: 'Privacy Policy' });
-    else if (index == 10) openDeleteModal()
-    else if (index === 11) _onYesPress()
+    else if (index === 5) navigation.navigate('editProfile');
+    else if (index === 6) navigation.navigate('myorders');
+    else if (index === 7) navigation.navigate('referral');
+    else if (index === 8) navigation.navigate('support');
+
+    else if (index === 9) navigation.navigate('webView', { id: 1, title: 'Terms & Conditions' });
+    else if (index == 10) navigation.navigate('webView', { id: 2, title: 'Privacy Policy' });
+    else if (index === 11) openDeleteModal()
+    else if (index == 12) _onYesPress()
   };
 
   const _renderSeperator = () => <MyView styl={styles['seperator']} />;

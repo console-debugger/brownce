@@ -127,7 +127,7 @@ const Discover = ({ navigation }) => {
                                     alphaHitTest
                                     tooltip={Platform.OS === 'ios'}
                                     style={styles.customView}
-                                    onPress={() => navigation.navigate('providerDetail', { id: item.UserId })}>
+                                    onPress={() => navigation.navigate('spDetail', { id: item.UserId })}>
                                     <ImageBackground
                                         source={mapbgIcon}
                                         style={styles.bubble}>

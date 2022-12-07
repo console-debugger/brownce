@@ -6,7 +6,7 @@
     "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "start": "react-native start",
+    "start": "export NODE_OPTIONS=--openssl-legacy-provider && react-native start",
     "test": "jest",
     "lint": "eslint .",
     "postinstall": "patch-package && npx jetify"

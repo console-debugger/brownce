@@ -135,6 +135,7 @@ import EditQuestion from '../scenes/EditQuestion';
 import { configPushNotifications } from '../services/configPush';
 import ProviderProfessionSelection from '../scenes/ProfileSetup/providerProfessionSelection';
 import SelectProfession from '../scenes/Settings/selectProfession';
+import FavouriteProvider from '../scenes/FavouriteProvider';
 
 const line = {
   borderBottomWidth: 0.4,
@@ -1236,6 +1237,20 @@ const TabFour = () => {
         name="tabFour"
         component={isCustomer() ? Menu : ProviderMenu}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="favProvider"
+        component={FavouriteProvider}
+        options={{
+          header: ({ scene, previous, navigation }) => (
+            <Header
+              isTheme
+              isBack
+              navigation={navigation}
+              title={'FAVOURITE PROVIDER'}
+            />
+          ),
+        }}
       />
       <Stack.Screen
         name="editProfile"

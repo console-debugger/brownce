@@ -2,17 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { FlatList, Linking, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector, useDispatch } from 'react-redux';
+import Carousel from 'react-native-snap-carousel';
 import {
   Button,
   CustomDropDown,
   Loader,
   MyImage,
+  MyPagination,
   MyText,
   MyView,
   RatingWithLabel,
   SafeArea,
   SecondaryButton,
   Touchable,
+  TouchableIcon,
 } from '../../components/customComponent';
 import {
   Base64,
@@ -22,20 +25,24 @@ import {
   onShare,
   SCREEN_HEIGHT,
   SCREEN_WIDTH,
+  validateUrl,
 } from '../../components/helper';
 import { BLACK, LIGHT_WHITE } from '../../utils/colors';
 import { montserratBold } from '../../utils/fontFamily';
 import { dynamicSize, getFontSize } from '../../utils/responsive';
 import styles from './styles';
 import {
+  addRemoveProfileToFavourite,
   getProfessionsListAction,
   getSpDetailAction,
   loaderAction,
 } from '../../redux/action';
-import { productImg2 } from '../../components/icons';
+import { activeFavHeartIcon, inactiveFavHeartIcon, productImg2 } from '../../components/icons';
 import { navigateToScreen } from '../../navigation/rootNav';
 import localKey from '../../utils/localKey';
 import { generateDynamicLink } from '../../utils/dynamicLinkHelper';
+
+const TYPES = { PORTFOLIO: 'portfolio', SERVICES: 'services', PRODUCT: 'product' }
 
 const SpDetail = ({ navigation, route }) => {
   const dispatch = useDispatch();
@@ -52,6 +59,12 @@ const SpDetail = ({ navigation, route }) => {
   const { List } = state.profileReducer.completeproviderproducts;
   const [isRefresh, setRefresh] = useState(false);
   const [buttonVisible, setButtonVisible] = useState(false);
+  const [portfolioData, setPortFolioData] = useState([])
+  const [productData, setProductData] = useState([])
+  const [servicesData, setServicesData] = useState([])
+  const [portfoliopageIndex, setPortfolioPageIndex] = useState(0)
+  const [productpageIndex, setProductPageIndex] = useState(0)
+  const [servicespageIndex, setServicesPageIndex] = useState(0)
   const [category, setCategory] = useState({
     id: '',
     name: '',
@@ -71,6 +84,56 @@ const SpDetail = ({ navigation, route }) => {
   useEffect(() => {
     setCategory({ name: professionsList[0]?.Name, Id: professionsList[0]?.Id });
   }, [professionsList]);
+
+  useEffect(() => {
+    if (providerprofile?.Portfolios?.length && providerprofile?.Portfolios) {
+      let newData = [], count = 0
+      for (let i = 0; i < providerprofile?.Portfolios?.length; i++) {
+        if (i % 6 == 0) {
+          count++
+          newData[count - 1] = [providerprofile?.Portfolios[i]]
+        }
+        else {
+          newData[count - 1].push(providerprofile?.Portfolios[i])
+        }
+      }
+      setPortFolioData(newData)
+    }
+  }, [providerprofile?.Portfolios])
+
+  useEffect(() => {
+    if (List?.length && List) {
+      let newData = [], count = 0
+      for (let i = 0; i < List?.length; i++) {
+        if (i % 6 == 0) {
+          count++
+          newData[count - 1] = [List[i]]
+        }
+        else {
+          newData[count - 1].push(List[i])
+        }
+      }
+      setProductData(newData)
+    }
+  }, [List])
+
+  useEffect(() => {
+    if (ServicesProvided?.length && ServicesProvided) {
+      let newData = [], count = 0
+      for (let i = 0; i < ServicesProvided?.length; i++) {
+        if (ServicesProvided[i].ProfessionId == category['Id']) {
+          if (i % 4 == 0) {
+            count++
+            newData[count - 1] = [ServicesProvided[i]]
+          }
+          else {
+            newData[count - 1].push(ServicesProvided[i])
+          }
+        }
+      }
+      setServicesData(newData)
+    }
+  }, [ServicesProvided, category])
 
   // useEffect(() => {
   //     console.log("filtered ==>> ", ServicesProvided.filter(item => {
@@ -102,6 +165,57 @@ const SpDetail = ({ navigation, route }) => {
     );
   };
 
+  const _renderPortfolioCrousel = ({ item, index }) => {
+    return (
+      <FlatList
+        key={index?.toString()}
+        data={item}
+        numColumns={3}
+        scrollEnabled={false}
+        renderItem={_renderPortfolio}
+        keyExtractor={_keyExtractor}
+        contentContainerStyle={styles['portfolioFlatList']}
+        ItemSeparatorComponent={_renderSeperator}
+      />
+    )
+  }
+
+  const _renderServicesCrousel = ({ item, index }) => {
+    return (
+      <FlatList
+        key={index?.toString()}
+        data={item?.filter(
+          (each) => each['ProfessionId'] == category['Id'],
+        )}
+        // data={ServicesProvided}
+        scrollEnabled={false}
+        keyExtractor={_keyExtractor}
+        renderItem={_renderHairType}
+        contentContainerStyle={styles['hairTypeFlatList']}
+        numColumns={2}
+        extraData={isRefresh}
+        columnWrapperStyle={{ justifyContent: 'space-between' }}
+      />
+    )
+  }
+
+  const _renderProductCrousel = ({ item, index }) => {
+    return (
+      <FlatList
+        data={item}
+        key={index?.toString()}
+        keyExtractor={_keyExtractor}
+        scrollEnabled={false}
+        showsVerticalScrollIndicator={false}
+        renderItem={_renderProducts}
+        ItemSeparatorComponent={_renderSeperator}
+        contentContainerStyle={{ paddingHorizontal: dynamicSize(15) }}
+        columnWrapperStyle={{ justifyContent: 'space-between' }}
+        numColumns={2}
+      />
+    )
+  }
+
   const _renderHairType = ({ item, index }) => {
     return (
       <SecondaryButton
@@ -126,7 +240,7 @@ const SpDetail = ({ navigation, route }) => {
       <Touchable
         disabled={item['ProductStatus'] === 1 ? false : true}
         onPress={() => navigateToScreen('productDetails', { item: item })}
-        style={{ marginTop: SCREEN_HEIGHT * 0.02, marginHorizontal: 12 }}>
+        style={{ marginTop: SCREEN_HEIGHT * 0.02, width: SCREEN_WIDTH / 2 - dynamicSize(20) }}>
         <MyView style={styles.view}>
           <MyImage
             style={styles['productImage']}
@@ -155,13 +269,17 @@ const SpDetail = ({ navigation, route }) => {
       </Touchable>
     );
   };
-  const _openLink = () => {
-    if (
-      providerprofile['Weblink'] === null ||
-      providerprofile['Weblink'] === ''
-    )
-      Linking.openURL(providerprofile['Weblink']);
-  };
+
+
+  const _openLink = async () => {
+    try {
+      const url = validateUrl(providerprofile['Weblink'])
+      if (url) Linking.openURL(url)
+    } catch (error) {
+      console.log('err-->', error)
+    }
+  }
+
 
   const isShowButton = async () => {
     const logToken = await getData(localKey['LOGIN_TOKEN']);
@@ -205,6 +323,30 @@ const SpDetail = ({ navigation, route }) => {
     onShare(newLink)
   };
 
+  const _onSnapToItem = type => index => {
+    if (type == TYPES.PORTFOLIO) {
+      setPortfolioPageIndex(index)
+    }
+    else if (type == TYPES.SERVICES) {
+      setServicesPageIndex(index)
+    }
+    else if (type == TYPES.PRODUCT) {
+      setProductPageIndex(index)
+    }
+  }
+
+  const _addOrRemovefav = () => {
+    const param = {
+      ProviderId: route.params.id,
+      IsFavorite: true
+    }
+    console.log('prams==>', param)
+    // return
+    dispatch(addRemoveProfileToFavourite(param, result => {
+      console.log('result==>', result)
+    }))
+  }
+
   return (
     <SafeArea style={{ paddingTop: -useSafeAreaInsets().top }}>
       <MyView style={styles['mainContainer']}>
@@ -220,12 +362,19 @@ const SpDetail = ({ navigation, route }) => {
                   ? dynamicSize(25)
                   : dynamicSize(25),
                 backgroundColor: LIGHT_WHITE,
-              }}>
+              }}
+              nestedScrollEnabled={false}
+            >
               <Loader isVisible={loading} />
               <MyView style={styles['shareContainer']}>
                 <MyText onPress={_onShareButton} style={styles['shareText']}>
                   {SHARE}
                 </MyText>
+                <TouchableIcon
+                  onPress={_addOrRemovefav}
+                  source={inactiveFavHeartIcon}
+                  style={{ marginRight: dynamicSize(20), marginTop: dynamicSize(20) }}
+                />
               </MyView>
               <MyImage
                 source={{ uri: providerprofile.ProfilePic }}
@@ -241,15 +390,12 @@ const SpDetail = ({ navigation, route }) => {
                 {providerprofile?.Username ? providerprofile.Username : LOADING}
               </MyText>
               <MyText style={styles['detail']}>{`${LOCATION}:  ${locationMapping(providerprofile)}`}</MyText>
-              <MyText
+              {providerprofile?.['Weblink'] ? <MyText
                 onPress={_openLink}
                 style={[
                   styles['detail'],
                   { textDecorationLine: 'underline' },
-                ]}>{`${'Website Link'}: ${providerprofile?.['Weblink'] === null
-                  ? ''
-                  : providerprofile?.['Weblink']
-                  }`}</MyText>
+                ]}>{providerprofile?.['Weblink'] || ''}</MyText> : null}
               <MyText style={styles['detail']}>{`${'Timing'}: ${providerprofile?.['OpeningTime'] === null
                 ? '--'
                 : providerprofile?.['OpeningTime']
@@ -299,16 +445,26 @@ const SpDetail = ({ navigation, route }) => {
                     </MyView>
                   );
                 })}
-                <MyText style={styles['portFolioText']}>{PORTFOLIO}</MyText>
-                <FlatList
-                  key="portfolio"
-                  data={providerprofile.Portfolios}
-                  numColumns={3}
-                  renderItem={_renderPortfolio}
-                  keyExtractor={_keyExtractor}
-                  contentContainerStyle={styles['portfolioFlatList']}
-                  ItemSeparatorComponent={_renderSeperator}
-                />
+                {portfolioData?.length ?
+                  <>
+                    <MyText style={styles['portFolioText']}>{PORTFOLIO}</MyText>
+                    <Carousel
+                      key="portfolio"
+                      data={portfolioData}
+                      renderItem={_renderPortfolioCrousel}
+                      keyExtractor={_keyExtractor}
+                      sliderWidth={SCREEN_WIDTH}
+                      removeClippedSubviews={false}
+                      contentContainerStyle={styles['portfolioFlatList']}
+                      itemWidth={SCREEN_WIDTH}
+                      onSnapToItem={_onSnapToItem(TYPES.PORTFOLIO)}
+                    />
+                    <MyPagination
+                      length={portfolioData.length}
+                      activeSlideIndex={portfoliopageIndex}
+                    />
+                  </>
+                  : null}
                 <MyText
                   style={[
                     styles['portFolioText'],
@@ -322,41 +478,59 @@ const SpDetail = ({ navigation, route }) => {
                     return { value: item['Name'], id: item['Id'] };
                   })}
                   value={category?.name}
+                  style={{ width: SCREEN_WIDTH - dynamicSize(50) }}
                   topOffset={dynamicSize(20)}
                   containerStyle={{
                     borderBottomColor: BLACK,
                     borderBottomWidth: 2,
                   }}
                 />
-                <FlatList
-                  key="hairType"
-                  data={ServicesProvided?.filter(
-                    (item) => item['ProfessionId'] == category['Id'],
-                  )}
-                  // data={ServicesProvided}
-                  keyExtractor={_keyExtractor}
-                  renderItem={_renderHairType}
-                  contentContainerStyle={styles['hairTypeFlatList']}
-                  numColumns={2}
-                  extraData={isRefresh}
-                  columnWrapperStyle={{ justifyContent: 'space-between' }}
-                />
-                <MyText
-                  style={[
-                    styles['portFolioText'],
-                    { marginVertical: null, marginTop: SCREEN_HEIGHT * 0.02 },
-                  ]}>
-                  {'PRODUCTS'}
-                </MyText>
-                <FlatList
-                  data={List}
-                  keyExtractor={_keyExtractor}
-                  showsVerticalScrollIndicator={false}
-                  renderItem={_renderProducts}
-                  ItemSeparatorComponent={_renderSeperator}
-                  numColumns={2}
-                  contentContainerStyle={{}}
-                />
+                {servicesData?.length ? <>
+                  <Carousel
+                    key="portfolio"
+                    data={servicesData}
+                    renderItem={_renderServicesCrousel}
+                    keyExtractor={_keyExtractor}
+                    sliderWidth={SCREEN_WIDTH}
+                    removeClippedSubviews={false}
+                    // contentContainerStyle={styles['portfolioFlatList']}
+                    itemWidth={SCREEN_WIDTH}
+                    onSnapToItem={_onSnapToItem(TYPES.SERVICES)}
+                  />
+                  {console.log('servicesData==>?', servicesData)}
+                  <MyPagination
+                    length={servicesData.length}
+                    activeSlideIndex={servicespageIndex}
+                  />
+                </>
+                  : null}
+                {productData?.length ?
+                  <>
+                    <MyText
+                      style={[
+                        styles['portFolioText'],
+                        { marginVertical: null, marginTop: SCREEN_HEIGHT * 0.02 },
+                      ]}>
+                      {'PRODUCTS'}
+                    </MyText>
+                    <Carousel
+                      key="portfolio"
+                      data={productData}
+                      renderItem={_renderProductCrousel}
+                      keyExtractor={_keyExtractor}
+                      sliderWidth={SCREEN_WIDTH}
+                      removeClippedSubviews={false}
+                      contentContainerStyle={styles['portfolioFlatList']}
+                      itemWidth={SCREEN_WIDTH}
+                      onSnapToItem={_onSnapToItem(TYPES.PRODUCT)}
+                    />
+                    <MyPagination
+                      length={productData.length}
+                      activeSlideIndex={productpageIndex}
+                    />
+                  </>
+                  :
+                  null}
               </MyView>
             </ScrollView>
           </MyView>

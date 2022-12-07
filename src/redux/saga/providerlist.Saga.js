@@ -1,6 +1,6 @@
 import { takeLatest, put, delay } from 'redux-saga/effects';
 import { showToast } from '../../components/helper'
-import { method, serviceError, GET_PROVIDER_PROFILE_URL, GET_PROVIDER_LIST_URL, GET_COMPLETE_PROVIDER_DETAIL_URL, GET_FILTER_PRICE_LIST_URL } from '../../services/serviceConstant'
+import { method, serviceError, GET_PROVIDER_PROFILE_URL, GET_PROVIDER_LIST_URL, GET_COMPLETE_PROVIDER_DETAIL_URL, GET_FILTER_PRICE_LIST_URL, APP_REMOVE_FAVOURITE_URl, FAV_PROVIDER_LIST_URL } from '../../services/serviceConstant'
 import { getProviderProfileSuccessAction, getProviderListSuccesAction, loaderAction, getProviderCompleteDetailSuccesAction, getProviderCompleteServices, SearchloaderAction, getProviderCompleteProducts } from '../action'
 import * as TYPES from '../action/type'
 import apiRequest from '../../services'
@@ -119,6 +119,56 @@ function* getPriceFilterListSaga(param) {
         else {
             if (param?.callBack) param?.callBack()
             showToast(priceListResp.message)
+        }
+    } catch (error) {
+        if (param?.callBack) param?.callBack()
+        showToast(serviceError['CATCH_ERROR'])
+    }
+}
+
+export function* AddRemoveToFavouriteSaga() {
+    try {
+        yield takeLatest(TYPES.ADD_REMOVE_PROFILE_TO_FAVOURITE, addRemoveProfileToFav)
+    }
+    catch (err) {
+        showToast('Error in add remove profile to observer')
+    }
+}
+
+function* addRemoveProfileToFav(param) {
+    try {
+        const response = yield apiRequest(param.payload, APP_REMOVE_FAVOURITE_URl, method['POST'])
+        if (response.status == 200) {
+            if (param?.callBack) param?.callBack(true)
+        }
+        else {
+            if (param?.callBack) param?.callBack()
+            showToast(response.message)
+        }
+    } catch (error) {
+        if (param?.callBack) param?.callBack()
+        showToast(serviceError['CATCH_ERROR'])
+    }
+}
+
+export function* GetFavProviderListSaga() {
+    try {
+        yield takeLatest(TYPES.GET_FAV_PROVIDER_LIST_ACTION, getFavProviderCall)
+    }
+    catch (err) {
+        showToast('Error in get Fav provider observer')
+    }
+}
+
+function* getFavProviderCall(param) {
+    try {
+        const response = yield apiRequest({}, FAV_PROVIDER_LIST_URL(param.payload), method['GET'])
+        if (response.status == 200) {
+            if (param?.callBack) param?.callBack(response?.result)
+        }
+        else {
+            if (param?.callBack) param?.callBack()
+            showToast(response.message)
         }
     } catch (error) {
         if (param?.callBack) param?.callBack()

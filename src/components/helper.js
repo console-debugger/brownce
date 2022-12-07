@@ -381,3 +381,11 @@ export const locationMapping = (detail) => {
   else if (!detail?.City && detail?.State) return detail?.State
   else return '--'
 }
+
+export const validateUrl = url => {
+  if (url) {
+    if (url?.includes('https://') || url?.includes('http://')) return url
+    else return `https://${url}`
+  }
+  else return null
+}

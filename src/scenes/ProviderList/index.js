@@ -304,7 +304,7 @@ const ProviderList = ({ navigation }) => {
     return (
       <Touchable
         onPress={() =>
-          navigation.navigate('providerDetail', { id: item['UserId'] })
+          navigation.navigate('spDetail', { id: item['UserId'] })
         }
         style={styles['header']}>
         <MyImage
@@ -367,7 +367,7 @@ const ProviderList = ({ navigation }) => {
             </MyView>
             <Button
               onPress={() =>
-                navigation.navigate('providerDetail', { id: item['UserId'] })
+                navigation.navigate('spDetail', { id: item['UserId'] })
               }
               text={BOOK_NOW}
               style={styles['buttonStyle']}
