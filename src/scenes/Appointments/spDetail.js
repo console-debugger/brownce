@@ -8,6 +8,7 @@ import {
   CustomDropDown,
   Loader,
   MyImage,
+  MyIndicator,
   MyPagination,
   MyText,
   MyView,
@@ -36,6 +37,7 @@ import {
   getProfessionsListAction,
   getSpDetailAction,
   loaderAction,
+  refreshDataAction,
 } from '../../redux/action';
 import { activeFavHeartIcon, inactiveFavHeartIcon, productImg2 } from '../../components/icons';
 import { navigateToScreen } from '../../navigation/rootNav';
@@ -52,13 +54,14 @@ const SpDetail = ({ navigation, route }) => {
   const { LOADING, RATING, LOCATION, PORTFOLIO, SHARE } = state['localeReducer'][
     'locale'
   ];
-  const { loading } = state['loaderReducer'];
+  const { loading, refreshData } = state['loaderReducer'];
   const { otherProfile, profile, providerprofile } = state['profileReducer'];
   const { professionsList } = state['hairReducer'];
   const { ServicesProvided } = state.profileReducer.providerprofile;
   const { List } = state.profileReducer.completeproviderproducts;
   const [isRefresh, setRefresh] = useState(false);
   const [buttonVisible, setButtonVisible] = useState(false);
+  const [updating, setUpdating] = useState(false)
   const [portfolioData, setPortFolioData] = useState([])
   const [productData, setProductData] = useState([])
   const [servicesData, setServicesData] = useState([])
@@ -69,6 +72,8 @@ const SpDetail = ({ navigation, route }) => {
     id: '',
     name: '',
   });
+
+  console.log('providerprofile==:', providerprofile)
 
   // @ fetch Service Provide details
   useEffect(() => {
@@ -336,14 +341,17 @@ const SpDetail = ({ navigation, route }) => {
   }
 
   const _addOrRemovefav = () => {
+    setUpdating(true)
     const param = {
       ProviderId: route.params.id,
-      IsFavorite: true
+      IsFavorite: !providerprofile.IsFavorite
     }
-    console.log('prams==>', param)
-    // return
     dispatch(addRemoveProfileToFavourite(param, result => {
-      console.log('result==>', result)
+      if (result) {
+        providerprofile.IsFavorite = !providerprofile.IsFavorite
+        dispatch(refreshDataAction(!refreshData))
+      }
+      setUpdating(false)
     }))
   }
 
@@ -370,11 +378,16 @@ const SpDetail = ({ navigation, route }) => {
                 <MyText onPress={_onShareButton} style={styles['shareText']}>
                   {SHARE}
                 </MyText>
-                <TouchableIcon
-                  onPress={_addOrRemovefav}
-                  source={inactiveFavHeartIcon}
-                  style={{ marginRight: dynamicSize(20), marginTop: dynamicSize(20) }}
-                />
+                <MyView style={{ width: dynamicSize(30), height: dynamicSize(30), alignItems: updating ? 'center' : 'flex-end', marginRight: dynamicSize(20), marginTop: dynamicSize(20) }}>
+                  {updating ? <MyIndicator />
+                    :
+                    <TouchableIcon
+                      onPress={_addOrRemovefav}
+                      source={providerprofile.IsFavorite ? activeFavHeartIcon : inactiveFavHeartIcon}
+                      style={{}}
+                    />
+                  }
+                </MyView>
               </MyView>
               <MyImage
                 source={{ uri: providerprofile.ProfilePic }}

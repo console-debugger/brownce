@@ -1,4 +1,6 @@
+import { useFocusEffect } from '@react-navigation/native'
 import React, { useEffect, useRef, useState } from 'react'
+import { useCallback } from 'react'
 import { FlatList, RefreshControl } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useDispatch, useSelector } from 'react-redux'
@@ -27,11 +29,13 @@ const FavouriteProvider = ({ navigation }) => {
     const isCallNextApi = useRef(false);
     const selectedIdRef = useRef([])
 
-    useEffect(() => {
-        setFetching(true)
-        pagination.current = 1
-        _fetchFavProviderList()
-    }, []);
+    useFocusEffect(
+        useCallback(() => {
+            setFetching(true)
+            pagination.current = 1
+            _fetchFavProviderList()
+        }, [])
+    )
 
     const _fetchFavProviderList = () => {
         const param = {
