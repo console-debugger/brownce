@@ -59,7 +59,7 @@ const Menu = ({ navigation }) => {
       label: MY_QUESTIONS,
     },
     {
-      label: 'Favourite Provider'
+      label: 'Favourites'
     },
     {
       label: 'FAQ & Community guidelines',
