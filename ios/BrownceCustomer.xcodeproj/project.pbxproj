@@ -17,10 +17,11 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* BrownceCustomerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* BrownceCustomerTests.m */; };
+		2EC1175D294C492C00BE5778 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 2EC1175C294C492C00BE5778 /* assets */; };
+		2EC1175F294C493900BE5778 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 2EC1175E294C493900BE5778 /* main.jsbundle */; };
 		303F7BB6A1A63855F0001B20 /* libPods-BrownceCustomer-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BAE2B54E6908676E32E570B /* libPods-BrownceCustomer-tvOSTests.a */; };
 		37616ED518144A7FB893CF4C /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 378ABB4245D34CD999B4DAFC /* Montserrat-Regular.ttf */; };
 		55CEAF44078269BD2CBBEDFB /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AAC4D079EC80A01A7CF633FF /* libPods-OneSignalNotificationServiceExtension.a */; };
-		611860E62818025100E52D45 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 611860E52818025100E52D45 /* main.jsbundle */; };
 		615DE95228BE155800E27BB0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 615DE95128BE155800E27BB0 /* GoogleService-Info.plist */; };
 		619ED16F28C85388001E9429 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619ED16E28C85388001E9429 /* NotificationService.swift */; };
 		619ED17328C85388001E9429 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 619ED16C28C85387001E9429 /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -90,12 +91,12 @@
 		292668F8D0A84053A846CE59 /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-SemiBold.ttf"; path = "../src/assets/fonts/Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* BrownceCustomer-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BrownceCustomer-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* BrownceCustomer-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "BrownceCustomer-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2EC1175C294C492C00BE5778 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
+		2EC1175E294C493900BE5778 /* main.jsbundle */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		36F63077FC4CEE15182AB520 /* Pods-BrownceCustomer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BrownceCustomer.debug.xcconfig"; path = "Target Support Files/Pods-BrownceCustomer/Pods-BrownceCustomer.debug.xcconfig"; sourceTree = "<group>"; };
 		378ABB4245D34CD999B4DAFC /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Regular.ttf"; path = "../src/assets/fonts/Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		3F60E117A1A74B06AEBE3611 /* Montserrat-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-BoldItalic.ttf"; path = "../src/assets/fonts/Montserrat-BoldItalic.ttf"; sourceTree = "<group>"; };
-		611860E52818025100E52D45 /* main.jsbundle */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		615DE95128BE155800E27BB0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		61700FA128BCF29600ACC60F /* main.jsbundle */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		619ED16C28C85387001E9429 /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		619ED16E28C85388001E9429 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		619ED17028C85388001E9429 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -256,9 +257,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				2EC1175E294C493900BE5778 /* main.jsbundle */,
+				2EC1175C294C492C00BE5778 /* assets */,
 				615DE95128BE155800E27BB0 /* GoogleService-Info.plist */,
-				611860E52818025100E52D45 /* main.jsbundle */,
-				61700FA128BCF29600ACC60F /* main.jsbundle */,
 				7728E771275F2EFB008322D2 /* NonConsumables.storekit */,
 				13B07FAE1A68108700A75B9A /* BrownceCustomer */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -477,8 +478,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EC1175D294C492C00BE5778 /* assets in Resources */,
 				615DE95228BE155800E27BB0 /* GoogleService-Info.plist in Resources */,
-				611860E62818025100E52D45 /* main.jsbundle in Resources */,
+				2EC1175F294C493900BE5778 /* main.jsbundle in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				7728E772275F2EFB008322D2 /* NonConsumables.storekit in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
@@ -1012,7 +1014,7 @@
 				CODE_SIGN_ENTITLEMENTS = BrownceCustomer/Brownce.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = LAZ53ZV878;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
@@ -1020,7 +1022,7 @@
 				INFOPLIST_FILE = BrownceCustomer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.22;
+				MARKETING_VERSION = 2.24;
 				OTHER_CODE_SIGN_FLAGS = "--generate-entitlement-der";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1046,14 +1048,14 @@
 				CODE_SIGN_ENTITLEMENTS = BrownceCustomer/Brownce.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = LAZ53ZV878;
 				EXCLUDED_ARCHS = "arm64e armv7 armv7s";
 				"EXCLUDED_ARCHS[sdk=*]" = " arm64e armv7 armv7s";
 				INFOPLIST_FILE = BrownceCustomer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.22;
+				MARKETING_VERSION = 2.24;
 				OTHER_CODE_SIGN_FLAGS = "--generate-entitlement-der";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
