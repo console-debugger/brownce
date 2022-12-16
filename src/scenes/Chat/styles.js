@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
         backgroundColor: WHITE
     },
     rightChatWrapper: {
+        alignItems: 'flex-end',
         borderRadius: dynamicSize(20),
         alignSelf: 'flex-end',
         backgroundColor: THEME
@@ -54,6 +55,14 @@ const styles = StyleSheet.create({
     rightMsg: {
         color: WHITE
     },
+    rightMsgTime: {
+        color: WHITE,
+        fontSize: getFontSize(9)
+    },
+    leftMsgTime:{
+        color: BLACK,
+        fontSize: getFontSize(9)
+    },
     textContainer: {
         backgroundColor: WHITE,
         flexDirection: 'row',
@@ -64,7 +73,7 @@ const styles = StyleSheet.create({
         paddingVertical: isIOS ? dynamicSize(15) : dynamicSize(10),
         backgroundColor: WHITE,
         flex: 1,
-        maxHeight:SCREEN_HEIGHT * 0.1,
+        maxHeight: SCREEN_HEIGHT * 0.1,
         fontSize: getFontSize(14)
     }
 })

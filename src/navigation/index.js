@@ -1247,7 +1247,7 @@ const TabFour = () => {
               isTheme
               isBack
               navigation={navigation}
-              title={'FAVOURITE PROVIDER'}
+              title={'MY FAVOURITE'}
             />
           ),
         }}

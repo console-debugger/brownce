@@ -67,6 +67,8 @@ const Chat = ({ navigation, route }) => {
 
     }
 
+    console.log('route==>',route)
+
     // @ Render blank chat messages
     const _renderEmptyChat = () => {
         if (!loading) {
@@ -99,7 +101,7 @@ const Chat = ({ navigation, route }) => {
             <MyView key={item + index} style={[styles['itemContainer'], isSender ? styles['leftItemContainer'] : styles['rightItemContainer']]}>
                 {!isSender ?
                     <MyView style={{ flexDirection: "row" }}>
-                        <MyView style={[styles['chatWrapper'], isSender ? styles['leftChatWraper'] : styles['rightChatWrapper']]}>
+                        <MyView style={[styles['chatWrapper'], styles['rightChatWrapper']]}>
                             <ReadMore
                                 numberOfLines={3}
                                 renderTruncatedFooter={_renderTruncatedFooter(isSender)}
@@ -107,6 +109,7 @@ const Chat = ({ navigation, route }) => {
                             >
                                 <MyText style={[styles['msgText'], isSender ? styles['leftMsg'] : styles['rightMsg']]} >{item['Message']}</MyText>
                             </ReadMore>
+                            <MyText style={styles['rightMsgTime']}>{`${item.RecordDate},${item.RecordTime}`}</MyText>
                         </MyView>
                         <MyImage source={{ uri: item['myPic'] || item['UFProfilePic'] }} style={styles['imageStyle']} />
                     </MyView>
@@ -121,6 +124,7 @@ const Chat = ({ navigation, route }) => {
                             >
                                 <MyText style={[styles['msgText'], isSender ? styles['leftMsg'] : styles['rightMsg']]} >{item['Message']}</MyText>
                             </ReadMore>
+                            <MyText style={styles['leftMsgTime']}>{`${item.RecordDate},${item.RecordTime}`}</MyText>
                         </MyView>
                     </MyView>
                 }
@@ -154,7 +158,7 @@ const Chat = ({ navigation, route }) => {
     return (
         <SafeArea style={{ backgroundColor: WHITE, paddingTop: -useSafeAreaInsets().top }}>
             <MyView style={styles['mainContainer']}>
-                <Header isTheme isBack navigation={navigation} title={CHAT}/>
+                <Header isTheme isBack navigation={navigation} title={CHAT} />
                 <CurveView />
                 <KeyboardAvoidingView
                     behavior={isIOS ? 'padding' : null}
