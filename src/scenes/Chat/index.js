@@ -69,10 +69,11 @@ const Chat = ({ navigation, route }) => {
 
     console.log('route==>',route)
 
+    //message={`You are yet to chat with this ${route?.params?.type == 'provider' ? 'service provider' : 'user'}`}
     // @ Render blank chat messages
     const _renderEmptyChat = () => {
         if (!loading) {
-            return (<EmptyMessage style={{ marginVertical: SCREEN_HEIGHT * 0.37 }} message={`You are yet to chat with this ${route?.params?.type == 'provider' ? 'service provider' : 'user'}`} />)
+            return (<EmptyMessage style={{ marginVertical: SCREEN_HEIGHT * 0.37 }} message={`You are yet to chat with this user`} />)
         }
         else return (<EmptyMessage message={""} />)
     }

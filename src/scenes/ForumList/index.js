@@ -276,6 +276,7 @@ const ForumList = ({ navigation }) => {
   };
 
   const _renderNotification = ({ item, index }) => {
+    console.log('item.CreatedOn=>?',item.CreatedOn)
     return (
       <Touchable onPress={_navToComment(item)} style={styles.notiItem}>
         <TouchableIcon
@@ -290,7 +291,7 @@ const ForumList = ({ navigation }) => {
           indicator={selectedNotificationQuesId == item.Id}
         />
         {_renderNotificationType(item)}
-        <MyText>{getDate(item.CreatedOn)}</MyText>
+        <MyText>{getDate('2022-12-22T18:18:51.973')}</MyText>
       </Touchable>
     );
   };

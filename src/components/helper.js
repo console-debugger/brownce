@@ -254,10 +254,10 @@ const hourDiff = (end) => {
   hour = startHour.diff(endHour, 'h');
   minute = startHour.diff(endHour, 'm');
   second = startHour.diff(endHour, 's');
-  if (hour > 1) return `${hour}h ago`;
-  else if (hour <= 0 && minute >= 1) return `${minute}m ago`;
+  if (hour > 1) return `${hour} hr ago`;
+  else if (hour <= 0 && minute >= 1) return `${minute} min ago`;
   else if (hour <= 0 && minute <= 0 && second <= 59)
-    return second == 0 ? 'now' : `${second}s ago`;
+    return second == 0 ? 'now' : `${second} s ago`;
 };
 
 export const Yesterday = () => {
@@ -282,7 +282,7 @@ export const daysAgoFormat = (dateTime) => {
     return difference + 'd';
   } else if (difference > 30 && difference < 365) {
     const monthCount = difference / 30;
-    return parseInt(monthCount) + 'm';
+    return `${parseInt(monthCount)} mo`;
   } else if (difference >= 365) {
     const yearCount = difference / 365;
     return parseInt(yearCount) + 'y';
