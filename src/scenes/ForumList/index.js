@@ -291,7 +291,7 @@ const ForumList = ({ navigation }) => {
           indicator={selectedNotificationQuesId == item.Id}
         />
         {_renderNotificationType(item)}
-        <MyText>{getDate('2022-12-22T18:18:51.973')}</MyText>
+        <MyText>{getDate(item.CreatedOn)}</MyText>
       </Touchable>
     );
   };
