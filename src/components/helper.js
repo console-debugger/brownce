@@ -278,7 +278,7 @@ export const daysAgoFormat = (dateTime) => {
   const currentDate = moment(); // today
   const secondDate = moment(dateTime); // target date
   const difference = currentDate.diff(secondDate, 'days');
-  if (difference > 7 && difference <= 30) {
+  if (difference <= 30) {
     return difference + 'd';
   } else if (difference > 30 && difference < 365) {
     const monthCount = difference / 30;

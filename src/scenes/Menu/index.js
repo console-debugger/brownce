@@ -59,7 +59,7 @@ const Menu = ({ navigation }) => {
       label: MY_QUESTIONS,
     },
     {
-      label: 'Favourites'
+      label: 'Favorites'
     },
     {
       label: 'FAQ & Community guidelines',
