@@ -110,7 +110,7 @@ const Chat = ({ navigation, route }) => {
                             >
                                 <MyText style={[styles['msgText'], isSender ? styles['leftMsg'] : styles['rightMsg']]} >{item['Message']}</MyText>
                             </ReadMore>
-                            <MyText style={styles['rightMsgTime']}>{`${item.RecordDate},${item.RecordTime}`}</MyText>
+                            <MyText style={styles['rightMsgTime']}>{`${item.RecordDate}, ${item.RecordTime}`}</MyText>
                         </MyView>
                         <MyImage source={{ uri: item['myPic'] || item['UFProfilePic'] }} style={styles['imageStyle']} />
                     </MyView>
@@ -125,7 +125,7 @@ const Chat = ({ navigation, route }) => {
                             >
                                 <MyText style={[styles['msgText'], isSender ? styles['leftMsg'] : styles['rightMsg']]} >{item['Message']}</MyText>
                             </ReadMore>
-                            <MyText style={styles['leftMsgTime']}>{`${item.RecordDate},${item.RecordTime}`}</MyText>
+                            <MyText style={styles['leftMsgTime']}>{`${item.RecordDate}, ${item.RecordTime}`}</MyText>
                         </MyView>
                     </MyView>
                 }
