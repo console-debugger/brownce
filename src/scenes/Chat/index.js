@@ -4,7 +4,7 @@ import { KeyboardAvoidingView, TextInput, FlatList } from 'react-native'
 import { WHITE, THEME } from '../../utils/colors'
 import AndroidKeyboardAdjust from 'react-native-android-keyboard-adjust';
 import { sendIcon } from '../../components/icons'
-import { isIOS, SCREEN_WIDTH, isAndroid, isCustomer, SCREEN_HEIGHT } from '../../components/helper'
+import { isIOS, SCREEN_WIDTH, isAndroid, isCustomer, SCREEN_HEIGHT, convertToLocal } from '../../components/helper'
 import styles from './styles'
 import { dynamicSize } from '../../utils/responsive'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -15,6 +15,7 @@ import { loaderAction, chatRoomAction, saveChatAction, getChatMessagesAction, cl
 import { socket } from '../../services'
 import { GET_CHAT_MESSAGE_SUCCESS_ACTION } from '../../redux/action/type'
 import ReadMore from 'react-native-read-more-text';
+import moment from 'moment';
 
 
 // @ Render Chat UI
@@ -67,7 +68,7 @@ const Chat = ({ navigation, route }) => {
 
     }
 
-    console.log('route==>',route)
+    console.log('route==>', route)
 
     //message={`You are yet to chat with this ${route?.params?.type == 'provider' ? 'service provider' : 'user'}`}
     // @ Render blank chat messages
@@ -97,6 +98,7 @@ const Chat = ({ navigation, route }) => {
 
     // @ Render chat messages
     const _renderChat = ({ item, index }) => {
+        console.log('itemsssss=s=s=ss=s=s=>?', item)
         const isSender = item['MsgFrom'] != (isCustomer() ? profile['UserId'] : providerprofile['UserId'])
         return (
             <MyView key={item + index} style={[styles['itemContainer'], isSender ? styles['leftItemContainer'] : styles['rightItemContainer']]}>
@@ -110,7 +112,7 @@ const Chat = ({ navigation, route }) => {
                             >
                                 <MyText style={[styles['msgText'], isSender ? styles['leftMsg'] : styles['rightMsg']]} >{item['Message']}</MyText>
                             </ReadMore>
-                            <MyText style={styles['rightMsgTime']}>{`${item.RecordDate}, ${item.RecordTime}`}</MyText>
+                            <MyText style={styles['rightMsgTime']}>{moment(convertToLocal(item.CreatedOn)).format('MMM DD, YYYY, hh:mm:ss A')}</MyText>
                         </MyView>
                         <MyImage source={{ uri: item['myPic'] || item['UFProfilePic'] }} style={styles['imageStyle']} />
                     </MyView>
@@ -125,7 +127,7 @@ const Chat = ({ navigation, route }) => {
                             >
                                 <MyText style={[styles['msgText'], isSender ? styles['leftMsg'] : styles['rightMsg']]} >{item['Message']}</MyText>
                             </ReadMore>
-                            <MyText style={styles['leftMsgTime']}>{`${item.RecordDate}, ${item.RecordTime}`}</MyText>
+                            <MyText style={styles['leftMsgTime']}>{moment(convertToLocal(item.CreatedOn)).format('MMM DD, YYYY, hh:mm:ss A')}</MyText>
                         </MyView>
                     </MyView>
                 }
@@ -141,6 +143,7 @@ const Chat = ({ navigation, route }) => {
                 RoomName: room['RoomName'],
                 MsgFrom: isCustomer() ? profile['UserId'] : providerprofile['UserId'],
                 myPic: isCustomer() ? profile['ProfilePic'] : providerprofile['ProfilePic'],
+                CreatedOn: moment().format('YYYY-MM-DDTHH:mm:ssZ')
             }
             socket.emit('room', JSON.stringify(messageObj))
             setChatHistory([...history, messageObj])
