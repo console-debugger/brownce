@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {useSelector} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
   MyImage,
   MyText,
@@ -7,30 +7,32 @@ import {
   SafeArea,
   Touchable,
 } from '../../components/customComponent';
-import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../components/helper';
-import {logo} from '../../components/icons';
-import {serviceConst} from '../../services/serviceConstant';
-import {LIGHT_WHITE, THEME, WHITE} from '../../utils/colors';
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../components/helper';
+import { logo } from '../../components/icons';
+import { serviceConst } from '../../services/serviceConstant';
+import { LIGHT_WHITE, THEME, WHITE } from '../../utils/colors';
 import styles from './styles';
 import AsyncStorage from '@react-native-community/async-storage';
-import {ROLE_TYPES} from '../../utils/roleType';
+import { ROLE_TYPES } from '../../utils/roleType';
 
-const TYPES = {CUSTOMER: 'customer', PROVIDER: 'provider'};
+const TYPES = { CUSTOMER: 'customer', PROVIDER: 'provider' };
 
 // Landing screen Role selection
-const RoleSelection = ({navigation}) => {
+const RoleSelection = ({ navigation }) => {
   const state = useSelector((state) => {
     return state;
   });
-  const {CUSTOMER, PROVIDER} = state['localeReducer']['locale'];
+  const { CUSTOMER, PROVIDER } = state['localeReducer']['locale'];
   const [selectedRole, setSelectredRole] = useState(0);
   const [status, setStatus] = useState(true);
 
   useEffect(() => {
     AsyncStorage.getItem('firsttimestatus').then(async (data) => {
-      data = JSON.parse(data);
-      console.log('firsttimestatus => ', data?.status);
-      setStatus(data?.status);
+      if (data) {
+        data = JSON.parse(data);
+        console.log('firsttimestatus => ', data?.status);
+        setStatus(data?.status);
+      }
     });
   }, []);
 
@@ -50,7 +52,7 @@ const RoleSelection = ({navigation}) => {
   return (
     <SafeArea>
       <MyView
-        style={{flex: 1, backgroundColor: LIGHT_WHITE, alignItems: 'center'}}>
+        style={{ flex: 1, backgroundColor: LIGHT_WHITE, alignItems: 'center' }}>
         <MyImage source={logo} style={styles['logo']} />
         <Touchable
           onPress={_navToNext}
@@ -58,12 +60,12 @@ const RoleSelection = ({navigation}) => {
           style={[
             styles['button'],
             styles['customerButton'],
-            {backgroundColor: selectedRole === 0 ? THEME : LIGHT_WHITE},
+            { backgroundColor: selectedRole === 0 ? THEME : LIGHT_WHITE },
           ]}>
           <MyText
             style={[
               styles['customerText'],
-              {color: selectedRole === 0 ? WHITE : THEME},
+              { color: selectedRole === 0 ? WHITE : THEME },
             ]}>
             {CUSTOMER}
           </MyText>
@@ -81,7 +83,7 @@ const RoleSelection = ({navigation}) => {
           <MyText
             style={[
               styles['providerText'],
-              {color: selectedRole === 1 ? WHITE : THEME},
+              { color: selectedRole === 1 ? WHITE : THEME },
             ]}>
             {PROVIDER}
           </MyText>

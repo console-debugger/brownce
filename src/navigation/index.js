@@ -2135,9 +2135,9 @@ const RootNavigation = () => {
     console.log('dynamic link ==>', link)
     try {
       if (link?.url?.includes('/profile-id/')) {
-        const splited = link?.url.split('/profile-id/')
+        const splited = link?.url?.split('/profile-id/')
         if (splited?.length > 0) {
-          const splitAnotherDetail = splited[splited?.length - 1]?.split('/')
+          const splitAnotherDetail = splited?.[splited?.length - 1]?.split('/')
           const userId = splitAnotherDetail?.[1]
           const userType = splitAnotherDetail?.[0]
           console.log('userType===>', userType, 'userid==>', userId)
@@ -2145,19 +2145,11 @@ const RootNavigation = () => {
             setTimeout(() => {
               navigate('customerDetail', { id: userId })
             }, 500);
-            // navigate('tabTwo', {
-            //   screen: 'customerDetail',
-            //   params: { id: userId },
-            // });
           }
           else if (userType == 'provider') {
             setTimeout(() => {
               navigate('spDetail', { id: userId })
             }, 500);
-            // navigate('tabTwo', {
-            //   screen: 'spDetail',
-            //   params: { id: userId },
-            // });
           }
         }
       }
