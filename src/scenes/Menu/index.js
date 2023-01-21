@@ -130,7 +130,7 @@ const Menu = ({ navigation }) => {
           styles['menuItem'],
           { borderBottomWidth: index === menuOption.length - 1 ? 0 : 1 },
         ]}>
-        <MyText style={[styles['labelStyle'], { color: index == 10 ? 'red' : BLACK }]}>{item['label']}</MyText>
+        <MyText style={[styles['labelStyle'], { color: index == 11 ? 'red' : BLACK }]}>{item['label']}</MyText>
         <MyImage source={rightArrow} style={styles['arrowStyle']} />
       </Touchable>
     );
