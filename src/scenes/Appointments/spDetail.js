@@ -3,6 +3,7 @@ import { FlatList, Linking, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector, useDispatch } from 'react-redux';
 import Carousel from 'react-native-snap-carousel';
+import Swiper from 'react-native-swiper';
 import {
   Button,
   CustomDropDown,
@@ -26,15 +27,17 @@ import {
   onShare,
   SCREEN_HEIGHT,
   SCREEN_WIDTH,
+  showToast,
   validateUrl,
 } from '../../components/helper';
-import { BLACK, LIGHT_WHITE } from '../../utils/colors';
-import { montserratBold } from '../../utils/fontFamily';
+import { BLACK, LIGHT_WHITE, THEME } from '../../utils/colors';
+import { montserratBold, montserratMedium } from '../../utils/fontFamily';
 import { dynamicSize, getFontSize } from '../../utils/responsive';
 import styles from './styles';
 import {
   addRemoveProfileToFavourite,
   getProfessionsListAction,
+  getProviderCompleteDetailAction,
   getSpDetailAction,
   loaderAction,
   refreshDataAction,
@@ -80,6 +83,7 @@ const SpDetail = ({ navigation, route }) => {
     dispatch(loaderAction(true));
     dispatch(getSpDetailAction(route.params.id));
     dispatch(getProfessionsListAction());
+    dispatch(getProviderCompleteDetailAction(route.params.id));
   }, []);
 
   useEffect(() => {
@@ -149,16 +153,11 @@ const SpDetail = ({ navigation, route }) => {
   //     }))
   // }, [category])
 
-  const _selectHairType = (item, index) => () => {
-    const replica = [...hairTypes];
-    for (let i = 0; i < hairTypes.length; i++) {
-      if (item['HairTypeMasterId'] === replica[i]['HairTypeMasterId']) {
-        replica[i]['status'] = true;
-      } else {
-        replica[i]['status'] = false;
-      }
-    }
+  const _selectHairType = (item, index, index1) => () => {
+    const replica = [...servicesData];
+    replica[index1][index]['status'] = !replica[index1][index]['status'];
     setRefresh(!isRefresh);
+    setServicesData(replica)
   };
 
   const _renderPortfolio = ({ item, index }) => {
@@ -221,15 +220,15 @@ const SpDetail = ({ navigation, route }) => {
     )
   }
 
-  const _renderHairType = ({ item, index }) => {
+  const _renderHairType = (props) => ({ item, index }) => {
     return (
       <SecondaryButton
         price
-        //onPress={_selectHairType(item, index)}
-        style={[styles['selected'], { borderRadius: dynamicSize(5) }]}
-        textStyle={styles['selectedText']}
-        text={item['ServiceName']}
-        pricetext={`${item['Price']} USD`}
+        onPress={_selectHairType(item, index, props)}
+        style={[item['status'] ? styles['selected'] : styles['unselected'], { borderRadius: dynamicSize(5) }]}
+        textStyle={item['status'] ? styles['selectedText'] : styles['unselectedText']}
+        text={item?.['ServiceName']}
+        pricetext={`${item?.['Price'] || ''} USD`}
       />
     );
   };
@@ -354,6 +353,29 @@ const SpDetail = ({ navigation, route }) => {
       setUpdating(false)
     }))
   }
+
+  const _validate = () => {
+    console.log('asds==>',)
+    let filterServiceId = [];
+    for (let i = 0; i < servicesData.length; i++) {
+      filterServiceId.push(
+        servicesData[i]
+          .filter((item) => {
+            if (item['status']) return item;
+          })
+          .map((each) => {
+            return each['ServiceMasterId'];
+          }),
+      );
+    }
+    const newData = filterServiceId?.length ? filterServiceId?.flat(1) : []
+    console.log('filterServiceId=>', newData)
+    if (newData.length) {
+      navigation.navigate('booking', { providerId: route.params.id });
+    } else {
+      showToast('Please select services');
+    }
+  };
 
   return (
     <SafeArea style={{ paddingTop: -useSafeAreaInsets().top }}>
@@ -498,7 +520,61 @@ const SpDetail = ({ navigation, route }) => {
                     borderBottomWidth: 2,
                   }}
                 />
-                {servicesData?.length ? <>
+                <MyView style={{ height: 200, marginBottom: useSafeAreaInsets().bottom }}>
+                  <Swiper
+                    key={servicesData.length}
+                    style={{ paddingVertical: SCREEN_HEIGHT * 0.03 }}
+                    dotStyle={styles['dotStyle']}
+                    activeDotColor={THEME}
+                    loadMinimal={true}
+                    loop={true}
+                    loadMinimalSize={1}
+                    removeClippedSubviews={false}
+                    activeDotStyle={[styles['dotStyle'], { backgroundColor: THEME }]}>
+                    {servicesData.map((item, index1) => {
+                      let arr = item.filter(
+                        (item) => item['ProfessionId'] == category['Id'],
+                      );
+                      if (arr.length) {
+                        return (
+                          <MyView style={{}}>
+                            <FlatList
+                              key="hairType"
+                              showsVerticalScrollIndicator={false}
+                              data={arr}
+                              // data={item.filter(item => item['ProfessionId'] == category['Id'])}
+                              keyExtractor={_keyExtractor}
+                              renderItem={_renderHairType(index1)}
+                              contentContainerStyle={styles['hairTypeFlatList']}
+                              numColumns={2}
+                              extraData={isRefresh}
+                              columnWrapperStyle={{
+                                paddingHorizontal: dynamicSize(1),
+                                justifyContent: 'space-between',
+                              }}
+                            />
+                          </MyView>
+                        );
+                      } else {
+                        return (
+                          <MyText
+                            style={{
+                              paddingHorizontal: dynamicSize(25),
+                              fontSize: getFontSize(14),
+                              color: BLACK,
+                              fontFamily: montserratMedium,
+                            }}>
+                            {'No services found for this profession'}
+                          </MyText>
+                        );
+                      }
+                      // return (
+
+                      // )
+                    })}
+                  </Swiper>
+                </MyView>
+                {/* {servicesData?.length ? <>
                   <Carousel
                     key="portfolio"
                     data={servicesData}
@@ -516,7 +592,7 @@ const SpDetail = ({ navigation, route }) => {
                     activeSlideIndex={servicespageIndex}
                   />
                 </>
-                  : null}
+                  : null} */}
                 {productData?.length ?
                   <>
                     <MyText
@@ -544,6 +620,11 @@ const SpDetail = ({ navigation, route }) => {
                   </>
                   :
                   null}
+                <Button
+                  onPress={_validate}
+                  style={styles['buttonStyle']}
+                  text={'CONTINUE'}
+                />
               </MyView>
             </ScrollView>
           </MyView>

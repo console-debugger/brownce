@@ -191,6 +191,18 @@ const styles = StyleSheet.create({
     fontFamily: montserratSemiBold,
     fontSize: getFontSize(16),
   },
+  dotStyle: {
+    backgroundColor: LIGHT_GRAY,
+    width: dynamicSize(13),
+    height: dynamicSize(13),
+    borderRadius: dynamicSize(10),
+    marginBottom: -60
+  },
+  buttonStyle: {
+    alignSelf: 'center',
+    backgroundColor: LIGHT_BROWN,
+    marginTop: 30
+  },
 });
 
 export default styles;
