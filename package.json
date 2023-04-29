@@ -6,10 +6,10 @@
     "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "start": "export NODE_OPTIONS=--openssl-legacy-provider && react-native start",
+    "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "postinstall": "patch-package && npx jetify"
+    "postinstall": "npx patch-package && npx jetify"
   },
   "dependencies": {
     "@react-native-community/async-storage": "1.12.0",
@@ -30,9 +30,9 @@
     "lodash": "4.17.21",
     "lodash.debounce": "4.0.8",
     "moment": "2.27.0",
-    "patch-package": "^6.4.7",
-    "react": "16.13.1",
-    "react-native": "0.63.3",
+    "patch-package": "^6.5.1",
+    "react": "17.0.2",
+    "react-native": "0.68.5",
     "react-native-android-keyboard-adjust": "1.2.0",
     "react-native-android-location-enabler": "1.2.2",
     "react-native-app-intro-slider": "4.0.4",
@@ -43,9 +43,9 @@
     "react-native-gesture-handler": "1.8.0",
     "react-native-google-places-autocomplete": "^2.5.1",
     "react-native-iap": "7.4.1",
-    "react-native-image-crop-picker": "0.34.1",
+    "react-native-image-crop-picker": "^0.39.0",
     "react-native-image-slider-box": "1.0.12",
-    "react-native-keyboard-aware-scroll-view": "0.9.2",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-maps": "0.28.0",
     "react-native-material-dropdown": "github:noway/react-native-material-dropdown",
     "react-native-modal-datetime-picker": "9.1.0",
@@ -54,7 +54,7 @@
     "react-native-paypal": "3.1.1",
     "react-native-push-notification": "8.1.1",
     "react-native-read-more-text": "1.1.2",
-    "react-native-reanimated": "1.13.0",
+    "react-native-reanimated": "2.9.1",
     "react-native-render-html": "5.1.0",
     "react-native-safe-area-context": "3.1.7",
     "react-native-screens": "2.10.1",
@@ -76,14 +76,14 @@
     "socket.io-client": "3.0.4"
   },
   "devDependencies": {
-    "@babel/core": "7.11.6",
-    "@babel/runtime": "7.11.2",
-    "@react-native-community/eslint-config": "1.1.0",
-    "babel-jest": "25.5.1",
-    "eslint": "6.8.0",
-    "jest": "25.5.4",
-    "metro-react-native-babel-preset": "0.59.0",
-    "react-test-renderer": "16.13.1"
+    "@babel/core": "7.20.5",
+    "@babel/runtime": "7.20.6",
+    "@react-native-community/eslint-config": "2.0.0",
+    "babel-jest": "26.6.3",
+    "eslint": "7.14.0",
+    "jest": "26.6.3",
+    "metro-react-native-babel-preset": "0.66.2",
+    "react-test-renderer": "17.0.2"
   },
   "jest": {
     "preset": "react-native"

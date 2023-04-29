@@ -4,10 +4,10 @@ def REACT_NATIVE_VERSION = new File(['node', '--print',"JSON.parse(require('fs')
 buildscript {
     ext {
         androidXCore = "1.6.0"
-        buildToolsVersion = "30.0.2"
+        buildToolsVersion = "33.0.0"
         minSdkVersion = 21
-        compileSdkVersion = 31
-        targetSdkVersion = 31
+        compileSdkVersion = 33
+        targetSdkVersion = 33
         // googlePlayServicesVersion = "+" // default: "+"
         firebaseMessagingVersion ="21.1.0"
         supportLibVersion="29.1.1"

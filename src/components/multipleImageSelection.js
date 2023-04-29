@@ -17,7 +17,7 @@ const MultipleImagePickerSelection = props => {
 
     const _openCamera = async () => {
         const imageUrl = await openCamera()
-        if (imageUrl?.['uri']) selectedImage(imageUrl)
+        if (imageUrl?.['uri']) selectedImage([imageUrl])
     }
 
 
