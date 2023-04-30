@@ -10,7 +10,7 @@ import { montserratBold } from '../../utils/fontFamily';
 import { getFontSize } from '../../utils/responsive';
 import { getCurrentLocation } from '../../components/geolocation';
 import { isIOS } from '../../components/helper';
-import { THEME } from '../../utils/colors';
+import { BLACK, THEME } from '../../utils/colors';
 import { SearchProviderAction } from '../../redux/action'
 import { apiKey } from '../../services/serviceConstant'
 
@@ -151,6 +151,7 @@ const Discover = ({ navigation }) => {
             <MyView style={styles['backView']} >
                 <TouchableIcon
                     style={{ height: 20 }}
+                    imageStyle={{ tintColor: BLACK }}
                     source={backIcon}
                     onPress={() => navigation.goBack()} />
             </MyView>

@@ -140,7 +140,7 @@ const MyTopTab = ({ state, descriptors, navigation, position }) => {
                 };
 
                 const inputRange = state.routes.map((_, i) => i);
-                const opacity = Animated.interpolate(position, {
+                const opacity = Animated.interpolateNode(position, {
                     inputRange,
                     outputRange: inputRange.map(i => (i === index ? 1 : 0)),
                 });

@@ -88,7 +88,7 @@ const ProfileSetupOne = ({ navigation }) => {
                     returnKeyType='done'
                 />
                 <Button onPress={_validate} style={styles['buttonStyle']} text={CONTINUE} />
-                <Button onPress={_complete_later} style={[styles['buttonStyle'], { backgroundColor: LIGHT_BROWN, marginTop: dynamicSize(10) }]} text={'COMPLETE LATER'} />             
+                {/* <Button onPress={_complete_later} style={[styles['buttonStyle'], { backgroundColor: LIGHT_BROWN, marginTop: dynamicSize(10) }]} text={'COMPLETE LATER'} />              */}
             </KeyboardAwareScroll>
         </SafeArea>
     )

@@ -22,7 +22,7 @@ import ProfileSetupFour from '../scenes/ProfileSetup/setupFour';
 import ProfileSetupFive from '../scenes/ProfileSetup/setupFive';
 import ProfileSetupSix from '../scenes/ProfileSetup/setupSix';
 import Prompt from '../scenes/Prompt';
-import { LIGHT_GRAY, THEME, LIGHT_BROWN, WHITE } from '../utils/colors';
+import { LIGHT_GRAY, THEME, LIGHT_BROWN, WHITE, BLACK } from '../utils/colors';
 import WriteAnswer from '../scenes/WriteAnswer';
 import {
   getData,
@@ -184,7 +184,7 @@ const Authentication = () => {
         component={Signup}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={CREATE_ACCOUNT} />
+            <Header navigation={navigation} isBack title={CREATE_ACCOUNT} imageStyle={{ tintColor: BLACK }} />
           ),
         }}
       />
@@ -207,7 +207,7 @@ const Authentication = () => {
         component={ForgotPassword}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={FORGOT_PASSWORD} />
+            <Header navigation={navigation} isBack title={FORGOT_PASSWORD} imageStyle={{ tintColor: BLACK }} />
           ),
         }}
       />
@@ -216,7 +216,7 @@ const Authentication = () => {
         component={OTP}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={VERIFICATION} />
+            <Header navigation={navigation} isBack title={VERIFICATION} imageStyle={{ tintColor: BLACK }} />
           ),
         }}
       />
@@ -225,7 +225,7 @@ const Authentication = () => {
         component={ResetPassword}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={'RESET PASSWORD'} />
+            <Header navigation={navigation} isBack title={'RESET PASSWORD'} imageStyle={{ tintColor: BLACK }} />
           ),
         }}
       />
@@ -234,7 +234,7 @@ const Authentication = () => {
         component={ProfileSetupOne}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} />
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
           ),
         }}
       />
@@ -243,7 +243,7 @@ const Authentication = () => {
         component={ProviderBio}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} />
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
           ),
         }}
       />
@@ -252,7 +252,7 @@ const Authentication = () => {
         component={ProfileSetupTwo}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} />
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
           ),
         }}
       />
@@ -261,7 +261,7 @@ const Authentication = () => {
         component={ProfileSetupThree}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} />
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
           ),
         }}
       />
@@ -270,7 +270,7 @@ const Authentication = () => {
         component={ProfileSetupFour}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} />
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
           ),
         }}
       />
@@ -280,7 +280,7 @@ const Authentication = () => {
         component={ProfileSetupFive}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} />
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
           ),
         }}
       />
@@ -289,7 +289,7 @@ const Authentication = () => {
         component={ProfileSetupSix}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} />
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
           ),
         }}
       />
@@ -298,7 +298,7 @@ const Authentication = () => {
         component={ProviderProfileSetupThree}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} />
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
           ),
         }}
       />
@@ -307,7 +307,7 @@ const Authentication = () => {
         component={ProviderProfileSetupFour}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} />
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
           ),
         }}
       />
@@ -316,7 +316,7 @@ const Authentication = () => {
         component={ProviderProfessionSelection}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} />
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
           ),
         }}
       />
@@ -325,7 +325,7 @@ const Authentication = () => {
         component={ProviderProfileSetupFive}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} />
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
           ),
         }}
       />
@@ -334,7 +334,7 @@ const Authentication = () => {
         component={AddCustomService}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} />
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
           ),
         }}
       />
@@ -343,7 +343,7 @@ const Authentication = () => {
         component={CustomServiceList}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} />
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
           ),
         }}
       />
@@ -352,7 +352,7 @@ const Authentication = () => {
         component={ProviderProfileSetupSix}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} />
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }} />
           ),
         }}
       />
@@ -361,7 +361,7 @@ const Authentication = () => {
         component={ProviderProfileSetupSeven}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} />
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
           ),
         }}
       />
@@ -370,7 +370,7 @@ const Authentication = () => {
         component={UpdateProviderService}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} />
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
           ),
         }}
       />
@@ -379,7 +379,7 @@ const Authentication = () => {
         component={uploadLicense}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} />
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
           ),
         }}
       />
@@ -388,7 +388,7 @@ const Authentication = () => {
         component={ProviderProfileSetupNine}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} />
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
           ),
         }}
       />
@@ -402,6 +402,7 @@ const Authentication = () => {
               isBack
               title={SELECT_A_PROMPT}
               style={line}
+              imageStyle={{ tintColor: BLACK }}
             />
           ),
         }}
