@@ -12,7 +12,7 @@ import { SearchServicesSaga, SearchProviderSaga } from './search.Saga';
 import { PriceRangeSaga } from './pricerange.Saga';
 import { ChatSaga, SaveChatSaga, GetChatMessagesSaga, GetChatListSaga, NotificationReadSaga } from './chat.Saga';
 import { SPDataStepSaga, CSDataStepSaga } from './step.Saga';
-import { CommentSaga, CommentHistorySaga, DeleteCommentSaga, GetSuggestionsSaga } from './comment.Saga';
+import { CommentSaga, CommentHistorySaga, DeleteCommentSaga, GetSuggestionsSaga, SaveAppFeedbackSaga } from './comment.Saga';
 import { RatingTypeSaga, RatingSaga, EarningsSaga, FundSaga } from './rating.Saga';
 import { CMSSaga } from './cms.Saga';
 import { AddBrandNameSaga, AddProductSaga, BrandCategorySaga, BrandSearchSaga, CategorySearchSaga, CustomerProductSaga, DeleteProductSaga, MyProductListSaga } from './product.Saga';
@@ -135,6 +135,7 @@ export function* rootSaga() {
         fork(GetFiltePriceListSaga),
         fork(getAllCityListSaga),
         fork(AddRemoveToFavouriteSaga),
-        fork(GetFavProviderListSaga)
+        fork(GetFavProviderListSaga),
+        fork(SaveAppFeedbackSaga)
     ])
 }

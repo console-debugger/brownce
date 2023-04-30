@@ -57,6 +57,27 @@ const styles = StyleSheet.create({
     twitterStyle: {
         height: SCREEN_HEIGHT * 0.04,
         width: SCREEN_WIDTH * 0.1
+    },
+    feedbackTitle: {
+        alignSelf: 'flex-start',
+        fontFamily: montserratSemiBold,
+        fontSize: 14,
+    },
+    feedbackContainer: {
+        alignSelf: 'center',
+        width: SCREEN_WIDTH - dynamicSize(50),
+    },
+    textInput: {
+        width:'100%',
+        textAlignVertical: 'top',
+        // height: SCREEN_HEIGHT * 0.3,
+        backgroundColor: WHITE,
+        borderWidth: 0,
+        marginVertical: SCREEN_HEIGHT * 0.01,
+    },
+    buttonStyle: {
+        width: null,
+        marginTop:10,
     }
 })
 

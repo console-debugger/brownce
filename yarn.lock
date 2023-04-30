@@ -7983,10 +7983,10 @@
   dependencies:
     "prop-types" "^15.7.2"
 
-"react-native-onesignal@^4.4.1":
-  "integrity" "sha512-vbS0E2TO5KljT0l1nAce04aOZF6FLv9oUaliffhFQR92oTHAbwNmwwMpxZF6CIcNANDDKkYtKPw5h7baUxmQdw=="
-  "resolved" "https://registry.npmjs.org/react-native-onesignal/-/react-native-onesignal-4.4.1.tgz"
-  "version" "4.4.1"
+"react-native-onesignal@^4.5.1":
+  "integrity" "sha512-9XtRwW/Hn3dTD7jxQiKIW4+o1bWNgm1jCUPK1SkjyPd7TiH4cnGuL9JGaAMCUvAWUAp9KC8ejShr6v8K0dGVGQ=="
+  "resolved" "https://registry.npmjs.org/react-native-onesignal/-/react-native-onesignal-4.5.1.tgz"
+  "version" "4.5.1"
   dependencies:
     "invariant" "^2.2.2"
 

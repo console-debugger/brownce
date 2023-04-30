@@ -1,6 +1,6 @@
-import { takeLatest, put } from 'redux-saga/effects';
+import { takeLatest, put, delay } from 'redux-saga/effects';
 import { showToast } from '../../components/helper'
-import { method, serviceError, COMMENT_HISTORY_URL, COMMENT_URL, DELETE_COMMENT_URL, GET_SUGGESTIONS_URL } from '../../services/serviceConstant'
+import { method, serviceError, COMMENT_HISTORY_URL, COMMENT_URL, DELETE_COMMENT_URL, GET_SUGGESTIONS_URL, SAVE_APP_FEEDBACK_URL } from '../../services/serviceConstant'
 import { getCommentsHistorySuccessAction, getSuggestionsSuccessAction, loaderAction, updateCommentsHistoryAction } from '../action'
 import * as TYPES from '../action/type'
 import apiRequest from '../../services'
@@ -99,12 +99,40 @@ function* getSuggestions(param) {
         const getsuggestionsResp = yield apiRequest({}, `${GET_SUGGESTIONS_URL}PageNo=1&RecordsPerPage=20000&Search=${param['payload'].Search}`, method['GET'])
         if (getsuggestionsResp['status'] === 200) {
             yield put(getSuggestionsSuccessAction(getsuggestionsResp['result']['List']))
-            yield put(loaderAction(false))
         }
         else {
             showToast(getsuggestionsResp['message'])
         }
     } catch (err) {
         showToast(serviceError['CATCH_ERROR'])
+    }
+}
+
+export function* SaveAppFeedbackSaga() {
+    try {
+        yield takeLatest(TYPES.SAVE_APP_FEEDBACK_ACTION, saveAppFeedback)
+    }
+    catch (err) {
+        showToast('Error in save app feedback observer')
+    }
+}
+
+function* saveAppFeedback(param) {
+    try {
+        const feedbackResp = yield apiRequest(param.payload, SAVE_APP_FEEDBACK_URL, method['POST'])
+        if (feedbackResp['status'] === 200) {
+            yield put(loaderAction(false))
+            yield delay(500)
+            yield showToast(feedbackResp['message'])
+        }
+        else {
+            yield put(loaderAction(false))
+            yield delay(500)
+            yield showToast(feedbackResp['message'])
+        }
+    } catch (err) {
+        yield put(loaderAction(false))
+        yield delay(500)
+        yield showToast(serviceError['CATCH_ERROR'])
     }
 }
