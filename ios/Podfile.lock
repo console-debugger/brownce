@@ -499,7 +499,7 @@ PODS:
   - RNPaypal (3.1.1):
     - Braintree
     - React
-  - RNReanimated (2.9.1):
+  - RNReanimated (2.14.4):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -810,7 +810,7 @@ SPEC CHECKSUMS:
   RNIap: 814be4e76c3d47bd2993cc67282be537fde17a9e
   RNImageCropPicker: 14fe1c29298fb4018f3186f455c475ab107da332
   RNPaypal: ac01980ea29ad4df3b46f99ea58fa290914d734f
-  RNReanimated: 5c8c17e26787fd8984cd5accdc70fef2ca70aafd
+  RNReanimated: 73afd1a9b4087e403163e0d300854cb99260c9b6
   RNScreens: b748efec66e095134c7166ca333b628cd7e6f3e2
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
@@ -819,4 +819,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: de8967aa6b8b624bf4404df924ecc995b9139129
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.12.1

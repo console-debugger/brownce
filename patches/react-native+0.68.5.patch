@@ -1,8 +1,8 @@
 diff --git a/node_modules/react-native/Libraries/Image/RCTUIImageViewAnimated.m b/node_modules/react-native/Libraries/Image/RCTUIImageViewAnimated.m
-index 21f1a06..2444713 100644
+index 481c9ee..f115ffe 100644
 --- a/node_modules/react-native/Libraries/Image/RCTUIImageViewAnimated.m
 +++ b/node_modules/react-native/Libraries/Image/RCTUIImageViewAnimated.m
-@@ -272,6 +272,9 @@ - (void)displayDidRefresh:(CADisplayLink *)displayLink
+@@ -276,6 +276,9 @@ - (void)displayDidRefresh:(CADisplayLink *)displayLink
  
  - (void)displayLayer:(CALayer *)layer
  {
@@ -12,6 +12,19 @@ index 21f1a06..2444713 100644
    if (_currentFrame) {
      layer.contentsScale = self.animatedImageScale;
      layer.contents = (__bridge id)_currentFrame.CGImage;
+diff --git a/node_modules/react-native/ReactCommon/yoga/yoga/Yoga.cpp b/node_modules/react-native/ReactCommon/yoga/yoga/Yoga.cpp
+index 9986279..20389d4 100644
+--- a/node_modules/react-native/ReactCommon/yoga/yoga/Yoga.cpp
++++ b/node_modules/react-native/ReactCommon/yoga/yoga/Yoga.cpp
+@@ -2229,7 +2229,7 @@ static float YGDistributeFreeSpaceSecondPass(
+         depth,
+         generationCount);
+     node->setLayoutHadOverflow(
+-        node->getLayout().hadOverflow() |
++        node->getLayout().hadOverflow() ||
+         currentRelativeChild->getLayout().hadOverflow());
+   }
+   return deltaFreeSpace;
 diff --git a/node_modules/react-native/scripts/.packager.env b/node_modules/react-native/scripts/.packager.env
 new file mode 100644
 index 0000000..361f5fb

@@ -835,6 +835,6 @@ export const getfavProviderListAction = (payload, callBack) => ({
     type: TYPES.GET_FAV_PROVIDER_LIST_ACTION, payload, callBack
 })
 
-export const saveAppFeedbackAction = (payload) => ({
-    type: TYPES.SAVE_APP_FEEDBACK_ACTION, payload
+export const saveAppFeedbackAction = (payload,callBack) => ({
+    type: TYPES.SAVE_APP_FEEDBACK_ACTION, payload,callBack
 })

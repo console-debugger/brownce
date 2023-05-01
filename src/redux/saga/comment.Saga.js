@@ -121,16 +121,19 @@ function* saveAppFeedback(param) {
     try {
         const feedbackResp = yield apiRequest(param.payload, SAVE_APP_FEEDBACK_URL, method['POST'])
         if (feedbackResp['status'] === 200) {
+            if(param?.callBack) param?.callBack(true)
             yield put(loaderAction(false))
             yield delay(500)
             yield showToast(feedbackResp['message'])
         }
         else {
+            if(param?.callBack) param?.callBack(false)
             yield put(loaderAction(false))
             yield delay(500)
             yield showToast(feedbackResp['message'])
         }
     } catch (err) {
+        if(param?.callBack) param?.callBack(false)
         yield put(loaderAction(false))
         yield delay(500)
         yield showToast(serviceError['CATCH_ERROR'])

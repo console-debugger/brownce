@@ -35,7 +35,9 @@ const Support = ({ navigation }) => {
             const param = {
                 Comment: comment
             }
-            dispatch(saveAppFeedbackAction(param))
+            dispatch(saveAppFeedbackAction(param, response => {
+                if (response) setComment('')
+            }))
         }
         else showToast(PLEASE_ENTER_COMMENT_TO_SUBMIT_YOUR_FEEDBACK)
     }
@@ -43,7 +45,7 @@ const Support = ({ navigation }) => {
     return (
         <SafeArea style={{ paddingTop: -useSafeAreaInsets().top }}>
             <KeyboardAwareScroll contentContainerStyle={{ paddingBottom: 20 }}>
-                <Loader isVisible={loading}/>
+                <Loader isVisible={loading} />
                 <MyView style={[styles['upperContainer'], { marginBottom: SCREEN_HEIGHT * 0.03 }]}>
                     <MyImage source={supportIcon} />
                 </MyView>
