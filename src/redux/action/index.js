@@ -835,6 +835,10 @@ export const getfavProviderListAction = (payload, callBack) => ({
     type: TYPES.GET_FAV_PROVIDER_LIST_ACTION, payload, callBack
 })
 
-export const saveAppFeedbackAction = (payload,callBack) => ({
-    type: TYPES.SAVE_APP_FEEDBACK_ACTION, payload,callBack
+export const saveAppFeedbackAction = (payload, callBack) => ({
+    type: TYPES.SAVE_APP_FEEDBACK_ACTION, payload, callBack
+})
+
+export const getBrownceStatsAction = (payload, callBack) => ({
+    type: TYPES.GET_BROWNCE_STATS_ACTION, payload, callBack
 })

@@ -305,3 +305,5 @@ export const DELETE_ACCOUNT_URL = `${BASE_URL}/api/account/DeleteAccount`
 export const FAV_PROVIDER_LIST_URL = (data) => `${BASE_URL}/APi/FavoriteProvider/favorite-providers?pageno=${data.page}&recordsPerPage=20`
 
 export const SAVE_APP_FEEDBACK_URL = `${BASE_URL}/api/AppFeedback/addfeedback`
+
+export const BROWNCE_STATS_URL = `${BASE_URL}/api/SPStatistics/statisticsdata`

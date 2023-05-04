@@ -1,6 +1,6 @@
 import { takeLatest, put, delay } from 'redux-saga/effects';
 import { showToast } from '../../components/helper'
-import { method, serviceError, FUND_LIST_URL, MAKE_PAYMENT_URL, REQUEST_FUND_URL, SAVE_BOOKING_URL, GET_SUPPORT_URL } from '../../services/serviceConstant'
+import { method, serviceError, FUND_LIST_URL, MAKE_PAYMENT_URL, REQUEST_FUND_URL, SAVE_BOOKING_URL, GET_SUPPORT_URL, BROWNCE_STATS_URL } from '../../services/serviceConstant'
 import { loaderAction, getSupportSuccessAction, requestFundSuccessAction, getFundListSuccessAction, makePaymentSuccessAction } from '../action'
 import * as TYPES from '../action/type'
 import apiRequest from '../../services'
@@ -153,5 +153,35 @@ function* fundlist(param) {
     } catch (err) {
         yield put(loaderAction(false))
         showToast(serviceError['CATCH_ERROR'])
+    }
+}
+
+export function* GetBrownceStatsSaga() {
+    try {
+        yield takeLatest(TYPES.GET_BROWNCE_STATS_ACTION, getBrownceStats)
+    }
+    catch (err) {
+        showToast('Error in get brownce stat observer')
+    }
+}
+
+function* getBrownceStats(param) {
+    try {
+        const statsResp = yield apiRequest({}, BROWNCE_STATS_URL, method['GET'])
+        if (statsResp['status'] === 200) {
+            if (param?.callBack) param?.callBack(statsResp?.data?.result || {})
+            yield put(loaderAction(false))
+        }
+        else {
+            if (param?.callBack) param?.callBack(false)
+            yield put(loaderAction(false))
+            yield delay(600)
+            yield showToast(statsResp['message'])
+        }
+    } catch (err) {
+        if (param?.callBack) param?.callBack(false)
+        yield put(loaderAction(false))
+        yield delay(600)
+        yield showToast(serviceError['CATCH_ERROR'])
     }
 }

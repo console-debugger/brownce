@@ -5,7 +5,7 @@ import { GetHairTypes, SaveHairTypeSaga, UpdateTenderHeadLevelSaga } from './hai
 import { GetAllServicesSaga, SaveEditServicesPriceSaga, GetProfileQuestionSaga, GetProfileSaga, DeleteProviderPortfolioSaga, SaveProviderPortfolioSaga, GetSavedServicesSaga, ProfileOneSetup, ProfileTwoSetup, ProviderProfileSetupThree, ProviderSaveDepositeFeesSaga, SaveGenderSaga, SaveProfileSaga, SaveProviderProfileSaga, SaveQuestionAnswerSaga, SaveServicesPriceSaga, UpdateServicesSaga, SaveServicesSaga, SaveLicenseSaga, ProviderBioSaga, GetCustomerDetailSaga, GetSpDetailSaga, GetCustomServicesSaga, AddCustomServicesSaga, GetSpCustomServicesSaga, OpenTimeSaga, NotificationListSaga, NotificationCountSaga, GetProfessionsListSaga, GetServicesByProfessionSaga, AddProviderProfessionSaga, DeleteAccountSaga } from './profileSetup.Saga';
 import { CancelPlanSaga, GetSubscriptionPlanSaga, SaveSubscriptionPlanSaga } from './subscriptionPlan.Saga';
 import { GetProviderListSaga, GetProviderProfileSaga, GetCompleteProviderDetailSaga, GetFiltePriceListSaga, AddRemoveToFavouriteSaga, GetFavProviderListSaga } from "./providerlist.Saga"
-import { BookingSaga, SupportSaga, PaymentSaga, RequestFundSaga, FundListSaga } from './booking.Saga';
+import { BookingSaga, SupportSaga, PaymentSaga, RequestFundSaga, FundListSaga, GetBrownceStatsSaga } from './booking.Saga';
 import { CustomerAppointmentSaga, CancelAppointmentSaga, ProviderAppointmentSaga, AvailabilitySaga, ApproveRejectSaga, AppointmentCompleteSaga, AppointmentHistorySaga, AppointmentDetailSaga, StartServiceSaga, UpdateServicePriceSaga } from './appointment.Saga';
 import { AllQuestionSaga, AddQuestionSaga, CommonQuestionSaga, DeleteQuestionSaga, LikeDislikeQuestionSaga, LikeDislikeCommentSaga, QuestionByQuestionIdSaga } from './question.Saga';
 import { SearchServicesSaga, SearchProviderSaga } from './search.Saga';
@@ -136,6 +136,7 @@ export function* rootSaga() {
         fork(getAllCityListSaga),
         fork(AddRemoveToFavouriteSaga),
         fork(GetFavProviderListSaga),
-        fork(SaveAppFeedbackSaga)
+        fork(SaveAppFeedbackSaga),
+        fork(GetBrownceStatsSaga)
     ])
 }
