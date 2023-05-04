@@ -19,7 +19,7 @@ const ProviderMenu = ({ navigation }) => {
 
     const dispatch = useDispatch()
     const state = useSelector(state => { return state })
-    const { PROFILE, DELETE_ACCOUNT, SERVICE_HISTORY, SETTINGS, EARNINGS, LOGOUT, LOADING, LOGOUT_MESSAGE, DELETE_MESSAGE, SUPPORT, REFERRALS } = state['localeReducer']['locale']
+    const { PROFILE, DELETE_ACCOUNT, SERVICE_HISTORY, MY_BROWNCE_STATS, SETTINGS, EARNINGS, LOGOUT, LOADING, LOGOUT_MESSAGE, DELETE_MESSAGE, SUPPORT, REFERRALS } = state['localeReducer']['locale']
     const { providerprofile } = state['profileReducer']
     const [logoutModalVisible, setLogoutModal] = useState(false)
     const [indicator, setIndicator] = useState(false)
@@ -33,6 +33,9 @@ const ProviderMenu = ({ navigation }) => {
     },
     {
         label: EARNINGS
+    },
+    {
+        label: MY_BROWNCE_STATS
     },
     {
         label: SETTINGS
@@ -83,15 +86,16 @@ const ProviderMenu = ({ navigation }) => {
         if (index === 0) navigation.navigate('providerSetting') // navigation.navigate('providerProfile')
         else if (index === 1) navigation.navigate('serviceHistory')
         else if (index === 2) navigation.navigate('earnings')
-        else if (index === 3) navigation.navigate('providerProfile') // navigation.navigate('providerSetting')
-        else if (index === 4) navigation.navigate('funds')
-        else if (index === 5) navigation.navigate('webView', { id: 5, title: "Community guidelines " })
-        else if (index === 6) navigation.navigate('referral')
-        else if (index === 7) navigation.navigate('support')
-        else if (index === 8) navigation.navigate('webView', { id: 1, title: "Terms & Conditions" })
-        else if (index === 9) navigation.navigate('webView', { id: 2, title: "Privacy Policy" })
-        else if (index === 10) openDeleteModal()
-        else if (index === 11) _onYesPress()
+        else if (index === 3) navigation.navigate('myBrownceStats')
+        else if (index === 4) navigation.navigate('providerProfile') // navigation.navigate('providerSetting')
+        else if (index === 5) navigation.navigate('funds')
+        else if (index === 6) navigation.navigate('webView', { id: 5, title: "Community guidelines " })
+        else if (index === 7) navigation.navigate('referral')
+        else if (index === 8) navigation.navigate('support')
+        else if (index === 9) navigation.navigate('webView', { id: 1, title: "Terms & Conditions" })
+        else if (index === 10) navigation.navigate('webView', { id: 2, title: "Privacy Policy" })
+        else if (index === 11) openDeleteModal()
+        else if (index === 12) _onYesPress()
     }
 
     const _renderSeperator = () => (<MyView style={styles['seperator']} />)

@@ -136,6 +136,7 @@ import { configPushNotifications } from '../services/configPush';
 import ProviderProfessionSelection from '../scenes/ProfileSetup/providerProfessionSelection';
 import SelectProfession from '../scenes/Settings/selectProfession';
 import FavouriteProvider from '../scenes/FavouriteProvider';
+import MyBrownceStats from '../scenes/MyBrownceStats';
 
 const line = {
   borderBottomWidth: 0.4,
@@ -234,7 +235,7 @@ const Authentication = () => {
         component={ProfileSetupOne}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }} />
           ),
         }}
       />
@@ -243,7 +244,7 @@ const Authentication = () => {
         component={ProviderBio}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }} />
           ),
         }}
       />
@@ -252,7 +253,7 @@ const Authentication = () => {
         component={ProfileSetupTwo}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }} />
           ),
         }}
       />
@@ -261,7 +262,7 @@ const Authentication = () => {
         component={ProfileSetupThree}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }} />
           ),
         }}
       />
@@ -270,7 +271,7 @@ const Authentication = () => {
         component={ProfileSetupFour}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }} />
           ),
         }}
       />
@@ -280,7 +281,7 @@ const Authentication = () => {
         component={ProfileSetupFive}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }} />
           ),
         }}
       />
@@ -289,7 +290,7 @@ const Authentication = () => {
         component={ProfileSetupSix}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }} />
           ),
         }}
       />
@@ -298,7 +299,7 @@ const Authentication = () => {
         component={ProviderProfileSetupThree}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }} />
           ),
         }}
       />
@@ -307,7 +308,7 @@ const Authentication = () => {
         component={ProviderProfileSetupFour}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }} />
           ),
         }}
       />
@@ -316,7 +317,7 @@ const Authentication = () => {
         component={ProviderProfessionSelection}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }} />
           ),
         }}
       />
@@ -325,7 +326,7 @@ const Authentication = () => {
         component={ProviderProfileSetupFive}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }} />
           ),
         }}
       />
@@ -334,7 +335,7 @@ const Authentication = () => {
         component={AddCustomService}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }} />
           ),
         }}
       />
@@ -343,7 +344,7 @@ const Authentication = () => {
         component={CustomServiceList}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }} />
           ),
         }}
       />
@@ -361,7 +362,7 @@ const Authentication = () => {
         component={ProviderProfileSetupSeven}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }} />
           ),
         }}
       />
@@ -370,7 +371,7 @@ const Authentication = () => {
         component={UpdateProviderService}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }} />
           ),
         }}
       />
@@ -379,7 +380,7 @@ const Authentication = () => {
         component={uploadLicense}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }} />
           ),
         }}
       />
@@ -388,7 +389,7 @@ const Authentication = () => {
         component={ProviderProfileSetupNine}
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }}/>
+            <Header navigation={navigation} isBack title={PROFILE_SETUP} imageStyle={{ tintColor: BLACK }} />
           ),
         }}
       />
@@ -1231,6 +1232,7 @@ const TabFour = () => {
     PROFILE,
     CANCEL,
     WRITE_ANSWER,
+    MY_BROWNCE_STATS
   } = state['localeReducer']['locale'];
   return (
     <Stack.Navigator headerMode="screen">
@@ -1238,6 +1240,20 @@ const TabFour = () => {
         name="tabFour"
         component={isCustomer() ? Menu : ProviderMenu}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="myBrownceStats"
+        component={MyBrownceStats}
+        options={{
+          header: ({ scene, previous, navigation }) => (
+            <Header
+              isTheme
+              isBack
+              navigation={navigation}
+              title={MY_BROWNCE_STATS}
+            />
+          ),
+        }}
       />
       <Stack.Screen
         name="favProvider"
