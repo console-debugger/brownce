@@ -62,6 +62,9 @@ const styles = StyleSheet.create({
         width: (SCREEN_WIDTH - dynamicSize(40)) / 3,
         alignItems: 'center',
         elevation: 5,
+        shadowRadius:10,
+        shadowOffset:{width:0, height:2},
+        shadowOpacity:0.2,
         backgroundColor: WHITE
     },
     cardIcon: {
@@ -88,6 +91,10 @@ const styles = StyleSheet.create({
     statList: {
         paddingHorizontal: 10,
         paddingVertical:15
+    },
+    belowTable:{
+        fontSize:10,
+        
     }
 })
 

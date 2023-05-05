@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addUserIcon, bookingIcon, cancelEventIcon, clientsIcon, clockIcon, growthIcon, mediumStarIcon, moneyIcon, repeatClientsIcon, sortIcon, standingTime } from '../../components/icons'
 import { FlatList, ScrollView } from 'react-native'
 import { getBrownceStatsAction, loaderAction } from '../../redux/action'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { dynamicSize } from '../../utils/responsive'
 
 const MyBrownceStats = ({ navigation }) => {
 
@@ -22,7 +24,8 @@ const MyBrownceStats = ({ navigation }) => {
         CANCELLED_APPOINTMENTS,
         AVERAGE_SERVICE_TIME,
         AVERAGE_BOOKING,
-        HOURS
+        HOURS,
+        MOST_POPULAR_SERVICES
     } = state['localeReducer']['locale']
     const { providerprofile } = state['profileReducer']
 
@@ -130,7 +133,7 @@ const MyBrownceStats = ({ navigation }) => {
     const renderSeparator = () => (<MyView style={styles.separator} />)
 
     return (
-        <SafeArea>
+        <SafeArea style={{ paddingTop: -useSafeAreaInsets().top }}>
             <ScrollView style={styles.mainContainer} contentContainerStyle={{ alignItems: 'center' }} >
                 <MyView style={styles.topRow}>
                     <MyImage source={{ uri: providerprofile?.ProfilePic || '' }} style={styles.pic} />
@@ -156,9 +159,16 @@ const MyBrownceStats = ({ navigation }) => {
                     data={statsData}
                     renderItem={renderStats}
                     numColumns={3}
+                    scrollEnabled={false}
                     ItemSeparatorComponent={renderSeparator}
                     contentContainerStyle={styles.statList}
                 />
+                <MyView style={[styles.statCardContainer, { width: '100%', marginHorizontal: dynamicSize(10) }]}>
+                    <MyView>
+                        <MyText style={styles.belowTable}>{MOST_POPULAR_SERVICES}</MyText>
+                        {/* <MyImage /> */}
+                    </MyView>
+                </MyView>
             </ScrollView>
         </SafeArea>
     )
