@@ -164,7 +164,6 @@ const MyBrownceStats = ({ navigation }) => {
                     ItemSeparatorComponent={renderSeparator}
                     contentContainerStyle={styles.statList}
                 />
-                {/* {console} */}
             </ScrollView>
         </SafeArea>
     )
