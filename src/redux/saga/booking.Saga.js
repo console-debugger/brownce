@@ -167,7 +167,8 @@ export function* GetBrownceStatsSaga() {
 
 function* getBrownceStats(param) {
     try {
-        const statsResp = yield apiRequest({}, BROWNCE_STATS_URL, method['GET'])
+        console.log('params====>',param)
+        const statsResp = yield apiRequest({}, `${BROWNCE_STATS_URL}?type=${param?.payload?.type}`, method['GET'])
         if (statsResp['status'] === 200) {
             if (param?.callBack) param?.callBack(statsResp?.data?.result || {})
             yield put(loaderAction(false))

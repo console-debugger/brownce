@@ -225,5 +225,9 @@
   "AVERAGE_SERVICE_TIME": "Average Service Time",
   "AVERAGE_BOOKING": "Average Booking",
   "HOURS": "hours",
-  "NA":"N/A"
+  "MOST_POPULAR_SERVICES": "Most Popular Services",
+  "NA": "N/A",
+  "BY_WEEK": "By Week",
+  "BY_MONTH": "By Month",
+  "NO_DATA_FOUND": "No data found."
 }
