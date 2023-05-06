@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addUserIcon, bookingIcon, cancelEventIcon, clientsIcon, clockIcon, growthIcon, mediumStarIcon, moneyIcon, repeatClientsIcon, sortIcon, standingTime } from '../../components/icons'
 import { FlatList, ScrollView } from 'react-native'
 import { getBrownceStatsAction, loaderAction } from '../../redux/action'
+import moment from 'moment'
 
 const MyBrownceStats = ({ navigation }) => {
 
@@ -22,7 +23,8 @@ const MyBrownceStats = ({ navigation }) => {
         CANCELLED_APPOINTMENTS,
         AVERAGE_SERVICE_TIME,
         AVERAGE_BOOKING,
-        HOURS
+        HOURS,
+        NA
     } = state['localeReducer']['locale']
     const { providerprofile } = state['profileReducer']
 
@@ -93,6 +95,8 @@ const MyBrownceStats = ({ navigation }) => {
     ]
 
     const [statsData, setStatsData] = useState(data)
+    const [refresh, setRefresh] = useState(false)
+    const [brownceStatsDetail, setBrownceStatsDetail] = useState({})
 
     useEffect(() => {
         dispatch(loaderAction(true))
@@ -109,8 +113,9 @@ const MyBrownceStats = ({ navigation }) => {
                     if (each.key == 'averageServiceTime') { each.value = `${response.AverageServiceTime} ${HOURS}` }
                     if (each.key == 'averageBooking') { each.value = `$${response.AverageBookingEarning}` }
                 })
+                setBrownceStatsDetail(response)
             }
-            // setStatsData([...data])
+            setRefresh(prevState => !prevState)
             console.log('response=>', JSON.stringify(response))
         }))
     }, [])
@@ -141,7 +146,7 @@ const MyBrownceStats = ({ navigation }) => {
                 </MyView>
                 <MyView style={styles.sinceContainer}>
                     <MyView>
-                        <MyText style={styles.bold}>{'Feb 26, 2021'}</MyText>
+                        <MyText style={styles.bold}>{brownceStatsDetail?.SPProfile?.CreatedAt ? moment(brownceStatsDetail?.SPProfile?.CreatedAt).format('MMM DD, YYYY') : NA}</MyText>
                         <MyText style={styles.mediumText}>{BROWNCER_SINCE}</MyText>
                     </MyView>
                     <MyView style={{ alignItems: 'center' }}>

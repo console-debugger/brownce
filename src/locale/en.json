@@ -224,5 +224,6 @@
   "CANCELLED_APPOINTMENTS": "Cancelled Appointments",
   "AVERAGE_SERVICE_TIME": "Average Service Time",
   "AVERAGE_BOOKING": "Average Booking",
-  "HOURS": "hours"
+  "HOURS": "hours",
+  "NA":"N/A"
 }
