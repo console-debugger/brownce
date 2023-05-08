@@ -4,7 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useDispatch, useSelector } from 'react-redux'
 import { MyAlert } from '../../components/alert'
 import { MyImage, MyText, MyView, SafeArea, Touchable } from '../../components/customComponent'
-import { onShare, SCREEN_HEIGHT } from '../../components/helper'
+import { logAnalyticEvent, onShare, SCREEN_HEIGHT } from '../../components/helper'
 import { arrowForeward, smallStar } from '../../components/icons'
 import { logout } from '../../navigation/rootNav'
 import { logoutAction, getProviderProfileAction, getAllServicesAction, getSpCustomServicesAction, loaderAction, getCustomServicesAction, deleteAccountAction } from '../../redux/action'
@@ -13,6 +13,7 @@ import styles from './styles'
 import { useFocusEffect } from '@react-navigation/native'
 import { getFontSize } from '../../utils/responsive'
 import { generateDynamicLink } from '../../utils/dynamicLinkHelper'
+import { PROVIDER_MENU } from '../../components/eventName'
 
 // UI of provide menu list
 const ProviderMenu = ({ navigation }) => {
@@ -80,6 +81,21 @@ const ProviderMenu = ({ navigation }) => {
             dispatch(getProviderProfileAction())
         }, [])
     )
+
+
+    useFocusEffect(
+        useCallback(() => {
+            if (providerprofile?.UserId) {
+                const data = {
+                    id: providerprofile?.UserId,
+                    name: providerprofile?.FirstName || '',
+                    username: providerprofile?.Username || ''
+                }
+                logAnalyticEvent(PROVIDER_MENU, data)
+            }
+        }, [providerprofile])
+    )
+
 
     // Navigation to particular screen
     const _navToScreens = index => () => {

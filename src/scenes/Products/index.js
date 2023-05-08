@@ -12,7 +12,7 @@ import {
   SearchInput,
   Touchable,
 } from '../../components/customComponent';
-import { isAndroid, SCREEN_HEIGHT, SCREEN_WIDTH } from '../../components/helper';
+import { isAndroid, logAnalyticEvent, SCREEN_HEIGHT, SCREEN_WIDTH } from '../../components/helper';
 import { productImg2 } from '../../components/icons';
 import { LIGHT_WHITE, THEME } from '../../utils/colors';
 import styles from './styles';
@@ -26,6 +26,7 @@ import {
   SearchloaderAction,
 } from '../../redux/action';
 import { useFocusEffect } from '@react-navigation/native';
+import { CUSTOMER_PRODUCT_LIST } from '../../components/eventName';
 
 // @ Products UI
 const Products = ({ navigation, route }) => {
@@ -52,6 +53,19 @@ const Products = ({ navigation, route }) => {
     dispatch(loaderAction(true))
     dispatch(customerProductAction(param))
   }, [])
+
+  useFocusEffect(
+    useCallback(() => {
+      if (profile?.UserId) {
+        const data = {
+          id: profile?.UserId,
+          name: profile?.Name || '',
+          username: profile?.Username || ''
+        }
+        logAnalyticEvent(CUSTOMER_PRODUCT_LIST, data)
+      }
+    }, [profile])
+  )
 
   // Customer products
   // useEffect(() => {

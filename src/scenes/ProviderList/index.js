@@ -26,7 +26,7 @@ import { FlatList, Modal, ScrollView } from 'react-native';
 import styles from './styles';
 import { useSelector, useDispatch } from 'react-redux';
 import { dynamicSize, getFontSize } from '../../utils/responsive';
-import { isIOS, SCREEN_HEIGHT, SCREEN_WIDTH } from '../../components/helper';
+import { isIOS, logAnalyticEvent, SCREEN_HEIGHT, SCREEN_WIDTH } from '../../components/helper';
 import { useFocusEffect } from '@react-navigation/native';
 import {
   loaderAction,
@@ -42,6 +42,7 @@ import { GET_PROVIDER_LIST_SUCCESS_ACTION } from '../../redux/action/type';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { GOOGLE_API_KEY } from '../../services/serviceConfig';
 import { getCurrentLocation } from '../../components/geolocation';
+import { CUSTOMER_SEARCH_PROVIDER } from '../../components/eventName';
 
 const MAX_FILTER_DISTANCE = 100
 let timeout
@@ -55,7 +56,7 @@ const ProviderList = ({ navigation }) => {
   });
   const { AVAILABLE, BOOK_NOW, APPLY, DISTANCE, PRICE, SERVICE, CITY } = state['localeReducer']['locale'];
   const { loading, searchloading } = state['loaderReducer'];
-  const { providerlist, messageCase } = state['profileReducer'];
+  const { profile } = state['profileReducer'];
 
   const selectedMultipleServicesRef = useRef([])
   const [data, setdata] = useState([]);
@@ -78,6 +79,19 @@ const ProviderList = ({ navigation }) => {
     useCallback(() => {
       isIOS ? _fetchLoaction() : _fetchLoactionAndroid()
     }, [])
+  )
+
+  useFocusEffect(
+    useCallback(() => {
+      if (profile?.UserId) {
+        const data = {
+          id: profile?.UserId,
+          name: profile?.Name || '',
+          username: profile?.Username || ''
+        }
+        logAnalyticEvent(CUSTOMER_SEARCH_PROVIDER, data)
+      }
+    }, [profile])
   )
 
   const _fetchLoactionAndroid = () => {

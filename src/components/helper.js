@@ -8,6 +8,7 @@ import { ROLE_TYPES } from '../utils/roleType';
 import moment from 'moment';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 import Geolocation from 'react-native-geolocation-service';
+import analytics from '@react-native-firebase/analytics';
 
 const Screen = Dimensions.get('window');
 
@@ -388,4 +389,9 @@ export const validateUrl = url => {
     else return `https://${url}`
   }
   else return null
+}
+
+export const logAnalyticEvent = (eventName, data) => {
+  if (typeof eventName == 'string' && eventName.trim().length)
+    analytics().logEvent(eventName, data)
 }

@@ -29,12 +29,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   getDate,
   isCustomer,
+  logAnalyticEvent,
   SCREEN_HEIGHT,
   SCREEN_WIDTH,
 } from '../../components/helper';
 import commonStyle from '../../components/commonStyle';
 import { dynamicSize } from '../../utils/responsive';
 import { THEME } from '../../utils/colors';
+import { CUSTOMER_SHOP_TALK, PROVIDER_SHOP_TALK } from '../../components/eventName';
 
 const TAB_TYPE = { FEED: 'feed', NOTIFICATIONS: 'notifications' };
 
@@ -94,6 +96,33 @@ const ForumList = ({ navigation }) => {
       }
     }, [search]),
   );
+
+
+  useFocusEffect(
+    useCallback(() => {
+      if (providerprofile?.UserId) {
+        const data = {
+          id: providerprofile?.UserId,
+          name: providerprofile?.FirstName || '',
+          username: providerprofile?.Username || ''
+        }
+        logAnalyticEvent(PROVIDER_SHOP_TALK, data)
+      }
+    }, [providerprofile])
+  )
+
+  useFocusEffect(
+    useCallback(() => {
+      if (profile?.UserId) {
+        const data = {
+          id: profile?.UserId,
+          name: profile?.Name || '',
+          username: profile?.Username || ''
+        }
+        logAnalyticEvent(CUSTOMER_SHOP_TALK, data)
+      }
+    }, [profile])
+  )
 
   const _getNotificationList = () => {
     if (selectedTab == TAB_TYPE.NOTIFICATIONS) {

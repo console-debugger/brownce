@@ -17,9 +17,10 @@ import { logout } from '../../navigation/rootNav';
 import { deleteAccountAction, getProfileAction, loaderAction, logoutAction } from '../../redux/action';
 import { BLACK, LIGHT_WHITE, THEME } from '../../utils/colors';
 import { getFontSize } from '../../utils/responsive';
-import { isCustomer, onShare } from '../../components/helper';
+import { isCustomer, logAnalyticEvent, onShare } from '../../components/helper';
 import styles from './styles';
 import { generateDynamicLink } from '../../utils/dynamicLinkHelper';
+import { CUSTOMER_MENU } from '../../components/eventName';
 
 // Menu list of customer UI design
 const Menu = ({ navigation }) => {
@@ -97,6 +98,19 @@ const Menu = ({ navigation }) => {
       dispatch(getProfileAction());
     }, []),
   );
+
+  useFocusEffect(
+    useCallback(() => {
+      if (profile?.UserId) {
+        const data = {
+          id: profile?.UserId,
+          name: profile?.Name || '',
+          username: profile?.Username || ''
+        }
+        logAnalyticEvent(CUSTOMER_MENU, data)
+      }
+    }, [profile])
+  )
 
   // navigation to screen
   const _navToScreens = (index) => () => {

@@ -29,6 +29,7 @@ import {
   isCustomer,
   isIOS,
   isProvider,
+  logAnalyticEvent,
   SCREEN_WIDTH,
 } from '../components/helper';
 import MyDrawer from './myDrawer';
@@ -137,6 +138,7 @@ import ProviderProfessionSelection from '../scenes/ProfileSetup/providerProfessi
 import SelectProfession from '../scenes/Settings/selectProfession';
 import FavouriteProvider from '../scenes/FavouriteProvider';
 import MyBrownceStats from '../scenes/MyBrownceStats';
+import { PROVIDER_REQUEST_LIST } from '../components/eventName';
 
 const line = {
   borderBottomWidth: 0.4,
@@ -623,6 +625,8 @@ const TabZero = () => {
 
 const Request = ({ navigation }) => {
   const [focused, setFocused] = useState(false);
+  const state = useSelector(state => { return state })
+  const { providerprofile } = state['profileReducer']
 
   useEffect(() => {
     navigation.addListener('focus', () => setFocused(true));
@@ -632,6 +636,19 @@ const Request = ({ navigation }) => {
       navigation.removeListener('blur', () => { });
     };
   }, [navigation]);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (providerprofile?.UserId) {
+        const data = {
+          id: providerprofile?.UserId,
+          name: providerprofile?.FirstName || '',
+          username: providerprofile?.Username || ''
+        }
+        logAnalyticEvent(PROVIDER_REQUEST_LIST, data)
+      }
+    }, [providerprofile, navigation])
+  )
 
   return (
     <>

@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { CurveView, MyImage, MyText, MyView, SafeArea, Touchable } from '../../components/customComponent'
-import { SCREEN_HEIGHT } from '../../components/helper'
+import { SCREEN_HEIGHT, logAnalyticEvent } from '../../components/helper'
 import { smallStar, plusadd } from '../../components/icons'
 import { LIGHT_BROWN, LIGHT_WHITE, THEME, WHITE } from '../../utils/colors'
 import styles from './styles'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { getFontSize } from '../../utils/responsive'
 import { navigateToScreen } from '../../navigation/rootNav'
+import { useFocusEffect } from '@react-navigation/native'
+import { PROVIDER_ORDERS } from '../../components/eventName'
 
 // Provider Shop
 const ProviderShopSelection = ({ navigation }) => {
@@ -19,6 +21,20 @@ const ProviderShopSelection = ({ navigation }) => {
     const [selectedRole, setSelectredRole] = useState(0)
 
     const _navToNext = () => navigation.navigate('neworders')
+
+    useFocusEffect(
+        useCallback(() => {
+          if (providerprofile?.UserId) {
+            const data = {
+              id: providerprofile?.UserId,
+              name: providerprofile?.FirstName || '',
+              username: providerprofile?.Username || ''
+            }
+            logAnalyticEvent(PROVIDER_ORDERS, data)
+          }
+        }, [providerprofile])
+      )
+    
 
     return (
         <SafeArea style={{ paddingBottom: -useSafeAreaInsets().bottom, backgroundColor: THEME }}>

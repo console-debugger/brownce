@@ -10,7 +10,8 @@ import { getFontSize } from '../../utils/responsive'
 import { apiKey } from '../../services/serviceConstant'
 import { MyAlert } from '../../components/alert'
 import { CANCEL_SUBSCRIPTION_SUCCESS_ACTION } from '../../redux/action/type'
-import { isCustomer, isIOS, locationMapping, validateUrl } from '../../components/helper'
+import { isCustomer, isIOS, locationMapping, logAnalyticEvent, validateUrl } from '../../components/helper'
+import { PROVIDER_DASHBOARD } from '../../components/eventName'
 
 // @ provider profile UI
 
@@ -46,6 +47,19 @@ const ProviderProfile = ({ navigation }) => {
                 dispatch(getNotificationCountAction())
             }
         }, [])
+    )
+
+    useFocusEffect(
+        useCallback(() => {
+            if (providerprofile?.UserId) {
+                const data = {
+                    id: providerprofile?.UserId,
+                    name: providerprofile?.FirstName || '',
+                    username: providerprofile?.Username || ''
+                }
+                logAnalyticEvent(PROVIDER_DASHBOARD, data)
+            }
+        }, [providerprofile])
     )
 
     const _cancel = () => {

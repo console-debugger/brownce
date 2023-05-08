@@ -20,9 +20,10 @@ import {
   loaderAction,
 } from '../../redux/action';
 import { getFontSize } from '../../utils/responsive';
-import { isCustomer, locationMapping, onShare } from '../../components/helper';
+import { isCustomer, locationMapping, logAnalyticEvent, onShare } from '../../components/helper';
 import { generateDynamicLink } from '../../utils/dynamicLinkHelper';
 import OneSignal from 'react-native-onesignal';
+import { CUSTOMER_DASHBOARD } from '../../components/eventName';
 
 // @ Customer Profile UI
 
@@ -50,6 +51,19 @@ const MyProfile = ({ navigation }) => {
       }
     }, []),
   );
+
+  useFocusEffect(
+    useCallback(() => {
+      if (profile?.UserId) {
+        const data = {
+          id: profile?.UserId,
+          name: profile?.Name || '',
+          username: profile?.Username || ''
+        }
+        logAnalyticEvent(CUSTOMER_DASHBOARD, data)
+      }
+    }, [profile])
+  )
 
   useEffect(() => {
     // Pass in email provided by customer
