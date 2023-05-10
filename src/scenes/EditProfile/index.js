@@ -1,17 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { SafeArea, MyView, MyImage, Touchable, CurveView, Input, Button, KeyboardAwareScroll, CustomDropDown, Loader } from '../../components/customComponent'
+import { SafeArea, MyView, MyImage, Touchable, CurveView, Input, Button, KeyboardAwareScroll, CustomDropDown, Loader, MyText, CustomModal } from '../../components/customComponent'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styles from './styles'
 import { imagePlaceholder, cameraIcon } from '../../components/icons'
-import { TRANSPARENT_LIGHT_BLACK, BLACK, LIGHT_WHITE } from '../../utils/colors'
+import { TRANSPARENT_LIGHT_BLACK, BLACK, LIGHT_WHITE, THEME, WHITE } from '../../utils/colors'
 import { useDispatch, useSelector } from 'react-redux'
-import { dismissKeyboard, SCREEN_HEIGHT, showToast } from '../../components/helper'
+import { dismissKeyboard, locationMapping, SCREEN_HEIGHT, showToast } from '../../components/helper'
 import { dynamicSize } from '../../utils/responsive'
 import { montserratSemiBold } from '../../utils/fontFamily'
 import ImagePickerSelection from '../../components/imagePickerSelection'
 import { getCityListAction, getCountryListAction, getStateListAction, saveProfileAction, updateEmailAction } from '../../redux/action'
 import MyListPicker from '../../components/myListPicker'
 import { apiKey } from '../../services/serviceConstant'
+import commonStyle from '../../components/commonStyle'
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+import { reverseGeocode } from '../../services'
 
 const TYPES = { USERNAME: 'username', NAME: 'name', EMAIL: 'email', GENDER: 'gender', COUNTRY: 'country', CITY: 'city', STATE: 'state' }
 
@@ -20,7 +23,11 @@ const EditProfile = ({ navigation }) => {
 
     const dispatch = useDispatch()
     const state = useSelector(state => { return state })
-    const { USERNAME, PLEASE_SELECT_CITY, PLEASE_SELECT_STATE, PLEASE_SELECT_COUNTRY, PLEASE_ENTER_AN_USERNAME, MALE, FEMALE, PLEASE_UPLOAD_PROFILE_PIC, PLEASE_ENTER_NAME, TRANSGENDER_FEMALE, TRANSGENDER_MALE, NON_BINARY, OTHER, EMAIL, NAME, CITY, STATE, COUNTRY, UPDATE, PLEASE_WAIT_WHILE_FETCHING_COUNTRY_LIST, PLEASE_WAIT_WHILE_FETCHING_STATE_LIST, PLEASE_WAIT_WHILE_FETCHING_CITY_LIST } = state['localeReducer']['locale']
+    const { USERNAME, PLEASE_SELECT_CITY, PLEASE_SELECT_STATE, PLEASE_SELECT_COUNTRY, PLEASE_ENTER_AN_USERNAME, MALE, FEMALE, PLEASE_UPLOAD_PROFILE_PIC, PLEASE_ENTER_NAME, TRANSGENDER_FEMALE, TRANSGENDER_MALE, NON_BINARY, OTHER, EMAIL, NAME, CITY, STATE, COUNTRY, UPDATE, PLEASE_WAIT_WHILE_FETCHING_COUNTRY_LIST, PLEASE_WAIT_WHILE_FETCHING_STATE_LIST, PLEASE_WAIT_WHILE_FETCHING_CITY_LIST,
+        LOCATION,
+        LOCATE_ON_MAP,
+        CONTINUE
+    } = state['localeReducer']['locale']
     const { profile } = state['profileReducer']
     const { loading } = state['loaderReducer']
     const { country, userState, city } = state['addressReducer']
@@ -28,6 +35,7 @@ const EditProfile = ({ navigation }) => {
     const emailRef = useRef('emailRef')
     const cityRef = useRef('cityRef')
     const stateRef = useRef('stateRef')
+    const mapRef = useRef('mapRef')
 
     const genderData = [
         {
@@ -56,6 +64,8 @@ const EditProfile = ({ navigation }) => {
         }
     ]
 
+    console.log('profile==>',profile)
+
     // data mapping of cutome detail
     const initialFormField = {
         username: profile?.['Username'] || '',
@@ -63,10 +73,10 @@ const EditProfile = ({ navigation }) => {
         email: profile?.['Email'] || '',
         gender: profile?.['Gender'] || '',
         genderId: profile?.['GenderId'] || 1,
-        selectedCountry: profile?.['Country'] || '',
+        // selectedCountry: profile?.['Country'] || '',
         selectedCity: profile?.['City'] || '',
         selectedUserState: profile?.['State'] || '',
-        selectedCityId: profile?.['CityId'] || ''
+        // selectedCityId: profile?.['CityId'] || ''
     }
 
     const initialError = {
@@ -83,6 +93,9 @@ const EditProfile = ({ navigation }) => {
     const [imageData, setImageData] = useState({})
     const [uri, seturi] = useState(profile?.['ProfilePic'])
     const [isShow, setShow] = useState(false)
+    const [isMapModalVisible, setModalVisible] = useState(false)
+    const [latitude, setlatitude] = useState('')
+    const [longitude, setlongitude] = useState('')
 
     // fetching state, country and city list
     useEffect(() => {
@@ -95,9 +108,9 @@ const EditProfile = ({ navigation }) => {
     const _focusNext = type => () => {
         if (type === TYPES['USERNAME']) emailRef.current.focus()
         else if (type === TYPES['NAME']) emailRef.current.focus()
-        else if (type === TYPES['EMAIL']) cityRef.current.focus()
-        else if (type === TYPES['CITY']) stateRef.current.focus()
-        else if (type === TYPES['STATE']) dismissKeyboard
+        // else if (type === TYPES['EMAIL']) cityRef.current.focus()
+        // else if (type === TYPES['CITY']) stateRef.current.focus()
+        // else if (type === TYPES['STATE']) dismissKeyboard
     }
 
     // onchange ofminput field
@@ -105,22 +118,22 @@ const EditProfile = ({ navigation }) => {
         if (type === TYPES['USERNAME']) { setFormField(prevState => ({ ...prevState, username: text.replace(/\s/g, '') })), setError(prevState => ({ ...prevState, usernameError: '' })) }
         if (type === TYPES['NAME']) { setFormField(prevState => ({ ...prevState, firstname: text })), setError(prevState => ({ ...prevState, nameError: '' })) }
         if (type === TYPES['EMAIL']) { setFormField(prevState => ({ ...prevState, email: text })), setError(prevState => ({ ...prevState, emailError: '' })) }
-        else if (type === TYPES['EMAIL']) { setFormField(prevState => ({ ...prevState, password: text })), setError(prevState => ({ ...prevState, passwordError: '' })) }
+        // else if (type === TYPES['EMAIL']) { setFormField(prevState => ({ ...prevState, password: text })), setError(prevState => ({ ...prevState, passwordError: '' })) }
     }
 
-    const _selectedCountry = data => {
-        setFormField(prevState => ({ ...prevState, selectedCountry: data['Name'], selectedUserState: '', selectedCity: '', selectedCityId: '' }))
-        dispatch(getStateListAction(data['CountryId']))
-    }
+    // const _selectedCountry = data => {
+    //     setFormField(prevState => ({ ...prevState, selectedCountry: data['Name'], selectedUserState: '', selectedCity: '', selectedCityId: '' }))
+    //     dispatch(getStateListAction(data['CountryId']))
+    // }
 
-    const _selectedState = data => {
-        setFormField(prevState => ({ ...prevState, selectedUserState: data['Name'], selectedCity: '', selectedCityId: '' }))
-        dispatch(getCityListAction(data['StateId']))
-    }
+    // const _selectedState = data => {
+    //     setFormField(prevState => ({ ...prevState, selectedUserState: data['Name'], selectedCity: '', selectedCityId: '' }))
+    //     dispatch(getCityListAction(data['StateId']))
+    // }
 
-    const _selectedCity = data => {
-        setFormField(prevState => ({ ...prevState, selectedCity: data['Name'], selectedCityId: data['CityId'] }))
-    }
+    // const _selectedCity = data => {
+    //     setFormField(prevState => ({ ...prevState, selectedCity: data['Name'], selectedCityId: data['CityId'] }))
+    // }
 
     const _openPicker = () => setShow(true)
 
@@ -142,13 +155,13 @@ const EditProfile = ({ navigation }) => {
         profilePic ?
             username.length ?
                 firstname.trim().length ?
-                    selectedCountry ?
+                    // selectedCountry ?
                         selectedUserState ?
-                            selectedCityId ?
+                            selectedCity ?
                                 _saveProfile()
                                 : showToast(PLEASE_SELECT_CITY)
                             : showToast(PLEASE_SELECT_STATE)
-                        : showToast(PLEASE_SELECT_COUNTRY)
+                        // : showToast(PLEASE_SELECT_COUNTRY)
                     : setError(prevError => ({ ...prevError, nameError: PLEASE_ENTER_NAME }))
                 : setError(prevError => ({ ...prevError, usernameError: PLEASE_ENTER_AN_USERNAME }))
             : showToast(PLEASE_UPLOAD_PROFILE_PIC)
@@ -171,6 +184,40 @@ const EditProfile = ({ navigation }) => {
             [apiKey['EMAIL']]: email
         }
         dispatch(updateEmailAction(param))
+    }
+
+    const _onDragEnd = event => {
+        console.log('coordinates', event.nativeEvent.coordinate)
+        const { latitude, longitude } = event.nativeEvent.coordinate
+        setlatitude(latitude)
+        setlongitude(longitude)
+    }
+
+    const openMapModal = () => setModalVisible(true)
+
+    const closeMapModal = () => setModalVisible(false)
+
+    const closeMapModalFuntion = async () => {
+        closeMapModal()
+        // const lat = 40.335725019928844, -75.92821932920248
+        const response = await reverseGeocode({ latitude, longitude })
+        if (response.status == 'OK') {
+            const place = response?.result?.[0]
+            console.log('place==>', place?.address_components)
+            const city = (() => {
+                return place?.address_components?.filter(address => address.types.includes('postal_town'))?.[0]?.short_name ||
+                    place?.address_components?.filter(address => address.types.includes('locality'))?.[0]?.short_name ||
+                    place?.address_components?.filter(address => address.types.includes('political'))?.[0]?.short_name || ''
+            })()
+            const userState = (() => {
+                return place?.address_components?.filter(address => address.types.includes('administrative_area_level_1'))?.[0]?.short_name ||
+                    place?.address_components?.filter(address => address.types.includes('administrative_area_level_2'))?.[0]?.short_name ||
+                    place?.address_components?.filter(address => address.types.includes('political'))?.[0]?.short_name || ''
+            })()
+            setFormField(prevState => ({ ...prevState, selectedCity: city, selectedUserState: userState }))
+            console.log('response===>', city, userState)
+        }
+
     }
 
     return (
@@ -227,11 +274,44 @@ const EditProfile = ({ navigation }) => {
                     errorMessage={emailError || null}
                 />
                 <CustomDropDown onChange={_changeGender} data={genderData} value={gender} topOffset={dynamicSize(20)} containerStyle={{ borderBottomColor: BLACK, borderBottomWidth: 2 }} />
-                <MyListPicker textStyle={{ fontFamily: montserratSemiBold }} style={{ marginVertical: null, marginTop: dynamicSize(20), borderBottomColor: BLACK }} message={PLEASE_WAIT_WHILE_FETCHING_COUNTRY_LIST} value={selectedCountry} placeholder={COUNTRY} data={country} selectedItem={_selectedCountry} />
-                <MyListPicker textStyle={{ fontFamily: montserratSemiBold }} style={{ marginVertical: dynamicSize(20), borderBottomColor: BLACK }} message={PLEASE_WAIT_WHILE_FETCHING_STATE_LIST} value={selectedUserState} placeholder={STATE} data={userState} selectedItem={_selectedState} />
-                <MyListPicker textStyle={{ fontFamily: montserratSemiBold }} style={{ marginVertical: null, borderBottomColor: BLACK }} message={PLEASE_WAIT_WHILE_FETCHING_CITY_LIST} value={selectedCity} placeholder={CITY} data={city} selectedItem={_selectedCity} />
-                <Button onPress={() => navigation.navigate('changepassword')} style={[styles['buttonStyle'], { marginTop: SCREEN_HEIGHT * 0.04 }]} text={'Change Password'} />
-                <Button onPress={_validate} style={[styles['buttonStyle'], { marginVertical: SCREEN_HEIGHT * 0.02 }]} text={UPDATE} />                
+                {/* <MyListPicker textStyle={{ fontFamily: montserratSemiBold }} style={{ marginVertical: null, marginTop: dynamicSize(20), borderBottomColor: BLACK }} message={PLEASE_WAIT_WHILE_FETCHING_COUNTRY_LIST} value={selectedCountry} placeholder={COUNTRY} data={country} selectedItem={_selectedCountry} /> */}
+                {/* <MyListPicker textStyle={{ fontFamily: montserratSemiBold }} style={{ marginVertical: dynamicSize(20), borderBottomColor: BLACK }} message={PLEASE_WAIT_WHILE_FETCHING_STATE_LIST} value={selectedUserState} placeholder={STATE} data={userState} selectedItem={_selectedState} />
+                <MyListPicker textStyle={{ fontFamily: montserratSemiBold }} style={{ marginVertical: null, borderBottomColor: BLACK }} message={PLEASE_WAIT_WHILE_FETCHING_CITY_LIST} value={selectedCity} placeholder={CITY} data={city} selectedItem={_selectedCity} /> */}
+                <MyText style={styles['locationName']}>{`${LOCATION}: ${locationMapping({ City: selectedCity, State: selectedUserState })}`}</MyText>
+                <Button onPress={openMapModal} style={[styles['buttonStyle'], { marginTop: SCREEN_HEIGHT * 0.04 }]} text={LOCATE_ON_MAP} />
+                <Button onPress={() => navigation.navigate('changepassword')} style={[styles['buttonStyle'], { marginTop: SCREEN_HEIGHT * 0.02 }]} text={'Change Password'} />
+                <Button onPress={_validate} style={[styles['buttonStyle'], { marginVertical: SCREEN_HEIGHT * 0.02 }]} text={UPDATE} />
+                <CustomModal
+                    isVisible={isMapModalVisible}
+                    animationType='slide'
+                >
+                    <MapView
+                        ref={mapRef}
+                        provider={PROVIDER_GOOGLE}
+                        style={styles['mapView']}
+                        initialRegion={{
+                            latitude: latitude ? latitude : 40.38190380557175,
+                            longitude: longitude ? longitude : -75.90530281564186,
+                            latitudeDelta: 0.015,
+                            longitudeDelta: 0.0121,
+
+                        }}
+                    >
+                        {/* <TouchableIcon
+                            onPress={closeMapModalFuntion}
+                            source={redCrossIcon}
+                            style={[styles.crossIcon, { top: useSafeAreaInsets().top + dynamicSize(100) }]}
+                        /> */}
+                        <MapView.Marker
+                            draggable
+                            onDragEnd={_onDragEnd}
+                            coordinate={{ latitude: latitude ? latitude : 40.38190380557175, longitude: longitude ? longitude : -75.90530281564186 }}
+                            pinColor={THEME}
+                        />
+
+                    </MapView>
+                    <Button onPress={closeMapModalFuntion} style={[styles['buttonStyle'], { position: 'absolute', zIndex: 10, bottom: useSafeAreaInsets().bottom + dynamicSize(10), alignSelf: 'center' }]} text={CONTINUE} textStyle={{ color: WHITE }} />
+                </CustomModal>
             </KeyboardAwareScroll>
         </SafeArea>
     )

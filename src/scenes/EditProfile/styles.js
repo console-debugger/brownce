@@ -1,8 +1,8 @@
 import { StyleSheet } from 'react-native'
-import { LIGHT_WHITE, THEME,LIGHT_GREY } from '../../utils/colors'
+import { LIGHT_WHITE, THEME, LIGHT_GREY } from '../../utils/colors'
 import { SCREEN_HEIGHT, isAndroid, SCREEN_WIDTH } from '../../components/helper'
-import { dynamicSize } from '../../utils/responsive'
-import { montserratBold } from '../../utils/fontFamily'
+import { dynamicSize, getFontSize } from '../../utils/responsive'
+import { montserratBold, montserratSemiBold } from '../../utils/fontFamily'
 
 const styles = StyleSheet.create({
     mainContainer: {
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     buttonStyle: {
-        
+
         width: SCREEN_WIDTH - dynamicSize(70),
         marginVertical: SCREEN_HEIGHT * 0.03
     },
@@ -71,10 +71,20 @@ const styles = StyleSheet.create({
         width: SCREEN_WIDTH - dynamicSize(70),
         //backgroundColor: WHITE,
         borderBottomWidth: 1,
-     
+
         borderRadius: dynamicSize(5),
         marginBottom: dynamicSize(20)
     },
+    mapView: {
+        ...StyleSheet.absoluteFillObject,
+    },
+    locationName: {
+        marginTop: dynamicSize(20),
+        marginHorizontal: dynamicSize(35),
+        alignSelf: 'flex-start',
+        fontFamily: montserratSemiBold,
+        fontSize: getFontSize(14)
+    }
 })
 
 export default styles

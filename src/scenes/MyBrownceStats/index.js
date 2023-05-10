@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { MyImage, MyText, MyView, SafeArea, Touchable, TouchableIcon } from '../../components/customComponent'
 import styles from './styles'
 import { useDispatch, useSelector } from 'react-redux'
-import { addUserIcon, bookingIcon, cancelEventIcon, clientsIcon, clockIcon, growthIcon, helpIcon, mediumStarIcon, moneyIcon, repeatClientsIcon, sortIcon, standingTime } from '../../components/icons'
+import { addUserIcon, bookingIcon, cancelEventIcon, clientsIcon, clockIcon, growthIcon, helpIcon, mediumStarIcon, moneyIcon, repeatClientsIcon, sortIcon, standingTime, topIcon } from '../../components/icons'
 import { FlatList, ScrollView, TouchableWithoutFeedback } from 'react-native'
 import { getBrownceStatsAction, loaderAction } from '../../redux/action'
 import moment from 'moment'
@@ -232,7 +232,7 @@ const MyBrownceStats = ({ navigation }) => {
                         <TouchableIcon onPress={onHelpPress({ info: 'dummy test, can be replaced in future' })} source={helpIcon} style={styles.helpIconContainer} imageStyle={styles.helpIcon} />
                         <MyView style={styles.rowAlignCenter}>
                             <MyText style={styles.belowTable}>{MOST_POPULAR_SERVICES}</MyText>
-                            <MyImage source={bookingIcon} style={[styles.cardIcon, { marginLeft: dynamicSize(10) }]} />
+                            <MyImage source={topIcon} style={[styles.smallCardIcon, { marginLeft: dynamicSize(5) }]} />
                         </MyView>
                         <MyView style={{ width: '100%', paddingHorizontal: dynamicSize(15), paddingBottom: 15 }}>
                             {brownceStatsDetail?.PopularServices?.length ?

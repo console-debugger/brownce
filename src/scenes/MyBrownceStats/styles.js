@@ -127,6 +127,12 @@ const styles = StyleSheet.create({
     sortText: {
         color: THEME,
         fontFamily: montserratBold
+    },
+    smallCardIcon:{
+        // marginTop: 15,
+        width: 20,
+        height: 20,
+        resizeMode: 'contain'
     }
 })
 
