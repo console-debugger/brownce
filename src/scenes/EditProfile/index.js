@@ -64,7 +64,7 @@ const EditProfile = ({ navigation }) => {
         }
     ]
 
-    console.log('profile==>',profile)
+    console.log('profile==>', profile)
 
     // data mapping of cutome detail
     const initialFormField = {
@@ -94,8 +94,8 @@ const EditProfile = ({ navigation }) => {
     const [uri, seturi] = useState(profile?.['ProfilePic'])
     const [isShow, setShow] = useState(false)
     const [isMapModalVisible, setModalVisible] = useState(false)
-    const [latitude, setlatitude] = useState('')
-    const [longitude, setlongitude] = useState('')
+    const [latitude, setlatitude] = useState(profile?.Latitude || 40.38190380557175)
+    const [longitude, setlongitude] = useState(profile?.Longitude || -75.90530281564186)
 
     // fetching state, country and city list
     useEffect(() => {
@@ -156,12 +156,12 @@ const EditProfile = ({ navigation }) => {
             username.length ?
                 firstname.trim().length ?
                     // selectedCountry ?
-                        selectedUserState ?
-                            selectedCity ?
-                                _saveProfile()
-                                : showToast(PLEASE_SELECT_CITY)
-                            : showToast(PLEASE_SELECT_STATE)
-                        // : showToast(PLEASE_SELECT_COUNTRY)
+                    selectedUserState ?
+                        selectedCity ?
+                            _saveProfile()
+                            : showToast(PLEASE_SELECT_CITY)
+                        : showToast(PLEASE_SELECT_STATE)
+                    // : showToast(PLEASE_SELECT_COUNTRY)
                     : setError(prevError => ({ ...prevError, nameError: PLEASE_ENTER_NAME }))
                 : setError(prevError => ({ ...prevError, usernameError: PLEASE_ENTER_AN_USERNAME }))
             : showToast(PLEASE_UPLOAD_PROFILE_PIC)
@@ -174,7 +174,11 @@ const EditProfile = ({ navigation }) => {
         formData.append(apiKey['user_name'], username)
         formData.append(apiKey['FIRSTNAME'], firstname)
         formData.append(apiKey['GENDER'], genderId)
-        formData.append(apiKey['CITY_ID'], selectedCityId)
+        formData.append(apiKey['CITY_NAME'], selectedCity)
+        formData.append(apiKey['STATE_NAME'], selectedUserState)
+        formData.append(apiKey['LATITUDE'], latitude)
+        formData.append(apiKey['LONGITUDE'], longitude)
+        console.log('formData==>', formData)
         dispatch(saveProfileAction(formData))
     }
 
@@ -290,8 +294,8 @@ const EditProfile = ({ navigation }) => {
                         provider={PROVIDER_GOOGLE}
                         style={styles['mapView']}
                         initialRegion={{
-                            latitude: latitude ? latitude : 40.38190380557175,
-                            longitude: longitude ? longitude : -75.90530281564186,
+                            latitude: latitude ? parseFloat(latitude) : 40.38190380557175,
+                            longitude: longitude ? parseFloat(longitude) : -75.90530281564186,
                             latitudeDelta: 0.015,
                             longitudeDelta: 0.0121,
 
@@ -305,7 +309,7 @@ const EditProfile = ({ navigation }) => {
                         <MapView.Marker
                             draggable
                             onDragEnd={_onDragEnd}
-                            coordinate={{ latitude: latitude ? latitude : 40.38190380557175, longitude: longitude ? longitude : -75.90530281564186 }}
+                            coordinate={{ latitude: latitude ? parseFloat(latitude) : 40.38190380557175, longitude: longitude ? parseFloat(longitude) : -75.90530281564186 }}
                             pinColor={THEME}
                         />
 

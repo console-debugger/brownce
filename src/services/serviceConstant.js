@@ -92,8 +92,8 @@ export const apiKey = {
     PlanId: 'PlanId',
     SubscriptionId: "SubscriptionId",
     isUpdate: "IsUpdate",
-    Amount: "Amount"
-
+    Amount: "Amount",
+    STATE_NAME: "StateName"
 }
 
 export const REGISTRATION_URL = `${BASE_URL}/api/account/RegisterCustomer`
