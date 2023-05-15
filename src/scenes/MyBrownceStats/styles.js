@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
         resizeMode: 'contain'
     },
     sinceContainer: {
+        zIndex: 5,
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
         color: THEME,
         fontFamily: montserratBold
     },
-    smallCardIcon:{
+    smallCardIcon: {
         // marginTop: 15,
         width: 20,
         height: 20,

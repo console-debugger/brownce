@@ -33,7 +33,17 @@ const MyBrownceStats = ({ navigation }) => {
         NA,
         BY_WEEK,
         BY_MONTH,
-        NO_DATA_FOUND
+        NO_DATA_FOUND,
+        REVENUE_INFO,
+        COMPLETED_BOOKING_INFO,
+        STANDING_TIME_INFO,
+        TOTAL_NO_OF_CLIENT_INFO,
+        NEW_CLINET_INFO,
+        REPEAT_CLIENT_INFO,
+        CANCELLED_APPOINTMENT_INFO,
+        AVERAGE_SERVICE_TIME_INFO,
+        AVERAGE_BOOKING_INFO,
+        MOST_POPULAR_SERVICES_INFO
     } = state['localeReducer']['locale']
     const { providerprofile } = state['profileReducer']
     const filterData = [{
@@ -53,63 +63,63 @@ const MyBrownceStats = ({ navigation }) => {
             value: '0',
             label: REVENUE,
             key: 'revenue',
-            info: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
+            info: REVENUE_INFO
         },
         {
             icon: bookingIcon,
             value: '0',
             label: COMPLETED_BOKINGS,
             key: 'completedBookings',
-            info: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
+            info: COMPLETED_BOOKING_INFO
         },
         {
             icon: standingTime,
             value: '0',
             label: STANDING_TIME,
             key: 'standingTime',
-            info: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
+            info: STANDING_TIME_INFO
         },
         {
             icon: clientsIcon,
             value: '0',
             label: TOTAL_NUMBER_OF_CLIENTS,
             key: 'totalClients',
-            info: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
+            info: TOTAL_NO_OF_CLIENT_INFO
         },
         {
             icon: addUserIcon,
             value: '0',
             label: NEW_CLIENTS,
             key: 'newClients',
-            info: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
+            info: NEW_CLINET_INFO
         },
         {
             icon: repeatClientsIcon,
             value: '0',
             label: REPEAT_CLIENTS,
             key: 'repeatClients',
-            info: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
+            info: REPEAT_CLIENT_INFO
         },
         {
             icon: cancelEventIcon,
             value: '0',
             label: CANCELLED_APPOINTMENTS,
             key: 'cancelledAppointment',
-            info: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
+            info: CANCELLED_APPOINTMENT_INFO
         },
         {
             icon: clockIcon,
             value: '0',
             label: AVERAGE_SERVICE_TIME,
             key: 'averageServiceTime',
-            info: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
+            info: AVERAGE_SERVICE_TIME_INFO
         },
         {
             icon: moneyIcon,
             value: '0',
             label: AVERAGE_BOOKING,
             key: 'averageBooking',
-            info: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
+            info: AVERAGE_BOOKING_INFO
         },
     ]
 
@@ -193,19 +203,17 @@ const MyBrownceStats = ({ navigation }) => {
                         <MyImage source={{ uri: providerprofile?.ProfilePic || '' }} style={styles.pic} />
                         <MyView style={styles.nameContainer}>
                             <MyText numberOfLines={2} style={styles.name}>{providerprofile?.Username || ''}</MyText>
-                            <MyView>
-                                <TouchableIcon onPress={openFilterPopup} source={sortIcon} imageStyle={styles.sortIcon} />
-                                {filterPopupVisible && <MyView style={styles.popupView}>
-                                    {sortData?.map((each, index) => {
-                                        return (
-                                            <Touchable key={index?.toString()} onPress={selectFilter(each)}>
-                                                <MyText style={[styles.sortText, { color: each.type == selectedFilter ? THEME : BLACK }]}>{each.name}</MyText>
-                                            </Touchable>
-                                        )
-                                    })}
-                                </MyView>}
-                            </MyView>
+                            <TouchableIcon onPress={openFilterPopup} source={sortIcon} imageStyle={styles.sortIcon} />
                         </MyView>
+                        {filterPopupVisible && <MyView style={styles.popupView}>
+                            {sortData?.map((each, index) => {
+                                return (
+                                    <Touchable key={index?.toString()} onPress={selectFilter(each)}>
+                                        <MyText style={[styles.sortText, { color: each.type == selectedFilter ? THEME : BLACK }]}>{each.name}</MyText>
+                                    </Touchable>
+                                )
+                            })}
+                        </MyView>}
                     </MyView>
                     <MyView style={styles.sinceContainer}>
                         <MyView>
@@ -229,7 +237,7 @@ const MyBrownceStats = ({ navigation }) => {
                         contentContainerStyle={styles.statList}
                     />
                     <MyView style={[styles.statCardContainer, { width: SCREEN_WIDTH - dynamicSize(20), marginHorizontalL: dynamicSize(10), marginBottom: dynamicSize(20) }]}>
-                        <TouchableIcon onPress={onHelpPress({ info: 'dummy test, can be replaced in future' })} source={helpIcon} style={styles.helpIconContainer} imageStyle={styles.helpIcon} />
+                        <TouchableIcon onPress={onHelpPress({ info: MOST_POPULAR_SERVICES_INFO })} source={helpIcon} style={styles.helpIconContainer} imageStyle={styles.helpIcon} />
                         <MyView style={styles.rowAlignCenter}>
                             <MyText style={styles.belowTable}>{MOST_POPULAR_SERVICES}</MyText>
                             <MyImage source={topIcon} style={[styles.smallCardIcon, { marginLeft: dynamicSize(5) }]} />

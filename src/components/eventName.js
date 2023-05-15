@@ -1,3 +1,5 @@
+const ROLE_SELECTION_PAGE = 'roleSelection'
+const LOGIN_PAGE = 'loginPage'
 const PROVIDER_DASHBOARD = 'providerDashboard'
 const PROVIDER_REQUEST_LIST = 'providerRequestList'
 const PROVIDER_CHAT = 'providerChat'
@@ -24,5 +26,7 @@ export {
     CUSTOMER_CHAT,
     CUSTOMER_SHOP_TALK,
     CUSTOMER_PRODUCT_LIST,
-    CUSTOMER_MENU
+    CUSTOMER_MENU,
+    ROLE_SELECTION_PAGE,
+    LOGIN_PAGE
 }

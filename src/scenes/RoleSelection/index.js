@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
   MyImage,
@@ -7,13 +7,15 @@ import {
   SafeArea,
   Touchable,
 } from '../../components/customComponent';
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../components/helper';
+import { SCREEN_HEIGHT, SCREEN_WIDTH, logAnalyticEvent } from '../../components/helper';
 import { logo } from '../../components/icons';
 import { serviceConst } from '../../services/serviceConstant';
 import { LIGHT_WHITE, THEME, WHITE } from '../../utils/colors';
 import styles from './styles';
 import AsyncStorage from '@react-native-community/async-storage';
 import { ROLE_TYPES } from '../../utils/roleType';
+import { useFocusEffect } from '@react-navigation/native';
+import { ROLE_SELECTION_PAGE } from '../../components/eventName';
 
 const TYPES = { CUSTOMER: 'customer', PROVIDER: 'provider' };
 
@@ -25,6 +27,15 @@ const RoleSelection = ({ navigation }) => {
   const { CUSTOMER, PROVIDER } = state['localeReducer']['locale'];
   const [selectedRole, setSelectredRole] = useState(0);
   const [status, setStatus] = useState(true);
+
+  useFocusEffect(
+    useCallback(() => {
+      logAnalyticEvent(ROLE_SELECTION_PAGE, {
+        id: 10,
+        data: 'Landed on role selectin page'
+      })
+    }, [])
+  )
 
   useEffect(() => {
     AsyncStorage.getItem('firsttimestatus').then(async (data) => {

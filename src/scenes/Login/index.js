@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import messaging from '@react-native-firebase/messaging';
 import AsyncStorage from '@react-native-community/async-storage'
 import { MyView, Button, SafeArea, Input, KeyboardAwareScroll, MyImage, Selection, MyText, Loader } from '../../components/customComponent'
-import { dismissKeyboard, getData, isAndroid, isCustomer, showToast, storeData } from '../../components/helper'
+import { dismissKeyboard, getData, isAndroid, isCustomer, logAnalyticEvent, showToast, storeData } from '../../components/helper'
 import { activeCheckIcon, activeEmail, inactivePassword, logo, uncheckBox } from '../../components/icons'
 import { LIGHT_GRAY, BLACK, LIGHT_WHITE } from '../../utils/colors'
 import commonStyle from '../../components/commonStyle'
@@ -14,6 +14,8 @@ import { loginAction, popupAction } from '../../redux/action'
 import localKey from '../../utils/localKey'
 import { ApprovalPopup } from '../../components/alert'
 import crashlytics from '@react-native-firebase/crashlytics';
+import { useFocusEffect } from '@react-navigation/native';
+import { LOGIN_PAGE } from '../../components/eventName';
 
 // @ types of input field
 const TYPES = { EMAIL: 'email', PASSWORD: 'password' }
@@ -43,6 +45,15 @@ const Login = ({ navigation }) => {
     const [isremember, setRememberMe] = useState(false)
 
     // console.log('email==>', email, password)
+
+    useFocusEffect(
+        useCallback(() => {
+            logAnalyticEvent(LOGIN_PAGE, {
+                id: 11,
+                data: 'Landed on login page'
+            })
+        }, [])
+    )
 
     useEffect(() => {
         // if user selected remember me, then fetch data from local storage
