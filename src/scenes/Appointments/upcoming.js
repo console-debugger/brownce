@@ -21,8 +21,6 @@ const UpComing = ({ navigation }) => {
     const { loading } = state['loaderReducer']
     const [cancelModalVisible, setcancelModal] = useState(false)
     const [id, setid] = useState('')
-    console.log("state in customer appointment==>>", state)
-
 
     useFocusEffect(
         useCallback(() => {
@@ -62,7 +60,6 @@ const UpComing = ({ navigation }) => {
         const b = months[d.getMonth()]
         const c = d.getFullYear()
         const e = a + " " + b + " " + c
-        console.log(e)
         return (e)
     }
 

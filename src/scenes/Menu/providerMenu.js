@@ -8,7 +8,7 @@ import { logAnalyticEvent, onShare, SCREEN_HEIGHT } from '../../components/helpe
 import { arrowForeward, smallStar } from '../../components/icons'
 import { logout } from '../../navigation/rootNav'
 import { logoutAction, getProviderProfileAction, getAllServicesAction, getSpCustomServicesAction, loaderAction, getCustomServicesAction, deleteAccountAction } from '../../redux/action'
-import { BLACK, LIGHT_WHITE, THEME } from '../../utils/colors'
+import { BLACK, LIGHT_WHITE, RED, THEME } from '../../utils/colors'
 import styles from './styles'
 import { useFocusEffect } from '@react-navigation/native'
 import { getFontSize } from '../../utils/responsive'
@@ -121,7 +121,7 @@ const ProviderMenu = ({ navigation }) => {
     const _renderMenuList = ({ item, index }) => {
         return (
             <Touchable onPress={_navToScreens(index)} style={styles['providerMenu']}>
-                <MyText style={[styles['labelStyle'], { color: index == 10 ? 'red' : BLACK }]}>{item['label']}</MyText>
+                <MyText style={[styles['labelStyle'], { color: item.label == DELETE_ACCOUNT ? RED : BLACK }]}>{item['label']}</MyText>
                 <MyImage source={arrowForeward} style={styles['arrowStyle']} />
             </Touchable>
         )
@@ -155,14 +155,10 @@ const ProviderMenu = ({ navigation }) => {
 
     const closeDeleteModal = () => setDeleteModalVisible(false)
 
-
-    console.log('providerprofile=?', providerprofile)
-
     const _onShareButton = async () => {
         const profileType = 'provider';
         const userId = providerprofile?.['UserId'];
         const newLink = await generateDynamicLink(profileType, userId)
-        console.log('new short link =>', newLink)
         onShare(newLink)
     };
 

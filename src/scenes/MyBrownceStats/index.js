@@ -158,7 +158,6 @@ const MyBrownceStats = ({ navigation }) => {
                 setBrownceStatsDetail(response)
             }
             setRefresh(prevState => !prevState)
-            console.log('response=>', JSON.stringify(response))
         }))
     }
 

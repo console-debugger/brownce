@@ -27,7 +27,6 @@ const Deposit = (props) => {
     setBillingAgreementDescription,
   ] = useState('Billing Description');
   const d = new Date()
-  console.log("dd", d)
   const { services } = state['hairReducer']
   const { DATE, SELECT_DATE, TIME, NOTES, OPTIONAL, DEPOSITE_DESCRIPTION } = state['localeReducer']['locale']
   const [date, setdate] = useState('')

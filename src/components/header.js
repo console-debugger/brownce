@@ -10,7 +10,7 @@ import { useSafeAreaInsets, SafeAreaView } from 'react-native-safe-area-context'
 
 const Header = props => {
 
-    const { title, navigation, isBack, isTheme, source, onRightPress, isLowerCase, style, leftText, rightText, onLeftPress, isDrawer, imageStyle } = props
+    const { title, navigation, isBack, isTheme, source, onRightPress, isLowerCase, style, leftText, rightText, onLeftPress, isDrawer, imageStyle, leftSource } = props
 
     const _goBack = () => navigation.goBack()
 
@@ -20,7 +20,7 @@ const Header = props => {
         <SafeAreaView style={{ backgroundColor: isTheme ? THEME : LIGHT_WHITE, paddingBottom: -useSafeAreaInsets().bottom }}>
             <StatusBar barStyle={'dark-content'} backgroundColor={LIGHT_WHITE} />
             <MyView style={[styles['headerView'], { backgroundColor: isTheme ? THEME : LIGHT_WHITE }, style]}>
-                {isBack && <TouchableIcon style={styles['leftIcon']} imageStyle={imageStyle} source={backIcon} onPress={_goBack} />}
+                {isBack && <TouchableIcon style={styles['leftIcon']} imageStyle={imageStyle} source={leftSource || backIcon} onPress={_goBack} />}
                 {isDrawer && <TouchableIcon style={styles['leftIcon']} source={menuIcon} onPress={_openDrawer} />}
                 {leftText && <MyText onPress={onLeftPress} style={styles['leftText']}>{leftText.toUpperCase()}</MyText>}
                 <MyText style={[styles['title'], { color: isTheme ? WHITE : BLACK }]}>{title ? isLowerCase ? title : title.toUpperCase() : ''}</MyText>
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     leftIcon: {
-        padding:dynamicSize(10),
+        padding: dynamicSize(10),
         zIndex: 2,
         position: 'absolute',
         left: dynamicSize(20)
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
         fontFamily: montserratBold
     },
     rightIcon: {
-        padding:dynamicSize(10),
+        padding: dynamicSize(10),
         zIndex: 2,
         position: 'absolute',
         right: dynamicSize(20)

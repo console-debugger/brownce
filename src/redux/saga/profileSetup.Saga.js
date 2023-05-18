@@ -875,7 +875,6 @@ function* notificaitonListCall(param) {
     try {
         const { payload, callBack } = param
         const notificationListResp = yield apiRequest({}, NOTIFICATION_LIST_URL(payload), method['GET'])
-        console.log('notificationListResp==>', notificationListResp)
         if (notificationListResp['status'] === 200) {
             callBack(notificationListResp?.result?.Notificationlist)
         }
@@ -901,7 +900,6 @@ export function* NotificationCountSaga() {
 function* notificaitonCountCall() {
     try {
         const notificationCountResp = yield apiRequest({}, NOTIFICATION_COUNT_URL, method['GET'])
-        console.log('notificationCountResp==>', notificationCountResp)
         if (notificationCountResp['status'] === 200) {
             yield put(getNotificationCountSuccessAction(notificationCountResp.result.UnreadNotificationCount))
         }
@@ -954,7 +952,6 @@ export function* GetServicesByProfessionSaga() {
 function* getServicesByProfession(param) {
     try {
         const { payload } = param
-        console.log("GET_SERVICES_BY_PROFESSION_URL(payload) => ", GET_SERVICES_BY_PROFESSION_URL(payload))
         yield put(loaderAction(true))
         const getServicesRes = yield apiRequest({}, GET_SERVICES_BY_PROFESSION_URL(payload), method['GET'])
 

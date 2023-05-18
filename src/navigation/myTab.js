@@ -13,7 +13,6 @@ const MyBottomTab = ({ state, descriptors, navigation }) => {
     const focusedOptions = descriptors[state.routes[state.index].key].options;
 
     const storeState = useSelector(s => { return s })
-    // console.log('storeState=>', storeState)
     const { notificationCount } = storeState.profileReducer
 
     if (focusedOptions.tabBarVisible === false) {

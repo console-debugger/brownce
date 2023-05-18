@@ -41,9 +41,7 @@ const Brands = ({ navigation }) => {
   useEffect(() => {
     if (messageCase === GET_BRAND_SUCCESS_ACTION) {
       setrefresh(true)
-      console.log('refresh', refresh);
       setbrandlist(brandList)
-      console.log('brandlist', brandlist);
     }
   }, [messageCase])
 

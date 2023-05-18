@@ -82,7 +82,6 @@ function* loginSaga(param) {
         yield put(loaderAction(true))
         const loginRes = yield apiRequest(param['payload'], LOGIN_URL, method['POST'])
         if (loginRes['status'] === 200) {
-            console.log('login resp-=>', loginRes)
             yield crashlytics().setUserId(loginRes?.result?.UserId?.toString()||'')
             yield crashlytics().setAttributes({
                 role: isCustomer() ? 'Customer' : 'Provider',

@@ -20,7 +20,6 @@ import moment from 'moment';
 
 // @ Render Chat UI
 const Chat = ({ navigation, route }) => {
-    console.log("route.params.type :", route?.params?.type)
     const dispatch = useDispatch()
     const state = useSelector(state => { return state })
     const { profile, providerprofile, room, messagesHistory, messageCase } = state['profileReducer']
@@ -64,11 +63,8 @@ const Chat = ({ navigation, route }) => {
             "pageSize": 20
         }
         dispatch(getChatMessagesAction(param))
-        console.log("on scroll", history);
 
     }
-
-    console.log('route==>', route)
 
     //message={`You are yet to chat with this ${route?.params?.type == 'provider' ? 'service provider' : 'user'}`}
     // @ Render blank chat messages
@@ -80,7 +76,6 @@ const Chat = ({ navigation, route }) => {
     }
 
     const _renderTruncatedFooter = isSender => (handlePress) => {
-        console.log('isSender=>', isSender, handlePress)
         return (
             <MyText style={[{ fontWeight: 'bold', marginTop: 5 }, isSender ? styles['leftMsg'] : styles['rightMsg']]} onPress={handlePress}>
                 Read more
@@ -98,7 +93,6 @@ const Chat = ({ navigation, route }) => {
 
     // @ Render chat messages
     const _renderChat = ({ item, index }) => {
-        console.log('itemsssss=s=s=ss=s=s=>?', item)
         const isSender = item['MsgFrom'] != (isCustomer() ? profile['UserId'] : providerprofile['UserId'])
         return (
             <MyView key={item + index} style={[styles['itemContainer'], isSender ? styles['leftItemContainer'] : styles['rightItemContainer']]}>
@@ -153,7 +147,6 @@ const Chat = ({ navigation, route }) => {
                 "MsgTo": room['MsgTo'],
                 "Message": chatMessage
             }
-            console.log('partam==>', param)
             dispatch(saveChatAction(param))
         }
 

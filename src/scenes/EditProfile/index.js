@@ -64,8 +64,6 @@ const EditProfile = ({ navigation }) => {
         }
     ]
 
-    console.log('profile==>', profile)
-
     // data mapping of cutome detail
     const initialFormField = {
         username: profile?.['Username'] || '',
@@ -98,11 +96,11 @@ const EditProfile = ({ navigation }) => {
     const [longitude, setlongitude] = useState(profile?.Longitude || -75.90530281564186)
 
     // fetching state, country and city list
-    useEffect(() => {
-        dispatch(getCountryListAction())
-        dispatch(getStateListAction(profile.CountryId))
-        dispatch(getCityListAction(profile.StateId))
-    }, [])
+    // useEffect(() => {
+    //     dispatch(getCountryListAction())
+    //     dispatch(getStateListAction(profile.CountryId))
+    //     dispatch(getCityListAction(profile.StateId))
+    // }, [])
 
     // focus next on submit
     const _focusNext = type => () => {
@@ -178,7 +176,6 @@ const EditProfile = ({ navigation }) => {
         formData.append(apiKey['STATE_NAME'], selectedUserState)
         formData.append(apiKey['LATITUDE'], latitude)
         formData.append(apiKey['LONGITUDE'], longitude)
-        console.log('formData==>', formData)
         dispatch(saveProfileAction(formData))
     }
 

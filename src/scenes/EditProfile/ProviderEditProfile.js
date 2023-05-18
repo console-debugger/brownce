@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react'
-import { SafeArea, MyView, MyImage, Touchable, CurveView, Input, Button, KeyboardAwareScroll, CustomDropDown, Loader, MyText } from '../../components/customComponent'
+import { SafeArea, MyView, MyImage, Touchable, CurveView, Input, Button, KeyboardAwareScroll, CustomDropDown, Loader, MyText, CustomModal } from '../../components/customComponent'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styles from './styles'
 import { imagePlaceholder, cameraIcon, timeIcon } from '../../components/icons'
-import { TRANSPARENT_LIGHT_BLACK, BLACK, LIGHT_WHITE, THEME, PLACEHOLDER_COLOR } from '../../utils/colors'
+import { TRANSPARENT_LIGHT_BLACK, BLACK, LIGHT_WHITE, THEME, PLACEHOLDER_COLOR, WHITE } from '../../utils/colors'
 import { useDispatch, useSelector } from 'react-redux'
-import { dismissKeyboard, SCREEN_HEIGHT, showToast } from '../../components/helper'
+import { dismissKeyboard, locationMapping, SCREEN_HEIGHT, showToast } from '../../components/helper'
 import { dynamicSize } from '../../utils/responsive'
 import { montserratMedium, montserratSemiBold } from '../../utils/fontFamily'
 import ImagePickerSelection from '../../components/imagePickerSelection'
@@ -15,6 +15,8 @@ import { apiKey } from '../../services/serviceConstant'
 import { useFocusEffect } from '@react-navigation/native'
 import LicensePickerSelection from '../../components/licensePickerSelection'
 import DateTimePicker from '../../components/datePicker'
+import { reverseGeocode } from '../../services'
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 
 const TYPES = { USERNAME: 'username', NAME: 'name', DESCRIPTION: 'description', WEBLINK: 'weblink', EMAIL: 'email', GENDER: 'gender', COUNTRY: 'country', CITY: 'city', STATE: 'state' }
 
@@ -23,7 +25,7 @@ const EditProviderProfile = ({ navigation }) => {
 
     const dispatch = useDispatch()
     const state = useSelector(state => { return state })
-    const { PLEASE_SELECT_CITY, PLEASE_SELECT_STATE, PLEASE_SELECT_COUNTRY, MALE, FEMALE, PLEASE_UPLOAD_PROFILE_PIC, PLEASE_ENTER_AN_USERNAME, PLEASE_ENTER_NAME, TRANSGENDER_FEMALE, TRANSGENDER_MALE, NON_BINARY, OTHER, EMAIL, USERNAME, NAME, CITY, STATE, COUNTRY, UPDATE, PLEASE_WAIT_WHILE_FETCHING_COUNTRY_LIST, PLEASE_WAIT_WHILE_FETCHING_STATE_LIST, PLEASE_WAIT_WHILE_FETCHING_CITY_LIST } = state['localeReducer']['locale']
+    const { PLEASE_SELECT_CITY, PLEASE_SELECT_STATE, LOCATION, PLEASE_SELECT_COUNTRY, MALE, FEMALE, PLEASE_UPLOAD_PROFILE_PIC, PLEASE_ENTER_AN_USERNAME, PLEASE_ENTER_NAME, TRANSGENDER_FEMALE, TRANSGENDER_MALE, NON_BINARY, OTHER, EMAIL, USERNAME, NAME, CITY, STATE, COUNTRY, UPDATE, PLEASE_WAIT_WHILE_FETCHING_COUNTRY_LIST, PLEASE_WAIT_WHILE_FETCHING_STATE_LIST, PLEASE_WAIT_WHILE_FETCHING_CITY_LIST, LOCATE_ON_MAP, CONTINUE } = state['localeReducer']['locale']
     const { providerprofile } = state['profileReducer']
     const { loading } = state['loaderReducer']
     const { country, userState, city } = state['addressReducer']
@@ -33,6 +35,7 @@ const EditProviderProfile = ({ navigation }) => {
     const emailRef = useRef('emailRef')
     const cityRef = useRef('cityRef')
     const stateRef = useRef('stateRef')
+    const mapRef = useRef('mapRef')
 
     const genderData = [
         {
@@ -68,10 +71,10 @@ const EditProviderProfile = ({ navigation }) => {
         email: providerprofile?.['Email'] || '',
         gender: providerprofile?.['Gender'] || 'Male',
         genderId: providerprofile?.['GenderId'] || 1,
-        selectedCountry: providerprofile?.['Country'] || '',
+        // selectedCountry: providerprofile?.['Country'] || '',
         selectedCity: providerprofile?.['City'] || '',
         selectedUserState: providerprofile?.['State'] || '',
-        selectedCityId: providerprofile?.['CityId'] || '',
+        // selectedCityId: providerprofile?.['CityId'] || '',
         description: providerprofile?.['Bio'] || '',
         weblink: providerprofile?.['Weblink'] || ''
     }
@@ -92,6 +95,9 @@ const EditProviderProfile = ({ navigation }) => {
     const [isShow, setShow] = useState(false)
     const [isVisible, setVisible] = useState(false)
     const [uri, seturi] = useState(providerprofile?.['ProfilePic'])
+    const [isMapModalVisible, setModalVisible] = useState(false)
+    const [latitude, setlatitude] = useState(providerprofile?.Latitude || 40.38190380557175)
+    const [longitude, setlongitude] = useState(providerprofile?.Longitude || -75.90530281564186)
 
     // fetching provider detail
     useFocusEffect(
@@ -102,19 +108,19 @@ const EditProviderProfile = ({ navigation }) => {
     )
 
     // fetch Country, state and city list
-    useEffect(() => {
-        dispatch(getCountryListAction())
-        dispatch(getStateListAction(providerprofile.CountryId))
-        dispatch(getCityListAction(providerprofile.StateId))
-    }, [])
+    // useEffect(() => {
+    //     dispatch(getCountryListAction())
+    //     dispatch(getStateListAction(providerprofile.CountryId))
+    //     dispatch(getCityListAction(providerprofile.StateId))
+    // }, [])
 
     // handle focus 
     const _focusNext = type => () => {
         if (type === TYPES['USERNAME']) emailRef.current.focus()
         else if (type === TYPES['NAME']) emailRef.current.focus()
-        else if (type === TYPES['EMAIL']) cityRef.current.focus()
-        else if (type === TYPES['CITY']) stateRef.current.focus()
-        else if (type === TYPES['STATE']) dismissKeyboard
+        // else if (type === TYPES['EMAIL']) cityRef.current.focus()
+        // else if (type === TYPES['CITY']) stateRef.current.focus()
+        // else if (type === TYPES['STATE']) dismissKeyboard
     }
 
     // handle onchange
@@ -126,19 +132,19 @@ const EditProviderProfile = ({ navigation }) => {
         else if (type === TYPES['WEBLINK']) { setFormField(prevState => ({ ...prevState, weblink: text })), setError(prevState => ({ ...prevState, passwordError: '' })) }
     }
 
-    const _selectedCountry = data => {
-        setFormField(prevState => ({ ...prevState, selectedCountry: data['Name'], selectedUserState: '', selectedCity: '', selectedCityId: '' }))
-        dispatch(getStateListAction(data['CountryId']))
-    }
+    // const _selectedCountry = data => {
+    //     setFormField(prevState => ({ ...prevState, selectedCountry: data['Name'], selectedUserState: '', selectedCity: '', selectedCityId: '' }))
+    //     dispatch(getStateListAction(data['CountryId']))
+    // }
 
-    const _selectedState = data => {
-        setFormField(prevState => ({ ...prevState, selectedUserState: data['Name'], selectedCity: '', selectedCityId: '' }))
-        dispatch(getCityListAction(data['StateId']))
-    }
+    // const _selectedState = data => {
+    //     setFormField(prevState => ({ ...prevState, selectedUserState: data['Name'], selectedCity: '', selectedCityId: '' }))
+    //     dispatch(getCityListAction(data['StateId']))
+    // }
 
-    const _selectedCity = data => {
-        setFormField(prevState => ({ ...prevState, selectedCity: data['Name'], selectedCityId: data['CityId'] }))
-    }
+    // const _selectedCity = data => {
+    //     setFormField(prevState => ({ ...prevState, selectedCity: data['Name'], selectedCityId: data['CityId'] }))
+    // }
 
     const _openPicker = () => setShow(true)
 
@@ -167,19 +173,19 @@ const EditProviderProfile = ({ navigation }) => {
         profilePic ?
             username.length ?
                 name.trim().length ?
-                    selectedCountry ?
-                        selectedUserState ?
-                            selectedCityId ?
-                                description.trim().length ?
-                                    time ?
-                                        closetime ?
-                                            _saveProviderProfile()
-                                            : showToast("Please enter close time")
-                                        : showToast("Please enter open time")
-                                    : showToast("Please enter description")
-                                : showToast(PLEASE_SELECT_CITY)
-                            : showToast(PLEASE_SELECT_STATE)
-                        : showToast(PLEASE_SELECT_COUNTRY)
+                    // selectedCountry ?
+                    selectedUserState ?
+                        selectedCity ?
+                            description.trim().length ?
+                                time ?
+                                    closetime ?
+                                        _saveProviderProfile()
+                                        : showToast("Please enter close time")
+                                    : showToast("Please enter open time")
+                                : showToast("Please enter description")
+                            : showToast(PLEASE_SELECT_CITY)
+                        : showToast(PLEASE_SELECT_STATE)
+                    // : showToast(PLEASE_SELECT_COUNTRY)
                     : setError(prevError => ({ ...prevError, nameError: PLEASE_ENTER_NAME }))
                 : setError(prevError => ({ ...prevError, usernameError: PLEASE_ENTER_AN_USERNAME }))
             : showToast(PLEASE_UPLOAD_PROFILE_PIC)
@@ -192,11 +198,16 @@ const EditProviderProfile = ({ navigation }) => {
         formData.append(apiKey['user_name'], username)
         formData.append(apiKey['FIRSTNAME'], name)
         formData.append(apiKey['GENDER'], genderId)
-        formData.append(apiKey['CITY_ID'], selectedCityId)
+        formData.append(apiKey['CITY_NAME'], selectedCity)
+        formData.append(apiKey['STATE_NAME'], selectedUserState)
+        formData.append(apiKey['LATITUDE'], latitude)
+        formData.append(apiKey['LONGITUDE'], longitude)
+        // formData.append(apiKey['CITY_ID'], selectedCityId)
         formData.append(apiKey['Description'], description)
         formData.append('WebLink', weblink)
         formData.append('OpeningTime', time)
         formData.append('ClosingTime', closetime)
+        console.log('formData==>', formData)
         dispatch(saveProviderProfileAction(formData))
     }
 
@@ -220,6 +231,39 @@ const EditProviderProfile = ({ navigation }) => {
 
     const _selectedCloseTime = time => {
         setclosetime(time)
+    }
+
+    const _onDragEnd = event => {
+        console.log('coordinates', event.nativeEvent.coordinate)
+        const { latitude, longitude } = event.nativeEvent.coordinate
+        setlatitude(latitude)
+        setlongitude(longitude)
+    }
+
+    const openMapModal = () => setModalVisible(true)
+
+    const closeMapModal = () => setModalVisible(false)
+
+    const closeMapModalFuntion = async () => {
+        closeMapModal()
+        // const lat = 40.335725019928844, -75.92821932920248
+        const response = await reverseGeocode({ latitude, longitude })
+        if (response.status == 'OK') {
+            const place = response?.result?.[0]
+            const city = (() => {
+                return place?.address_components?.filter(address => address.types.includes('postal_town'))?.[0]?.short_name ||
+                    place?.address_components?.filter(address => address.types.includes('locality'))?.[0]?.short_name ||
+                    place?.address_components?.filter(address => address.types.includes('political'))?.[0]?.short_name || ''
+            })()
+            const userState = (() => {
+                return place?.address_components?.filter(address => address.types.includes('administrative_area_level_1'))?.[0]?.short_name ||
+                    place?.address_components?.filter(address => address.types.includes('administrative_area_level_2'))?.[0]?.short_name ||
+                    place?.address_components?.filter(address => address.types.includes('political'))?.[0]?.short_name || ''
+            })()
+            setFormField(prevState => ({ ...prevState, selectedCity: city, selectedUserState: userState }))
+            console.log('response===>', city, userState)
+        }
+
     }
 
     return (
@@ -280,9 +324,9 @@ const EditProviderProfile = ({ navigation }) => {
                     errorMessage={emailError || null}
                 />
                 <CustomDropDown onChange={_changeGender} data={genderData} value={gender} topOffset={dynamicSize(20)} containerStyle={{ borderBottomColor: BLACK, borderBottomWidth: 2 }} />
-                <MyListPicker textStyle={{ fontFamily: montserratSemiBold }} style={{ marginVertical: null, marginTop: dynamicSize(20), borderBottomColor: BLACK }} message={PLEASE_WAIT_WHILE_FETCHING_COUNTRY_LIST} value={selectedCountry} placeholder={COUNTRY} data={country} selectedItem={_selectedCountry} />
+                {/* <MyListPicker textStyle={{ fontFamily: montserratSemiBold }} style={{ marginVertical: null, marginTop: dynamicSize(20), borderBottomColor: BLACK }} message={PLEASE_WAIT_WHILE_FETCHING_COUNTRY_LIST} value={selectedCountry} placeholder={COUNTRY} data={country} selectedItem={_selectedCountry} />
                 <MyListPicker textStyle={{ fontFamily: montserratSemiBold }} style={{ marginVertical: dynamicSize(20), borderBottomColor: BLACK }} message={PLEASE_WAIT_WHILE_FETCHING_STATE_LIST} value={selectedUserState} placeholder={STATE} data={userState} selectedItem={_selectedState} />
-                <MyListPicker textStyle={{ fontFamily: montserratSemiBold }} style={{ marginVertical: null, borderBottomColor: BLACK }} message={PLEASE_WAIT_WHILE_FETCHING_CITY_LIST} value={selectedCity} placeholder={CITY} data={city} selectedItem={_selectedCity} />
+                <MyListPicker textStyle={{ fontFamily: montserratSemiBold }} style={{ marginVertical: null, borderBottomColor: BLACK }} message={PLEASE_WAIT_WHILE_FETCHING_CITY_LIST} value={selectedCity} placeholder={CITY} data={city} selectedItem={_selectedCity} /> */}
                 <Input
                     multiline
                     labelFontSize={0}
@@ -323,7 +367,35 @@ const EditProviderProfile = ({ navigation }) => {
                 >
                     <MyImage source={timeIcon} />
                 </DateTimePicker>
-                <Button onPress={_validate} style={styles['buttonStyle']} text={UPDATE} />
+                <MyText style={styles['locationName']}>{`${LOCATION}: ${locationMapping({ City: selectedCity, State: selectedUserState })}`}</MyText>
+                <Button onPress={openMapModal} style={[styles['buttonStyle'], { marginTop: SCREEN_HEIGHT * 0.04 }]} text={LOCATE_ON_MAP} />
+                <Button onPress={_validate} style={[styles['buttonStyle'], { marginVertical: SCREEN_HEIGHT * 0.04 }]} text={UPDATE} />
+                <CustomModal
+                    isVisible={isMapModalVisible}
+                    animationType='slide'
+                >
+                    <MapView
+                        ref={mapRef}
+                        provider={PROVIDER_GOOGLE}
+                        style={styles['mapView']}
+                        initialRegion={{
+                            latitude: latitude ? parseFloat(latitude) : 40.38190380557175,
+                            longitude: longitude ? parseFloat(longitude) : -75.90530281564186,
+                            latitudeDelta: 0.015,
+                            longitudeDelta: 0.0121,
+
+                        }}
+                    >
+                        <MapView.Marker
+                            draggable
+                            onDragEnd={_onDragEnd}
+                            coordinate={{ latitude: latitude ? parseFloat(latitude) : 40.38190380557175, longitude: longitude ? parseFloat(longitude) : -75.90530281564186 }}
+                            pinColor={THEME}
+                        />
+
+                    </MapView>
+                    <Button onPress={closeMapModalFuntion} style={[styles['buttonStyle'], { position: 'absolute', zIndex: 10, bottom: useSafeAreaInsets().bottom + dynamicSize(10), alignSelf: 'center' }]} text={CONTINUE} textStyle={{ color: WHITE }} />
+                </CustomModal>
             </KeyboardAwareScroll>
         </SafeArea>
     )

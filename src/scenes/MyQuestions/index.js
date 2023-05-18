@@ -52,7 +52,6 @@ const MyQuestions = ({navigation}) => {
       <Loader isVisible={loading} />
       <MyView style={{flex: 1, alignItems: 'center'}}>
         <CurveView />
-        {console.log('commonquestion', commonquestion)}
         {commonquestion.length != 0 ? (
           <FlatList
             key="quesions"

@@ -93,7 +93,6 @@ const ForumDetail = ({ navigation, route }) => {
         setComment('')
         setReply('')
         dispatch(commentAction(data, (result) => {
-            console.log('new result=>', result)
             if (ParentCommentId) {
                 commenthistory[index].CommentReplies.push(result)
                 dispatch(refreshDataAction(!refreshData))

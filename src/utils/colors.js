@@ -12,3 +12,4 @@ export const GRAY = '#c4c4c4'
 export const LIGHT_BROWN = '#b7a692'
 export const MID_LIGHT_GRAY = '#697083'
 export const BACKGROUND = "rgb(229,225,219)"
+export const RED = 'red'

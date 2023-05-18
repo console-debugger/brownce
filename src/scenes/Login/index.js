@@ -83,7 +83,6 @@ const Login = ({ navigation }) => {
             authStatus === messaging.AuthorizationStatus.PROVISIONAL;
         if (enabled) getToken()
         else if (authStatus === messaging.AuthorizationStatus.DENIED) {
-            console.log('Notification permissnion denied by user.')
             showToast('Notification permissnion denied by user.')
         }
     }
@@ -92,7 +91,6 @@ const Login = ({ navigation }) => {
         let fcmToken = await getData(localKey['DEVICE_TOKEN'])
         if (!fcmToken) {
             fcmToken = await messaging().getToken();
-            console.log('fcmToken=>', fcmToken)
             serviceConst.deviceToken = fcmToken
             if (fcmToken) storeData(localKey['DEVICE_TOKEN'], fcmToken)
             else console.log('Could not fetch notification permission.')

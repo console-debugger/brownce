@@ -68,7 +68,6 @@ const ProviderProfileSetupSeven = ({ navigation }) => {
                 if (price.trim().length == 0) return item
             }
         })
-        console.log('filtered Result', filteredResult)
         if (filteredResult.length == 0) {
             const newParam = savedServices.map(item => {
                 const result = {

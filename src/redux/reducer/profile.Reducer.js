@@ -59,9 +59,6 @@ const initialState = {
 }
 
 export default profileReducer = (state = initialState, action) => {
-
-    // console.log('action==>', action)
-
     const oldState = { ...state }
     const { type, payload } = action
     switch (type) {

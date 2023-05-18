@@ -124,9 +124,7 @@ export function* LikeDislikeQuestionSaga() {
 
 function* LikeDislikeQuestion(param) {
     try {
-        console.log('like param=>', param)
         const resp = yield apiRequest(param['payload'], `${LIKE_DISLIKE_QUESTION_URL}`, method['POST'])
-        console.log('like resp=>', resp)
         if (resp['status'] === 200) {
             param.callBack(true)
             // showToast(resp['message'])
@@ -180,7 +178,6 @@ export function* QuestionByQuestionIdSaga() {
 function* getQuestionById(param) {
     try {
         const resp = yield apiRequest({}, `${ALL_QUESTION_URL}QuestionId=${param.payload}`, method['GET'])
-        console.log('resut=>', resp)
         if (resp['status'] === 200) {
             param.callBack(resp['result'])
         }

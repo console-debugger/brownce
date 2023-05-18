@@ -76,8 +76,6 @@ const SpDetail = ({ navigation, route }) => {
     name: '',
   });
 
-  console.log('providerprofile==:', providerprofile)
-
   // @ fetch Service Provide details
   useEffect(() => {
     dispatch(loaderAction(true));
@@ -323,7 +321,6 @@ const SpDetail = ({ navigation, route }) => {
     const profileType = 'provider';
     const userId = providerprofile?.['UserId'];
     const newLink = await generateDynamicLink(profileType, userId)
-    console.log('new short link =>', newLink)
     onShare(newLink)
   };
 
@@ -355,7 +352,6 @@ const SpDetail = ({ navigation, route }) => {
   }
 
   const _validate = () => {
-    console.log('asds==>',)
     let filterServiceId = [];
     for (let i = 0; i < servicesData.length; i++) {
       filterServiceId.push(
@@ -369,7 +365,6 @@ const SpDetail = ({ navigation, route }) => {
       );
     }
     const newData = filterServiceId?.length ? filterServiceId?.flat(1) : []
-    console.log('filterServiceId=>', newData)
     if (newData.length) {
       navigation.navigate('booking', { providerId: route.params.id });
     } else {
@@ -586,7 +581,6 @@ const SpDetail = ({ navigation, route }) => {
                     itemWidth={SCREEN_WIDTH}
                     onSnapToItem={_onSnapToItem(TYPES.SERVICES)}
                   />
-                  {console.log('servicesData==>?', servicesData)}
                   <MyPagination
                     length={servicesData.length}
                     activeSlideIndex={servicespageIndex}

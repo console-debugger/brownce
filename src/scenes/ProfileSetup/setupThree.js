@@ -183,8 +183,6 @@ const ProfileSetupThree = ({ navigation }) => {
         dispatch(saveLocationAction(param))
     }
 
-    console.log('lat==>', latitude, longitude)
-
     const _complete_later = () => isCustomer() ? navigateToScreen('profileSetupFive') : navigateToScreen('providerProfileSetupThree')
 
     return (

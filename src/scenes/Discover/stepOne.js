@@ -27,7 +27,6 @@ const DiscoverOne = ({ navigation }) => {
     })
 
     useEffect(() => {
-        console.log("professionsList =>> ", professionsList)
         setCategory({ name: professionsList[0]?.Name, Id: professionsList[0]?.Id })
     }, [professionsList])
 
@@ -109,8 +108,6 @@ const DiscoverOne = ({ navigation }) => {
                         activeDotStyle={[styles['dotStyle'], { backgroundColor: THEME }]}
                     >
                         {searchservices.map((item, index1) => {
-                            // console.log("category => ", category['Id'])
-                            // console.log("Item => ", item[0]['ProfessionId'])
                             let arr = item.filter(item => item['ProfessionId'] == category['Id'])
                             if (arr.length) {
                                 return (

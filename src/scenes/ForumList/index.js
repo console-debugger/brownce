@@ -79,7 +79,7 @@ const ForumList = ({ navigation }) => {
     null,
   );
 
-  console.log('allquestion==>', allquestion);
+
 
   useFocusEffect(
     useCallback(() => {
@@ -136,7 +136,7 @@ const ForumList = ({ navigation }) => {
     setRefreshState(true);
     dispatch(
       getAllQuestionAction(search, (data) => {
-        console.log('all Questions ==>', data);
+      
         if (data) {
           if (notiPaginationOffset.current == 1) {
             setAllFeeds([...data]);
@@ -305,7 +305,7 @@ const ForumList = ({ navigation }) => {
   };
 
   const _renderNotification = ({ item, index }) => {
-    console.log('item.CreatedOn=>?',item.CreatedOn)
+  
     return (
       <Touchable onPress={_navToComment(item)} style={styles.notiItem}>
         <TouchableIcon
@@ -521,7 +521,7 @@ const ForumList = ({ navigation }) => {
             }
           />
         )}
-        {console.log('notificationList====>', notificationList)}
+      
       </MyView>
       {notificationFooterIndicator.current ? (
         <MyIndicator verticalSpace />

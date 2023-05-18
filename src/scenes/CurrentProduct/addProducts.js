@@ -159,7 +159,6 @@ const AddProducts = ({ navigation }) => {
         formdata.append('CategoryId', categoryId)
         formdata.append('Price', price)
         formdata.append('Description', description)
-        console.log('param', formdata)
         dispatch(addProductAction(formdata))
 
     }

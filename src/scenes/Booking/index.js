@@ -23,7 +23,7 @@ const Booking = (props) => {
     const state = useSelector(state => { return state })
     const {completeprovider} = state['profileReducer']
     let deposit  =completeprovider['DepositFee'].toString()
-    console.log("string",state);
+
     const [amount, setAmount] = useState(deposit);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState({
@@ -39,7 +39,6 @@ const Booking = (props) => {
         setBillingAgreementDescription,
       ] = useState('Billing Description');
     const d = new Date()
-    console.log("dd",d)
    const {services} =state['hairReducer']
    const {completeproviderservices} =state['profileReducer']
     const { DATE, SELECT_DATE, TIME, NOTES, OPTIONAL, DEPOSITE_DESCRIPTION } = state['localeReducer']['locale']
@@ -69,14 +68,12 @@ const Booking = (props) => {
         for (let i = 0; i < services.length; i++) {
         filterServiceid.push(services[i].filter(item => { if (item['status']) return item }).map(each => { return each['SPServiceMappingId'] }))
         }
-        console.log("000--",newArr);
+        
 
         for(var i = 0; i < filterServiceid.length; i++)
         {
             newArr = newArr.concat(filterServiceid[i]);
         }
-         console.log("000--",newArr);
-         console.log("state--",state);
         let param ={
             [apiKey['SPId']]:props.route.params.providerId,
             [apiKey['SPServiceMapId']]:newArr,

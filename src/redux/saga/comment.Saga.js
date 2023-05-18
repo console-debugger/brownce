@@ -18,7 +18,6 @@ export function* CommentSaga() {
 function* comment(param) {
     try {
         const updateCommentResp = yield apiRequest(param['payload'], COMMENT_URL, method['POST'])
-        console.log('comment resp==>', updateCommentResp)
         if ((updateCommentResp['status'] === 200) || (updateCommentResp['status'] === 201)) {
             param.callBack(updateCommentResp.result)
         }

@@ -42,7 +42,6 @@ const FavouriteProvider = ({ navigation }) => {
             page: pagination.current
         }
         dispatch(getfavProviderListAction(param, result => {
-            console.log('result=>', result)
             if (result?.List) {
                 if (pagination.current == 1) {
                     setdata(result?.List)
@@ -94,10 +93,8 @@ const FavouriteProvider = ({ navigation }) => {
             ProviderId: item.UserId,
             IsFavorite: false
         }
-        console.log('prams==>', param)
         // return
         dispatch(addRemoveProfileToFavourite(param, result => {
-            console.log('result=>', result)
             if (result) {
                 const foundIndex = selectedIdRef.current.findIndex(each => each == item.UserId)
                 selectedIdRef.current.splice(foundIndex, 1)

@@ -150,7 +150,7 @@ const ProviderCompleteProfile = ({ navigation }) => {
                                         )
                                     })}
                                     <MyText style={styles['portFolioText']}>{PORTFOLIO}</MyText>
-                                    {providerprofile?.Portfolios.length > 0 && <FlatList
+                                    {providerprofile?.Portfolios?.length > 0 && <FlatList
                                         key='portfolio'
                                         data={providerprofile.Portfolios}
                                         numColumns={3}

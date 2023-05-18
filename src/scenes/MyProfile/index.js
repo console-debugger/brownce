@@ -91,7 +91,6 @@ const MyProfile = ({ navigation }) => {
     const profileType = isCustomer() ? 'customer' : 'provider';
     const userId = profile?.['UserId'];
     const newLink = await generateDynamicLink(profileType, userId)
-    console.log('new short link =>', newLink)
     onShare(newLink)
   };
 

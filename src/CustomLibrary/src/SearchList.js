@@ -139,7 +139,6 @@ export default class SearchList extends Component {
 
   componentDidMount() {
     this.initList(this.props.data).then(() => {
-      console.log("in didmount",this.props.data);
       if (this.props.searchOnDefaultValue && this.props.searchInputDefaultValue != '') {
         this.search(this.props.searchInputDefaultValue);
         this.enterSearchState();

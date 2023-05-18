@@ -69,7 +69,6 @@ const NewOrders = ({ navigation }) => {
 
     // mark as delivered order
     const _markasdelivered = (item) => {
-        console.log(item);
         const param = {
             'OrderId': item.Id,
             //'Status':8

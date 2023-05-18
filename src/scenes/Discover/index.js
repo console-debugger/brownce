@@ -151,8 +151,8 @@ const Discover = ({ navigation }) => {
             <MyView style={styles['backView']} >
                 <TouchableIcon
                     style={{ height: 20 }}
-                    imageStyle={{ tintColor: BLACK }}
-                    source={backIcon}
+                    imageStyle={{ width: 25, height: 25 }}
+                    source={blackbackIcon}
                     onPress={() => navigation.goBack()} />
             </MyView>
             <MyView style={styles['bottomSheet']}>

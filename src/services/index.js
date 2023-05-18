@@ -21,11 +21,11 @@ const apiRequest = (body, URL, apiMethod, isMedia) => {
             : {...jsonHeader, token: serviceConst['token']},
         };
 
-  console.log(URL, 'Request -->>', init);
+  // console.log(URL, 'Request -->>', init);
   return fetch(`${URL}`, init)
     .then((resp) =>
       resp.json().then((resp) => {
-        console.log(URL, 'Response -->>', resp);
+        // console.log(URL, 'Response -->>', JSON.stringify(resp));
         const jsonResp = {
           status: resp.Status,
           data: resp,
@@ -39,7 +39,7 @@ const apiRequest = (body, URL, apiMethod, isMedia) => {
       }),
     )
     .catch((error) => {
-      console.log(URL, 'error -->>', error);
+      // console.log(URL, 'error -->>', error);
       const catchErr = {
         status: 900,
         message: serviceError['NETWORK_ERROR'],
@@ -56,7 +56,7 @@ export default apiRequest;
 const reverseGeocode = (coordinates) => {
   return fetch(`${REVERSE_GEOCODE_URL}${coordinates.latitude},${coordinates.longitude}&key=${GOOGLE_API_KEY}`).then(resp => resp.json()
       .then(data => {
-          console.log('reverse==>', data)
+          // console.log('reverse==>', data)
           const jsonResp = {
               status: data.status,
               data: data,
@@ -65,7 +65,7 @@ const reverseGeocode = (coordinates) => {
           return jsonResp
       }))
       .catch((error) => {
-          console.log('catch Error of place details==>', error)
+          // console.log('catch Error of place details==>', error)
           const catchErr = {
               status: 900,
               jsonData: { message: serviceError['NETWORK_ERROR'] }
