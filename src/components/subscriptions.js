@@ -282,11 +282,11 @@ const Subscriptions = ({ navigation }) => {
                     style={[styles['buttonStyleCont'], { width: SCREEN_WIDTH - dynamicSize(70) }]}
                     text={'Subscribe'}
                 />}
-                {state.subscriptions.length > 0 && <Button
+                <Button
                     onPress={_continue}
                     style={[styles['buttonStyleCont'], { width: SCREEN_WIDTH - dynamicSize(70), marginVertical: dynamicSize(10) }]}
                     text={'Continue with ADs'}
-                />}
+                />
             </MyView>
         </View>
     )

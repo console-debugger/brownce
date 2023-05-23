@@ -21,7 +21,7 @@ const AllServices = ({ navigation, route }) => {
     const { CONTINUE } = state['localeReducer']['locale']
     const { services, customservices, messageCase, allservices, servicesByProfession } = state['hairReducer']
     const { ServicesProvided } = state.profileReducer.providerprofile
-    const [servs, setServs] = useState([...servicesByProfession])
+    const [servs, setServs] = useState([])
 
     const [selectedSubServices, setSelectedSubServices] = useState([])
 
@@ -29,6 +29,9 @@ const AllServices = ({ navigation, route }) => {
         dispatch(getServicesByProfessionAction(selectedServices))
     }, [])
 
+    useEffect(() => {
+        setServs([...servicesByProfession])
+    }, [servicesByProfession])
 
 
     useEffect(() => {

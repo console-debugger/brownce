@@ -4,7 +4,7 @@ import { SafeArea, MyView, MyText, Button, Touchable, MyImage, TouchableIcon } f
 import MapView, { PROVIDER_GOOGLE, Callout } from 'react-native-maps';
 import { useSelector, useDispatch } from 'react-redux'
 import styles from './styles'
-import { locateIcon, backIcon, mapbgIcon } from '../../components/icons';
+import { locateIcon, backIcon, mapbgIcon, blackbackIcon } from '../../components/icons';
 import Geolocation from "react-native-geolocation-service"
 import { montserratBold } from '../../utils/fontFamily';
 import { getFontSize } from '../../utils/responsive';
