@@ -79,11 +79,14 @@ export function* GetCompleteProviderDetailSaga() {
 function* getCompleteProvider(param) {
     try {
         const profileRes = yield apiRequest({}, `${GET_COMPLETE_PROVIDER_DETAIL_URL}${param['payload']}`, method['GET'])
-        let newResult = []
-        for (let i = 0; i < profileRes['result']['spProfile']['Services'].length; i++) {
-            newResult.push(profileRes['result']['spProfile']['Services'][i].map(item => { return { ...item, status: false } }))
-        }
+        console.log('profileRes===>', JSON.stringify(profileRes))
         if (profileRes['status'] === 200) {
+            let newResult = []
+            if (profileRes['result']['spProfile']['Services']) {
+                for (let i = 0; i < profileRes['result']['spProfile']['Services'].length; i++) {
+                    newResult.push(profileRes['result']['spProfile']['Services'][i].map(item => { return { ...item, status: false } }))
+                }
+            }
             yield put(loaderAction(false))
             yield put(getProviderCompleteDetailSuccesAction(profileRes['result']['spProfile']))
             yield put(getProviderCompleteServices(newResult))
@@ -92,9 +95,10 @@ function* getCompleteProvider(param) {
         else {
             yield put(loaderAction(false))
             yield delay(600)
-            showToast(profileRes['message'])
+            showToast(profileRes['message'] || profileRes['Message'])
         }
     } catch (err) {
+        console.log('====>>>', JSON.stringify(err))
         yield put(loaderAction(false))
         yield delay(600)
         showToast(serviceError['CATCH_ERROR'])

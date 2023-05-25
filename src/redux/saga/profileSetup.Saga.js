@@ -277,7 +277,7 @@ export function* GetSpDetailSaga() {
 function* getspDetail(param) {
     try {
         const profileRes = yield apiRequest({}, `${GET_SP_DETAIL_URL}${param['payload']} `, method['GET'])
-
+        console.log('spprofilerespppp==>', JSON.stringify(profileRes['result']))
         if (profileRes['status'] === 200) {
             yield put(loaderAction(false))
             yield put(getProviderProfileSuccessAction(profileRes['result']['lstPortfolio']))

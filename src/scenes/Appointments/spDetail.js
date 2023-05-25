@@ -58,10 +58,10 @@ const SpDetail = ({ navigation, route }) => {
     'locale'
   ];
   const { loading, refreshData } = state['loaderReducer'];
-  const { otherProfile, profile, providerprofile } = state['profileReducer'];
+  const { otherProfile, profile, providerprofile, completeproviderproducts } = state['profileReducer'];
   const { professionsList } = state['hairReducer'];
   const { ServicesProvided } = state.profileReducer.providerprofile;
-  const { List } = state.profileReducer.completeproviderproducts;
+  // const { List } = state.profileReducer.completeproviderproducts;
   const [isRefresh, setRefresh] = useState(false);
   const [buttonVisible, setButtonVisible] = useState(false);
   const [updating, setUpdating] = useState(false)
@@ -78,6 +78,7 @@ const SpDetail = ({ navigation, route }) => {
 
   // @ fetch Service Provide details
   useEffect(() => {
+    console.log('route.params.id--->', route.params.id)
     dispatch(loaderAction(true));
     dispatch(getSpDetailAction(route.params.id));
     dispatch(getProfessionsListAction());
@@ -109,20 +110,20 @@ const SpDetail = ({ navigation, route }) => {
   }, [providerprofile?.Portfolios])
 
   useEffect(() => {
-    if (List?.length && List) {
+    if (completeproviderproducts?.List?.length && completeproviderproducts?.List) {
       let newData = [], count = 0
-      for (let i = 0; i < List?.length; i++) {
+      for (let i = 0; i < completeproviderproducts?.List?.length; i++) {
         if (i % 6 == 0) {
           count++
-          newData[count - 1] = [List[i]]
+          newData[count - 1] = [completeproviderproducts?.List[i]]
         }
         else {
-          newData[count - 1].push(List[i])
+          newData[count - 1].push(completeproviderproducts?.List[i])
         }
       }
       setProductData(newData)
     }
-  }, [List])
+  }, [completeproviderproducts?.List])
 
   useEffect(() => {
     if (ServicesProvided?.length && ServicesProvided) {

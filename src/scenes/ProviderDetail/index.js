@@ -52,8 +52,7 @@ const ProviderDetail = (props) => {
     VIEW_LICENSE,
     SHARE,
   } = state['localeReducer']['locale'];
-  const { completeprovider } = state['profileReducer'];
-  const { completeproviderservices } = state['profileReducer'];
+  const { completeprovider, completeproviderproducts, completeproviderservices } = state['profileReducer'];
   const { professionsList } = state['hairReducer'];
   const { List } = state['profileReducer']['completeproviderproducts'];
   const [modalVisible, setmodalVisible] = useState(false);
@@ -230,8 +229,8 @@ const ProviderDetail = (props) => {
                   </MyView>
 
                   <MyText style={styles['priceStyle']}>
-                    {completeprovider?.['DepositFee']
-                      ? `$ ${completeprovider['DepositFee']}`
+                    {completeprovider?.['UserId']
+                      ? `$ ${completeprovider['DepositFee'] ? completeprovider['DepositFee'] : 0}`
                       : LOADING}
                   </MyText>
                 </MyView>
@@ -398,7 +397,7 @@ const ProviderDetail = (props) => {
             </MyText>
 
             <FlatList
-              data={List}
+              data={completeproviderproducts?.List?.length ? completeproviderproducts?.List : []}
               showsVerticalScrollIndicator={false}
               renderItem={_renderProducts}
               ItemSeparatorComponent={_renderSeperator}

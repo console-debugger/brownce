@@ -34,7 +34,7 @@ const App = () => {
 
   // Prompt for push on iOS
   OneSignal.promptForPushNotificationsWithUserResponse((response) => {
-    console.log('Prompt response:', response);
+    // console.log('Prompt response:', response);
   });
 
   //Method for handling notifications received while app in foreground
