@@ -1,7 +1,7 @@
 import { takeLatest, put, delay } from 'redux-saga/effects';
 import { isCustomer, multiRemoveData, showToast, storeData } from '../../components/helper'
-import { method, serviceError, VALIDATE_EMAIL_OTP_URL, UPDATE_EMAIL_URL, RESET_PASSWORD_URL, REGISTRATION_URL, OTP_VERIFICATION_URL, serviceConst, LOGIN_URL, FORGOT_PASSWORD_URL, CHANGE_PASSWORD_URL } from '../../services/serviceConstant'
-import { loaderAction, otpViewAction, popupAction } from '../action'
+import { method, serviceError, VALIDATE_EMAIL_OTP_URL, UPDATE_EMAIL_URL, RESET_PASSWORD_URL, REGISTRATION_URL, OTP_VERIFICATION_URL, serviceConst, LOGIN_URL, FORGOT_PASSWORD_URL, CHANGE_PASSWORD_URL, apiKey, REGISTER_WITH_PHONE_URL, PHONE_OTP_VERIFICATION_URL, LOGIN_WITH_PHONE_URL, VALIDATE_PHONE_LOGIN_URL } from '../../services/serviceConstant'
+import { loaderAction, otpViewAction, popupAction, signupUserDataAction } from '../action'
 import * as TYPES from '../action/type'
 import apiRequest from '../../services'
 import { navigateToScreen, reset } from '../../navigation/rootNav'
@@ -20,12 +20,19 @@ export function* Registration() {
 function* registration(param) {
     try {
         yield put(loaderAction(true))
-        const registrationRes = yield apiRequest(param['payload'], REGISTRATION_URL, method['POST'])
+        const isPhone = !!param?.payload?.[apiKey.PHONE] && !!param?.payload?.[apiKey.COUNTRY_CODE]
+        const apiUrl = isPhone ? REGISTER_WITH_PHONE_URL : REGISTRATION_URL
+        const registrationRes = yield apiRequest(param['payload'], apiUrl, method['POST'])
         if (registrationRes['status'] === 201) {
+            const saveData = {
+                [apiKey.PHONE]: param?.payload?.[apiKey.PHONE] || '',
+                [apiKey.COUNTRY_CODE]: param?.payload?.[apiKey.COUNTRY_CODE] || ''
+            }
+            yield put(signupUserDataAction(saveData))
             yield put(loaderAction(false))
             yield put(otpViewAction(registrationRes['result']['OTP']))
             showToast(registrationRes['message'])
-            navigateToScreen('otpVerification', [param['payload']['Email'], false])
+            navigateToScreen('otpVerification', isPhone ? [`${param?.payload?.[apiKey.COUNTRY_CODE]} ${param?.payload?.[apiKey.PHONE]}`, false, true] : [param['payload']['Email'], false])
         }
         else {
             yield put(loaderAction(false))
@@ -50,7 +57,8 @@ export function* OTPVerification() {
 function* otpVerification(param) {
     try {
         yield put(loaderAction(true))
-        const verifyRes = yield apiRequest(param['payload'], OTP_VERIFICATION_URL, method['POST'])
+        const apiUrl = param['isPhone'] ? PHONE_OTP_VERIFICATION_URL : OTP_VERIFICATION_URL
+        const verifyRes = yield apiRequest(param['payload'], apiUrl, method['POST'])
         if (verifyRes['status'] === 200) {
             yield put(loaderAction(false))
             yield delay(600)
@@ -60,6 +68,51 @@ function* otpVerification(param) {
         }
         else {
             showToast(verifyRes['message'])
+        }
+        yield put(loaderAction(false))
+    } catch (err) {
+        yield put(loaderAction(false))
+        showToast(serviceError['CATCH_ERROR'])
+    }
+}
+
+export function* PhoneOTPVerification() {
+    try {
+        yield takeLatest(TYPES.PHONE_LOGIN_VERIFICATION_ACTION, phoneLoginOtpVerification)
+    }
+    catch (err) {
+        showToast('Error in otp verification observer')
+    }
+}
+
+function* phoneLoginOtpVerification(param) {
+    try {
+        yield put(loaderAction(true))
+        console.log('params==>', param.payload)
+        const loginRes = yield apiRequest(param['payload'], VALIDATE_PHONE_LOGIN_URL, method['POST'])
+        console.log('loginRes==>', JSON.stringify(loginRes))
+        if (loginRes['status'] === 200) {
+            yield crashlytics().setUserId(loginRes?.result?.UserId?.toString() || '')
+            yield crashlytics().setAttributes({
+                role: isCustomer() ? 'Customer' : 'Provider',
+                email: loginRes?.result?.Email || '',
+                username: loginRes?.result?.FirstName || '',
+            })
+            yield put(loaderAction(false))
+            serviceConst['token'] = loginRes['result']['Token']
+            if (loginRes['result']['UserStatus'] === 1) {
+                yield storeData(localKey['ROLE'], serviceConst['role'])
+                yield storeData(localKey['LOGIN_TOKEN'], loginRes['result']['Token'])
+                reset('bottomTab')
+            }
+            else if (loginRes['result']['UserStatus'] === 14) showToast("Waiting for Approval")
+            else if (loginRes['result']['UserStatus'] === 15) showToast("Account Rejected")
+            showToast(loginRes['message'])
+        }
+        else {
+            yield put(loaderAction(false))
+            yield delay(600)
+            loginRes['message'] == "Log-in Successful!" || loginRes['message'] == "Username/Password is Incorrect" || loginRes['message'] == "An Unexpected Error Has Occured!" ? showToast(loginRes['message']) : yield put(popupAction(true, loginRes['message']))
         }
         yield put(loaderAction(false))
     } catch (err) {
@@ -82,7 +135,7 @@ function* loginSaga(param) {
         yield put(loaderAction(true))
         const loginRes = yield apiRequest(param['payload'], LOGIN_URL, method['POST'])
         if (loginRes['status'] === 200) {
-            yield crashlytics().setUserId(loginRes?.result?.UserId?.toString()||'')
+            yield crashlytics().setUserId(loginRes?.result?.UserId?.toString() || '')
             yield crashlytics().setAttributes({
                 role: isCustomer() ? 'Customer' : 'Provider',
                 email: loginRes?.result?.Email || '',
@@ -132,6 +185,38 @@ function* loginSaga(param) {
     }
 }
 
+export function* LoginWithPhoneSaga() {
+    try {
+        yield takeLatest(TYPES.LOGIN_WITH_PHONE_ACTION, loginWithPhoneSaga)
+    }
+    catch (err) {
+        showToast('Error in login with phone observer')
+    }
+}
+
+function* loginWithPhoneSaga(param) {
+    try {
+        yield put(loaderAction(true))
+        console.log('params==>', param['payload'])
+        const loginResp = yield apiRequest(param['payload'], LOGIN_WITH_PHONE_URL, method['POST'])
+        console.log('loginResp==>', loginResp)
+        if (loginResp['status'] === 200) {
+            yield put(loaderAction(false))
+            yield delay(600)
+            showToast(loginResp['message'])
+            navigateToScreen('otpVerification', [`${param?.payload?.[apiKey.COUNTRY_CODE]} ${param?.payload?.[apiKey.PHONE]}`, false, true, true])
+        }
+        else {
+            yield put(loaderAction(false))
+            yield delay(600)
+            showToast(loginResp['message'])
+        }
+    } catch (err) {
+        yield put(loaderAction(false))
+        showToast(serviceError['CATCH_ERROR'])
+    }
+}
+
 export function* ForgotSaga() {
     try {
         yield takeLatest(TYPES.FORGOT_PASSWORD_ACTION, forgotSaga)
@@ -149,7 +234,7 @@ function* forgotSaga(param) {
             yield put(loaderAction(false))
             yield delay(600)
             showToast(forgotRes['message'])
-            navigateToScreen('otpVerification', [param['payload']['Email'], true])
+            navigateToScreen('otpVerification', [param['payload']['EmailOrPhone'], true, param?.isPhone ? true : false])
         }
         else {
             yield put(loaderAction(false))

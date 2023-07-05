@@ -1,6 +1,6 @@
 import { all, fork } from 'redux-saga/effects';
 import { CityListSaga, CountryListSaga, getAllCityListSaga, SaveLocationSaga, StateListSaga } from './address.Saga';
-import { ChangePasswordSaga, ForgotSaga, LoginSaga, OTPVerification, Registration, ResetPasswordSaga, UpdateEmailSaga, validateEmailOtpSaga } from './auth.Saga';
+import { ChangePasswordSaga, ForgotSaga, LoginSaga, LoginWithPhoneSaga, OTPVerification, PhoneOTPVerification, Registration, ResetPasswordSaga, UpdateEmailSaga, validateEmailOtpSaga } from './auth.Saga';
 import { GetHairTypes, SaveHairTypeSaga, UpdateTenderHeadLevelSaga } from './hair.Saga';
 import { GetAllServicesSaga, SaveEditServicesPriceSaga, GetProfileQuestionSaga, GetProfileSaga, DeleteProviderPortfolioSaga, SaveProviderPortfolioSaga, GetSavedServicesSaga, ProfileOneSetup, ProfileTwoSetup, ProviderProfileSetupThree, ProviderSaveDepositeFeesSaga, SaveGenderSaga, SaveProfileSaga, SaveProviderProfileSaga, SaveQuestionAnswerSaga, SaveServicesPriceSaga, UpdateServicesSaga, SaveServicesSaga, SaveLicenseSaga, ProviderBioSaga, GetCustomerDetailSaga, GetSpDetailSaga, GetCustomServicesSaga, AddCustomServicesSaga, GetSpCustomServicesSaga, OpenTimeSaga, NotificationListSaga, NotificationCountSaga, GetProfessionsListSaga, GetServicesByProfessionSaga, AddProviderProfessionSaga, DeleteAccountSaga } from './profileSetup.Saga';
 import { CancelPlanSaga, GetSubscriptionPlanSaga, SaveSubscriptionPlanSaga } from './subscriptionPlan.Saga';
@@ -36,6 +36,8 @@ export function* rootSaga() {
         fork(GetProfileQuestionSaga),
         fork(SaveQuestionAnswerSaga),
         fork(LoginSaga),
+        fork(LoginWithPhoneSaga),
+        fork(PhoneOTPVerification),
         fork(ForgotSaga),
         fork(GetProfileSaga),
         fork(GetProviderProfileSaga),

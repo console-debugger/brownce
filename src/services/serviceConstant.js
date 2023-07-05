@@ -19,6 +19,11 @@ export const method = {
     DELETE: "DELETE",
 }
 
+export const DEFAULT_PHONE_COUNTRY = {
+    country_code: "IN",
+    calling_code: "+91",
+}
+
 export const serviceError = {
     NETWORK_ERROR: 'Sorry, something went wrong, please try again in sometime.',
     CATCH_ERROR: 'Something went wrong, please try again'
@@ -93,9 +98,13 @@ export const apiKey = {
     SubscriptionId: "SubscriptionId",
     isUpdate: "IsUpdate",
     Amount: "Amount",
-    STATE_NAME: "StateName"
+    STATE_NAME: "StateName",
+    PHONE: 'Phone',
+    COUNTRY_CODE: 'CountryCode'
 }
 
+export const REGISTER_WITH_PHONE_URL = `${BASE_URL}/api/account/register-with-phone`
+export const PHONE_OTP_VERIFICATION_URL = `${BASE_URL}/api/account/verify-signup-phonenumber`
 export const REGISTRATION_URL = `${BASE_URL}/api/account/RegisterCustomer`
 export const OTP_VERIFICATION_URL = `${BASE_URL}/api/account/validateotp`
 export const PROFILE_SETUP_ONE_URL = `${BASE_URL}/api/customer/ProfileStep_Name`
@@ -109,6 +118,8 @@ export const SAVE_HAIR_TYPES_URL = `${BASE_URL}/api/customer/ProfileStep_HairTyp
 export const SAVE_GENDER_URL = `${BASE_URL}/api/customer/ProfileStep_Gender`
 export const GET_ALL_PROFILE_QUESTION_URL = `${BASE_URL}/api/common/GetProfileQuestions`
 export const SAVE_ALL_QUESTIONS_URL = `${BASE_URL}/api/customer/ProfileStep_FillProfileAns`
+export const LOGIN_WITH_PHONE_URL = `${BASE_URL}/api/account/login-with-phone`
+export const VALIDATE_PHONE_LOGIN_URL = `${BASE_URL}/api/account/validate-phone-login`
 export const LOGIN_URL = `${BASE_URL}/api/account/login`
 export const FORGOT_PASSWORD_URL = `${BASE_URL}/api/account/forgotpassword`
 export const RESET_PASSWORD_URL = `${BASE_URL}/api/account/ResetPassword`

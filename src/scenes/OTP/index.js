@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, KeyboardAwareScroll, MyText, MyView, OtpInput } from '../../components/customComponent'
-import { dismissKeyboard, isAndroid, SCREEN_HEIGHT, showToast } from '../../components/helper'
-import { otpVerificationAction } from '../../redux/action'
+import { checkDialCodePlusSymbol, dismissKeyboard, isAndroid, SCREEN_HEIGHT, showToast } from '../../components/helper'
+import { otpVerificationAction, phoneLoginVerificationAction } from '../../redux/action'
 import { apiKey } from '../../services/serviceConstant'
 import { LIGHT_GRAY, THEME } from '../../utils/colors'
 import styles from './styles'
@@ -10,16 +10,20 @@ import styles from './styles'
 // UI of OTP 
 const OTP = ({ navigation, route }) => {
 
-    const email = route['params'][0] || ''
-    const status = route['params'][1] || ''
+    const emailOrPhone = route?.['params']?.[0] || ''
+    const status = route?.['params']?.[1] || ''
+    const isPhone = route?.['params']?.[2] || false
+    const isPhoneLogin = route?.['params']?.[3] || false
     const dispatch = useDispatch()
     const state = useSelector(state => { return state })
-    const { VERIFICATION_CODE, VERIFICATION_MESSAGE1, VERIFICATION_MESSAGE2, PLEASE_ENTER_OTP, SUBMIT, RESEND } = state['localeReducer']['locale']
+    const { VERIFICATION_CODE, LOGIN, VERIFICATION_MESSAGE1, VERIFICATION_MESSAGE2, VERIFICATION_MESSAGE3, PLEASE_ENTER_OTP, SUBMIT, RESEND } = state['localeReducer']['locale']
 
     const fieldOneRef = useRef('one')
     const fieldTwoRef = useRef('two')
     const fieldThreeRef = useRef('three')
     const fieldFourRef = useRef('four')
+
+    console.log('isPhoneLogin=>', isPhoneLogin)
 
     const [focus, setFocus] = useState({ focusOne: false, focusTwo: false, focusThree: false, focusFour: false })
     const [otpStatus, setOtpStatus] = useState({ fieldOne: false, fieldTwo: false, fieldThree: false, fieldFour: false })
@@ -121,13 +125,22 @@ const OTP = ({ navigation, route }) => {
     // verifying OTP
     const _verifyOtp = () => {
         const OTP = `${otp['fieldOne']}${otp['fieldTwo']}${otp['fieldThree']}${otp['fieldFour']}`
-        const param = {
-            [apiKey['EMAIL']]: email,
+
+        const param = isPhone ? {
+            [apiKey['PHONE']]: emailOrPhone?.split(' ')?.[1] || '',
+            [apiKey['COUNTRY_CODE']]: checkDialCodePlusSymbol(emailOrPhone?.split(' ')?.[0] || ''),
+            [apiKey['OTP']]: OTP,
+            [apiKey['DEVICE_TOKEN']]: 'test',
+            [apiKey['DEVICE_TYPE']]: isAndroid ? 1 : 2
+        } : {
+            [apiKey['EMAIL']]: emailOrPhone,
             [apiKey['OTP']]: OTP,
             [apiKey['DEVICE_TOKEN']]: 'test',
             [apiKey['DEVICE_TYPE']]: isAndroid ? 1 : 2
         }
-        dispatch(otpVerificationAction(param, status))
+        console.log('parsma=>', param)
+        if (isPhoneLogin) dispatch(phoneLoginVerificationAction(param))
+        else dispatch(otpVerificationAction(param, status, isPhone))
     }
 
     const _closeKeyboard = () => dismissKeyboard
@@ -137,8 +150,8 @@ const OTP = ({ navigation, route }) => {
             <MyText style={styles['mediumBoldText']} >{VERIFICATION_CODE}</MyText>
             <MyText style={styles['messageText']} >{VERIFICATION_MESSAGE1}</MyText>
             <MyView style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                <MyText style={styles['messageText']} >{VERIFICATION_MESSAGE2}</MyText>
-                <MyText style={styles['messageTextBold']} >{email}</MyText>
+                <MyText style={styles['messageText']} >{isPhone ? VERIFICATION_MESSAGE3 : VERIFICATION_MESSAGE2}</MyText>
+                <MyText style={styles['messageTextBold']} >{emailOrPhone}</MyText>
             </MyView>
             <MyView style={styles['otpView']}>
                 <OtpInput
@@ -178,7 +191,7 @@ const OTP = ({ navigation, route }) => {
                     onSubmitEditing={_closeKeyboard}
                 />
             </MyView>
-            <Button title={SUBMIT} style={styles['buttonStyle']}
+            <Button text={isPhoneLogin ? LOGIN : SUBMIT} style={styles['buttonStyle']}
                 onPress={_validateOtp}
             />
             <MyText style={[styles['messageText'], { marginVertical: SCREEN_HEIGHT * 0.01 }]} >{RESEND}</MyText>

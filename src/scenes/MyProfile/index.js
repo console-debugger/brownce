@@ -24,6 +24,8 @@ import { isCustomer, locationMapping, logAnalyticEvent, onShare } from '../../co
 import { generateDynamicLink } from '../../utils/dynamicLinkHelper';
 import OneSignal from 'react-native-onesignal';
 import { CUSTOMER_DASHBOARD } from '../../components/eventName';
+import InAppReview from 'react-native-in-app-review';
+
 
 // @ Customer Profile UI
 
@@ -88,6 +90,21 @@ const MyProfile = ({ navigation }) => {
 
   const _navToEditProfile = () => navigation.navigate('settings'); // navigation.navigate('editProfile')
   const _onShareButton = async () => {
+    if (!InAppReview.isAvailable()) return
+    InAppReview.RequestInAppReview()
+      .then(hasFlowFinishedSuccessfully => {
+        console.log('hasFlowFinishedSuccessfully=>', hasFlowFinishedSuccessfully)
+        if (hasFlowFinishedSuccessfully) {
+          console.log('success=>')
+        }
+        else {
+          console.log('failure=>')
+        }
+      })
+      .catch(err => {
+        console.log('error==>', JSON.stringify(err))
+      })
+    return
     const profileType = isCustomer() ? 'customer' : 'provider';
     const userId = profile?.['UserId'];
     const newLink = await generateDynamicLink(profileType, userId)

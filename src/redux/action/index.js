@@ -35,8 +35,8 @@ export const otpViewAction = payload => ({
     type: TYPES['OTP_VIEW_ACTION'], payload
 })
 
-export const otpVerificationAction = (payload, status) => ({
-    type: TYPES['OTP_VERIFICATION_ACTION'], payload, status
+export const otpVerificationAction = (payload, status, isPhone) => ({
+    type: TYPES['OTP_VERIFICATION_ACTION'], payload, status, isPhone
 })
 
 export const profileSetupOneAction = payload => ({
@@ -123,8 +123,8 @@ export const loginAction = (payload, isRemember) => ({
     type: TYPES['LOGIN_ACTION'], payload, isRemember
 })
 
-export const forgotPasswordAction = (payload, Email) => ({
-    type: TYPES['FORGOT_PASSWORD_ACTION'], payload, Email
+export const forgotPasswordAction = (payload, EmailOrPhone, isPhone) => ({
+    type: TYPES['FORGOT_PASSWORD_ACTION'], payload, EmailOrPhone, isPhone
 })
 
 export const getProfileAction = () => ({
@@ -841,4 +841,20 @@ export const saveAppFeedbackAction = (payload, callBack) => ({
 
 export const getBrownceStatsAction = (payload, callBack) => ({
     type: TYPES.GET_BROWNCE_STATS_ACTION, payload, callBack
+})
+
+export const checkSignupTypeAction = payload => ({
+    type: TYPES.CHECK_SIGNUP_TYPE_ACTION, payload
+})
+
+export const signupUserDataAction = payload => ({
+    type: TYPES.SIGNUP_USER_DATA_ACTION, payload
+})
+
+export const loginWithPhoneAction = (payload) => ({
+    type: TYPES.LOGIN_WITH_PHONE_ACTION, payload
+})
+
+export const phoneLoginVerificationAction = (payload) => ({
+    type: TYPES.PHONE_LOGIN_VERIFICATION_ACTION, payload
 })

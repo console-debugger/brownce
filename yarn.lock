@@ -4733,6 +4733,11 @@
     "pify" "^3.0.0"
     "slash" "^1.0.0"
 
+"google-libphonenumber@^3.2.32":
+  "integrity" "sha512-mcNgakausov/B/eTgVeX8qc8IwWjRrupk9UzZZ/QDEvdh5fAjE7Aa211bkZpZj42zKkeS6MTT8avHUwjcLxuGQ=="
+  "resolved" "https://registry.npmjs.org/google-libphonenumber/-/google-libphonenumber-3.2.32.tgz"
+  "version" "3.2.32"
+
 "gopd@^1.0.1":
   "integrity" "sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA=="
   "resolved" "https://registry.npmjs.org/gopd/-/gopd-1.0.1.tgz"
@@ -7906,6 +7911,11 @@
   "version" "1.0.12"
   dependencies:
     "react-native-snap-carousel" "*"
+
+"react-native-in-app-review@^4.3.3":
+  "integrity" "sha512-Q9sXBtK8tCBYFPCGmMgeMlkxXC5e6vAyPZK26OC1oOKUuKUd0QORnryk/qbwnuN4fLshHQN8UKlLgyHLGRuK3A=="
+  "resolved" "https://registry.npmjs.org/react-native-in-app-review/-/react-native-in-app-review-4.3.3.tgz"
+  "version" "4.3.3"
 
 "react-native-iphone-x-helper@^1.0.3", "react-native-iphone-x-helper@^1.2.1":
   "integrity" "sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg=="

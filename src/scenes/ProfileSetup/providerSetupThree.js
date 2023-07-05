@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useRef } from 'react'
 import { useState } from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -23,6 +23,9 @@ const ProviderProfileSetupThree = ({ navigation }) => {
     const dispatch = useDispatch()
     const state = useSelector(state => { return state })
     const { MY, CONTACT_DETAILS, PHONE, SUBMIT_YOUR_PHONE_NUMBER_WITH_COUNTRY_CODE, CONTINUE } = state['localeReducer']['locale']
+    const { signupUserData } = state.profileReducer
+
+    console.log('signupUserData==>', signupUserData)
 
     const initialFormField = {
         phone: '',
@@ -39,17 +42,15 @@ const ProviderProfileSetupThree = ({ navigation }) => {
 
     const emailRef = useRef('emailRef')
 
+    useEffect(() => {
+        setFormField(prevState => ({ ...prevState, phone: `${signupUserData[apiKey.COUNTRY_CODE]}${signupUserData[apiKey.PHONE]}` }))
+    }, [signupUserData])
+
     const _focus = type => () => {
         if (type === TYPES['PHONE']) setFocus(1)
         else if (type === TYPES['EMAIL']) setFocus(2)
     }
 
-    useFocusEffect(
-        useCallback(() => {
-            // dispatch(loaderAction(false))
-            // dispatch(getSpDataStepAction(8))
-        }, [])
-    )
     const _blur = () => setFocus(0)
 
     const _focusToNext = type => () => {

@@ -92,6 +92,19 @@ export const validateMobileNo = mobileNo => {
     }
 }
 
+export const validateMobileNoWithoutPlusSymbol = mobileNo => {
+    // const numRegExWithCode = /^\+(?:[0-9] ?){10,12}[0-9]$/
+    const numRegExWithCode = /^[1-9][0-9]{9,12}$/;
+    mobileNo = mobileNo.trim()
+    if (mobileNo == "" || mobileNo == undefined || mobileNo == null) {
+        return { status: false, error: appConstants['PLEASE_ENTER_PHONE_NUMBER'] }
+    } else if (!numRegExWithCode.test(mobileNo)) {
+        return { status: false, error: appConstants['PLEASE_ENTER_VALID_PHONE_NUMBER'] }
+    } else {
+        return { status: true, error: '' }
+    }
+}
+
 export const validatePrice = number => {
     const numberRegEx = /^[0-9][0-9]*$/
     number = number.trim()

@@ -28,7 +28,7 @@ import {
   MID_GRAY,
 } from '../utils/colors';
 import commonStyle from './commonStyle';
-import { dismissKeyboard, SCREEN_HEIGHT, SCREEN_WIDTH, isIOS } from './helper';
+import { dismissKeyboard, SCREEN_HEIGHT, SCREEN_WIDTH, isIOS, checkDialCodePlusSymbol } from './helper';
 import { getFontSize, dynamicSize } from '../utils/responsive';
 import { useSelector } from 'react-redux';
 import {
@@ -542,7 +542,6 @@ export const CustomDropDown = (props) => {
       containerStyle={[commonStyle['dropDownContainer'], style]}
       labelFontSize={label ? getFontSize(12) : 0}
       fontSize={getFontSize(14)}
-      error={error}
       fontFamily={montserratSemiBold}
       baseColor={BLACK}
       label={label || ''}
@@ -1011,3 +1010,41 @@ export const MyPagination = props => {
     />
   )
 }
+
+export const MobileInput = forwardRef((props, ref) => {
+  const { textContentType, mainContainerStyle, returnKeyType, countryCodeTextStyle, errorMessage, style, source, countryCode, rightIcon, onPress, fieldstyle, onRightPress, value, onChangeText, keyboardType, rightIconStyle, rightIconImageStyle } = props
+  return (
+    <MyView style={mainContainerStyle}>
+      <MyView style={[commonStyle['textField'], fieldstyle]}>
+        {source && <MyImage resizeMode={'contain'} source={source} />}
+        {!!countryCode && <Touchable onPress={onPress} style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <MyText style={[{ marginLeft: 8, fontFamily: montserratSemiBold, fontSize: getFontSize(14) }, countryCodeTextStyle]}>{checkDialCodePlusSymbol(countryCode)}</MyText>
+          <MyImage style={{ margin: 5}} source={downArrow} />
+        </Touchable>
+        }
+        <TextInput {...props}
+          ref={ref}
+          textContentType={textContentType}
+          style={[commonStyle['textInput'], { flex: 1, paddingBottom: 10 }, style]}
+          underlineColorAndroid={'transparent'}
+          placeholderTextColor={PLACEHOLDER_COLOR}
+          autoCorrect={false}
+          spellCheck={false}
+          allowFontScaling={false}
+          value={value}
+          maxLength={14}
+          onChangeText={onChangeText}
+          returnKeyType={returnKeyType || 'done'}
+          keyboardType={keyboardType || 'number-pad'}
+        />
+        {rightIcon && <Touchable style={rightIconStyle} onPress={onRightPress}>
+          <MyImage source={rightIcon} style={rightIconImageStyle} />
+        </Touchable>}
+
+      </MyView>
+      {errorMessage?.length ? <MyView style={{ width: SCREEN_WIDTH - dynamicSize(52) }}>
+        <MyText style={[commonStyle.errorMessage]}>{errorMessage}</MyText>
+      </MyView> : null}
+    </MyView>
+  )
+})

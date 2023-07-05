@@ -1,8 +1,8 @@
 import { StyleSheet } from 'react-native'
-import { SCREEN_HEIGHT } from '../../components/helper'
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../components/helper'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
-import { THEME, LIGHT_GRAY } from '../../utils/colors'
-import { montserratBold, montserratSemiBold } from '../../utils/fontFamily'
+import { THEME, LIGHT_GRAY, LIGHT_WHITE } from '../../utils/colors'
+import { montserrat, montserratBold, montserratSemiBold } from '../../utils/fontFamily'
 
 const styles = StyleSheet.create({
     parentContainer: {
@@ -37,6 +37,35 @@ const styles = StyleSheet.create({
     },
     buttonStyle: {
         marginVertical: SCREEN_HEIGHT * 0.1
+    },
+    tabContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: SCREEN_WIDTH / 1.5,
+        marginBottom: SCREEN_HEIGHT * 0.03
+    },
+    tabItem: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: dynamicSize(15)
+    },
+    selectedBorder: {
+        borderBottomColor: THEME,
+        borderBottomWidth: 2
+    },
+    unSelectedBorder: {
+        borderBottomColor: LIGHT_WHITE,
+        borderBottomWidth: 2
+    },
+    tabText: {
+        fontFamily: montserratSemiBold
+    },
+    selectedTabText: {
+        fontFamily: montserratSemiBold
+    },
+    unSelectedTabText: {
+        fontFamily: montserrat
     }
 })
 
