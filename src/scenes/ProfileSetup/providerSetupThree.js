@@ -98,6 +98,7 @@ const ProviderProfileSetupThree = ({ navigation }) => {
                     noteText={SUBMIT_YOUR_PHONE_NUMBER_WITH_COUNTRY_CODE}
                     errorMessage={phoneError || null}
                     blurOnSubmit={false}
+                    editable={!!!`${signupUserData[apiKey.COUNTRY_CODE]}${signupUserData[apiKey.PHONE]}`.trim()}
                 />
                 <Input
                     ref={emailRef}
