@@ -234,7 +234,7 @@ function* forgotSaga(param) {
             yield put(loaderAction(false))
             yield delay(600)
             showToast(forgotRes['message'])
-            navigateToScreen('otpVerification', [param['payload']['EmailOrPhone'], true, param?.isPhone ? true : false])
+            navigateToScreen('otpVerification', [param['EmailOrPhone'], true, false])
         }
         else {
             yield put(loaderAction(false))

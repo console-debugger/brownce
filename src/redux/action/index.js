@@ -123,8 +123,8 @@ export const loginAction = (payload, isRemember) => ({
     type: TYPES['LOGIN_ACTION'], payload, isRemember
 })
 
-export const forgotPasswordAction = (payload, EmailOrPhone, isPhone) => ({
-    type: TYPES['FORGOT_PASSWORD_ACTION'], payload, EmailOrPhone, isPhone
+export const forgotPasswordAction = (payload, EmailOrPhone) => ({
+    type: TYPES['FORGOT_PASSWORD_ACTION'], payload, EmailOrPhone
 })
 
 export const getProfileAction = () => ({
