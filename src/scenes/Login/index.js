@@ -51,7 +51,7 @@ const Login = ({ navigation }) => {
         phoneError: ''
     }
 
-    const [{ email, password, visible, phone, countryPickerVisible, country_code = DEFAULT_PHONE_COUNTRY.country_code, calling_code = DEFAULT_PHONE_COUNTRY.calling_code }, setFormField] = useState(initialFormField)
+    const [{ email, password, visible, phone, countryPickerVisible, country_code, calling_code }, setFormField] = useState(initialFormField)
     const [{ emailError, passwordError, phoneError }, setError] = useState(initialError)
     const [focus, setFocus] = useState(-1)
     const [isremember, setRememberMe] = useState(false)
@@ -71,6 +71,7 @@ const Login = ({ navigation }) => {
     useEffect(() => {
         // if user selected remember me, then fetch data from local storage
         const fetchRememberMe = async () => {
+            setFormField(prevState => ({ ...prevState, country_code: DEFAULT_PHONE_COUNTRY.country_code, calling_code: DEFAULT_PHONE_COUNTRY.calling_code }))
             const localEmail = await getData(localKey['EMAIL'])
             const localPassword = await getData(localKey['PASSWORD'])
             if (localEmail) { setFormField({ email: localEmail, password: localPassword }), setRememberMe(true) }
@@ -135,8 +136,6 @@ const Login = ({ navigation }) => {
 
     const _navToForget = () => navigation.navigate('forgotPassword')
 
-    const openModal = () => setFormField(prevState => ({ ...prevState, visible: true }))
-
     const selectTab = type => () => {
         setSelectedTab(type)
     }
@@ -161,14 +160,8 @@ const Login = ({ navigation }) => {
         else showToast(DIAL_CODE_NOT_AVAILABLE)
     }
 
-    const _navToSignup = type => () => {
-        dispatch(checkSignupTypeAction(type))
-        onCancelPress()
+    const _navToSignup = () => {
         navigation.navigate('signup')
-    }
-
-    const onCancelPress = () => {
-        setFormField(prevState => ({ ...prevState, visible: false }))
     }
 
     // validate data before login
@@ -279,12 +272,11 @@ const Login = ({ navigation }) => {
                                 height: null,
                                 fontFamily: montserratSemiBold
                             }}
+                            mainContainerStyle={{ marginBottom: dynamicSize(15) }}
                             fieldstyle={{ borderBottomColor: focus === 1 ? BLACK : LIGHT_GRAY, }}
                             onPress={openPicker}
                             countryCode={calling_code}
                             onFocus={_focus(TYPES['PHONE'])}
-                            // onBlur={_clearFocus}
-                            // source={activeEmail}
                             value={phone}
                             placeholder={PHONE}
                             onChangeText={_onChangeText(TYPES['PHONE'])}
@@ -293,7 +285,7 @@ const Login = ({ navigation }) => {
                             errorMessage={phoneError}
                         />
                     }
-                    <MyView style={styles['rowContainer']}>
+                    {selectedTab == LOGIN_TYPE.EMAIL ? <MyView style={styles['rowContainer']}>
                         <Selection
                             onPress={_rememberMe}
                             source={isremember ? activeCheckIcon : uncheckBox}
@@ -301,23 +293,11 @@ const Login = ({ navigation }) => {
                         />
                         <MyText onPress={_navToForget} style={styles['forgotText']}>{FORGOT_PASSWORD}</MyText>
                     </MyView>
+                        :
+                        null}
                     <Button onPress={_navToDashboard} style={styles['buttonStyle']} text={selectedTab == LOGIN_TYPE.EMAIL ? LOGIN : CONTINUE} />
                 </KeyboardAwareScroll>
-                <MyText style={commonStyle['dontHaveAccount']}>{DONT_HAVE_AN_ACCOUNT}<MyText onPress={openModal} style={commonStyle['signUpText']} >{SIGNUP}</MyText></MyText>
-                {visible && <MyView
-                    style={{ ...StyleSheet.absoluteFill, backgroundColor: TRANSPARENT_BLACK, zIndex: 10, justifyContent: 'flex-end' }}
-                >
-                    <MyView style={{ padding: dynamicSize(10), alignItems: 'center', flex: 1 }}>
-                        <Touchable style={{ flex: 1, width: SCREEN_WIDTH }} onPress={onCancelPress} />
-                        <Touchable onPress={_navToSignup(LOGIN_TYPE.EMAIL)} style={commonStyle['takePhotoView']}>
-                            <MyText style={{ color: BLACK, fontSize: getFontSize(20) }} >{CONTINUE_WITH_EMAIL}</MyText>
-                        </Touchable>
-                        <Touchable onPress={_navToSignup(LOGIN_TYPE.PHONE)} style={commonStyle['chooseFromLibrary']}>
-                            <MyText style={{ color: BLACK, fontSize: getFontSize(20) }} >{CONTINUE_WITH_PHONE}</MyText>
-                        </Touchable>
-                    </MyView>
-                </MyView>
-                }
+                <MyText style={commonStyle['dontHaveAccount']}>{DONT_HAVE_AN_ACCOUNT}<MyText onPress={_navToSignup} style={commonStyle['signUpText']} >{SIGNUP}</MyText></MyText>
                 {countryPickerVisible &&
                     <MyCountryPicker
                         onSelect={_onCountryPickerSelect}

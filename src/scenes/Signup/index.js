@@ -10,6 +10,7 @@ import {
   SafeArea,
   Loader,
   MobileInput,
+  Touchable,
 } from '../../components/customComponent';
 import { LIGHT_WHITE, BLACK, LIGHT_GRAY } from '../../utils/colors';
 import { useDispatch, useSelector } from 'react-redux';
@@ -43,7 +44,7 @@ import {
   validateMobileNoWithoutPlusSymbol,
 } from '../../utils/validation';
 import { DEFAULT_PHONE_COUNTRY, apiKey } from '../../services/serviceConstant';
-import { registrationAction } from '../../redux/action';
+import { checkSignupTypeAction, registrationAction } from '../../redux/action';
 import { navigateToScreen } from '../../navigation/rootNav';
 import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -122,6 +123,7 @@ const Signup = ({ navigation, route }) => {
   ] = useState(initialError);
   const [focus, setFocus] = useState(-1);
   const [isAccepted, setAccepted] = useState(false);
+  const [selectedTab, setSelectedTab] = useState(LOGIN_TYPE.EMAIL)
 
   const isPhone = useMemo(() => {
     return signupType == LOGIN_TYPE.PHONE
@@ -161,7 +163,7 @@ const Signup = ({ navigation, route }) => {
   };
 
   const _focusNext = (type) => () => {
-    if (type === TYPES['USERNAME']) { isPhone ? phoneRef.current.focus() : emailRef.current.focus(); }
+    if (type === TYPES['USERNAME']) { selectedTab == LOGIN_TYPE.PHONE ? phoneRef.current.focus() : emailRef.current.focus(); }
     else if (type === TYPES['PHONE']) emailRef.current.focus();
     else if (type === TYPES['EMAIL']) passwordRef.current.focus();
     else if (type === TYPES['PASSWORD']) confPasswordRef.current.focus();
@@ -201,10 +203,14 @@ const Signup = ({ navigation, route }) => {
     else showToast(DIAL_CODE_NOT_AVAILABLE)
   }
 
+  const selectTab = type => () => {
+    setSelectedTab(type)
+  }
+
   const _navToProfileSetup = () => {
     const number = phoneUtil.parseAndKeepRawInput(`${Number(calling_code)}${phone}`, country_code);
     const isValidNumber = phoneUtil.isValidNumberForRegion(number, country_code)
-    if (isPhone) {
+    if (selectedTab == LOGIN_TYPE.PHONE) {
       requireUsername(username).status
         ? validateMobileNoWithoutPlusSymbol(phone).status
           ? isValidNumber
@@ -256,7 +262,7 @@ const Signup = ({ navigation, route }) => {
   const _register = () => {
     dismissKeyboard();
     if (isAccepted) {
-      const param = isPhone ? {
+      const param = selectedTab == LOGIN_TYPE.PHONE ? {
         [apiKey['USERNAME']]: username,
         [apiKey['PHONE']]: phone,
         [apiKey['EMAIL']]: email,
@@ -269,6 +275,7 @@ const Signup = ({ navigation, route }) => {
         [apiKey['ROLE_ID']]: isCustomer() ? 3 : 2,
       };
       console.log('param==>', param)
+      dispatch(checkSignupTypeAction(selectedTab))
       dispatch(registrationAction(param));
     } else showToast(PLEASE_ACCEPT_TERMS_AND_CONDITION);
   };
@@ -292,6 +299,18 @@ const Signup = ({ navigation, route }) => {
           <MyText style={styles['providerText']}>
             {isProvider() ? PROVIDER : ''}
           </MyText>
+          <MyView style={styles.tabContainer}>
+            <Touchable
+              onPress={selectTab(LOGIN_TYPE.EMAIL)}
+              style={[styles.tabItem, selectedTab == LOGIN_TYPE.EMAIL ? styles.selectedBorder : styles.unSelectedBorder]}>
+              <MyText style={[styles.tabText, selectedTab == LOGIN_TYPE.EMAIL ? styles.selectedTabText : styles.unSelectedTabText]}>{EMAIL}</MyText>
+            </Touchable>
+            <Touchable
+              onPress={selectTab(LOGIN_TYPE.PHONE)}
+              style={[styles.tabItem, selectedTab == LOGIN_TYPE.PHONE ? styles.selectedBorder : styles.unSelectedBorder]}>
+              <MyText style={[styles.tabText, selectedTab == LOGIN_TYPE.PHONE ? styles.selectedTabText : styles.unSelectedTabText]}>{PHONE}</MyText>
+            </Touchable>
+          </MyView>
           <Input
             style={{
               borderBottomColor: focus === 1 ? BLACK : LIGHT_GRAY,
@@ -310,7 +329,7 @@ const Signup = ({ navigation, route }) => {
             blurOnSubmit={false}
             errorMessage={usernameError}
           />
-          {isPhone && <MobileInput
+          {selectedTab == LOGIN_TYPE.PHONE && <MobileInput
             style={{
               height: null,
               fontFamily: phone ? montserratSemiBold : montserrat
@@ -331,7 +350,7 @@ const Signup = ({ navigation, route }) => {
           />}
           <Input
             style={{
-              marginTop: isPhone ? dynamicSize(10) : null,
+              marginTop: selectedTab == LOGIN_TYPE.PHONE ? dynamicSize(10) : null,
               borderBottomColor: focus === 3 ? BLACK : LIGHT_GRAY,
               marginBottom: !emailError ? getFontSize(12) + dynamicSize(4) : 0,
             }}
@@ -348,7 +367,7 @@ const Signup = ({ navigation, route }) => {
             blurOnSubmit={false}
             errorMessage={emailError}
           />
-          {!isPhone && <>
+          {selectedTab == LOGIN_TYPE.EMAIL && <>
             <Input
               source={inactivePassword}
               style={{
