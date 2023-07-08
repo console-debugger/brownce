@@ -1017,15 +1017,15 @@ export const MobileInput = forwardRef((props, ref) => {
     <MyView style={mainContainerStyle}>
       <MyView style={[commonStyle['textField'], fieldstyle]}>
         {source && <MyImage resizeMode={'contain'} source={source} />}
-        {!!countryCode && <Touchable onPress={onPress} style={{ flexDirection: 'row', alignItems: 'center' }}>
+        {!!countryCode && <Touchable onPress={onPress} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: isIOS ? dynamicSize(7) : 0 }}>
           <MyText style={[{ marginLeft: 8, fontFamily: montserratSemiBold, fontSize: getFontSize(14) }, countryCodeTextStyle]}>{checkDialCodePlusSymbol(countryCode)}</MyText>
-          <MyImage style={{ margin: 5}} source={downArrow} />
+          <MyImage style={{ margin: 5 }} source={downArrow} />
         </Touchable>
         }
         <TextInput {...props}
           ref={ref}
           textContentType={textContentType}
-          style={[commonStyle['textInput'], { flex: 1, paddingBottom: 10 }, style]}
+          style={[commonStyle['textInput'], { flex: 1, paddingBottom: dynamicSize(10) }, style]}
           underlineColorAndroid={'transparent'}
           placeholderTextColor={PLACEHOLDER_COLOR}
           autoCorrect={false}

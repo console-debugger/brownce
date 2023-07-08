@@ -27,6 +27,7 @@ import {
   checkDialCodePlusSymbol,
   dismissKeyboard,
   isCustomer,
+  isIOS,
   isProvider,
   SCREEN_WIDTH,
   showToast,
@@ -334,6 +335,7 @@ const Signup = ({ navigation, route }) => {
               height: null,
               fontFamily: phone ? montserratSemiBold : montserrat
             }}
+            mainContainerStyle={{ marginTop: isIOS ? 20 : 0 }}
             fieldstyle={{ borderBottomColor: focus === 2 ? BLACK : LIGHT_GRAY, }}
             ref={phoneRef}
             onPress={openPicker}
