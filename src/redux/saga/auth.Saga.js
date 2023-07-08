@@ -92,6 +92,7 @@ function* phoneLoginOtpVerification(param) {
         const loginRes = yield apiRequest(param['payload'], VALIDATE_PHONE_LOGIN_URL, method['POST'])
         console.log('loginRes==>', JSON.stringify(loginRes))
         if (loginRes['status'] === 200) {
+            console.log('here==>',loginRes)
             yield crashlytics().setUserId(loginRes?.result?.UserId?.toString() || '')
             yield crashlytics().setAttributes({
                 role: isCustomer() ? 'Customer' : 'Provider',
@@ -112,6 +113,7 @@ function* phoneLoginOtpVerification(param) {
         else {
             yield put(loaderAction(false))
             yield delay(600)
+            console.log('asdasdasd==>',loginRes.message)
             loginRes['message'] == "Log-in Successful!" || loginRes['message'] == "Username/Password is Incorrect" || loginRes['message'] == "An Unexpected Error Has Occured!" ? showToast(loginRes['message']) : yield put(popupAction(true, loginRes['message']))
         }
         yield put(loaderAction(false))
@@ -174,6 +176,7 @@ function* loginSaga(param) {
         else {
             yield put(loaderAction(false))
             yield delay(600)
+            console.log('asdasdasd==>1',loginRes.message)
             loginRes['message'] == "Log-in Successful!" || loginRes['message'] == "Username/Password is Incorrect" || loginRes['message'] == "An Unexpected Error Has Occured!" ? showToast(loginRes['message']) : yield put(popupAction(true, loginRes['message']))
 
         }
@@ -209,7 +212,7 @@ function* loginWithPhoneSaga(param) {
         else {
             yield put(loaderAction(false))
             yield delay(600)
-            showToast(loginResp['message'])
+            loginResp['message'] == "Log-in Successful!" || loginResp['message'] == "Username/Password is Incorrect" || loginResp['message'] == "An Unexpected Error Has Occured!" ? showToast(loginResp['message']) : yield put(popupAction(true, loginResp['message']))
         }
     } catch (err) {
         yield put(loaderAction(false))
