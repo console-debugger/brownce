@@ -395,3 +395,9 @@ export const logAnalyticEvent = (eventName, data) => {
   if (typeof eventName == 'string' && eventName.trim().length)
     analytics().logEvent(eventName, data)
 }
+
+export const checkDialCodePlusSymbol = dialCode => {
+  if (dialCode && dialCode.includes('+')) return dialCode
+  else if (dialCode) return `+${dialCode}`
+  else return ''
+}

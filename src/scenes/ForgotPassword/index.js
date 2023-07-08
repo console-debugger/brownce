@@ -16,7 +16,10 @@ const ForgotPassword = ({ navigation }) => {
     const [email, setEmail] = useState('')
     const [emailError, setError] = useState('')
 
-    const _onChangeText = text => { setEmail(text), setError('') }
+    const _onChangeText = text => {
+        setEmail(text)
+        setError('')
+    }
 
     // validation before api call
     const _validate = () => {

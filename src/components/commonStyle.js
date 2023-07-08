@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native'
-import { WHITE, THEME, BLACK, LIGHT_GRAY, LIGHT_WHITE, MID_GRAY, LIGHT_BROWN } from '../utils/colors'
+import { WHITE, THEME, BLACK, LIGHT_GRAY, LIGHT_WHITE, MID_GRAY, LIGHT_BROWN, PLACEHOLDER_COLOR } from '../utils/colors'
 import { dynamicSize, getFontSize } from '../utils/responsive'
 import { montserratBold, montserratSemiBold, montserrat, montserratMedium } from '../utils/fontFamily'
 import { SCREEN_WIDTH, SCREEN_HEIGHT, isAndroid, isIOS } from './helper'
@@ -406,7 +406,7 @@ const commonStyle = StyleSheet.create({
         fontSize: getFontSize(14)
     },
     multiMainWrapperStyle: {
-        width:SCREEN_WIDTH - dynamicSize(70),
+        width: SCREEN_WIDTH - dynamicSize(70),
         backgroundColor: WHITE,
         // borderRadius: dynamicSize(10),
         borderBottomColor: THEME,
@@ -427,6 +427,14 @@ const commonStyle = StyleSheet.create({
         paddingRight: 0,
         borderBottomWidth: 0,
         borderRadius: dynamicSize(10)
+    },
+    textField: {
+        alignItems: 'center',
+        alignSelf: 'center',
+        borderBottomWidth: 1.5,
+        borderBottomColor: BLACK,
+        flexDirection: 'row',
+        width: SCREEN_WIDTH - dynamicSize(70),
     },
 })
 

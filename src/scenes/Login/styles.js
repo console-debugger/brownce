@@ -1,8 +1,8 @@
 import { StyleSheet } from 'react-native'
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from '../../components/helper'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
-import { MID_GRAY, BLACK } from '../../utils/colors'
-import { montserratSemiBold, montserratMedium } from '../../utils/fontFamily'
+import { MID_GRAY, BLACK, THEME, LIGHT_WHITE } from '../../utils/colors'
+import { montserratSemiBold, montserratMedium, montserrat } from '../../utils/fontFamily'
 
 const styles = StyleSheet.create({
     mainContainer: {
@@ -32,6 +32,35 @@ const styles = StyleSheet.create({
     },
     buttonStyle: {
         marginVertical: SCREEN_HEIGHT * 0.05
+    },
+    tabContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: SCREEN_WIDTH / 1.5,
+        marginBottom: SCREEN_HEIGHT * 0.03
+    },
+    tabItem: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: dynamicSize(15)
+    },
+    selectedBorder: {
+        borderBottomColor: THEME,
+        borderBottomWidth: 2
+    },
+    unSelectedBorder: {
+        borderBottomColor: LIGHT_WHITE,
+        borderBottomWidth: 2
+    },
+    tabText: {
+        fontFamily: montserratSemiBold
+    },
+    selectedTabText: {
+        fontFamily: montserratSemiBold
+    },
+    unSelectedTabText: {
+        fontFamily: montserrat
     }
 })
 

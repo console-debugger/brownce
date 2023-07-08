@@ -124,6 +124,7 @@
   "VERIFICATION_CODE": "Verification code",
   "VERIFICATION_MESSAGE1": "Please type the verification code sent to",
   "VERIFICATION_MESSAGE2": "your email ",
+  "VERIFICATION_MESSAGE3": "your phone ",
   "PLEASE_ENTER_OTP": "Please enter otp",
   "VERIFICATION": "Verification",
   "PLEASE_SELECT_CITY": "Please select city",
@@ -239,5 +240,8 @@
   "CANCELLED_APPOINTMENT_INFO": "The number of bookings that were canceled by clients or you.",
   "AVERAGE_SERVICE_TIME_INFO": "The average amount of time you spend with each client during a service.",
   "AVERAGE_BOOKING_INFO": "The average amount of money spent by clients on each booking.",
-  "MOST_POPULAR_SERVICES_INFO": "The beauty services that were booked the most frequently on Brownce."
+  "MOST_POPULAR_SERVICES_INFO": "The beauty services that were booked the most frequently on Brownce.",
+  "CONTINUE_WITH_EMAIL":"Continue with Email",
+  "CONTINUE_WITH_PHONE":"Continue with Phone",
+  "DIAL_CODE_NOT_AVAILABLE":"Country dial code not available for this country"
 }
