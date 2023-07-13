@@ -138,6 +138,8 @@ const ProfileSetupThree = ({ navigation }) => {
     }
 
     const openMapModal = async () => {
+        setModalVisible(true)
+return
         if (latitude && longitude) setModalVisible(true)
         else {
             try {
