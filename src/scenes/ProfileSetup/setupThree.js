@@ -61,23 +61,23 @@ const ProfileSetupThree = ({ navigation }) => {
 
     useFocusEffect(
         useCallback(() => {
-            // _fetchLocation()
-            isIOS ? _fetchLoaction() : _fetchLoactionAndroid()
+            _fetchLocation()
+            // isIOS ? _fetchLoaction() : _fetchLoactionAndroid()
             // dispatch(getCountryListAction())
         }, [])
     )
 
-    // const _fetchLocation = async () => {
-    //     try {
-    //         const coordinates = await getCurrentLocationCoordinate()
-    //         console.log('coordinates==>',coordinates)
-    //         setlatitude(coordinates.latitude)
-    //         setlongitude(coordinates.longitude)
-    //     } catch (error) {
-    //         console.log('errror=>',error)
-    //         alert(error.message)
-    //     }
-    // }
+    const _fetchLocation = async () => {
+        try {
+            const coordinates = await getCurrentLocationCoordinate()
+            console.log('coordinates==>', coordinates)
+            setlatitude(coordinates.latitude)
+            setlongitude(coordinates.longitude)
+        } catch (error) {
+            console.log('errror=>', error)
+            // alert(error.message)
+        }
+    }
 
 
     const _fetchLoactionAndroid = () => {
@@ -137,7 +137,21 @@ const ProfileSetupThree = ({ navigation }) => {
         setlongitude(longitude)
     }
 
-    const openMapModal = () => setModalVisible(true)
+    const openMapModal = async () => {
+        if (latitude && longitude) setModalVisible(true)
+        else {
+            try {
+                const coordinates = await getCurrentLocationCoordinate()
+                console.log('coordinates==>', coordinates)
+                setlatitude(coordinates.latitude)
+                setlongitude(coordinates.longitude)
+                setModalVisible(true)
+            } catch (error) {
+                console.log('errror=>', error)
+                // alert(error.message)
+            }
+        }
+    }
 
     const closeMapModal = () => setModalVisible(false)
 
@@ -166,7 +180,7 @@ const ProfileSetupThree = ({ navigation }) => {
 
     const _validate = () => {
         if (!latitude && !longitude) {
-            return alert('Unable to fetch coordinates of your selected location')
+            return alert('Unable to fetch location coordinates.')
         }
         else {
             _saveLocation()
@@ -177,8 +191,8 @@ const ProfileSetupThree = ({ navigation }) => {
         const param = {
             'StateName': selectedUserState,
             [apiKey['CITY_NAME']]: selectedCityId,
-            [apiKey['LATITUDE']]: latitude || 40.38190380557175,
-            [apiKey['LONGITUDE']]: longitude || -75.90530281564186
+            [apiKey['LATITUDE']]: latitude,
+            [apiKey['LONGITUDE']]: longitude
         }
         dispatch(saveLocationAction(param))
     }
@@ -215,7 +229,7 @@ const ProfileSetupThree = ({ navigation }) => {
                     </MyView>
                     <Button onPress={openMapModal} style={[styles['buttonStyle'], { marginTop: dynamicSize(25) }]} text={LOCATE_ON_MAP} />
                     <Button disabled={(!latitude && !longitude)} onPress={_validate} style={[styles['buttonStyle'], { marginVertical: dynamicSize(10), backgroundColor: (latitude && longitude) ? THEME : LIGHT_BROWN }]} text={CONTINUE} />
-                    <Button disabled={(!latitude && !longitude)} onPress={_complete_later} style={[styles['buttonStyle'], { backgroundColor: (latitude && longitude) ? THEME : LIGHT_BROWN }]} text={'COMPLETE LATER'} />
+                    {isCustomer() && <Button disabled={(!latitude && !longitude)} onPress={_complete_later} style={[styles['buttonStyle'], { backgroundColor: (latitude && longitude) ? THEME : LIGHT_BROWN }]} text={'COMPLETE LATER'} />}
                 </MyView>
                 <CustomModal
                     isVisible={isMapModalVisible}
