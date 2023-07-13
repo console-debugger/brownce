@@ -27,9 +27,10 @@ const App = () => {
   // OneSignal Init Code
   // OneSignal.setLogLevel(6, 0);
   OneSignal.setAppId(
-    Platform.OS === 'ios'
-      ? 'f25aab86-cefa-4fae-9ace-8405eb75a6ee'
-      : 'c5d1a9ff-d08a-490c-a93d-3a87e80bda90',
+    'f25aab86-cefa-4fae-9ace-8405eb75a6ee'
+    // Platform.OS === 'ios'
+    //   ? 'f25aab86-cefa-4fae-9ace-8405eb75a6ee'
+    //   : 'c5d1a9ff-d08a-490c-a93d-3a87e80bda90',
   );
 
   // Prompt for push on iOS
