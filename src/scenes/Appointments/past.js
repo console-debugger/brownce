@@ -14,6 +14,7 @@ import { requestOneTimePayment } from 'react-native-paypal';
 import { PaymentPopup, RatingPopup } from '../../components/alert'
 import { MAKE_PAYMENT_SUCCESS_ACTION } from '../../redux/action/type'
 import { token } from "../../services/serviceConstant"
+import moment from 'moment'
 
 
 // @ Past Appointment UI
@@ -131,7 +132,7 @@ const PastAppointment = ({ navigation }) => {
                 <Touchable onPress={() => navigation.navigate('serviceDetail', { id: item['AppointmentId'] })} >
                     <MyView style={styles['headerContent']}>
                         <MyText style={styles['bookingId']}>{`${BOOKING_ID} : `}<MyText style={styles['idvalue']}>{item['AppointmentId']}</MyText></MyText>
-                        <MyText style={styles['bookingId']}>{dateHandler(item['AppointmentDate']) + ' ' + item['AppointmentTime']}</MyText>
+                        <MyText style={styles['bookingId']}>{moment(item['AppointmentDate']).format('MMM Do, YYYY') + ' ' + item['AppointmentTime']}</MyText>
                     </MyView>
                     <MyView style={styles['itemMainContainer']}>
                         <MyImage source={{ uri: item['SPProfilePic'] }} style={styles['image']} />

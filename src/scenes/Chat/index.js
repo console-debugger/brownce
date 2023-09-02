@@ -106,7 +106,7 @@ const Chat = ({ navigation, route }) => {
                             >
                                 <MyText style={[styles['msgText'], isSender ? styles['leftMsg'] : styles['rightMsg']]} >{item['Message']}</MyText>
                             </ReadMore>
-                            <MyText style={styles['rightMsgTime']}>{moment(convertToLocal(item.CreatedOn)).format('MMM DD, YYYY, hh:mm:ss A')}</MyText>
+                            <MyText style={styles['rightMsgTime']}>{moment(convertToLocal(item.CreatedOn)).format('MMM Do, YYYY, hh:mm:ss A')}</MyText>
                         </MyView>
                         <MyImage source={{ uri: item['myPic'] || item['UFProfilePic'] }} style={styles['imageStyle']} />
                     </MyView>
@@ -121,7 +121,7 @@ const Chat = ({ navigation, route }) => {
                             >
                                 <MyText style={[styles['msgText'], isSender ? styles['leftMsg'] : styles['rightMsg']]} >{item['Message']}</MyText>
                             </ReadMore>
-                            <MyText style={styles['leftMsgTime']}>{moment(convertToLocal(item.CreatedOn)).format('MMM DD, YYYY, hh:mm:ss A')}</MyText>
+                            <MyText style={styles['leftMsgTime']}>{moment(convertToLocal(item.CreatedOn)).format('MMM Do, YYYY, hh:mm:ss A')}</MyText>
                         </MyView>
                     </MyView>
                 }

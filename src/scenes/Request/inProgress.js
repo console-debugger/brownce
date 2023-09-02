@@ -13,6 +13,7 @@ import { getFontSize } from '../../utils/responsive'
 import { SCREEN_HEIGHT } from '../../components/helper'
 import { MyAlert, UpdatePrice } from '../../components/alert'
 import { useState } from 'react'
+import moment from 'moment'
 
 const COMPLETE_MESSAGE = "Are you sure to want to complete this service?"
 
@@ -96,12 +97,13 @@ const InProgressRequest = ({ navigation }) => {
     const onCancel = () => setUpdatePriceModalVisible(false)
 
     const _renderProgress = ({ item, index }) => {
+        console.log('Cherraye@brownceapp.com==>',item?.['AppointmentDate'],item['AppointmentTime'])
         return (
             <Card style={styles['itemContainer']}>
                 <Touchable onPress={() => navigation.navigate('serviceDetail', { id: item?.['AppointmentId'] })}>
                     <MyView style={styles['headerContent']}>
                         <MyText style={styles['bookingId']}>{`${BOOKING_ID} : `}<MyText style={styles['idvalue']}>{item?.['AppointmentId'] ? item?.['AppointmentId'] : "LOADING"}</MyText></MyText>
-                        <MyText style={styles['bookingId']}>{item?.['AppointmentDate'] ? dateHandler(item['AppointmentDate']) + ' ' + item['AppointmentTime'] : "LOADING"}</MyText>
+                        <MyText style={styles['bookingId']}>{item?.['AppointmentDate'] ? moment((item['AppointmentDate'])).format('MMM Do, YYYY') + ' ' + item['AppointmentTime'] : "LOADING"}</MyText>
                     </MyView>
                     <MyView style={styles['itemMainContainer']}>
                         <MyImage source={{ uri: item['CustomerProfilePic'] }} style={styles['image']} />

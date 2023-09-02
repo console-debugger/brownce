@@ -67,7 +67,7 @@ const PastOrders = () => {
                     <View style={styles.insideView} >
                         <Text numberOfLines={1} ellipsizeMode='tail' style={[styles.id, { color: GRAY, fontFamily: montserratMedium }]}>{`${'Order Id: '}`}
                             <Text numberOfLines={1} ellipsizeMode={'tail'} style={styles.id}>{item['Id']}</Text></Text>
-                        <MyText style={styles.date}>{`${dateHandler(item['CreatedAt'])}`}</MyText>
+                        <MyText style={styles.date}>{`${moment(convertToLocal(item['CreatedAt']),'YYYY-MM-DD').format('MMM Do, YYYY')}`}</MyText>
                     </View>
 
                 </View>

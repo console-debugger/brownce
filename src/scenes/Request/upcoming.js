@@ -11,6 +11,7 @@ import { getProviderAppointmentAction, loaderAction, startServiceAction } from '
 import { MyAlert } from '../../components/alert'
 import { useState } from 'react'
 import { SCREEN_HEIGHT } from '../../components/helper'
+import moment from 'moment'
 
 const START_MESSAGE = "Are you sure you want to start this service?"
 
@@ -87,7 +88,7 @@ const UpcomingRequest = ({ navigation }) => {
                 <Touchable onPress={() => navigation.navigate("serviceDetail", { id: item['AppointmentId'] })} >
                     <MyView style={styles['headerContent']}>
                         <MyText style={styles['bookingId']}>{`${BOOKING_ID} : `}<MyText style={styles['idvalue']}>{item['AppointmentId']}</MyText></MyText>
-                        <MyText style={styles['bookingId']}>{dateHandler(item['AppointmentDate']) + ' ' + item['AppointmentTime']}</MyText>
+                        <MyText style={styles['bookingId']}>{moment(item['AppointmentDate']).format('MMM Do, YYYY') + ' ' + item['AppointmentTime']}</MyText>
                     </MyView>
                     <MyView style={styles['itemMainContainer']}>
                         <MyImage source={{ uri: item['CustomerProfilePic'] }} style={styles['image']} />

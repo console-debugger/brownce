@@ -306,7 +306,7 @@ const ProviderDetail = (props) => {
               ]}>{completeprovider?.['Weblink']}</MyText>
               : null}
 
-            <MyText style={[styles['title'], { marginTop: 10 }]}>{`${'Timing'}: ${completeprovider?.['OpeningTime'] === null
+            <MyText style={[styles['title'], { marginTop: 10 }]}>{`${'Hours'}: ${completeprovider?.['OpeningTime'] === null
               ? '--'
               : completeprovider?.['OpeningTime']
               } To ${completeprovider?.['ClosingTime'] === null

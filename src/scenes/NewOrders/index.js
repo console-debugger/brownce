@@ -7,10 +7,11 @@ import styles from './style'
 import { GRAY, WHITE } from '../../utils/colors'
 import { montserratMedium } from '../../utils/fontFamily'
 import { markAsDeliveredAction, orderStatusAction, paymentSaveAction, providerOrderAction, refreshDataAction } from '../../redux/action'
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../components/helper'
+import { SCREEN_HEIGHT, SCREEN_WIDTH, convertToLocal } from '../../components/helper'
 import { useFocusEffect } from '@react-navigation/native'
 import { ORDER_STATUS_SUCCESS_ACTION } from '../../redux/action/type'
 import { dynamicSize } from '../../utils/responsive'
+import moment from 'moment'
 
 // New order UI list
 const NewOrders = ({ navigation }) => {
@@ -107,13 +108,14 @@ const NewOrders = ({ navigation }) => {
     }
 
     const renderItem = ({ item, index }) => {
+        console.log("item['CreatedAt']=>",item['CreatedAt'])
         return (
             <Touchable activeOpacity={1} style={styles.cardView}>
                 <View style={styles.topView}>
                     <View style={styles.insideView} >
                         <Text numberOfLines={1} ellipsizeMode='tail' style={[styles.id, { color: GRAY, fontFamily: montserratMedium }]}>{`${'Order Id: '}`}
                             <Text numberOfLines={1} ellipsizeMode={'tail'} style={styles.id}>{item['Id']}</Text></Text>
-                        <MyText style={styles.date}>{`${dateHandler(item['CreatedAt'])}`}</MyText>
+                        <MyText style={styles.date}>{`${moment(convertToLocal(item['CreatedAt']),'YYYY-MM-DD').format('MMM Do, YYYY')}`}</MyText>
                     </View>
                 </View>
                 <View style={{ flexDirection: "row", marginTop: 10, paddingHorizontal: 7 }} >
