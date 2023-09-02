@@ -37,6 +37,7 @@ import commonStyle from '../../components/commonStyle';
 import { dynamicSize } from '../../utils/responsive';
 import { THEME } from '../../utils/colors';
 import { CUSTOMER_SHOP_TALK, PROVIDER_SHOP_TALK } from '../../components/eventName';
+import moment from 'moment';
 
 const TAB_TYPE = { FEED: 'feed', NOTIFICATIONS: 'notifications' };
 
@@ -136,7 +137,7 @@ const ForumList = ({ navigation }) => {
     setRefreshState(true);
     dispatch(
       getAllQuestionAction(search, (data) => {
-      
+
         if (data) {
           if (notiPaginationOffset.current == 1) {
             setAllFeeds([...data]);
@@ -229,7 +230,7 @@ const ForumList = ({ navigation }) => {
         }
         source={{ uri: item?.User?.['ProfilePic'] }}
         question={item?.['QuestionText'] ? item['QuestionText'] : 'LOADING'}
-        date={item?.['CreatedOnStr'] ? item['CreatedOnStr'] : 'LOADING'}
+        date={item?.['CreatedOnStr'] ? moment(item?.CreatedOnStr, 'DD/MM/YYYY').format('MMM Do, YYYY') : ''}
         name={item?.['UserName'] ? item['UserName'] : 'LOADING'}
         replyCount={
           item?.['CommentsCount']
@@ -305,7 +306,7 @@ const ForumList = ({ navigation }) => {
   };
 
   const _renderNotification = ({ item, index }) => {
-  
+
     return (
       <Touchable onPress={_navToComment(item)} style={styles.notiItem}>
         <TouchableIcon
@@ -521,7 +522,7 @@ const ForumList = ({ navigation }) => {
             }
           />
         )}
-      
+
       </MyView>
       {notificationFooterIndicator.current ? (
         <MyIndicator verticalSpace />

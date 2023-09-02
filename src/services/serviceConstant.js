@@ -20,8 +20,8 @@ export const method = {
 }
 
 export const DEFAULT_PHONE_COUNTRY = {
-    country_code: "IN",
-    calling_code: "+91",
+    country_code: "US",
+    calling_code: "+1",
 }
 
 export const serviceError = {

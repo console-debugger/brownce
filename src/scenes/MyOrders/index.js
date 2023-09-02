@@ -16,7 +16,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {cancelOrderAction, customerOrderAction} from '../../redux/action';
 import {RemarkPopUp} from '../../components/alert';
 import {CANCEL_ORDER_SUCCESS_ACTION} from '../../redux/action/type';
-import {SCREEN_HEIGHT} from '../../components/helper';
+import {SCREEN_HEIGHT, convertToLocal} from '../../components/helper';
+import moment from 'moment';
 
 // Order List UI
 const MyOrders = () => {
@@ -102,6 +103,7 @@ const MyOrders = () => {
   };
 
   const renderItem = ({item}) => {
+    console.log('==>>>>', )
     return (
       <MyView activeOpacity={1} style={styles.cardView}>
         <MyView style={styles.topView}>
@@ -118,9 +120,7 @@ const MyOrders = () => {
                 {item['Id']}
               </MyText>
             </MyText>
-            <MyText style={styles.date}>{`${dateHandler(
-              item['CreatedAt'],
-            )}`}</MyText>
+            <MyText style={styles.date}>{`${moment(convertToLocal(item['CreatedAt'])).format('MMM Do, YYYY')}`}</MyText>
           </MyView>
         </MyView>
         <MyView

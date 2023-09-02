@@ -74,7 +74,10 @@ const Login = ({ navigation }) => {
             setFormField(prevState => ({ ...prevState, country_code: DEFAULT_PHONE_COUNTRY.country_code, calling_code: DEFAULT_PHONE_COUNTRY.calling_code }))
             const localEmail = await getData(localKey['EMAIL'])
             const localPassword = await getData(localKey['PASSWORD'])
-            if (localEmail) { setFormField({ email: localEmail, password: localPassword }), setRememberMe(true) }
+            if (localEmail) {
+                setFormField(prevState => ({ ...prevState, country_code: DEFAULT_PHONE_COUNTRY.country_code, calling_code: DEFAULT_PHONE_COUNTRY.calling_code, email: localEmail, password: localPassword }))
+                setRememberMe(true)
+            }
             await AsyncStorage.getItem('fcmToken').then(async resp => {
                 serviceConst.deviceToken = resp
             })

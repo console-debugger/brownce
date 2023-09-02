@@ -47,9 +47,9 @@ const ProviderMenu = ({ navigation }) => {
     {
         label: "FAQ & Community Guidelines"
     },
-    {
-        label: REFERRALS
-    },
+    // {
+    //     label: REFERRALS
+    // },
     {
         label: SUPPORT
     },
@@ -106,12 +106,12 @@ const ProviderMenu = ({ navigation }) => {
         else if (index === 4) navigation.navigate('providerProfile') // navigation.navigate('providerSetting')
         else if (index === 5) navigation.navigate('funds')
         else if (index === 6) navigation.navigate('webView', { id: 5, title: "Community guidelines " })
-        else if (index === 7) navigation.navigate('referral')
-        else if (index === 8) navigation.navigate('support')
-        else if (index === 9) navigation.navigate('webView', { id: 1, title: "Terms & Conditions" })
-        else if (index === 10) navigation.navigate('webView', { id: 2, title: "Privacy Policy" })
-        else if (index === 11) openDeleteModal()
-        else if (index === 12) _onYesPress()
+        // else if (index === 7) navigation.navigate('referral')
+        else if (index === 7) navigation.navigate('support')
+        else if (index === 8) navigation.navigate('webView', { id: 1, title: "Terms & Conditions" })
+        else if (index === 9) navigation.navigate('webView', { id: 2, title: "Privacy Policy" })
+        else if (index === 10) openDeleteModal()
+        else if (index === 11) _onYesPress()
     }
 
     const _renderSeperator = () => (<MyView style={styles['seperator']} />)

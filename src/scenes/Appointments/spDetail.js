@@ -72,7 +72,7 @@ const SpDetail = ({ navigation, route }) => {
   const [productpageIndex, setProductPageIndex] = useState(0)
   const [servicespageIndex, setServicesPageIndex] = useState(0)
   const [category, setCategory] = useState({
-    id: '',
+    Id: '',
     name: '',
   });
 
@@ -126,7 +126,9 @@ const SpDetail = ({ navigation, route }) => {
   }, [completeproviderproducts?.List])
 
   useEffect(() => {
-    if (ServicesProvided?.length && ServicesProvided) {
+    console.log('dsfdsfdsf0', category, JSON.stringify(ServicesProvided))
+    console.log('dsfdsfdsf1', JSON.stringify(professionsList))
+    if (ServicesProvided?.length && ServicesProvided && category?.['Id']) {
       let newData = [], count = 0
       for (let i = 0; i < ServicesProvided?.length; i++) {
         if (ServicesProvided[i].ProfessionId == category['Id']) {

@@ -71,9 +71,9 @@ const Menu = ({ navigation }) => {
     {
       label: 'My Orders',
     },
-    {
-      label: REFERRALS,
-    },
+    // {
+    //   label: REFERRALS,
+    // },
     {
       label: SUPPORT,
     },
@@ -124,13 +124,13 @@ const Menu = ({ navigation }) => {
     // navigation.navigate('settings')
     else if (index === 5) navigation.navigate('editProfile');
     else if (index === 6) navigation.navigate('myorders');
-    else if (index === 7) navigation.navigate('referral');
-    else if (index === 8) navigation.navigate('support');
+    // else if (index === 7) navigation.navigate('referral');
+    else if (index === 7) navigation.navigate('support');
 
-    else if (index === 9) navigation.navigate('webView', { id: 1, title: 'Terms & Conditions' });
-    else if (index == 10) navigation.navigate('webView', { id: 2, title: 'Privacy Policy' });
-    else if (index === 11) openDeleteModal()
-    else if (index == 12) _onYesPress()
+    else if (index === 8) navigation.navigate('webView', { id: 1, title: 'Terms & Conditions' });
+    else if (index == 9) navigation.navigate('webView', { id: 2, title: 'Privacy Policy' });
+    else if (index === 10) openDeleteModal()
+    else if (index == 11) _onYesPress()
   };
 
   const _renderSeperator = () => <MyView styl={styles['seperator']} />;
@@ -144,7 +144,7 @@ const Menu = ({ navigation }) => {
           styles['menuItem'],
           { borderBottomWidth: index === menuOption.length - 1 ? 0 : 1 },
         ]}>
-        <MyText style={[styles['labelStyle'], { color: index == 11 ? 'red' : BLACK }]}>{item['label']}</MyText>
+        <MyText style={[styles['labelStyle'], { color: index == 10 ? 'red' : BLACK }]}>{item['label']}</MyText>
         <MyImage source={rightArrow} style={styles['arrowStyle']} />
       </Touchable>
     );

@@ -924,7 +924,7 @@ function* getProfessionsList() {
     try {
         yield put(loaderAction(true))
         const professionsRes = yield apiRequest({}, GET_PROFESSIONS_LIST_URL, method['GET'])
-
+        console.log('response proffes==>', JSON.stringify(professionsRes))
         if (professionsRes['status'] === 200) {
             yield put(getProfessionsListSuccessAction(professionsRes['result']['ProfessionalList']))
             yield put(loaderAction(false))
