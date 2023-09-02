@@ -12,6 +12,7 @@ import { apiKey } from '../../services/serviceConstant'
 import { MyAlert } from '../../components/alert'
 import { SCREEN_HEIGHT } from '../../components/helper'
 import { getFontSize } from '../../utils/responsive'
+import moment from 'moment'
 
 // New request UI
 const NewRequest = ({ navigation }) => {
@@ -104,7 +105,7 @@ const NewRequest = ({ navigation }) => {
                 <Touchable onPress={() => navigation.navigate('serviceDetail', { id: item['AppointmentId'] })} >
                     <MyView style={styles['headerContent']}>
                         <MyText style={styles['bookingId']}>{`${BOOKING_ID} : `}<MyText style={styles['idvalue']}>{item?.['AppointmentId'] ? item?.['AppointmentId'] : "LOADING"}</MyText></MyText>
-                        <MyText style={styles['bookingId']}>{dateHandler(item['AppointmentDate']) + ' ' + item['AppointmentTime']}</MyText>
+                        <MyText style={styles['bookingId']}>{moment(item['AppointmentDate']).format('MMM Do, YYYY') + ' ' + item['AppointmentTime']}</MyText>
                     </MyView>
                     <MyView style={styles['itemMainContainer']}>
                         <MyImage source={{ uri: item?.['CustomerProfilePic'] }} style={styles['image']} />
