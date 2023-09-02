@@ -138,7 +138,7 @@ const ProviderCompleteProfile = ({ navigation }) => {
                                 <MyText onPress={() => setmodalVisible(true)} style={[styles['detail'], { textDecorationLine: "underline", color: THEME }]}>{"View License"}</MyText>
                                 <MyText style={styles['detail']}>{`${LOCATION}:  ${locationMapping(providerprofile)}`}</MyText>
                                 {providerprofile?.['Weblink'] ? <MyText onPress={_openLink} style={[styles['detail'], { textDecorationLine: 'underline' }]}>{providerprofile?.['Weblink'] || ''}</MyText> : null}
-                                <MyText style={styles['detail']}>{`${'Timing'}: ${providerprofile?.['OpeningTime'] === null ? '--' : providerprofile['OpeningTime']} To ${providerprofile?.['ClosingTime'] === null ? '--' : providerprofile['ClosingTime']}`}</MyText>
+                                <MyText style={styles['detail']}>{`${'Hours'}: ${providerprofile?.['OpeningTime'] === null ? '--' : providerprofile['OpeningTime']} To ${providerprofile?.['ClosingTime'] === null ? '--' : providerprofile['ClosingTime']}`}</MyText>
                                 <MyView style={[styles['lowerInnerCurve']]}>
                                     <RatingWithLabel style={{ marginTop: dynamicSize(7), }} labelStyle={{ fontFamily: montserratBold }} isRateCount label={RATING} mytext={`${providerprofile['OverallRating']}/5`} />
 

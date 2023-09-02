@@ -429,7 +429,7 @@ const SpDetail = ({ navigation, route }) => {
                   styles['detail'],
                   { textDecorationLine: 'underline' },
                 ]}>{providerprofile?.['Weblink'] || ''}</MyText> : null}
-              <MyText style={styles['detail']}>{`${'Timing'}: ${providerprofile?.['OpeningTime'] === null
+              <MyText style={styles['detail']}>{`${'Hours'}: ${providerprofile?.['OpeningTime'] === null
                 ? '--'
                 : providerprofile?.['OpeningTime']
                 } To ${providerprofile?.['ClosingTime'] === null
