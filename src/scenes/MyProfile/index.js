@@ -24,7 +24,7 @@ import { isCustomer, locationMapping, logAnalyticEvent, onShare } from '../../co
 import { generateDynamicLink } from '../../utils/dynamicLinkHelper';
 import OneSignal from 'react-native-onesignal';
 import { CUSTOMER_DASHBOARD } from '../../components/eventName';
-import InAppReview from 'react-native-in-app-review';
+// import InAppReview from 'react-native-in-app-review';
 
 
 // @ Customer Profile UI
