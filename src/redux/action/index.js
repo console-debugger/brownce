@@ -147,8 +147,8 @@ export const getProviderProfileSuccessAction = payload => ({
     type: TYPES['GET_PROVIDER_PROFILE_SUCCESS_ACTION'], payload
 })
 
-export const saveProfileAction = payload => ({
-    type: TYPES['SAVE_PROFILE_ACTION'], payload
+export const saveProfileAction = (payload, callBack) => ({
+    type: TYPES['SAVE_PROFILE_ACTION'], payload, callBack
 })
 
 export const saveProviderPortfolioAction = payload => ({
