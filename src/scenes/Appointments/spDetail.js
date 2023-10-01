@@ -32,7 +32,7 @@ import {
   validateUrl,
 } from '../../components/helper';
 import { BLACK, LIGHT_WHITE, THEME } from '../../utils/colors';
-import { montserratBold, montserratMedium } from '../../utils/fontFamily';
+import { montserratBold, montserratMedium, montserratSemiBold } from '../../utils/fontFamily';
 import { dynamicSize, getFontSize } from '../../utils/responsive';
 import styles from './styles';
 import {
@@ -55,7 +55,7 @@ const SpDetail = ({ navigation, route }) => {
   const state = useSelector((state) => {
     return state;
   });
-  const { LOADING, RATING, LOCATION, PORTFOLIO, SHARE } = state['localeReducer'][
+  const { LOADING, RATING, LOCATION, PORTFOLIO, SHARE,HOURS_OF_OPERATION,NOT_AVAILABLE } = state['localeReducer'][
     'locale'
   ];
   const { loading, refreshData } = state['loaderReducer'];
@@ -77,57 +77,7 @@ const SpDetail = ({ navigation, route }) => {
     name: '',
   });
   const [selectedWeekDayIndex, setSelectedWeekDayIndex] = useState(0)
-  const [weeklyTimeTable] = useState([
-    {
-      "WeekDayId": 1,
-      "WeekDay": "Sunday",
-      "IsOpen": true,
-      "StartTime": "01:00 AM",
-      "EndTime": "03:00 AM",
-    },
-    {
-      "WeekDayId": 2,
-      "WeekDay": "Monday",
-      "IsOpen": true,
-      "StartTime": "02:00 AM",
-      "EndTime": "03:00 AM",
-    },
-    {
-      "WeekDayId": 3,
-      "WeekDay": "Tuesday",
-      "IsOpen": false,
-      "StartTime": null,
-      "EndTime": null,
-    },
-    {
-      "WeekDayId": 4,
-      "WeekDay": "Webnesday",
-      "IsOpen": false,
-      "StartTime": null,
-      "EndTime": null,
-    },
-    {
-      "WeekDayId": 5,
-      "WeekDay": "Thursday",
-      "IsOpen": false,
-      "StartTime": null,
-      "EndTime": null,
-    },
-    {
-      "WeekDayId": 6,
-      "WeekDay": "Friday",
-      "IsOpen": false,
-      "StartTime": null,
-      "EndTime": null,
-    },
-    {
-      "WeekDayId": 7,
-      "WeekDay": "Saturday",
-      "IsOpen": false,
-      "StartTime": null,
-      "EndTime": null,
-    }
-  ])
+  const [weeklyTimeTable, setWeekltTimeTable] = useState([])
 
   // @ fetch Service Provide details
   useEffect(() => {
@@ -137,6 +87,8 @@ const SpDetail = ({ navigation, route }) => {
     dispatch(getProfessionsListAction());
     dispatch(getProviderCompleteDetailAction(route.params.id));
   }, []);
+
+  console.log('providerprofileproviderprofile=>', JSON.stringify(providerprofile))
 
   useEffect(() => {
     isShowButton();
@@ -160,7 +112,10 @@ const SpDetail = ({ navigation, route }) => {
       }
       setPortFolioData(newData)
     }
-  }, [providerprofile?.Portfolios])
+    if (providerprofile?.Timings?.length) {
+      setWeekltTimeTable(providerprofile?.Timings)
+    }
+  }, [providerprofile?.Portfolios, providerprofile?.Timings])
 
   useEffect(() => {
     if (completeproviderproducts?.List?.length && completeproviderproducts?.List) {
@@ -208,9 +163,13 @@ const SpDetail = ({ navigation, route }) => {
   // }, [category])
 
   const selectedWeekDay = useMemo(() => {
-    const selectedData = weeklyTimeTable.filter(each=> (each.StartTime || each.EndTime))
-    return `${selectedData[selectedWeekDayIndex].WeekDay} : ${selectedData[selectedWeekDayIndex].StartTime} - ${selectedData[selectedWeekDayIndex].EndTime}`
-  }, [selectedWeekDayIndex])
+    if (weeklyTimeTable?.length) {
+      const selectedData = weeklyTimeTable.filter(each => (each.StartTime || each.EndTime))
+      if(selectedData.length) return `${selectedData[selectedWeekDayIndex].WeekDay} : ${selectedData[selectedWeekDayIndex].StartTime} - ${selectedData[selectedWeekDayIndex].EndTime}`
+      else return NOT_AVAILABLE
+    }
+    else return ''
+  }, [selectedWeekDayIndex, weeklyTimeTable])
 
   const _selectHairType = (item, index, index1) => () => {
     const replica = [...servicesData];
@@ -434,12 +393,12 @@ const SpDetail = ({ navigation, route }) => {
   };
 
   const jumpToNextWeek = () => {
-    const selectedData = weeklyTimeTable.filter(each=> (each.StartTime || each.EndTime))
+    const selectedData = weeklyTimeTable.filter(each => (each.StartTime || each.EndTime))
     if (selectedWeekDayIndex < (selectedData.length - 1)) setSelectedWeekDayIndex(prevState => prevState + 1)
   }
 
   const jumpToPreviousWeek = () => {
-    const selectedData = weeklyTimeTable.filter(each=> (each.StartTime || each.EndTime))
+    // const selectedData = weeklyTimeTable.filter(each=> (each.StartTime || each.EndTime))
     if (selectedWeekDayIndex > 0) setSelectedWeekDayIndex(prevState => prevState - 1)
   }
 
@@ -498,13 +457,7 @@ const SpDetail = ({ navigation, route }) => {
                   styles['detail'],
                   { textDecorationLine: 'underline' },
                 ]}>{providerprofile?.['Weblink'] || ''}</MyText> : null}
-              <MyText style={styles['detail']}>{`${'Hours'}: ${providerprofile?.['OpeningTime'] === null
-                ? '--'
-                : providerprofile?.['OpeningTime']
-                } To ${providerprofile?.['ClosingTime'] === null
-                  ? '--'
-                  : providerprofile['ClosingTime']
-                }`}</MyText>
+             <MyText style={{fontSize:12,alignSelf:'center', fontFamily:montserratSemiBold, marginTop:10}}>{HOURS_OF_OPERATION}</MyText>
               <WeekDayTimings
                 jumpToPreviousWeek={jumpToPreviousWeek}
                 jumpToNextWeek={jumpToNextWeek}

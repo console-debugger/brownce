@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react'
-import { SafeArea, MyView, MyImage, Touchable, CurveView, Input, Button, KeyboardAwareScroll, CustomDropDown, Loader, MyText, CustomModal } from '../../components/customComponent'
+import { SafeArea, MyView, MyImage, Touchable, CurveView, Input, Button, KeyboardAwareScroll, CustomDropDown, Loader, MyText, CustomModal, NewThemeInput, NewThemeDropdown } from '../../components/customComponent'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styles from './styles'
-import { imagePlaceholder, cameraIcon, timeIcon } from '../../components/icons'
+import { imagePlaceholder, cameraIcon, timeIcon, accountNameIcon, usernameIcon, newEmailIcon, genderIcon } from '../../components/icons'
 import { TRANSPARENT_LIGHT_BLACK, BLACK, LIGHT_WHITE, THEME, PLACEHOLDER_COLOR, WHITE } from '../../utils/colors'
 import { useDispatch, useSelector } from 'react-redux'
 import { dismissKeyboard, locationMapping, SCREEN_HEIGHT, showToast } from '../../components/helper'
@@ -25,7 +25,7 @@ const EditProviderProfile = ({ navigation }) => {
 
     const dispatch = useDispatch()
     const state = useSelector(state => { return state })
-    const { PLEASE_SELECT_CITY, PLEASE_SELECT_STATE, LOCATION, PLEASE_SELECT_COUNTRY, MALE, FEMALE, PLEASE_UPLOAD_PROFILE_PIC, PLEASE_ENTER_AN_USERNAME, PLEASE_ENTER_NAME, TRANSGENDER_FEMALE, TRANSGENDER_MALE, NON_BINARY, OTHER, EMAIL, USERNAME, NAME, CITY, STATE, COUNTRY, UPDATE, PLEASE_WAIT_WHILE_FETCHING_COUNTRY_LIST, PLEASE_WAIT_WHILE_FETCHING_STATE_LIST, PLEASE_WAIT_WHILE_FETCHING_CITY_LIST, LOCATE_ON_MAP, CONTINUE } = state['localeReducer']['locale']
+    const { PLEASE_SELECT_CITY, UPDATE_EMAIL, PLEASE_SELECT_STATE, LOCATION, PLEASE_SELECT_COUNTRY, MALE, FEMALE, PLEASE_UPLOAD_PROFILE_PIC, PLEASE_ENTER_AN_USERNAME, PLEASE_ENTER_NAME, TRANSGENDER_FEMALE, TRANSGENDER_MALE, NON_BINARY, OTHER, EMAIL, USERNAME, NAME, CITY, STATE, COUNTRY, UPDATE, PLEASE_WAIT_WHILE_FETCHING_COUNTRY_LIST, PLEASE_WAIT_WHILE_FETCHING_STATE_LIST, PLEASE_WAIT_WHILE_FETCHING_CITY_LIST, LOCATE_ON_MAP, CONTINUE } = state['localeReducer']['locale']
     const { providerprofile } = state['profileReducer']
     const { loading } = state['loaderReducer']
     const { country, userState, city } = state['addressReducer']
@@ -282,46 +282,52 @@ const EditProviderProfile = ({ navigation }) => {
                 <MyText onPress={() => setVisible(true)} style={{ textDecorationLine: "underline", color: THEME, marginTop: 5, marginLeft: 5 }}>
                     {"Update License"}
                 </MyText>
-                <Input
-                    labelFontSize={0}
-                    style={{ borderBottomColor: BLACK }}
-                    value={username}
-                    hintColor={LIGHT_WHITE}
-                    placeholder={USERNAME}
-                    onChangeText={_onChangeText(TYPES['USERNAME'])}
-                    onSubmitEditing={_focusNext(TYPES['USERNAME'])}
-                    blurOnSubmit={false}
-                    errorMessage={usernameError || null}
-                />
-                <Input
-                    labelFontSize={0}
-                    style={{ borderBottomColor: BLACK }}
+                <NewThemeInput
+                    mainContainerStyle={{ marginTop: 10 }}
                     value={name}
-                    hintColor={LIGHT_WHITE}
                     placeholder={NAME}
+                    source={accountNameIcon}
                     onChangeText={_onChangeText(TYPES['NAME'])}
                     onSubmitEditing={_focusNext(TYPES['NAME'])}
                     blurOnSubmit={false}
                     errorMessage={nameError || null}
                 />
-                <Input
-                    onPress={_updateEmail}
-                    text={"Update"}
-                    labelFontSize={0}
+                <NewThemeInput
+                    mainContainerStyle={{ marginTop: 10 }}
+                    value={username}
+                    placeholder={USERNAME}
+                    source={usernameIcon}
+                    onChangeText={_onChangeText(TYPES['USERNAME'])}
+                    onSubmitEditing={_focusNext(TYPES['USERNAME'])}
+                    blurOnSubmit={false}
+                    errorMessage={usernameError || null}
+                />
+                <NewThemeInput
                     ref={emailRef}
+                    mainContainerStyle={{ marginTop: 10 }}
                     clearButtonMode
                     editable={true}
-                    style={{ borderBottomColor: BLACK }}
-                    textInputStyle={{ color: BLACK }}
-                    value={email}
-                    hintColor={LIGHT_WHITE}
+                    source={newEmailIcon}
                     placeholder={EMAIL}
+                    value={email}
                     onChangeText={_onChangeText(TYPES['EMAIL'])}
                     onSubmitEditing={_focusNext(TYPES['EMAIL'])}
                     keyboardType={'email-address'}
                     autoCapitalize='none'
                     blurOnSubmit={false}
                     errorMessage={emailError || null}
+                />
+                <MyView style={{ alignSelf: 'flex-end', marginRight: dynamicSize(35), marginTop: 5 }}>
+                    <MyText onPress={_updateEmail} style={{ textDecorationLine: 'underline', color: THEME, paddingVertical: dynamicSize(5) }}>{UPDATE_EMAIL}</MyText>
+                </MyView>
+                <NewThemeDropdown
+                    onChange={_changeGender}
+                    source={genderIcon}
+                    data={genderData}
+                    value={gender}
+                    placeholder={'Gender'}
+                    // topOffset={dynamicSize(25)}
+                    // containerStyle={{ borderBottomColor: BLACK, borderBottomWidth: 2 }}
                 />
                 <CustomDropDown onChange={_changeGender} data={genderData} value={gender} topOffset={dynamicSize(20)} containerStyle={{ borderBottomColor: BLACK, borderBottomWidth: 2 }} />
                 {/* <MyListPicker textStyle={{ fontFamily: montserratSemiBold }} style={{ marginVertical: null, marginTop: dynamicSize(20), borderBottomColor: BLACK }} message={PLEASE_WAIT_WHILE_FETCHING_COUNTRY_LIST} value={selectedCountry} placeholder={COUNTRY} data={country} selectedItem={_selectedCountry} />

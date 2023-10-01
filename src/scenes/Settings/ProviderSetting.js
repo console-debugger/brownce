@@ -412,13 +412,6 @@ const ProviderSetting = ({ navigation }) => {
                                             optionsContainerStyle={{ width: '20%', paddingHorizontal: 0 }}
                                             disabled={!item.IsOpen}
                                             onSelect={(each) => onPopupSelection('open', each, item, index)}
-                                        // customOptionUI={(each) => {
-                                        //     return (
-                                        //         <Touchable onPress={onPopupSelection('open', each, item, index)} style={[{ paddingVertical: 5, alignItems: 'center' }]}>
-                                        //             <MyText style={[styles.drowpdownmText, { marginRight: 5, flex: 1 }]}>{each.name}</MyText>
-                                        //         </Touchable>
-                                        //     )
-                                        // }}
                                         >
                                             <MyView style={[styles.dropdownContainer, { backgroundColor: !item.IsOpen ? DARK_GRAY : WHITE, }]}>
                                                 <MyText style={{ width: 55, fontSize: 10 }}>{item.StartTime}</MyText>
@@ -431,13 +424,6 @@ const ProviderSetting = ({ navigation }) => {
                                             optionsContainerStyle={{ width: '20%', paddingHorizontal: 0 }}
                                             disabled={!item.IsOpen}
                                             onSelect={(each) => onPopupSelection('close', each, item, index)}
-                                        // customOptionUI={(each) => {
-                                        //     return (
-                                        //         <Touchable onPress={onPopupSelection('close', each, item, index)} style={[{ paddingVertical: 5, alignItems: 'center' }]}>
-                                        //             <MyText style={[styles.drowpdownmText, { marginRight: 5, flex: 1 }]}>{each.name}</MyText>
-                                        //         </Touchable>
-                                        //     )
-                                        // }}
                                         >
                                             <MyView style={[styles.dropdownContainer, { backgroundColor: !item.IsOpen ? DARK_GRAY : WHITE, }]}>
                                                 <MyText style={{ width: 55, fontSize: 10 }}>{item.EndTime}</MyText>
