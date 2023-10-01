@@ -241,7 +241,15 @@
   "AVERAGE_SERVICE_TIME_INFO": "The average amount of time you spend with each client during a service.",
   "AVERAGE_BOOKING_INFO": "The average amount of money spent by clients on each booking.",
   "MOST_POPULAR_SERVICES_INFO": "The beauty services that were booked the most frequently on Brownce.",
-  "CONTINUE_WITH_EMAIL":"Continue with Email",
-  "CONTINUE_WITH_PHONE":"Continue with Phone",
-  "DIAL_CODE_NOT_AVAILABLE":"Country dial code not available for this country"
+  "CONTINUE_WITH_EMAIL": "Continue with Email",
+  "CONTINUE_WITH_PHONE": "Continue with Phone",
+  "DIAL_CODE_NOT_AVAILABLE": "Country dial code not available for this country",
+  "WEBSITE": "WEBSITE",
+  "HOURS_CAPS": "HOURS",
+  "BIO": "BIO",
+  "WEBSITE_SMALL": "Website",
+  "SERVICES": "SERVICES",
+  "HOURS_OF_OPERATION": "Hours of Operation",
+  "CLOSED": "Closed",
+  "BIO_SMALL": "Bio"
 }

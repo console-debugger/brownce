@@ -56,6 +56,7 @@
     "react-native-multiple-select": "^0.5.12",
     "react-native-onesignal": "^4.5.1",
     "react-native-paypal": "3.1.1",
+    "react-native-popup-menu": "^0.16.1",
     "react-native-push-notification": "8.1.1",
     "react-native-read-more-text": "1.1.2",
     "react-native-reanimated": "2.14.4",

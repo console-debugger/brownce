@@ -10,6 +10,7 @@ import {
   TextInput,
   ActivityIndicator,
   StyleSheet,
+  ScrollView,
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Dropdown } from 'react-native-material-dropdown';
@@ -56,6 +57,7 @@ import {
 import Slider from 'react-native-slider';
 import { editIcon } from '../components/icons';
 import { Pagination } from 'react-native-snap-carousel';
+import { Menu, MenuOption, MenuOptions, MenuTrigger, renderers } from 'react-native-popup-menu';
 
 export const SafeArea = (props) => {
   const { children, style } = props;
@@ -1048,3 +1050,93 @@ export const MobileInput = forwardRef((props, ref) => {
     </MyView>
   )
 })
+
+export const Triangle = props => {
+  const size = props?.size || 20
+  return (<View style={[commonStyle.triangle, {
+    borderLeftWidth: size / 2,
+    borderRightWidth: size / 2,
+    borderBottomWidth: size,
+  }, props.style]} />)
+}
+
+export const WeekDayTimings = props => {
+  const { jumpToNextWeek, jumpToPreviousWeek, text } = props
+
+  return (
+    <MyView style={commonStyle.weekScheduleContainer}>
+      <Touchable style={commonStyle.weekScheduleArrowTouch} onPress={jumpToPreviousWeek}>
+        <Triangle size={15} style={{ transform: [{ rotate: "-90deg" }] }} />
+      </Touchable>
+      <MyText style={commonStyle.weekdayText}>{text}</MyText>
+      <Touchable style={commonStyle.weekScheduleArrowTouch} onPress={jumpToNextWeek}>
+        <Triangle size={15} style={{ transform: [{ rotate: "90deg" }] }} />
+      </Touchable>
+    </MyView>
+  )
+}
+
+export const NormalInput = forwardRef((props, ref) => {
+  const { containerStyle, style } = props
+  return (
+    <MyView style={containerStyle}>
+      <TextInput
+        {...props}
+        ref={ref}
+        style={[{ flex: 1, backgroundColor: WHITE, paddingHorizontal: 10, paddingVertical: 7 }, style]}
+      />
+    </MyView>
+  )
+})
+
+export const PopupMenuOption = ({
+  optionData = [],
+  customOptionUI,
+  optionsContainerStyle,
+  onSelect,
+  children,
+  optionKey = 'name',
+  scrollviewStyle,
+  isPopOver,
+  disabled
+}) => {
+  const { Popover } = renderers
+  const menuOptionsUI = (
+    <MenuOptions
+      optionsContainerStyle={[
+        {
+          padding: 10,
+          borderRadius: 10,
+          paddingBottom: 10
+        },
+        optionsContainerStyle,
+      ]}>
+      <ScrollView
+        style={[{ maxHeight: 150 }, scrollviewStyle]}
+      >
+        {optionData.map((item, index) => {
+          return customOptionUI ? (
+            customOptionUI(item, index)
+          ) : (
+            <MenuOption key={index.toString()} onSelect={onSelect(item)}>
+              <MyText>{item[optionKey]}</MyText>
+            </MenuOption>
+          );
+        })}
+      </ScrollView>
+    </MenuOptions>
+  )
+
+  return isPopOver ? (
+    <Menu renderer={Popover} rendererProps={{ preferredPlacement: 'bottom' }} >
+      <MenuTrigger disabled={disabled} >{children}</MenuTrigger>
+      {menuOptionsUI}
+    </Menu>
+  )
+    :
+    (<Menu>
+      <MenuTrigger disabled={disabled}>{children}</MenuTrigger>
+      {menuOptionsUI}
+    </Menu>
+    );
+};

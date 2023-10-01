@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 import { getFontSize, dynamicSize } from '../../utils/responsive'
 import { montserratBold, montserratSemiBold, montserratMedium } from '../../utils/fontFamily'
 import { SCREEN_HEIGHT, SCREEN_WIDTH, isAndroid } from '../../components/helper'
-import { LIGHT_BROWN, LIGHT_WHITE, LIGHT_GRAY, WHITE, MID_GRAY, BLACK, THEME } from '../../utils/colors'
+import { LIGHT_BROWN, LIGHT_WHITE, LIGHT_GRAY, WHITE, MID_GRAY, BLACK, THEME, GRAY } from '../../utils/colors'
 
 const styles = StyleSheet.create({
     title: {
@@ -169,6 +169,58 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignSelf: 'center'
     },
+    topTabContainer: {
+        marginVertical: 10,
+        borderWidth: 1,
+        borderColor: GRAY,
+        flexDirection: 'row',
+        // width: '100%',
+        marginHorizontal: dynamicSize(25)
+    },
+    tabItem: {
+        flex: 1,
+        paddingVertical: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: WHITE
+    },
+    tabText: {
+        fontSize: 8,
+        fontFamily: montserratSemiBold
+    },
+    hoursOfOperationContainer: {
+        flex: 1,
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        width: SCREEN_WIDTH,
+        paddingHorizontal: 25,
+        marginBottom: 7
+    },
+    drowpdownmText: {
+        fontSize: 8,
+        fontFamily: montserratMedium
+    },
+    dropdownContainer: {
+        borderWidth: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderColor: GRAY,
+        borderRadius: 2
+    },
+    selectedRadio: {
+        width: 12,
+        height: 12,
+        borderRadius: 10,
+        backgroundColor: GRAY,
+        borderWidth: 0.5
+    },
+    unselectedRadio: {
+        width: 12,
+        height: 12,
+        borderRadius: 10,
+        backgroundColor: WHITE,
+        borderWidth: 0.5
+    }
 })
 
 export default styles

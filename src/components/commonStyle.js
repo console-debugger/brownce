@@ -436,6 +436,27 @@ const commonStyle = StyleSheet.create({
         flexDirection: 'row',
         width: SCREEN_WIDTH - dynamicSize(70),
     },
+    triangle: {
+        width: 0,
+        height: 0,
+        backgroundColor: "transparent",
+        borderStyle: "solid",
+        borderLeftColor: "transparent",
+        borderRightColor: "transparent",
+        borderBottomColor: THEME,
+    },
+    weekScheduleContainer: {
+        alignSelf: 'center',
+        flexDirection: 'row',
+        marginBottom: 10
+    },
+    weekScheduleArrowTouch: {
+        paddingHorizontal: 10
+    },
+    weekdayText: {
+        fontFamily: montserratSemiBold,
+        fontSize: 11
+    }
 })
 
 export default commonStyle

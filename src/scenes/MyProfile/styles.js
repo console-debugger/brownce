@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import {
   THEME,
   LIGHT_WHITE,
@@ -13,8 +13,8 @@ import {
   montserratMedium,
   montserratBold,
 } from '../../utils/fontFamily';
-import {getFontSize, dynamicSize} from '../../utils/responsive';
-import {SCREEN_HEIGHT, isAndroid, SCREEN_WIDTH} from '../../components/helper';
+import { getFontSize, dynamicSize } from '../../utils/responsive';
+import { SCREEN_HEIGHT, isAndroid, SCREEN_WIDTH } from '../../components/helper';
 
 // @ Stylsheet for profile
 
@@ -242,6 +242,18 @@ const styles = StyleSheet.create({
     fontSize: getFontSize(10),
     marginTop: 5,
   },
+  weekScheduleContainer: {
+    alignSelf: 'center',
+    flexDirection: 'row',
+    marginBottom: 10
+  },
+  arrowTouch: {
+    paddingHorizontal: 10
+  },
+  weekdayText: {
+    fontFamily: montserratSemiBold,
+    fontSize: 11
+  }
 });
 
 export default styles;

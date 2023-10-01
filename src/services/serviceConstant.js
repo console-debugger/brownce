@@ -318,3 +318,9 @@ export const FAV_PROVIDER_LIST_URL = (data) => `${BASE_URL}/APi/FavoriteProvider
 export const SAVE_APP_FEEDBACK_URL = `${BASE_URL}/api/AppFeedback/addfeedback`
 
 export const BROWNCE_STATS_URL = `${BASE_URL}/api/SPStatistics/statisticsdata`
+
+export const UPDATE_PROVIDER_SETTING_URL = `${BASE_URL}/api/sp/UpdateSetting`
+
+export const UPDATE_SP_PROFILE_PIC_URL = `${BASE_URL}/api/sp/UpdateProfilePic`
+
+export const UPDATE_CUSTOMER_PROFILE_PIC_URL = `${BASE_URL}/api/customer/UpdateProfilePic`

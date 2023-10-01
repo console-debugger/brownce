@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import styles from './styles'
 import { FlatList, ScrollView } from 'react-native'
 import { dynamicSize } from '../../utils/responsive'
-import { getHairTypeAction, getProfileAction, getProfileQuestionAction, loaderAction, saveHairTypeAction, saveProfileAction, saveQuestionAnswerAction, updateHairTypeAction, updateTenderHeadLevelAction } from '../../redux/action'
+import { getHairTypeAction, getProfileAction, getProfileQuestionAction, loaderAction, saveHairTypeAction, saveProfileAction, saveQuestionAnswerAction, updateCustomerProfilePicAction, updateHairTypeAction, updateTenderHeadLevelAction } from '../../redux/action'
 import { apiKey } from '../../services/serviceConstant'
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../components/helper'
 import { cameraIcon, editIcon, imagePlaceholder } from '../../components/icons'
@@ -165,16 +165,10 @@ const Settings = ({ navigation }) => {
     }
 
     const _saveProfile = () => {
+        dispatch(loaderAction(true))
         const formData = new FormData()
         imageData?.['uri'] && formData.append(apiKey['PROFILE_PIC'], imageData)
-        formData.append(apiKey['user_name'], profile?.Username)
-        formData.append(apiKey['FIRSTNAME'], profile?.Name)
-        formData.append(apiKey['GENDER'], profile?.GenderId)
-        formData.append(apiKey['CITY_NAME'], profile?.City)
-        formData.append(apiKey['STATE_NAME'], profile?.State)
-        formData.append(apiKey['LATITUDE'], profile?.Latitude)
-        formData.append(apiKey['LONGITUDE'], profile?.Longitude)
-        if (profile?.Username && imageData?.uri && profile?.Name) dispatch(saveProfileAction(formData, () => {
+        if (imageData?.uri) dispatch(updateCustomerProfilePicAction(formData, () => {
             navigation.goBack()
         }))
     }
