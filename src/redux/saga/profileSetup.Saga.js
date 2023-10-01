@@ -307,10 +307,11 @@ export function* SaveProfileSaga() {
 function* saveProfile(param) {
     try {
         const saveProfileRes = yield apiRequest(param['payload'], SAVE_USER_PROFILE_URL, method['POST'], true)
-
+        console.log('saveProfileRes==>', JSON.stringify(saveProfileRes))
         if (saveProfileRes['status'] === 200) {
             yield put(loaderAction(false))
-            navigateToScreen('tabZero')
+            if (param?.callBack) param?.callBack()
+            else navigateToScreen('tabZero')
         }
         else {
             yield put(loaderAction(false))

@@ -147,8 +147,8 @@ export const getProviderProfileSuccessAction = payload => ({
     type: TYPES['GET_PROVIDER_PROFILE_SUCCESS_ACTION'], payload
 })
 
-export const saveProfileAction = payload => ({
-    type: TYPES['SAVE_PROFILE_ACTION'], payload
+export const saveProfileAction = (payload, callBack) => ({
+    type: TYPES['SAVE_PROFILE_ACTION'], payload, callBack
 })
 
 export const saveProviderPortfolioAction = payload => ({
@@ -857,4 +857,16 @@ export const loginWithPhoneAction = (payload) => ({
 
 export const phoneLoginVerificationAction = (payload) => ({
     type: TYPES.PHONE_LOGIN_VERIFICATION_ACTION, payload
+})
+
+export const updateProviderSettingAction = (payload) => ({
+    type: TYPES.UPDATE_PROVIDER_SETTINGS_ACTION, payload
+})
+
+export const updateServiceProviderProfilePicAction = (payload) => ({
+    type: TYPES.UPDATE_SERVICE_PROVIDER_PROFILE_PIC_ACTION, payload
+})
+
+export const updateCustomerProfilePicAction = (payload, callBack) => ({
+    type: TYPES.UPDATE_CUSTOMER_PROFILE_PIC_ACTION, payload, callBack
 })

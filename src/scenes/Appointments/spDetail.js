@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { FlatList, Linking, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector, useDispatch } from 'react-redux';
@@ -18,6 +18,7 @@ import {
   SecondaryButton,
   Touchable,
   TouchableIcon,
+  WeekDayTimings,
 } from '../../components/customComponent';
 import {
   Base64,
@@ -75,10 +76,62 @@ const SpDetail = ({ navigation, route }) => {
     Id: '',
     name: '',
   });
+  const [selectedWeekDayIndex, setSelectedWeekDayIndex] = useState(0)
+  const [weeklyTimeTable] = useState([
+    {
+      "WeekDayId": 1,
+      "WeekDay": "Sunday",
+      "IsOpen": true,
+      "StartTime": "01:00 AM",
+      "EndTime": "03:00 AM",
+    },
+    {
+      "WeekDayId": 2,
+      "WeekDay": "Monday",
+      "IsOpen": true,
+      "StartTime": "02:00 AM",
+      "EndTime": "03:00 AM",
+    },
+    {
+      "WeekDayId": 3,
+      "WeekDay": "Tuesday",
+      "IsOpen": false,
+      "StartTime": null,
+      "EndTime": null,
+    },
+    {
+      "WeekDayId": 4,
+      "WeekDay": "Webnesday",
+      "IsOpen": false,
+      "StartTime": null,
+      "EndTime": null,
+    },
+    {
+      "WeekDayId": 5,
+      "WeekDay": "Thursday",
+      "IsOpen": false,
+      "StartTime": null,
+      "EndTime": null,
+    },
+    {
+      "WeekDayId": 6,
+      "WeekDay": "Friday",
+      "IsOpen": false,
+      "StartTime": null,
+      "EndTime": null,
+    },
+    {
+      "WeekDayId": 7,
+      "WeekDay": "Saturday",
+      "IsOpen": false,
+      "StartTime": null,
+      "EndTime": null,
+    }
+  ])
 
   // @ fetch Service Provide details
   useEffect(() => {
-    console.log('route.params.id--->', route.params.id)
+    console.log('route.params.id--->', JSON.stringify(providerprofile), route.params.id)
     dispatch(loaderAction(true));
     dispatch(getSpDetailAction(route.params.id));
     dispatch(getProfessionsListAction());
@@ -153,6 +206,11 @@ const SpDetail = ({ navigation, route }) => {
   //         return item
   //     }))
   // }, [category])
+
+  const selectedWeekDay = useMemo(() => {
+    const selectedData = weeklyTimeTable.filter(each=> (each.StartTime || each.EndTime))
+    return `${selectedData[selectedWeekDayIndex].WeekDay} : ${selectedData[selectedWeekDayIndex].StartTime} - ${selectedData[selectedWeekDayIndex].EndTime}`
+  }, [selectedWeekDayIndex])
 
   const _selectHairType = (item, index, index1) => () => {
     const replica = [...servicesData];
@@ -375,6 +433,17 @@ const SpDetail = ({ navigation, route }) => {
     }
   };
 
+  const jumpToNextWeek = () => {
+    const selectedData = weeklyTimeTable.filter(each=> (each.StartTime || each.EndTime))
+    if (selectedWeekDayIndex < (selectedData.length - 1)) setSelectedWeekDayIndex(prevState => prevState + 1)
+  }
+
+  const jumpToPreviousWeek = () => {
+    const selectedData = weeklyTimeTable.filter(each=> (each.StartTime || each.EndTime))
+    if (selectedWeekDayIndex > 0) setSelectedWeekDayIndex(prevState => prevState - 1)
+  }
+
+
   return (
     <SafeArea style={{ paddingTop: -useSafeAreaInsets().top }}>
       <MyView style={styles['mainContainer']}>
@@ -436,6 +505,12 @@ const SpDetail = ({ navigation, route }) => {
                   ? '--'
                   : providerprofile['ClosingTime']
                 }`}</MyText>
+              <WeekDayTimings
+                jumpToPreviousWeek={jumpToPreviousWeek}
+                jumpToNextWeek={jumpToNextWeek}
+                text={selectedWeekDay}
+              />
+
               {buttonVisible && (
                 <Button
                   onPress={() =>

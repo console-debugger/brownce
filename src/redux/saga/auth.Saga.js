@@ -1,6 +1,6 @@
 import { takeLatest, put, delay } from 'redux-saga/effects';
 import { isCustomer, multiRemoveData, showToast, storeData } from '../../components/helper'
-import { method, serviceError, VALIDATE_EMAIL_OTP_URL, UPDATE_EMAIL_URL, RESET_PASSWORD_URL, REGISTRATION_URL, OTP_VERIFICATION_URL, serviceConst, LOGIN_URL, FORGOT_PASSWORD_URL, CHANGE_PASSWORD_URL, apiKey, REGISTER_WITH_PHONE_URL, PHONE_OTP_VERIFICATION_URL, LOGIN_WITH_PHONE_URL, VALIDATE_PHONE_LOGIN_URL } from '../../services/serviceConstant'
+import { method, serviceError, VALIDATE_EMAIL_OTP_URL, UPDATE_EMAIL_URL, RESET_PASSWORD_URL, REGISTRATION_URL, OTP_VERIFICATION_URL, serviceConst, LOGIN_URL, FORGOT_PASSWORD_URL, CHANGE_PASSWORD_URL, apiKey, REGISTER_WITH_PHONE_URL, PHONE_OTP_VERIFICATION_URL, LOGIN_WITH_PHONE_URL, VALIDATE_PHONE_LOGIN_URL, UPDATE_PROVIDER_SETTING_URL, UPDATE_SP_PROFILE_PIC_URL, UPDATE_CUSTOMER_PROFILE_PIC_URL } from '../../services/serviceConstant'
 import { loaderAction, otpViewAction, popupAction, signupUserDataAction } from '../action'
 import * as TYPES from '../action/type'
 import apiRequest from '../../services'
@@ -92,7 +92,7 @@ function* phoneLoginOtpVerification(param) {
         const loginRes = yield apiRequest(param['payload'], VALIDATE_PHONE_LOGIN_URL, method['POST'])
         console.log('loginRes==>', JSON.stringify(loginRes))
         if (loginRes['status'] === 200) {
-            console.log('here==>',loginRes)
+            console.log('here==>', loginRes)
             yield crashlytics().setUserId(loginRes?.result?.UserId?.toString() || '')
             yield crashlytics().setAttributes({
                 role: isCustomer() ? 'Customer' : 'Provider',
@@ -113,7 +113,7 @@ function* phoneLoginOtpVerification(param) {
         else {
             yield put(loaderAction(false))
             yield delay(600)
-            console.log('asdasdasd==>',loginRes.message)
+            console.log('asdasdasd==>', loginRes.message)
             loginRes['message'] == "Log-in Successful!" || loginRes['message'] == "Username/Password is Incorrect" || loginRes['message'] == "An Unexpected Error Has Occured!" ? showToast(loginRes['message']) : yield put(popupAction(true, loginRes['message']))
         }
         yield put(loaderAction(false))
@@ -176,7 +176,7 @@ function* loginSaga(param) {
         else {
             yield put(loaderAction(false))
             yield delay(600)
-            console.log('asdasdasd==>1',loginRes.message)
+            console.log('asdasdasd==>1', loginRes.message)
             loginRes['message'] == "Log-in Successful!" || loginRes['message'] == "Username/Password is Incorrect" || loginRes['message'] == "An Unexpected Error Has Occured!" ? showToast(loginRes['message']) : yield put(popupAction(true, loginRes['message']))
 
         }
@@ -365,6 +365,95 @@ function* valdiateEmailotp(param) {
             yield put(loaderAction(false))
             yield delay(600)
             showToast(forgotRes['message'])
+        }
+    } catch (err) {
+        yield put(loaderAction(false))
+        showToast(serviceError['CATCH_ERROR'])
+    }
+}
+
+export function* updateProviderSettingSaga() {
+    try {
+        yield takeLatest(TYPES.UPDATE_PROVIDER_SETTINGS_ACTION, updateProviderSetting)
+    }
+    catch (err) {
+        showToast('Error in update provider setting observer')
+    }
+}
+
+
+function* updateProviderSetting(param) {
+    try {
+        yield put(loaderAction(true))
+        const updateRes = yield apiRequest(param['payload'], UPDATE_PROVIDER_SETTING_URL, method['POST'])
+        if (updateRes['status'] === 200) {
+            yield put(loaderAction(false))
+            yield delay(600)
+            showToast(updateRes['message'])
+        }
+        else {
+            yield put(loaderAction(false))
+            yield delay(600)
+            showToast(updateRes['message'])
+        }
+    } catch (err) {
+        yield put(loaderAction(false))
+        showToast(serviceError['CATCH_ERROR'])
+    }
+}
+
+
+export function* updateServiceProviderProfilePicSaga() {
+    try {
+        yield takeLatest(TYPES.UPDATE_SERVICE_PROVIDER_PROFILE_PIC_ACTION, updateServiceProviderProfilePic)
+    }
+    catch (err) {
+        showToast('Error in update provider profile pic observer')
+    }
+}
+
+function* updateServiceProviderProfilePic(param) {
+    try {
+        yield put(loaderAction(true))
+        const updateRes = yield apiRequest(param['payload'], UPDATE_SP_PROFILE_PIC_URL, method['POST'], true)
+        if (updateRes['status'] === 200) {
+            yield put(loaderAction(false))
+            yield delay(600)
+            showToast(updateRes['message'])
+        }
+        else {
+            yield put(loaderAction(false))
+            yield delay(600)
+            showToast(updateRes['message'])
+        }
+    } catch (err) {
+        yield put(loaderAction(false))
+        showToast(serviceError['CATCH_ERROR'])
+    }
+}
+
+export function* updateCustomerProfilePicSaga() {
+    try {
+        yield takeLatest(TYPES.UPDATE_CUSTOMER_PROFILE_PIC_ACTION, updateCustomerProfilePic)
+    }
+    catch (err) {
+        showToast('Error in customer profile pic observer')
+    }
+}
+
+function* updateCustomerProfilePic(param) {
+    try {
+        const updateRes = yield apiRequest(param['payload'], UPDATE_CUSTOMER_PROFILE_PIC_URL, method['POST'], true)
+        if (updateRes['status'] === 200) {
+            yield put(loaderAction(false))
+            yield delay(600)
+            if (param?.callBack) param?.callBack()
+            showToast(updateRes['message'])
+        }
+        else {
+            yield put(loaderAction(false))
+            yield delay(600)
+            showToast(updateRes['message'])
         }
     } catch (err) {
         yield put(loaderAction(false))

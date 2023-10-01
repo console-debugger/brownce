@@ -1,8 +1,8 @@
 import { StyleSheet } from 'react-native'
 import { getFontSize, dynamicSize } from '../../utils/responsive'
 import { montserratBold, montserratSemiBold, montserratMedium } from '../../utils/fontFamily'
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../components/helper'
-import { LIGHT_BROWN, LIGHT_WHITE, LIGHT_GRAY, WHITE, MID_GRAY, BLACK, THEME } from '../../utils/colors'
+import { SCREEN_HEIGHT, SCREEN_WIDTH, isAndroid } from '../../components/helper'
+import { LIGHT_BROWN, LIGHT_WHITE, LIGHT_GRAY, WHITE, MID_GRAY, BLACK, THEME, GRAY } from '../../utils/colors'
 
 const styles = StyleSheet.create({
     title: {
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         marginTop: SCREEN_HEIGHT * 0.01
     },
     portfolioView: {
-      
+
         marginRight: dynamicSize(20),
         width: SCREEN_WIDTH / 3 - dynamicSize(30),
         height: SCREEN_WIDTH / 3 - dynamicSize(30),
@@ -122,33 +122,33 @@ const styles = StyleSheet.create({
         fontFamily: montserratMedium,
         top: dynamicSize(-5)
     },
-    addCustomService:{
-        width:SCREEN_WIDTH * 0.4,
-        height:SCREEN_HEIGHT * 0.07,
-        backgroundColor:THEME,
-        borderRadius:6,
-        alignItems:'center',
-        justifyContent:"center"
+    addCustomService: {
+        width: SCREEN_WIDTH * 0.4,
+        height: SCREEN_HEIGHT * 0.07,
+        backgroundColor: THEME,
+        borderRadius: 6,
+        alignItems: 'center',
+        justifyContent: "center"
     },
     buttonStyleCont: {
         marginVertical: SCREEN_HEIGHT * 0.04
     },
-    addText:{
-        color:WHITE,
-        fontFamily:montserratBold,
-        fontSize:getFontSize(12)
+    addText: {
+        color: WHITE,
+        fontFamily: montserratBold,
+        fontSize: getFontSize(12)
     },
-    addCircle:{
-        width:SCREEN_WIDTH * 0.072,
-        height:SCREEN_HEIGHT * 0.032,
-        borderRadius:100,
-        backgroundColor:WHITE,
-        alignItems:"center",
-        justifyContent:'center'
+    addCircle: {
+        width: SCREEN_WIDTH * 0.072,
+        height: SCREEN_HEIGHT * 0.032,
+        borderRadius: 100,
+        backgroundColor: WHITE,
+        alignItems: "center",
+        justifyContent: 'center'
     },
-    plusStyle:{
-        width:10,
-        height:10
+    plusStyle: {
+        width: 10,
+        height: 10
     },
     serviceList: {
         paddingVertical: SCREEN_HEIGHT * 0.02,
@@ -156,7 +156,71 @@ const styles = StyleSheet.create({
         paddingHorizontal: dynamicSize(35),
         paddingVertical: SCREEN_HEIGHT * 0.04
     },
-    
+    image: {
+        width: isAndroid ? SCREEN_HEIGHT * 0.16 : SCREEN_HEIGHT * 0.14,
+        height: isAndroid ? SCREEN_HEIGHT * 0.16 : SCREEN_HEIGHT * 0.14,
+        borderRadius: (isAndroid ? SCREEN_HEIGHT * 0.16 : SCREEN_HEIGHT * 0.14) / 2
+    },
+    imageContainer: {
+        width: isAndroid ? SCREEN_HEIGHT * 0.16 : SCREEN_HEIGHT * 0.14,
+        height: isAndroid ? SCREEN_HEIGHT * 0.16 : SCREEN_HEIGHT * 0.14,
+        borderRadius: (isAndroid ? SCREEN_HEIGHT * 0.16 : SCREEN_HEIGHT * 0.14) / 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center'
+    },
+    topTabContainer: {
+        marginVertical: 10,
+        borderWidth: 1,
+        borderColor: GRAY,
+        flexDirection: 'row',
+        // width: '100%',
+        marginHorizontal: dynamicSize(25)
+    },
+    tabItem: {
+        flex: 1,
+        paddingVertical: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: WHITE
+    },
+    tabText: {
+        fontSize: 8,
+        fontFamily: montserratSemiBold
+    },
+    hoursOfOperationContainer: {
+        flex: 1,
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        width: SCREEN_WIDTH,
+        paddingHorizontal: 25,
+        marginBottom: 7
+    },
+    drowpdownmText: {
+        fontSize: 8,
+        fontFamily: montserratMedium
+    },
+    dropdownContainer: {
+        borderWidth: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderColor: GRAY,
+        borderRadius: 2
+    },
+    selectedRadio: {
+        width: 12,
+        height: 12,
+        borderRadius: 10,
+        backgroundColor: GRAY,
+        borderWidth: 0.5
+    },
+    unselectedRadio: {
+        width: 12,
+        height: 12,
+        borderRadius: 10,
+        backgroundColor: WHITE,
+        borderWidth: 0.5
+    }
 })
 
 export default styles

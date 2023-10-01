@@ -1,9 +1,9 @@
 // @ imports of React and custom components
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { FlatList, Linking, ScrollView } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useSelector, useDispatch } from 'react-redux'
-import { Button, Loader, MyImage, MyText, MyView, RatingWithLabel, SafeArea, SecondaryButton, Touchable } from '../../components/customComponent'
+import { Button, Loader, MyImage, MyText, MyView, RatingWithLabel, SafeArea, SecondaryButton, Touchable, Triangle, WeekDayTimings } from '../../components/customComponent'
 import { isAndroid, locationMapping, SCREEN_HEIGHT, SCREEN_WIDTH, validateUrl } from '../../components/helper'
 import { LIGHT_WHITE, THEME } from '../../utils/colors'
 import { montserratBold } from '../../utils/fontFamily'
@@ -29,6 +29,44 @@ const ProviderCompleteProfile = ({ navigation }) => {
     const { spProducts } = state['productReducer']
     const [modalVisible, setmodalVisible] = useState(false)
     const [isRefresh, setRefresh] = useState(false)
+    const [selectedWeekDayIndex, setSelectedWeekDayIndex] = useState(0)
+    const [weeklyTimeTable] = useState([
+        {
+            weekdayName: 'Monday',
+            openingTime: '8 AM',
+            closingTime: '5 PM'
+        },
+        {
+            weekdayName: 'Tuesday',
+            openingTime: '8 AM',
+            closingTime: '5 PM'
+        },
+        {
+            weekdayName: 'Wednesday',
+            openingTime: '8 AM',
+            closingTime: '5 PM'
+        },
+        {
+            weekdayName: 'Thursday',
+            openingTime: '8 AM',
+            closingTime: '5 PM'
+        },
+        {
+            weekdayName: 'Friday',
+            openingTime: '8 AM',
+            closingTime: '5 PM'
+        },
+        {
+            weekdayName: 'Saturday',
+            openingTime: '8 AM',
+            closingTime: '5 PM'
+        },
+        {
+            weekdayName: 'Sunday',
+            openingTime: '8 AM',
+            closingTime: '5 PM'
+        },
+    ])
 
     useEffect(() => {
         dispatch(getProviderProfileAction())
@@ -44,6 +82,11 @@ const ProviderCompleteProfile = ({ navigation }) => {
             dispatch(getMyProductListAction(params))
         }, [])
     )
+
+    const selectedWeekDay = useMemo(() => {
+        return `${weeklyTimeTable[selectedWeekDayIndex].weekdayName} : ${weeklyTimeTable[selectedWeekDayIndex].openingTime} - ${weeklyTimeTable[selectedWeekDayIndex].closingTime}`
+    }, [selectedWeekDayIndex])
+
     const _selectHairType = (item, index) => () => {
         const replica = [...hairTypes]
         for (let i = 0; i < hairTypes.length; i++) {
@@ -113,6 +156,14 @@ const ProviderCompleteProfile = ({ navigation }) => {
         }
     }
 
+    const jumpToNextWeek = () => {
+        if (selectedWeekDayIndex < (weeklyTimeTable.length - 1)) setSelectedWeekDayIndex(prevState => prevState + 1)
+    }
+
+    const jumpToPreviousWeek = () => {
+        if (selectedWeekDayIndex > 0) setSelectedWeekDayIndex(prevState => prevState - 1)
+    }
+
 
     return (
         <SafeArea style={{ paddingTop: -useSafeAreaInsets().top }}>
@@ -132,13 +183,18 @@ const ProviderCompleteProfile = ({ navigation }) => {
                                 <Loader isVisible={loading} />
                                 <MyText onPress={_navToEditProfile} style={[styles['editText'], styles['absoluteEditText']]}>{EDIT}</MyText>
                                 <MyImage source={{ uri: providerprofile.ProfilePic }} style={styles['image']} />
-                                <MyText style={styles['name']}>{providerprofile?.FirstName ? providerprofile.FirstName : LOADING}</MyText>
-
+                                <MyText style={[styles['name'], { fontFamily: montserratBold }]}>{providerprofile?.FirstName ? providerprofile.FirstName : LOADING}</MyText>
                                 <MyText style={[styles['name'], { fontSize: getFontSize(14) }]}>{providerprofile?.Username ? providerprofile.Username : LOADING}</MyText>
                                 <MyText onPress={() => setmodalVisible(true)} style={[styles['detail'], { textDecorationLine: "underline", color: THEME }]}>{"View License"}</MyText>
                                 <MyText style={styles['detail']}>{`${LOCATION}:  ${locationMapping(providerprofile)}`}</MyText>
                                 {providerprofile?.['Weblink'] ? <MyText onPress={_openLink} style={[styles['detail'], { textDecorationLine: 'underline' }]}>{providerprofile?.['Weblink'] || ''}</MyText> : null}
-                                <MyText style={styles['detail']}>{`${'Hours'}: ${providerprofile?.['OpeningTime'] === null ? '--' : providerprofile['OpeningTime']} To ${providerprofile?.['ClosingTime'] === null ? '--' : providerprofile['ClosingTime']}`}</MyText>
+                                <MyText style={styles['detail']}>{'Hours of Operation'}</MyText>
+                                {/* ${providerprofile?.['OpeningTime'] === null ? '--' : providerprofile['OpeningTime']} To ${providerprofile?.['ClosingTime'] === null ? '--' : providerprofile['ClosingTime']}` */}
+                                <WeekDayTimings
+                                    jumpToPreviousWeek={jumpToPreviousWeek}
+                                    jumpToNextWeek={jumpToNextWeek}
+                                    text={selectedWeekDay}
+                                />
                                 <MyView style={[styles['lowerInnerCurve']]}>
                                     <RatingWithLabel style={{ marginTop: dynamicSize(7), }} labelStyle={{ fontFamily: montserratBold }} isRateCount label={RATING} mytext={`${providerprofile['OverallRating']}/5`} />
 

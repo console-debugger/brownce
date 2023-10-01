@@ -22,6 +22,7 @@ import {
 import { withIAPContext } from 'react-native-iap';
 import crashlytics from '@react-native-firebase/crashlytics';
 import OneSignal from 'react-native-onesignal';
+import { MenuProvider } from 'react-native-popup-menu';
 
 const App = () => {
   // OneSignal Init Code
@@ -135,10 +136,12 @@ const App = () => {
 
   return (
     <Provider store={store}>
+      <MenuProvider>
       <SafeAreaProvider>
         <StatusBar barStyle="dark-content" backgroundColor={THEME} />
         <RootNavigation />
       </SafeAreaProvider>
+      </MenuProvider>
     </Provider>
   );
 };

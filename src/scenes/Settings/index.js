@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { SafeArea, MyView, MyText, CurveView, SecondaryButton, EmptyMessage, Loader, Button, TouchableIcon, CustomSlider } from '../../components/customComponent'
+import { SafeArea, MyView, MyText, CurveView, SecondaryButton, EmptyMessage, Loader, Button, TouchableIcon, CustomSlider, MyImage, Touchable } from '../../components/customComponent'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useDispatch, useSelector } from 'react-redux'
 import styles from './styles'
 import { FlatList, ScrollView } from 'react-native'
 import { dynamicSize } from '../../utils/responsive'
-import { getHairTypeAction, getProfileAction, getProfileQuestionAction, loaderAction, saveHairTypeAction, saveQuestionAnswerAction, updateHairTypeAction, updateTenderHeadLevelAction } from '../../redux/action'
+import { getHairTypeAction, getProfileAction, getProfileQuestionAction, loaderAction, saveHairTypeAction, saveProfileAction, saveQuestionAnswerAction, updateCustomerProfilePicAction, updateHairTypeAction, updateTenderHeadLevelAction } from '../../redux/action'
 import { apiKey } from '../../services/serviceConstant'
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../components/helper'
-import { editIcon } from '../../components/icons'
+import { cameraIcon, editIcon, imagePlaceholder } from '../../components/icons'
+import { TRANSPARENT_LIGHT_BLACK } from '../../utils/colors'
+import ImagePickerSelection from '../../components/imagePickerSelection'
 
 let timeout = null
 
@@ -26,6 +28,10 @@ const Settings = ({ navigation }) => {
     const [value, setValue] = useState(profile['TenderHeadLevel'] != null ? profile['TenderHeadLevel'] : 0)
     const left = value * (SCREEN_WIDTH - 60) / 10 - 15;
     const [sliderValue, setSliderValue] = useState(profile['TenderHeadLevel'] != null ? profile['TenderHeadLevel'] : 0)
+    const [profilePic, setProfilePic] = useState(profile?.['ProfilePic'])
+    const [imageData, setImageData] = useState({})
+    const [uri, seturi] = useState(profile?.['ProfilePic'])
+    const [isShow, setShow] = useState(false)
 
     useEffect(() => {
 
@@ -135,7 +141,6 @@ const Settings = ({ navigation }) => {
             [apiKey['TENDER_HEAD_LEVEL']]: value
         }
         dispatch(updateTenderHeadLevelAction(tenderparam))
-
     }
 
     const _onSliderChange = value => {
@@ -146,13 +151,43 @@ const Settings = ({ navigation }) => {
         setValue(value)
     }
 
+    const _openPicker = () => setShow(true)
+
+    const _closePicker = () => setShow(false)
+
+    const _getImage = data => {
+        if (data?.['uri']) {
+            seturi(data?.['uri'])
+            setImageData(data)
+            setProfilePic(data?.['uri'])
+            setShow(false)
+        }
+    }
+
+    const _saveProfile = () => {
+        dispatch(loaderAction(true))
+        const formData = new FormData()
+        imageData?.['uri'] && formData.append(apiKey['PROFILE_PIC'], imageData)
+        if (imageData?.uri) dispatch(updateCustomerProfilePicAction(formData, () => {
+            navigation.goBack()
+        }))
+    }
+
     return (
         <SafeArea style={{ paddingTop: -useSafeAreaInsets().top, }}>
             <ScrollView>
                 <MyView style={{ flex: 1 }}>
                     <CurveView />
                     <Loader isVisible={loading} />
-                    <MyText style={styles['title']}>{CHANGE_HAIR_TYPE}</MyText>
+                    <ImagePickerSelection pickerModal={isShow} onCancelPress={_closePicker} selectedImage={_getImage} />
+                    <MyView style={styles['imageContainer']}>
+                        <MyImage source={uri ? { uri: uri ? uri : profile['ProfilePic'] } : imagePlaceholder} style={styles['image']} />
+                        <Touchable onPress={_openPicker} style={[styles['imageContainer'], { position: 'absolute', backgroundColor: TRANSPARENT_LIGHT_BLACK }]} >
+                            <MyImage source={cameraIcon} />
+                        </Touchable>
+                    </MyView>
+                    {!!imageData?.['uri'] && <Button style={{ alignSelf: 'center', marginVertical: SCREEN_HEIGHT * 0.02 }} text={UPDATE} onPress={_saveProfile} />}
+                    <MyText style={[styles['title'], { marginTop: 15 }]}>{CHANGE_HAIR_TYPE}</MyText>
                     <MyView>
                         <FlatList
                             key='hairType'

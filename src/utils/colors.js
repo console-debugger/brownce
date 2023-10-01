@@ -13,3 +13,4 @@ export const LIGHT_BROWN = '#b7a692'
 export const MID_LIGHT_GRAY = '#697083'
 export const BACKGROUND = "rgb(229,225,219)"
 export const RED = 'red'
+export const DARK_GRAY = "#979797"
