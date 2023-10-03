@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState, useMemo } from 'react'
 import { Linking, TouchableOpacity } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useSelector, useDispatch } from 'react-redux'
-import { CurveView, Loader, MyImage, MyText, Button, MyView, SafeArea } from '../../components/customComponent'
+import { CurveView, Loader, MyImage, MyText, Button, MyView, SafeArea, WeekDayTimings } from '../../components/customComponent'
 import styles from './styles'
 import { useFocusEffect } from '@react-navigation/native'
 import { cancelSubscriptionAction, getNotificationCountAction, getProfileAction, getProviderProfileAction, loaderAction } from '../../redux/action'
@@ -12,6 +12,7 @@ import { MyAlert } from '../../components/alert'
 import { CANCEL_SUBSCRIPTION_SUCCESS_ACTION } from '../../redux/action/type'
 import { isCustomer, isIOS, locationMapping, logAnalyticEvent, validateUrl } from '../../components/helper'
 import { PROVIDER_DASHBOARD } from '../../components/eventName'
+import { montserratSemiBold } from '../../utils/fontFamily'
 
 // @ provider profile UI
 
@@ -21,12 +22,14 @@ const ProviderProfile = ({ navigation }) => {
 
     const dispatch = useDispatch()
     const state = useSelector(state => { return state })
-    const { EDIT, MY_SUBSCRIPTION, LOCATION, LOADING, CANCEL_PLAN_MESSAGE } = state['localeReducer']['locale']
+    const { EDIT, MY_SUBSCRIPTION, LOCATION, LOADING, NOT_AVAILABLE, HOURS_OF_OPERATION, CANCEL_PLAN_MESSAGE } = state['localeReducer']['locale']
     const { loading } = state['loaderReducer']
     const { providerprofile } = state['profileReducer']
     const { messageCase } = state['subscriptionPlanReducer']
 
     const [cancelModalVisible, setcancelModal] = useState(false)
+    const [selectedWeekDayIndex, setSelectedWeekDayIndex] = useState(0)
+    const [weeklyTimeTable, setWeekltTimeTable] = useState([])
 
     // @ refetch details of provider profile
     useEffect(() => {
@@ -59,8 +62,21 @@ const ProviderProfile = ({ navigation }) => {
                 }
                 logAnalyticEvent(PROVIDER_DASHBOARD, data)
             }
+            console.log('providerprofile?.Timings==>', JSON.stringify(providerprofile?.Timings))
+            if (providerprofile?.Timings?.length) {
+                setWeekltTimeTable(providerprofile?.Timings || [])
+            }
         }, [providerprofile])
     )
+
+    const selectedWeekDay = useMemo(() => {
+        if (weeklyTimeTable?.length) {
+            const selectedData = weeklyTimeTable.filter(each => (each.StartTime || each.EndTime))
+            if (selectedData.length) return `${selectedData[selectedWeekDayIndex].WeekDay} : ${selectedData[selectedWeekDayIndex].StartTime} - ${selectedData[selectedWeekDayIndex].EndTime}`
+            else return NOT_AVAILABLE
+        }
+        else return NOT_AVAILABLE
+    }, [selectedWeekDayIndex, weeklyTimeTable])
 
     const _cancel = () => {
         // setcancelModal(true)
@@ -108,6 +124,16 @@ const ProviderProfile = ({ navigation }) => {
         }
     }
 
+    const jumpToNextWeek = () => {
+        const selectedData = weeklyTimeTable.filter(each => (each.StartTime || each.EndTime))
+        if (selectedWeekDayIndex < (selectedData.length - 1)) setSelectedWeekDayIndex(prevState => prevState + 1)
+    }
+
+    const jumpToPreviousWeek = () => {
+        // const selectedData = weeklyTimeTable.filter(each=> (each.StartTime || each.EndTime))
+        if (selectedWeekDayIndex > 0) setSelectedWeekDayIndex(prevState => prevState - 1)
+    }
+
     return (
         <SafeArea style={{ paddingTop: -useSafeAreaInsets().top, paddingBottom: -useSafeAreaInsets().bottom }}>
 
@@ -128,7 +154,13 @@ const ProviderProfile = ({ navigation }) => {
                 </TouchableOpacity>
                     :
                     null}
-                <MyText style={styles['detail']}>{`${'Hours'}: ${providerprofile?.['OpeningTime'] === null ? '--' : providerprofile['OpeningTime']} To ${providerprofile?.['ClosingTime'] === null ? '--' : providerprofile['ClosingTime']}`}</MyText>
+                {/* <MyText style={styles['detail']}>{`${'Hours'}: ${providerprofile?.['OpeningTime'] === null ? '--' : providerprofile['OpeningTime']} To ${providerprofile?.['ClosingTime'] === null ? '--' : providerprofile['ClosingTime']}`}</MyText> */}
+                <MyText style={{ fontSize: 12, alignSelf: 'center', fontFamily: montserratSemiBold, marginTop: 10 }}>{HOURS_OF_OPERATION}</MyText>
+                <WeekDayTimings
+                    jumpToPreviousWeek={jumpToPreviousWeek}
+                    jumpToNextWeek={jumpToNextWeek}
+                    text={selectedWeekDay}
+                />
 
                 <CurveView style={styles['curveMain']} innerStyle={styles['innerStyle']} />
                 {providerprofile['IsAdMobSubscribe'] ?

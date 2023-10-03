@@ -2,14 +2,14 @@ import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { SafeArea, MyView, MyImage, Touchable, CurveView, Input, Button, KeyboardAwareScroll, CustomDropDown, Loader, MyText, CustomModal, NewThemeInput, NewThemeDropdown } from '../../components/customComponent'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styles from './styles'
-import { imagePlaceholder, cameraIcon, timeIcon, accountNameIcon, usernameIcon, newEmailIcon, genderIcon } from '../../components/icons'
-import { TRANSPARENT_LIGHT_BLACK, BLACK, LIGHT_WHITE, THEME, PLACEHOLDER_COLOR, WHITE } from '../../utils/colors'
+import { imagePlaceholder, cameraIcon, timeIcon, accountNameIcon, usernameIcon, newEmailIcon, genderIcon, certificateIcon } from '../../components/icons'
+import { TRANSPARENT_LIGHT_BLACK, BLACK, LIGHT_WHITE, THEME, WHITE } from '../../utils/colors'
 import { useDispatch, useSelector } from 'react-redux'
 import { dismissKeyboard, locationMapping, SCREEN_HEIGHT, showToast } from '../../components/helper'
 import { dynamicSize } from '../../utils/responsive'
-import { montserratMedium, montserratSemiBold } from '../../utils/fontFamily'
+import { montserrat, montserratBold } from '../../utils/fontFamily'
 import ImagePickerSelection from '../../components/imagePickerSelection'
-import { getCityListAction, getCountryListAction, getProviderProfileAction, getStateListAction, loaderAction, saveLicenseAction, saveProviderProfileAction, updateEmailAction } from '../../redux/action'
+import { getProviderProfileAction, loaderAction, saveLicenseAction, saveProviderProfileAction, updateEmailAction } from '../../redux/action'
 import MyListPicker from '../../components/myListPicker'
 import { apiKey } from '../../services/serviceConstant'
 import { useFocusEffect } from '@react-navigation/native'
@@ -17,6 +17,9 @@ import LicensePickerSelection from '../../components/licensePickerSelection'
 import DateTimePicker from '../../components/datePicker'
 import { reverseGeocode } from '../../services'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+import { locationPinIcon } from '../../components/icons'
+import { LicensePopup } from '../../components/alert'
+import { lockIcon } from '../../components/icons'
 
 const TYPES = { USERNAME: 'username', NAME: 'name', DESCRIPTION: 'description', WEBLINK: 'weblink', EMAIL: 'email', GENDER: 'gender', COUNTRY: 'country', CITY: 'city', STATE: 'state' }
 
@@ -25,17 +28,13 @@ const EditProviderProfile = ({ navigation }) => {
 
     const dispatch = useDispatch()
     const state = useSelector(state => { return state })
-    const { PLEASE_SELECT_CITY, UPDATE_EMAIL, PLEASE_SELECT_STATE, LOCATION, PLEASE_SELECT_COUNTRY, MALE, FEMALE, PLEASE_UPLOAD_PROFILE_PIC, PLEASE_ENTER_AN_USERNAME, PLEASE_ENTER_NAME, TRANSGENDER_FEMALE, TRANSGENDER_MALE, NON_BINARY, OTHER, EMAIL, USERNAME, NAME, CITY, STATE, COUNTRY, UPDATE, PLEASE_WAIT_WHILE_FETCHING_COUNTRY_LIST, PLEASE_WAIT_WHILE_FETCHING_STATE_LIST, PLEASE_WAIT_WHILE_FETCHING_CITY_LIST, LOCATE_ON_MAP, CONTINUE } = state['localeReducer']['locale']
+    const { PLEASE_SELECT_CITY, UPDATE_EMAIL, PLEASE_SELECT_STATE, LOCATION, ACCOUNT, LICENSE, PRIVACY_AND_SECURITY, MALE, FEMALE, PLEASE_UPLOAD_PROFILE_PIC, PLEASE_ENTER_AN_USERNAME, PLEASE_ENTER_NAME, TRANSGENDER_FEMALE, TRANSGENDER_MALE, NON_BINARY, OTHER, EMAIL, USERNAME, NAME, CITY, STATE, COUNTRY, UPDATE, PLEASE_WAIT_WHILE_FETCHING_COUNTRY_LIST, PLEASE_WAIT_WHILE_FETCHING_STATE_LIST, PLEASE_WAIT_WHILE_FETCHING_CITY_LIST, LOCATE_ON_MAP, CONTINUE } = state['localeReducer']['locale']
     const { providerprofile } = state['profileReducer']
     const { loading } = state['loaderReducer']
-    const { country, userState, city } = state['addressReducer']
-    const [time, settime] = useState(providerprofile?.['OpeningTime'] === null ? '' : providerprofile['OpeningTime'])
-    const [closetime, setclosetime] = useState(providerprofile?.['ClosingTime'] === null ? '' : providerprofile['ClosingTime'])
 
     const emailRef = useRef('emailRef')
-    const cityRef = useRef('cityRef')
-    const stateRef = useRef('stateRef')
     const mapRef = useRef('mapRef')
+    const [modalVisible, setmodalVisible] = useState(false)
 
     const genderData = [
         {
@@ -71,10 +70,8 @@ const EditProviderProfile = ({ navigation }) => {
         email: providerprofile?.['Email'] || '',
         gender: providerprofile?.['Gender'] || 'Male',
         genderId: providerprofile?.['GenderId'] || 1,
-        // selectedCountry: providerprofile?.['Country'] || '',
         selectedCity: providerprofile?.['City'] || '',
         selectedUserState: providerprofile?.['State'] || '',
-        // selectedCityId: providerprofile?.['CityId'] || '',
         description: providerprofile?.['Bio'] || '',
         weblink: providerprofile?.['Weblink'] || ''
     }
@@ -88,13 +85,9 @@ const EditProviderProfile = ({ navigation }) => {
         descriptionError: ''
     }
 
-    const [{ username, name, email, gender, genderId, selectedCountry, selectedCity, selectedUserState, selectedCityId, description, weblink }, setFormField] = useState(initialFormField)
-    const [{ usernameError, nameError, emailError, cityError, stateError, descriptionError }, setError] = useState(initialError)
-    const [profilePic, setProfilePic] = useState(providerprofile?.['ProfilePic'])
-    const [imageData, setImageData] = useState({})
-    const [isShow, setShow] = useState(false)
+    const [{ username, name, email, gender, genderId, selectedCity, selectedUserState }, setFormField] = useState(initialFormField)
+    const [{ usernameError, nameError, emailError }, setError] = useState(initialError)
     const [isVisible, setVisible] = useState(false)
-    const [uri, seturi] = useState(providerprofile?.['ProfilePic'])
     const [isMapModalVisible, setModalVisible] = useState(false)
     const [latitude, setlatitude] = useState(providerprofile?.Latitude || 40.38190380557175)
     const [longitude, setlongitude] = useState(providerprofile?.Longitude || -75.90530281564186)
@@ -107,22 +100,6 @@ const EditProviderProfile = ({ navigation }) => {
         }, [])
     )
 
-    // fetch Country, state and city list
-    // useEffect(() => {
-    //     dispatch(getCountryListAction())
-    //     dispatch(getStateListAction(providerprofile.CountryId))
-    //     dispatch(getCityListAction(providerprofile.StateId))
-    // }, [])
-
-    // handle focus 
-    const _focusNext = type => () => {
-        if (type === TYPES['USERNAME']) emailRef.current.focus()
-        else if (type === TYPES['NAME']) emailRef.current.focus()
-        // else if (type === TYPES['EMAIL']) cityRef.current.focus()
-        // else if (type === TYPES['CITY']) stateRef.current.focus()
-        // else if (type === TYPES['STATE']) dismissKeyboard
-    }
-
     // handle onchange
     const _onChangeText = type => text => {
         if (type === TYPES['USERNAME']) { setFormField(prevState => ({ ...prevState, username: text.replace(/\s/g, '') })), setError(prevState => ({ ...prevState, usernameError: '' })) }
@@ -130,33 +107,6 @@ const EditProviderProfile = ({ navigation }) => {
         if (type === TYPES['EMAIL']) { setFormField(prevState => ({ ...prevState, email: text })), setError(prevState => ({ ...prevState, emailError: '' })) }
         if (type === TYPES['DESCRIPTION']) { setFormField(prevState => ({ ...prevState, description: text })), setError(prevState => ({ ...prevState, descriptionError: '' })) }
         else if (type === TYPES['WEBLINK']) { setFormField(prevState => ({ ...prevState, weblink: text })), setError(prevState => ({ ...prevState, passwordError: '' })) }
-    }
-
-    // const _selectedCountry = data => {
-    //     setFormField(prevState => ({ ...prevState, selectedCountry: data['Name'], selectedUserState: '', selectedCity: '', selectedCityId: '' }))
-    //     dispatch(getStateListAction(data['CountryId']))
-    // }
-
-    // const _selectedState = data => {
-    //     setFormField(prevState => ({ ...prevState, selectedUserState: data['Name'], selectedCity: '', selectedCityId: '' }))
-    //     dispatch(getCityListAction(data['StateId']))
-    // }
-
-    // const _selectedCity = data => {
-    //     setFormField(prevState => ({ ...prevState, selectedCity: data['Name'], selectedCityId: data['CityId'] }))
-    // }
-
-    const _openPicker = () => setShow(true)
-
-    const _closePicker = () => setShow(false)
-
-    const _getImage = data => {
-        if (data?.['uri']) {
-            seturi(data?.['uri'])
-            setImageData(data)
-            setProfilePic(data?.['uri'])
-            setShow(false)
-        }
     }
 
     const _getLicenseImage = async data => {
@@ -170,31 +120,21 @@ const EditProviderProfile = ({ navigation }) => {
 
     // validate before save provider details
     const _validate = () => {
-        profilePic ?
+        name.trim().length ?
             username.length ?
-                name.trim().length ?
-                    // selectedCountry ?
-                    selectedUserState ?
-                        selectedCity ?
-                            description.trim().length ?
-                                time ?
-                                    closetime ?
-                                        _saveProviderProfile()
-                                        : showToast("Please enter close time")
-                                    : showToast("Please enter open time")
-                                : showToast("Please enter description")
-                            : showToast(PLEASE_SELECT_CITY)
-                        : showToast(PLEASE_SELECT_STATE)
-                    // : showToast(PLEASE_SELECT_COUNTRY)
-                    : setError(prevError => ({ ...prevError, nameError: PLEASE_ENTER_NAME }))
+                selectedUserState ?
+                    selectedCity ?
+                        _saveProviderProfile()
+                        : showToast(PLEASE_SELECT_CITY)
+                    : showToast(PLEASE_SELECT_STATE)
                 : setError(prevError => ({ ...prevError, usernameError: PLEASE_ENTER_AN_USERNAME }))
-            : showToast(PLEASE_UPLOAD_PROFILE_PIC)
+            : setError(prevError => ({ ...prevError, nameError: PLEASE_ENTER_NAME }))
     }
 
     // save updated provider details
     const _saveProviderProfile = () => {
         const formData = new FormData()
-        imageData?.['uri'] && formData.append(apiKey['PROFILE_PIC'], imageData)
+        // imageData?.['uri'] && formData.append(apiKey['PROFILE_PIC'], imageData)
         formData.append(apiKey['user_name'], username)
         formData.append(apiKey['FIRSTNAME'], name)
         formData.append(apiKey['GENDER'], genderId)
@@ -202,11 +142,6 @@ const EditProviderProfile = ({ navigation }) => {
         formData.append(apiKey['STATE_NAME'], selectedUserState)
         formData.append(apiKey['LATITUDE'], latitude)
         formData.append(apiKey['LONGITUDE'], longitude)
-        // formData.append(apiKey['CITY_ID'], selectedCityId)
-        formData.append(apiKey['Description'], description)
-        formData.append('WebLink', weblink)
-        formData.append('OpeningTime', time)
-        formData.append('ClosingTime', closetime)
         console.log('formData==>', formData)
         dispatch(saveProviderProfileAction(formData))
     }
@@ -223,14 +158,6 @@ const EditProviderProfile = ({ navigation }) => {
         formData.append(apiKey['DocName'], data)
         formData.append(apiKey['IsUpdate'], true)
         dispatch(saveLicenseAction(formData, false))
-    }
-
-    const _selectedTime = time => {
-        settime(time)
-    }
-
-    const _selectedCloseTime = time => {
-        setclosetime(time)
     }
 
     const _onDragEnd = event => {
@@ -271,24 +198,29 @@ const EditProviderProfile = ({ navigation }) => {
             <KeyboardAwareScroll contentContainerStyle={{ alignItems: 'center' }}>
                 <CurveView />
                 <Loader isVisible={loading} />
-                <ImagePickerSelection pickerModal={isShow} onCancelPress={_closePicker} selectedImage={_getImage} />
+                {/* <ImagePickerSelection pickerModal={isShow} onCancelPress={_closePicker} selectedImage={_getImage} /> */}
+                <LicensePopup
+                    source={{ uri: providerprofile?.['DocumentPath'] }}
+                    dismiss={() => setmodalVisible(false)}
+                    isVisible={modalVisible} />
                 <LicensePickerSelection pickerModal={isVisible} onCancelPress={() => setVisible(false)} selectedImage={_getLicenseImage} />
-                <MyView style={styles['imageContainer']}>
+                {/* <MyView style={styles['imageContainer']}>
                     <MyImage source={uri ? { uri: uri ? uri : providerprofile?.['ProfilePic'] } : imagePlaceholder} style={styles['image']} />
                     <Touchable onPress={_openPicker} style={[styles['imageContainer'], { position: 'absolute', backgroundColor: TRANSPARENT_LIGHT_BLACK }]} >
                         <MyImage source={cameraIcon} />
                     </Touchable>
-                </MyView>
-                <MyText onPress={() => setVisible(true)} style={{ textDecorationLine: "underline", color: THEME, marginTop: 5, marginLeft: 5 }}>
+                </MyView> */}
+                <MyText style={{ fontSize: 19, fontFamily: montserratBold, marginTop: 10 }}>{ACCOUNT}</MyText>
+                {/* <MyText onPress={() => setVisible(true)} style={{ textDecorationLine: "underline", color: THEME, marginTop: 5, marginLeft: 5 }}>
                     {"Update License"}
-                </MyText>
+                </MyText> */}
                 <NewThemeInput
                     mainContainerStyle={{ marginTop: 10 }}
                     value={name}
                     placeholder={NAME}
                     source={accountNameIcon}
                     onChangeText={_onChangeText(TYPES['NAME'])}
-                    onSubmitEditing={_focusNext(TYPES['NAME'])}
+                    // onSubmitEditing={_focusNext(TYPES['NAME'])}
                     blurOnSubmit={false}
                     errorMessage={nameError || null}
                 />
@@ -298,7 +230,7 @@ const EditProviderProfile = ({ navigation }) => {
                     placeholder={USERNAME}
                     source={usernameIcon}
                     onChangeText={_onChangeText(TYPES['USERNAME'])}
-                    onSubmitEditing={_focusNext(TYPES['USERNAME'])}
+                    // onSubmitEditing={_focusNext(TYPES['USERNAME'])}
                     blurOnSubmit={false}
                     errorMessage={usernameError || null}
                 />
@@ -311,7 +243,7 @@ const EditProviderProfile = ({ navigation }) => {
                     placeholder={EMAIL}
                     value={email}
                     onChangeText={_onChangeText(TYPES['EMAIL'])}
-                    onSubmitEditing={_focusNext(TYPES['EMAIL'])}
+                    // onSubmitEditing={_focusNext(TYPES['EMAIL'])}
                     keyboardType={'email-address'}
                     autoCapitalize='none'
                     blurOnSubmit={false}
@@ -326,55 +258,53 @@ const EditProviderProfile = ({ navigation }) => {
                     data={genderData}
                     value={gender}
                     placeholder={'Gender'}
-                    // topOffset={dynamicSize(25)}
-                    // containerStyle={{ borderBottomColor: BLACK, borderBottomWidth: 2 }}
+                    containerStyle={{ height: 10 }}
                 />
-                <CustomDropDown onChange={_changeGender} data={genderData} value={gender} topOffset={dynamicSize(20)} containerStyle={{ borderBottomColor: BLACK, borderBottomWidth: 2 }} />
-                {/* <MyListPicker textStyle={{ fontFamily: montserratSemiBold }} style={{ marginVertical: null, marginTop: dynamicSize(20), borderBottomColor: BLACK }} message={PLEASE_WAIT_WHILE_FETCHING_COUNTRY_LIST} value={selectedCountry} placeholder={COUNTRY} data={country} selectedItem={_selectedCountry} />
-                <MyListPicker textStyle={{ fontFamily: montserratSemiBold }} style={{ marginVertical: dynamicSize(20), borderBottomColor: BLACK }} message={PLEASE_WAIT_WHILE_FETCHING_STATE_LIST} value={selectedUserState} placeholder={STATE} data={userState} selectedItem={_selectedState} />
-                <MyListPicker textStyle={{ fontFamily: montserratSemiBold }} style={{ marginVertical: null, borderBottomColor: BLACK }} message={PLEASE_WAIT_WHILE_FETCHING_CITY_LIST} value={selectedCity} placeholder={CITY} data={city} selectedItem={_selectedCity} /> */}
-                <Input
-                    multiline
-                    labelFontSize={0}
-                    style={{ borderBottomColor: BLACK }}
-                    value={description}
-                    hintColor={BLACK}
-                    onChangeText={_onChangeText(TYPES['DESCRIPTION'])}
-                    onSubmitEditing={_focusNext(TYPES['DESCRIPTION'])}
+                {/* <Touchable onPress={openMapModal}> */}
+                {/* <MyView pointerEvents="none"> */}
+                <NewThemeInput
+                    mainContainerStyle={{ marginTop: 10 }}
+                    containerStyle={{ alignItems: 'center' }}
+                    source={locationPinIcon}
+                    editable={false}
+                    placeholder={LOCATION}
+                    value={locationMapping({ City: selectedCity, State: selectedUserState })}
                     blurOnSubmit={false}
-                    errorMessage={descriptionError || null}
+                    rightLabel={UPDATE}
+                    inputStyle={{ fontSize: 14 }}
+                    rightLabelStyle={{ fontSize: 14 }}
+                    onRightPress={openMapModal}
                 />
-                <Input
-                    styleContainer={{ marginTop: SCREEN_HEIGHT * 0.01 }}
-                    value={weblink}
-                    placeholder={'Website Link (Optional)'}
-                    onChangeText={_onChangeText(TYPES['WEBLINK'])}
+                {/* </MyView> */}
+                {/* </Touchable> */}
+                <MyText style={{ fontSize: 19, fontFamily: montserratBold, marginVertical: 15 }}>{LICENSE}</MyText>
+
+                <NewThemeInput
+                    textOnly
+                    source={certificateIcon}
+                    sourceStyle={{ width: 25, height: 25 }}
+                    onTextPress={() => setmodalVisible(true)}
+                    inputStyle={{ fontFamily: montserrat, fontSize: 14, textAlign: 'center' }}
+                    value={'View Lisense'}
+                    rightLabel={UPDATE}
+                    rightLabelStyle={{ fontSize: 14 }}
+                    onRightPress={() => setVisible(true)}
+                />
+
+                <MyText style={{ fontSize: 19, fontFamily: montserratBold, marginVertical: 15 }}>{PRIVACY_AND_SECURITY}</MyText>
+                <NewThemeInput
+                    containerStyle={{ alignItems: 'center' }}
+                    source={lockIcon}
+                    editable={false}
+                    placeholder={LOCATION}
+                    value={'**********'}
+                    secureTextEntry={true}
                     blurOnSubmit={false}
+                    rightLabel={UPDATE}
+                    inputStyle={{ fontSize: 14 }}
+                    rightLabelStyle={{ fontSize: 14 }}
+                    onRightPress={() => navigation.navigate('changepassword')}
                 />
-                <DateTimePicker
-                    mode='time'
-                    style={styles['picker']}
-                    placeholder={time ? time : 'Open Time'}
-                    selectedTime={_selectedTime}
-                    textStyle={{
-                        color: time ? BLACK : PLACEHOLDER_COLOR, right: 10, fontFamily: montserratMedium,
-                    }}
-                >
-                    <MyImage source={timeIcon} />
-                </DateTimePicker>
-                <DateTimePicker
-                    mode='time'
-                    style={styles['picker']}
-                    placeholder={closetime ? closetime : 'Close Time'}
-                    selectedTime={_selectedCloseTime}
-                    textStyle={{
-                        color: time ? BLACK : PLACEHOLDER_COLOR, right: 10, fontFamily: montserratMedium,
-                    }}
-                >
-                    <MyImage source={timeIcon} />
-                </DateTimePicker>
-                <MyText style={styles['locationName']}>{`${LOCATION}: ${locationMapping({ City: selectedCity, State: selectedUserState })}`}</MyText>
-                <Button onPress={openMapModal} style={[styles['buttonStyle'], { marginTop: SCREEN_HEIGHT * 0.04 }]} text={LOCATE_ON_MAP} />
                 <Button onPress={_validate} style={[styles['buttonStyle'], { marginVertical: SCREEN_HEIGHT * 0.04 }]} text={UPDATE} />
                 <CustomModal
                     isVisible={isMapModalVisible}

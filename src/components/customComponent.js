@@ -1142,16 +1142,24 @@ export const PopupMenuOption = ({
 };
 
 export const NewThemeInput = forwardRef((props, ref) => {
-  const { source, inputStyle, errorMessage, errorStyle, mainContainerStyle } = props
+  const { source, inputStyle, errorMessage, errorStyle, mainContainerStyle, containerStyle, rightLabel, onRightPress, value, textOnly, onTextPress, rightLabelStyle, sourceStyle } = props
   return (
-    <MyView style={[{ flex: 1 }, mainContainerStyle]}>
-      <MyView style={{ flexDirection: 'row', backgroundColor: WHITE, borderRadius: 5, width: SCREEN_WIDTH - dynamicSize(70), paddingVertical: 10, paddingHorizontal: 5 }}>
-        {!!source && <MyImage source={source} style={{ marginRight: 10 }} resizeMode='contain' />}
-        <TextInput
-          ref={ref}
-          style={[{ flex: 1, borderBottomColor: 'transparent', fontFamily: montserratSemiBold, fontSize: 13 }, inputStyle]}
-          {...props}
-        />
+    <MyView style={mainContainerStyle}>
+      <MyView style={[{ flexDirection: 'row', backgroundColor: WHITE, borderRadius: 5, width: SCREEN_WIDTH - dynamicSize(70), paddingVertical: 10, paddingHorizontal: 5 }, containerStyle]}>
+        {!!source && <MyImage source={source} style={[{ marginRight: 10 }, sourceStyle]} resizeMode='contain' />}
+        {textOnly ?
+          <MyText
+            onPress={onTextPress}
+            style={[{ flex: 1, fontFamily: montserratSemiBold, fontSize: 13 }, inputStyle]}
+          >{value}</MyText>
+          :
+          <TextInput
+            ref={ref}
+            style={[{ flex: 1, borderBottomColor: 'transparent', fontFamily: montserratSemiBold, fontSize: 14 }, inputStyle]}
+            {...props}
+          />
+        }
+        <MyText onPress={onRightPress} style={[{ marginLeft: 10, fontSize: 13, fontFamily: montserratMedium }, rightLabelStyle]}>{rightLabel}</MyText>
       </MyView>
       {!!errorMessage && (
         <MyView style={{ width: SCREEN_WIDTH - dynamicSize(70) }}>
@@ -1205,7 +1213,7 @@ export const NewThemeDropdown = (props) => {
   return (
     <MyView style={[{ flex: 1 }, mainContainerStyle]}>
       <MyView style={{ flexDirection: 'row', backgroundColor: WHITE, borderRadius: 5, width: SCREEN_WIDTH - dynamicSize(70), paddingVertical: 5, paddingHorizontal: 5 }}>
-        {!!source && <MyImage source={source} style={{ marginRight: 10, width:30, height:30 }} resizeMode='contain' />}
+        {!!source && <MyImage source={source} style={{ marginRight: 10, width: 30, height: 30 }} resizeMode='contain' />}
         <Dropdown
           {...props}
           placeholderTextColor={placeholderTextColor || LIGHT_GRAY}
@@ -1213,10 +1221,11 @@ export const NewThemeDropdown = (props) => {
           dropdownOffset={{ top: topOffset || SCREEN_WIDTH * 0.014, left: 0 }}
           labelTextStyle={{ fontFamily: montserratSemiBold, color: LIGHT_GRAY }}
           itemTextStyle={{ fontFamily: montserratSemiBold }}
-          containerStyle={[commonStyle['dropDownContainer'], { width: null, flex: 1, height:35}, style]}
+          containerStyle={[commonStyle['dropDownContainer'], { width: null, flex: 1 }, style]}
           labelFontSize={label ? getFontSize(12) : 0}
-          pickerStyle={{width:SCREEN_WIDTH-dynamicSize(70)}}
-          fontSize={getFontSize(13)}
+          // pickerStyle={{ width: SCREEN_WIDTH - dynamicSize(70) }}
+          dropdownPosition={0}
+          fontSize={getFontSize(14)}
           fontFamily={montserratSemiBold}
           baseColor={BLACK}
           label={label || null}
@@ -1233,7 +1242,7 @@ export const NewThemeDropdown = (props) => {
           renderAccessory={icon || _renderIcon}
           placeholder={placeholder || PLEASE_SELECT}
           onChangeText={onChange}
-          // error={errorMessage}
+        // error={errorMessage}
         />
       </MyView>
       {!!errorMessage && (

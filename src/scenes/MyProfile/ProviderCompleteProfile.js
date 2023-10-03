@@ -61,7 +61,7 @@ const ProviderCompleteProfile = ({ navigation }) => {
             if (selectedData.length) return `${selectedData[selectedWeekDayIndex].WeekDay} : ${selectedData[selectedWeekDayIndex].StartTime} - ${selectedData[selectedWeekDayIndex].EndTime}`
             else return NOT_AVAILABLE
         }
-        else return ''
+        else return NOT_AVAILABLE
     }, [selectedWeekDayIndex, weeklyTimeTable])
 
     const _selectHairType = (item, index) => () => {
@@ -163,7 +163,7 @@ const ProviderCompleteProfile = ({ navigation }) => {
                                 <MyImage source={{ uri: providerprofile.ProfilePic }} style={styles['image']} />
                                 <MyText style={[styles['name'], { fontFamily: montserratBold }]}>{providerprofile?.FirstName ? providerprofile.FirstName : LOADING}</MyText>
                                 <MyText style={[styles['name'], { fontSize: getFontSize(14) }]}>{providerprofile?.Username ? providerprofile.Username : LOADING}</MyText>
-                                <MyText onPress={() => setmodalVisible(true)} style={[styles['detail'], { textDecorationLine: "underline", color: THEME }]}>{"View License"}</MyText>
+                                {/* <MyText onPress={() => setmodalVisible(true)} style={[styles['detail'], { textDecorationLine: "underline", color: THEME }]}>{"View License"}</MyText> */}
                                 <MyText style={styles['detail']}>{`${LOCATION}:  ${locationMapping(providerprofile)}`}</MyText>
                                 {providerprofile?.['Weblink'] ? <MyText onPress={_openLink} style={[styles['detail'], { textDecorationLine: 'underline' }]}>{providerprofile?.['Weblink'] || ''}</MyText> : null}
                                 <MyText style={{ fontSize: 12, alignSelf: 'center', fontFamily: montserratSemiBold, marginTop: 10 }}>{HOURS_OF_OPERATION}</MyText>
@@ -218,7 +218,7 @@ const ProviderCompleteProfile = ({ navigation }) => {
                                 </MyView>
                             </MyView>
                         </ScrollView>
-                        <Button onPress={() => navigation.navigate('changepassword')} style={{ marginVertical: dynamicSize(10), }} text="Change Password" />
+                        {/* <Button onPress={() => navigation.navigate('changepassword')} style={{ marginVertical: dynamicSize(10), }} text="Change Password" /> */}
                     </MyView>
                 </MyView>
             </MyView>

@@ -168,7 +168,7 @@ const SpDetail = ({ navigation, route }) => {
       if(selectedData.length) return `${selectedData[selectedWeekDayIndex].WeekDay} : ${selectedData[selectedWeekDayIndex].StartTime} - ${selectedData[selectedWeekDayIndex].EndTime}`
       else return NOT_AVAILABLE
     }
-    else return ''
+    else return NOT_AVAILABLE
   }, [selectedWeekDayIndex, weeklyTimeTable])
 
   const _selectHairType = (item, index, index1) => () => {

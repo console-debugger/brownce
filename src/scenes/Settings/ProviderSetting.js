@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { FlatList, ScrollView } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useSelector, useDispatch } from 'react-redux'
 import { CurveView, MyImage, MyText, MyView, SafeArea, SecondaryButton, TouchableIcon, Button, Touchable, Loader, NormalInput, PopupMenuOption } from '../../components/customComponent'
-import { SCREEN_HEIGHT, showToast } from '../../components/helper'
+import { SCREEN_HEIGHT, SCREEN_WIDTH, showToast } from '../../components/helper'
 import { cameraIcon, downArrow, imagePlaceholder, plusIcon, redCrossIcon } from '../../components/icons'
 import { DARK_GRAY, GRAY, LIGHT_GRAY, TRANSPARENT_LIGHT_BLACK, WHITE } from '../../utils/colors'
 import { dynamicSize } from '../../utils/responsive'
@@ -16,6 +16,7 @@ import ImagePickerSelection from '../../components/imagePickerSelection'
 import { montserratBold, montserratSemiBold } from '../../utils/fontFamily'
 import moment from 'moment'
 
+let timeout
 // Provider setting
 const openData = [
     {
@@ -137,9 +138,11 @@ const ProviderSetting = ({ navigation }) => {
     const [websiteLink, setWebsiteLink] = useState(providerprofile?.Weblink || '')
     const [bio, setBio] = useState(providerprofile?.Bio || '')
 
+    const scrollViewRef = useRef()
+
     useEffect(() => {
         getImages()
-        console.log('asdasasddsad===>',JSON.stringify(providerprofile))
+        console.log('asdasasddsad===>', JSON.stringify(providerprofile))
     }, [])
 
     useEffect(() => {
@@ -367,6 +370,30 @@ const ProviderSetting = ({ navigation }) => {
         console.log('param==>', JSON.stringify(param))
     }
 
+    const scrollToIndex = (index) => () => {
+        if (index == 0 || index == 1 || index == 2) {
+            if (timeout) clearTimeout(timeout)
+            timeout = setTimeout(() => {
+                timeout = null
+                scrollViewRef?.current?.scrollTo(0)
+            }, 1);
+        }
+        else if (index == 3) {
+            if (timeout) clearTimeout(timeout)
+            timeout = setTimeout(() => {
+                timeout = null
+                scrollViewRef?.current?.scrollTo(SCREEN_WIDTH / 2)
+            }, 1);
+        }
+        else if (index == 4) {
+            if (timeout) clearTimeout(timeout)
+            timeout = setTimeout(() => {
+                timeout = null
+                scrollViewRef?.current?.scrollToEnd()
+            }, 1);
+        }
+    }
+
     return (
         <SafeArea style={{ paddingTop: -useSafeAreaInsets().top, }}>
             {/* <Loader isVisible={loading} /> */}
@@ -374,7 +401,7 @@ const ProviderSetting = ({ navigation }) => {
                 <MultipleImagePickerSelection pickerModal={isShow} onCancelPress={_closePicker} selectedImage={_getImage} />
 
                 <CurveView />
-                <ScrollView showsVerticalScrollIndicator={false}>
+                <ScrollView showsVerticalScrollIndicator={false} ref={scrollViewRef}>
                     <ImagePickerSelection pickerModal={showImagePicker} onCancelPress={_closeImagePicker} selectedImage={_getSingleImage} />
                     <MyView style={styles['imageContainer']}>
                         <MyImage source={uri ? { uri: uri ? uri : providerprofile['ProfilePic'] } : imagePlaceholder} style={styles['image']} />
@@ -385,18 +412,20 @@ const ProviderSetting = ({ navigation }) => {
                     {!!imageData?.['uri'] && <Button style={{ alignSelf: 'center', marginVertical: SCREEN_HEIGHT * 0.02 }} text={UPDATE} onPress={_saveProfile} />}
                     <MyView style={styles.topTabContainer}>
                         {tabData.map((each, index) => {
-                            return (<Touchable key={index.toString()} style={[styles.tabItem, { borderLeftWidth: index == 0 ? 0 : 1, borderLeftColor: GRAY }]}>
+                            return (<Touchable onPress={scrollToIndex(index)} key={index.toString()} style={[styles.tabItem, { borderLeftWidth: index == 0 ? 0 : 1, borderLeftColor: GRAY }]}>
                                 <MyText style={styles.tabText}>{each.name}</MyText>
                             </Touchable>)
                         })}
                     </MyView>
-                    <MyText style={{ marginHorizontal: 25 }}>{`${WEBSITE_SMALL}:`}</MyText>
-                    <NormalInput
-                        style={{ borderRadius: 25 }}
-                        containerStyle={{ marginHorizontal: 25, marginVertical: 10 }}
-                        value={websiteLink}
-                        onChangeText={onChangeWebsite}
-                    />
+                    <MyView>
+                        <MyText style={{ marginHorizontal: 25 }}>{`${WEBSITE_SMALL}:`}</MyText>
+                        <NormalInput
+                            style={{ borderRadius: 25 }}
+                            containerStyle={{ marginHorizontal: 25, marginVertical: 10 }}
+                            value={websiteLink}
+                            onChangeText={onChangeWebsite}
+                        />
+                    </MyView>
                     {!!weekDaysData?.length && <MyView>
                         <MyText style={{ marginHorizontal: 25, marginBottom: 10 }}>{`${HOURS_OF_OPERATION}:`}</MyText>
                         {weekDaysData?.map((item, index) => {
@@ -451,48 +480,52 @@ const ProviderSetting = ({ navigation }) => {
                             value={bio}
                             onChangeText={onChangeBio}
                         />
+                        <Button onPress={_validateHoursAdProfile} style={{ alignSelf: 'center', marginVertical: SCREEN_HEIGHT * 0.02 }} text={UPDATE} />
                     </MyView>
-                    <Button onPress={_validateHoursAdProfile} style={{ alignSelf: 'center', marginVertical: SCREEN_HEIGHT * 0.02 }} text={UPDATE} />
-                    <MyText style={[styles['title'], { marginBottom: SCREEN_HEIGHT * 0.02, paddingHorizontal: dynamicSize(25) }]}>{CHANGE_PORTFOLIO}</MyText>
+                    <MyView>
+                        <MyText style={[styles['title'], { marginBottom: SCREEN_HEIGHT * 0.02, paddingHorizontal: dynamicSize(25) }]}>{CHANGE_PORTFOLIO}</MyText>
 
-                    <FlatList
-                        key='portFolio'
-                        data={portfolioData}
-                        numColumns={3}
-                        showsVerticalScrollIndicator={false}
-                        renderItem={_renderPortfolio}
-                        keyExtractor={_keyExtractor}
-                        contentContainerStyle={styles['portfolioFlatList']}
-                        ItemSeparatorComponent={_renderSeperator}
-                    />
+                        <FlatList
+                            key='portFolio'
+                            data={portfolioData}
+                            numColumns={3}
+                            showsVerticalScrollIndicator={false}
+                            renderItem={_renderPortfolio}
+                            keyExtractor={_keyExtractor}
+                            contentContainerStyle={styles['portfolioFlatList']}
+                            ItemSeparatorComponent={_renderSeperator}
+                        />
 
-                    <Button onPress={() => updatePortfolio()} style={{ alignSelf: 'center', marginTop: SCREEN_HEIGHT * 0.03 }} text={UPDATE} />
-                    <MyText style={[styles['title'], { marginTop: SCREEN_HEIGHT * 0.02 }]}>{"CHANGE SERVICES"}</MyText>
-                    <FlatList
-                        key='hairType'
-                        data={ServicesProvided}
-                        keyExtractor={_keyExtractor}
-                        showsVerticalScrollIndicator={false}
-                        renderItem={(item, index) => _renderHairType(item, index)}
-                        contentContainerStyle={styles['hairTypeFlatList']}
-                        numColumns={2}
-                        extraData={isrefresh}
-                        columnWrapperStyle={{ justifyContent: 'space-between' }}
-                    />
-                    <Button onPress={_validate} style={{ alignSelf: 'center', marginBottom: SCREEN_HEIGHT * 0.02 }} text={UPDATE} />
-                    <MyText style={[styles['title'], { marginTop: SCREEN_HEIGHT * 0.02 }]}>{"CUSTOM SERVICES"}</MyText>
-                    <FlatList
-                        key='serviceProviderCustom'
-                        data={providerprofile['ServicesProvidedCustom']}
-                        keyExtractor={_keyExtractor}
-                        showsVerticalScrollIndicator={false}
-                        renderItem={(item, index) => _renderHairType1(item, index)}
-                        contentContainerStyle={styles['hairTypeFlatList']}
-                        numColumns={2}
-                        extraData={isrefresh}
-                        columnWrapperStyle={{ justifyContent: 'space-between' }}
-                    />
-                    <Button onPress={_validate1} style={{ alignSelf: 'center', marginBottom: SCREEN_HEIGHT * 0.02 }} text={UPDATE} />
+                        <Button onPress={() => updatePortfolio()} style={{ alignSelf: 'center', marginTop: SCREEN_HEIGHT * 0.03 }} text={UPDATE} />
+                    </MyView>
+                    <MyView>
+                        <MyText style={[styles['title'], { marginTop: SCREEN_HEIGHT * 0.02 }]}>{"CHANGE SERVICES"}</MyText>
+                        <FlatList
+                            key='hairType'
+                            data={ServicesProvided}
+                            keyExtractor={_keyExtractor}
+                            showsVerticalScrollIndicator={false}
+                            renderItem={(item, index) => _renderHairType(item, index)}
+                            contentContainerStyle={styles['hairTypeFlatList']}
+                            numColumns={2}
+                            extraData={isrefresh}
+                            columnWrapperStyle={{ justifyContent: 'space-between' }}
+                        />
+                        <Button onPress={_validate} style={{ alignSelf: 'center', marginBottom: SCREEN_HEIGHT * 0.02 }} text={UPDATE} />
+                        <MyText style={[styles['title'], { marginTop: SCREEN_HEIGHT * 0.02 }]}>{"CUSTOM SERVICES"}</MyText>
+                        <FlatList
+                            key='serviceProviderCustom'
+                            data={providerprofile['ServicesProvidedCustom']}
+                            keyExtractor={_keyExtractor}
+                            showsVerticalScrollIndicator={false}
+                            renderItem={(item, index) => _renderHairType1(item, index)}
+                            contentContainerStyle={styles['hairTypeFlatList']}
+                            numColumns={2}
+                            extraData={isrefresh}
+                            columnWrapperStyle={{ justifyContent: 'space-between' }}
+                        />
+                        <Button onPress={_validate1} style={{ alignSelf: 'center', marginBottom: SCREEN_HEIGHT * 0.02 }} text={UPDATE} />
+                    </MyView>
                 </ScrollView>
             </MyView>
         </SafeArea>
