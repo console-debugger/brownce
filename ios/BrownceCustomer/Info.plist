@@ -50,6 +50,8 @@
 		<string>https://brownceapp.page.link</string>
 		<string>http://brownceapp.page.link</string>
 	</array>
+  <key>NSUserTrackingUsageDescription</key>
+    <string>App using ads</string>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-6632433436195884~8263097893</string>
 	<key>LSApplicationQueriesSchemes</key>
