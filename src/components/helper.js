@@ -3,7 +3,7 @@ import Toast from 'react-native-simple-toast';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Share } from 'react-native';
 import { serviceConst } from '../services/serviceConstant';
-import { TestIds } from '@react-native-firebase/admob';
+import { TestIds } from 'react-native-google-mobile-ads';
 import { ROLE_TYPES } from '../utils/roleType';
 import moment from 'moment';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler';

@@ -140,6 +140,8 @@ import SelectProfession from '../scenes/Settings/selectProfession';
 import FavouriteProvider from '../scenes/FavouriteProvider';
 import MyBrownceStats from '../scenes/MyBrownceStats';
 import { PROVIDER_REQUEST_LIST } from '../components/eventName';
+import mobileAds from 'react-native-google-mobile-ads';
+import { check, request, PERMISSIONS, RESULTS } from 'react-native-permissions';
 
 const line = {
   borderBottomWidth: 0.4,
@@ -2025,6 +2027,17 @@ const RootNavigation = () => {
     const fetchLoginToken = async () => {
       const logToken = await getData(localKey['LOGIN_TOKEN']);
       const userRole = await getData(localKey['ROLE']);
+      const result = await check(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY);
+      if (result === RESULTS.DENIED) {
+        // The permission has not been requested, so request it.
+        await request(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY);
+      }
+      mobileAds()
+      .initialize()
+      .then(adapterStatuses => {
+        console.log('adapterStatuses=>,Initialization complete!',adapterStatuses)
+        // Initialization complete!
+      });
       if (logToken) {
         serviceConst['token'] = logToken;
         serviceConst['role'] = userRole;

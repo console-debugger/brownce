@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { SafeArea, MyView, MyImage, Touchable, CurveView, Input, Button, KeyboardAwareScroll, CustomDropDown, Loader, MyText, CustomModal } from '../../components/customComponent'
+import { SafeArea, MyView, MyImage, Touchable, CurveView, Input, Button, KeyboardAwareScroll, CustomDropDown, Loader, MyText, CustomModal, NewThemeInput, NewThemeDropdown } from '../../components/customComponent'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styles from './styles'
-import { imagePlaceholder, cameraIcon } from '../../components/icons'
+import { imagePlaceholder, cameraIcon, accountNameIcon, usernameIcon, newEmailIcon, genderIcon, locationPinIcon, lockIcon } from '../../components/icons'
 import { TRANSPARENT_LIGHT_BLACK, BLACK, LIGHT_WHITE, THEME, WHITE } from '../../utils/colors'
 import { useDispatch, useSelector } from 'react-redux'
 import { dismissKeyboard, locationMapping, SCREEN_HEIGHT, showToast } from '../../components/helper'
 import { dynamicSize } from '../../utils/responsive'
-import { montserratSemiBold } from '../../utils/fontFamily'
+import { montserratBold, montserratSemiBold } from '../../utils/fontFamily'
 import ImagePickerSelection from '../../components/imagePickerSelection'
 import { getCityListAction, getCountryListAction, getStateListAction, saveProfileAction, updateEmailAction } from '../../redux/action'
 import MyListPicker from '../../components/myListPicker'
@@ -23,7 +23,7 @@ const EditProfile = ({ navigation }) => {
 
     const dispatch = useDispatch()
     const state = useSelector(state => { return state })
-    const { USERNAME, PLEASE_SELECT_CITY, PLEASE_SELECT_STATE, PLEASE_SELECT_COUNTRY, PLEASE_ENTER_AN_USERNAME, MALE, FEMALE, PLEASE_UPLOAD_PROFILE_PIC, PLEASE_ENTER_NAME, TRANSGENDER_FEMALE, TRANSGENDER_MALE, NON_BINARY, OTHER, EMAIL, NAME, CITY, STATE, COUNTRY, UPDATE, PLEASE_WAIT_WHILE_FETCHING_COUNTRY_LIST, PLEASE_WAIT_WHILE_FETCHING_STATE_LIST, PLEASE_WAIT_WHILE_FETCHING_CITY_LIST,
+    const { USERNAME, PLEASE_SELECT_CITY, PLEASE_SELECT_STATE, ACCOUNT, UPDATE_EMAIL, PLEASE_ENTER_AN_USERNAME, PRIVACY_AND_SECURITY, MALE, FEMALE, PLEASE_UPLOAD_PROFILE_PIC, PLEASE_ENTER_NAME, TRANSGENDER_FEMALE, TRANSGENDER_MALE, NON_BINARY, OTHER, EMAIL, NAME, CITY, STATE, COUNTRY, UPDATE, PLEASE_WAIT_WHILE_FETCHING_COUNTRY_LIST, PLEASE_WAIT_WHILE_FETCHING_STATE_LIST, PLEASE_WAIT_WHILE_FETCHING_CITY_LIST,
         LOCATION,
         LOCATE_ON_MAP,
         CONTINUE
@@ -150,25 +150,20 @@ const EditProfile = ({ navigation }) => {
 
     // validate before save data via api
     const _validate = () => {
-        profilePic ?
+        firstname.trim().length ?
             username.length ?
-                firstname.trim().length ?
-                    // selectedCountry ?
-                    selectedUserState ?
-                        selectedCity ?
-                            _saveProfile()
-                            : showToast(PLEASE_SELECT_CITY)
-                        : showToast(PLEASE_SELECT_STATE)
-                    // : showToast(PLEASE_SELECT_COUNTRY)
-                    : setError(prevError => ({ ...prevError, nameError: PLEASE_ENTER_NAME }))
+                selectedUserState ?
+                    selectedCity ?
+                        _saveProfile()
+                        : showToast(PLEASE_SELECT_CITY)
+                    : showToast(PLEASE_SELECT_STATE)
                 : setError(prevError => ({ ...prevError, usernameError: PLEASE_ENTER_AN_USERNAME }))
-            : showToast(PLEASE_UPLOAD_PROFILE_PIC)
+            : setError(prevError => ({ ...prevError, nameError: PLEASE_ENTER_NAME }))
     }
 
     // Save updated detail of customer
     const _saveProfile = () => {
         const formData = new FormData()
-        imageData?.['uri'] && formData.append(apiKey['PROFILE_PIC'], imageData)
         formData.append(apiKey['user_name'], username)
         formData.append(apiKey['FIRSTNAME'], firstname)
         formData.append(apiKey['GENDER'], genderId)
@@ -226,61 +221,78 @@ const EditProfile = ({ navigation }) => {
             <KeyboardAwareScroll contentContainerStyle={{ alignItems: 'center' }}>
                 <CurveView />
                 <Loader isVisible={loading} />
-                <ImagePickerSelection pickerModal={isShow} onCancelPress={_closePicker} selectedImage={_getImage} />
-                <MyView style={styles['imageContainer']}>
-                    <MyImage source={uri ? { uri: uri ? uri : profile['ProfilePic'] } : imagePlaceholder} style={styles['image']} />
-                    <Touchable onPress={_openPicker} style={[styles['imageContainer'], { position: 'absolute', backgroundColor: TRANSPARENT_LIGHT_BLACK }]} >
-                        <MyImage source={cameraIcon} />
-                    </Touchable>
-                </MyView>
-                <Input
-                    labelFontSize={0}
-                    style={{ borderBottomColor: BLACK }}
-                    value={username}
-                    hintColor={LIGHT_WHITE}
-                    placeholder={USERNAME}
-                    onChangeText={_onChangeText(TYPES['USERNAME'])}
-                    onSubmitEditing={_focusNext(TYPES['USERNAME'])}
-                    blurOnSubmit={false}
-                    errorMessage={usernameError || null}
-                />
-                <Input
-                    labelFontSize={0}
-                    style={{ borderBottomColor: BLACK }}
+                <MyText style={{ fontSize: 19, fontFamily: montserratBold, marginTop: 10 }}>{ACCOUNT}</MyText>
+                <NewThemeInput
+                    mainContainerStyle={{ marginTop: 10 }}
                     value={firstname}
-                    hintColor={LIGHT_WHITE}
                     placeholder={NAME}
+                    source={accountNameIcon}
                     onChangeText={_onChangeText(TYPES['NAME'])}
-                    onSubmitEditing={_focusNext(TYPES['NAME'])}
                     blurOnSubmit={false}
                     errorMessage={nameError || null}
                 />
-                <Input
-                    onPress={_updateEmail}
-                    text={"Update"}
-                    labelFontSize={0}
+                <NewThemeInput
+                    mainContainerStyle={{ marginTop: 10 }}
+                    value={username}
+                    placeholder={USERNAME}
+                    source={usernameIcon}
+                    onChangeText={_onChangeText(TYPES['USERNAME'])}
+                    blurOnSubmit={false}
+                    errorMessage={usernameError || null}
+                />
+                <NewThemeInput
                     ref={emailRef}
+                    mainContainerStyle={{ marginTop: 10 }}
                     clearButtonMode
                     editable={true}
-                    style={{ borderBottomColor: BLACK }}
-                    textInputStyle={{ color: BLACK }}
-                    value={email}
-                    hintColor={LIGHT_WHITE}
+                    source={newEmailIcon}
                     placeholder={EMAIL}
+                    value={email}
                     onChangeText={_onChangeText(TYPES['EMAIL'])}
-                    onSubmitEditing={_focusNext(TYPES['EMAIL'])}
                     keyboardType={'email-address'}
                     autoCapitalize='none'
                     blurOnSubmit={false}
                     errorMessage={emailError || null}
                 />
-                <CustomDropDown onChange={_changeGender} data={genderData} value={gender} topOffset={dynamicSize(20)} containerStyle={{ borderBottomColor: BLACK, borderBottomWidth: 2 }} />
-                {/* <MyListPicker textStyle={{ fontFamily: montserratSemiBold }} style={{ marginVertical: null, marginTop: dynamicSize(20), borderBottomColor: BLACK }} message={PLEASE_WAIT_WHILE_FETCHING_COUNTRY_LIST} value={selectedCountry} placeholder={COUNTRY} data={country} selectedItem={_selectedCountry} /> */}
-                {/* <MyListPicker textStyle={{ fontFamily: montserratSemiBold }} style={{ marginVertical: dynamicSize(20), borderBottomColor: BLACK }} message={PLEASE_WAIT_WHILE_FETCHING_STATE_LIST} value={selectedUserState} placeholder={STATE} data={userState} selectedItem={_selectedState} />
-                <MyListPicker textStyle={{ fontFamily: montserratSemiBold }} style={{ marginVertical: null, borderBottomColor: BLACK }} message={PLEASE_WAIT_WHILE_FETCHING_CITY_LIST} value={selectedCity} placeholder={CITY} data={city} selectedItem={_selectedCity} /> */}
-                <MyText style={styles['locationName']}>{`${LOCATION}: ${locationMapping({ City: selectedCity, State: selectedUserState })}`}</MyText>
-                <Button onPress={openMapModal} style={[styles['buttonStyle'], { marginTop: SCREEN_HEIGHT * 0.04 }]} text={LOCATE_ON_MAP} />
-                <Button onPress={() => navigation.navigate('changepassword')} style={[styles['buttonStyle'], { marginTop: SCREEN_HEIGHT * 0.02 }]} text={'Change Password'} />
+                <MyView style={{ alignSelf: 'flex-end', marginRight: dynamicSize(35), marginTop: 5 }}>
+                    <MyText onPress={_updateEmail} style={{ textDecorationLine: 'underline', color: THEME, paddingVertical: dynamicSize(5) }}>{UPDATE_EMAIL}</MyText>
+                </MyView>
+                <NewThemeDropdown
+                    mainContainerStyle={{ marginTop: 10 }}
+                    onChange={_changeGender}
+                    source={genderIcon}
+                    data={genderData}
+                    value={gender}
+                    placeholder={'Gender'}
+                    containerStyle={{ height: 10 }}
+                />
+                <NewThemeInput
+                    mainContainerStyle={{ marginTop: 10 }}
+                    containerStyle={{ alignItems: 'center' }}
+                    source={locationPinIcon}
+                    editable={false}
+                    placeholder={LOCATION}
+                    value={locationMapping({ City: selectedCity, State: selectedUserState })}
+                    blurOnSubmit={false}
+                    rightLabel={UPDATE}
+                    inputStyle={{ fontSize: 14 }}
+                    rightLabelStyle={{ fontSize: 14 }}
+                    onRightPress={openMapModal}
+                />
+                <MyText style={{ fontSize: 19, fontFamily: montserratBold, marginVertical: 15 }}>{PRIVACY_AND_SECURITY}</MyText>
+                <NewThemeInput
+                    containerStyle={{ alignItems: 'center' }}
+                    source={lockIcon}
+                    editable={false}
+                    placeholder={LOCATION}
+                    value={'**********'}
+                    secureTextEntry={true}
+                    blurOnSubmit={false}
+                    rightLabel={UPDATE}
+                    inputStyle={{ fontSize: 14 }}
+                    rightLabelStyle={{ fontSize: 14 }}
+                    onRightPress={() => navigation.navigate('changepassword')}
+                />
                 <Button onPress={_validate} style={[styles['buttonStyle'], { marginVertical: SCREEN_HEIGHT * 0.02 }]} text={UPDATE} />
                 <CustomModal
                     isVisible={isMapModalVisible}
@@ -298,18 +310,12 @@ const EditProfile = ({ navigation }) => {
 
                         }}
                     >
-                        {/* <TouchableIcon
-                            onPress={closeMapModalFuntion}
-                            source={redCrossIcon}
-                            style={[styles.crossIcon, { top: useSafeAreaInsets().top + dynamicSize(100) }]}
-                        /> */}
                         <MapView.Marker
                             draggable
                             onDragEnd={_onDragEnd}
                             coordinate={{ latitude: latitude ? parseFloat(latitude) : 40.38190380557175, longitude: longitude ? parseFloat(longitude) : -75.90530281564186 }}
                             pinColor={THEME}
                         />
-
                     </MapView>
                     <Button onPress={closeMapModalFuntion} style={[styles['buttonStyle'], { position: 'absolute', zIndex: 10, bottom: useSafeAreaInsets().bottom + dynamicSize(10), alignSelf: 'center' }]} text={CONTINUE} textStyle={{ color: WHITE }} />
                 </CustomModal>

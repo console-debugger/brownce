@@ -1,13 +1,15 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+require_relative '../node_modules/react-native-permissions/scripts/setup'
 
 # $RNAdMobAsStaticFramework = true
+# use_frameworks! :linkage => :static
 
 platform :ios, '11.0'
 
 target 'BrownceCustomer' do
   config = use_native_modules!
-
+  # $RNGoogleMobileAdsAsStaticFramework = true
   use_react_native!(:path => config["reactNativePath"])
   rn_maps_path = '../node_modules/react-native-maps'
   pod 'react-native-google-maps', :path => rn_maps_path
@@ -18,6 +20,9 @@ target 'BrownceCustomer' do
   pod 'Braintree/DataCollector'
   pod 'Google-Mobile-Ads-SDK'
   # pod 'OneSignalXCFramework', '>= 3.0', '< 4.0'
+  setup_permissions([
+    'AppTrackingTransparency'
+  ])
 
   target 'BrownceCustomerTests' do
     inherit! :complete

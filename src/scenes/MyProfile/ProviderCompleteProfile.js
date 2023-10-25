@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Button, Loader, MyImage, MyText, MyView, RatingWithLabel, SafeArea, SecondaryButton, Touchable, Triangle, WeekDayTimings } from '../../components/customComponent'
 import { isAndroid, locationMapping, SCREEN_HEIGHT, SCREEN_WIDTH, validateUrl } from '../../components/helper'
 import { LIGHT_WHITE, THEME } from '../../utils/colors'
-import { montserratBold } from '../../utils/fontFamily'
+import { montserratBold, montserratSemiBold } from '../../utils/fontFamily'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
 import styles from './styles'
 import { getMyProductListAction, getProviderProfileAction } from '../../redux/action'
@@ -22,7 +22,7 @@ const ProviderCompleteProfile = ({ navigation }) => {
     // @ initailization of local and store state
     const dispatch = useDispatch()
     const state = useSelector(state => { return state })
-    const { EDIT, LOADING, RATING, LOCATION, PORTFOLIO } = state['localeReducer']['locale']
+    const { EDIT, LOADING, RATING, LOCATION, NOT_AVAILABLE, PORTFOLIO, HOURS_OF_OPERATION } = state['localeReducer']['locale']
     const { loading } = state['loaderReducer']
     const providerprofile = state.profileReducer.providerprofile
     const { ServicesProvided } = state['profileReducer']['providerprofile']
@@ -30,47 +30,19 @@ const ProviderCompleteProfile = ({ navigation }) => {
     const [modalVisible, setmodalVisible] = useState(false)
     const [isRefresh, setRefresh] = useState(false)
     const [selectedWeekDayIndex, setSelectedWeekDayIndex] = useState(0)
-    const [weeklyTimeTable] = useState([
-        {
-            weekdayName: 'Monday',
-            openingTime: '8 AM',
-            closingTime: '5 PM'
-        },
-        {
-            weekdayName: 'Tuesday',
-            openingTime: '8 AM',
-            closingTime: '5 PM'
-        },
-        {
-            weekdayName: 'Wednesday',
-            openingTime: '8 AM',
-            closingTime: '5 PM'
-        },
-        {
-            weekdayName: 'Thursday',
-            openingTime: '8 AM',
-            closingTime: '5 PM'
-        },
-        {
-            weekdayName: 'Friday',
-            openingTime: '8 AM',
-            closingTime: '5 PM'
-        },
-        {
-            weekdayName: 'Saturday',
-            openingTime: '8 AM',
-            closingTime: '5 PM'
-        },
-        {
-            weekdayName: 'Sunday',
-            openingTime: '8 AM',
-            closingTime: '5 PM'
-        },
-    ])
+    const [weeklyTimeTable, setWeekltTimeTable] = useState([])
+
+    console.log('providerprofile==>', JSON.stringify(providerprofile))
 
     useEffect(() => {
         dispatch(getProviderProfileAction())
     }, [])
+
+    useEffect(() => {
+        if (providerprofile?.Timings?.length) {
+            setWeekltTimeTable(providerprofile?.Timings)
+        }
+    }, [providerprofile?.Timings])
 
     useFocusEffect(
         useCallback(() => {
@@ -84,8 +56,13 @@ const ProviderCompleteProfile = ({ navigation }) => {
     )
 
     const selectedWeekDay = useMemo(() => {
-        return `${weeklyTimeTable[selectedWeekDayIndex].weekdayName} : ${weeklyTimeTable[selectedWeekDayIndex].openingTime} - ${weeklyTimeTable[selectedWeekDayIndex].closingTime}`
-    }, [selectedWeekDayIndex])
+        if (weeklyTimeTable?.length) {
+            const selectedData = weeklyTimeTable.filter(each => (each.StartTime || each.EndTime))
+            if (selectedData.length) return `${selectedData[selectedWeekDayIndex].WeekDay} : ${selectedData[selectedWeekDayIndex].StartTime} - ${selectedData[selectedWeekDayIndex].EndTime}`
+            else return NOT_AVAILABLE
+        }
+        else return NOT_AVAILABLE
+    }, [selectedWeekDayIndex, weeklyTimeTable])
 
     const _selectHairType = (item, index) => () => {
         const replica = [...hairTypes]
@@ -157,7 +134,8 @@ const ProviderCompleteProfile = ({ navigation }) => {
     }
 
     const jumpToNextWeek = () => {
-        if (selectedWeekDayIndex < (weeklyTimeTable.length - 1)) setSelectedWeekDayIndex(prevState => prevState + 1)
+        const selectedData = weeklyTimeTable.filter(each => (each.StartTime || each.EndTime))
+    if (selectedWeekDayIndex < (selectedData.length - 1)) setSelectedWeekDayIndex(prevState => prevState + 1)
     }
 
     const jumpToPreviousWeek = () => {
@@ -185,10 +163,10 @@ const ProviderCompleteProfile = ({ navigation }) => {
                                 <MyImage source={{ uri: providerprofile.ProfilePic }} style={styles['image']} />
                                 <MyText style={[styles['name'], { fontFamily: montserratBold }]}>{providerprofile?.FirstName ? providerprofile.FirstName : LOADING}</MyText>
                                 <MyText style={[styles['name'], { fontSize: getFontSize(14) }]}>{providerprofile?.Username ? providerprofile.Username : LOADING}</MyText>
-                                <MyText onPress={() => setmodalVisible(true)} style={[styles['detail'], { textDecorationLine: "underline", color: THEME }]}>{"View License"}</MyText>
+                                {/* <MyText onPress={() => setmodalVisible(true)} style={[styles['detail'], { textDecorationLine: "underline", color: THEME }]}>{"View License"}</MyText> */}
                                 <MyText style={styles['detail']}>{`${LOCATION}:  ${locationMapping(providerprofile)}`}</MyText>
                                 {providerprofile?.['Weblink'] ? <MyText onPress={_openLink} style={[styles['detail'], { textDecorationLine: 'underline' }]}>{providerprofile?.['Weblink'] || ''}</MyText> : null}
-                                <MyText style={styles['detail']}>{'Hours of Operation'}</MyText>
+                                <MyText style={{ fontSize: 12, alignSelf: 'center', fontFamily: montserratSemiBold, marginTop: 10 }}>{HOURS_OF_OPERATION}</MyText>
                                 {/* ${providerprofile?.['OpeningTime'] === null ? '--' : providerprofile['OpeningTime']} To ${providerprofile?.['ClosingTime'] === null ? '--' : providerprofile['ClosingTime']}` */}
                                 <WeekDayTimings
                                     jumpToPreviousWeek={jumpToPreviousWeek}
@@ -216,7 +194,7 @@ const ProviderCompleteProfile = ({ navigation }) => {
                                         ItemSeparatorComponent={_renderSeperator}
                                     />}
                                     <MyText style={[styles['portFolioText'], { marginVertical: null, marginTop: SCREEN_HEIGHT * 0.02 }]}>{"SERVICES"}</MyText>
-                                    {ServicesProvided.length > 0 && <FlatList
+                                    {ServicesProvided?.length > 0 && <FlatList
                                         key='hairType'
                                         data={ServicesProvided}
                                         keyExtractor={_keyExtractor}
@@ -228,7 +206,7 @@ const ProviderCompleteProfile = ({ navigation }) => {
                                     />}
                                     <MyText style={[styles['portFolioText'], { marginVertical: null, marginTop: SCREEN_HEIGHT * 0.02 }]}>{"My Products"}</MyText>
 
-                                    {spProducts.length > 0 && <FlatList
+                                    {spProducts?.length > 0 && <FlatList
                                         key={'serviceProviderProducts'}
                                         data={spProducts}
                                         showsVerticalScrollIndicator={false}
@@ -240,7 +218,7 @@ const ProviderCompleteProfile = ({ navigation }) => {
                                 </MyView>
                             </MyView>
                         </ScrollView>
-                        <Button onPress={() => navigation.navigate('changepassword')} style={{ marginVertical: dynamicSize(10), }} text="Change Password" />
+                        {/* <Button onPress={() => navigation.navigate('changepassword')} style={{ marginVertical: dynamicSize(10), }} text="Change Password" /> */}
                     </MyView>
                 </MyView>
             </MyView>

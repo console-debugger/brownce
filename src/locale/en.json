@@ -251,5 +251,10 @@
   "SERVICES": "SERVICES",
   "HOURS_OF_OPERATION": "Hours of Operation",
   "CLOSED": "Closed",
-  "BIO_SMALL": "Bio"
+  "BIO_SMALL": "Bio",
+  "NOT_AVAILABLE":"Not Available",
+  "UPDATE_EMAIL":"Update Email",
+  "ACCOUNT":"ACCOUNT",
+  "LICENSE":"LICENSE",
+  "PRIVACY_AND_SECURITY":"PRIVACY & SECURITY"
 }

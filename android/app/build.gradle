@@ -219,7 +219,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
-    implementation platform('com.google.firebase:firebase-bom:29.0.1')
+    implementation platform('com.google.firebase:firebase-bom:30.1.0')
     implementation("com.google.firebase:firebase-iid")
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.facebook.soloader:soloader:0.10.4+'
@@ -232,6 +232,7 @@ dependencies {
     implementation "com.braintreepayments.api:data-collector:3.+"
     implementation 'androidx.work:work-runtime:2.7.1'
     implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'com.google.android.gms:play-services-ads:20.4.0'
     // implementation("com.google.android.gms:play-services-ads:21.3.0")
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
