@@ -209,9 +209,9 @@ const Signup = ({ navigation, route }) => {
   }
 
   const _navToProfileSetup = () => {
-    const number = phoneUtil.parseAndKeepRawInput(`${Number(calling_code)}${phone}`, country_code);
-    const isValidNumber = phoneUtil.isValidNumberForRegion(number, country_code)
     if (selectedTab == LOGIN_TYPE.PHONE) {
+      const number = phoneUtil.parseAndKeepRawInput(`${Number(calling_code)}${phone}`, country_code);
+      const isValidNumber = phoneUtil.isValidNumberForRegion(number, country_code)
       requireUsername(username).status
         ? validateMobileNoWithoutPlusSymbol(phone).status
           ? isValidNumber
