@@ -522,6 +522,20 @@ const TabZero = () => {
         }}
       />
       <Stack.Screen
+        name="providerSetting"
+        component={ProviderSetting}
+        options={{
+          header: ({ scene, previous, navigation }) => (
+            <Header
+              isTheme
+              isBack
+              navigation={navigation}
+              title={PROFILE /* SETTINGS */}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
         name="mySubscription"
         component={MySubscription}
         options={{

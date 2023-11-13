@@ -87,7 +87,7 @@ const ProviderProfile = ({ navigation }) => {
         }
     }
 
-    const _navToEditProfile = () => navigation.navigate('editProviderProfile')
+    const _navToEditProfile = () => navigation.navigate('providerSetting')
 
     const _change = () => navigation.navigate('mySubscription')
 
