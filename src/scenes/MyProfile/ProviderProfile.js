@@ -245,7 +245,7 @@ const ProviderProfile = ({ navigation }) => {
                             </MyView>
                         </MyView> :
                         <MyView style={[styles['lowerContainer'], { paddingBottom: 10 }]}>
-                            <MyText style={styles['subscriptionBuyDescription']}>{"You don't have any plan."}</MyText>
+                            <MyText style={styles['subscriptionBuyDescription']}>{"Upgrade your plan!"}</MyText>
                             <MyView style={styles['button']} >
                                 <Button onPress={_buy} style={[styles['buttonContainer'], {}]} textStyle={{ fontSize: getFontSize(15) }} text={"BUY PLAN"} />
                             </MyView>
