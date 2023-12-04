@@ -1,14 +1,16 @@
 import React, { useState, useCallback } from 'react'
-import { SafeArea, MyView, MyText, Button, SecondaryButton } from '../../components/customComponent'
-import { LIGHT_WHITE } from '../../utils/colors'
+import { SafeArea, MyView, MyText, Button, SecondaryButton, CustomDropDown } from '../../components/customComponent'
+import { BLACK, LIGHT_WHITE } from '../../utils/colors'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import commonStyle from '../../components/commonStyle'
 import { useDispatch, useSelector } from 'react-redux'
-import { SCREEN_HEIGHT } from '../../components/helper'
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../components/helper'
 import styles from './styles'
 import { apiKey } from '../../services/serviceConstant'
-import { saveGenderAction, loaderAction, getCsDataStepAction } from '../../redux/action'
+import { saveGenderAction, loaderAction, getCsDataStepAction, getGenderAction } from '../../redux/action'
 import { useFocusEffect } from '@react-navigation/native'
+import { dynamicSize } from '../../utils/responsive'
+import { useRef } from 'react'
 
 const TYPES = { MALE: 'male', FEMALE: 'female', TRANSGENDER_FEMALE: 'transgenderFemale', TRANSGENDER_MALE: 'transgenderMale', NON_BINARY: 'nonBinary', OTHER: 'other' }
 
@@ -18,30 +20,38 @@ const ProfileSetupFour = ({ navigation }) => {
     const dispatch = useDispatch()
 
     const state = useSelector(state => { return state })
-    const { I_AM_A, MALE, FEMALE, TRANSGENDER_FEMALE, TRANSGENDER_MALE, NON_BINARY, OTHER, CONTINUE } = state['localeReducer']['locale']
+    const { I_AM_A, CONTINUE } = state['localeReducer']['locale']
 
-    const [gender, setGender] = useState(1)
+    const [gender, setGender] = useState()
+    const [genderList, setGenderList] = useState([])
+
+    const selectedGenderId = useRef()
 
     useFocusEffect(
         useCallback(() => {
-            // dispatch(loaderAction(true))
-            // dispatch(getCsDataStepAction(9))
+            dispatch(getGenderAction((response) => {
+                if (response.status == 200) {
+                    const newResult = response.data?.result?.map(each => { return { ...each, value: each['Name'], id: each['Id'] } }) || []
+                    setGenderList(newResult || [])
+                    if (newResult?.length) {
+                        setGender(newResult[0].Name)
+                        selectedGenderId.current = newResult[0].Id
+                    }
+                }
+            }))
         }, [])
     )
 
-    const _selectGender = type => () => {
-        if (type === TYPES['MALE']) setGender(1)
-        if (type === TYPES['FEMALE']) setGender(2)
-        if (type === TYPES['TRANSGENDER_FEMALE']) setGender(3)
-        if (type === TYPES['TRANSGENDER_MALE']) setGender(4)
-        if (type === TYPES['NON_BINARY']) setGender(5)
-        if (type === TYPES['OTHER']) setGender(6)
+    const _changeGender = (data, index) => {
+        setGender(genderList[index].Name)
+        selectedGenderId.current = genderList[index].Id
     }
 
     const _saveGender = () => {
         const param = {
-            [apiKey['GENDER']]: gender
+            [apiKey['GENDER']]: selectedGenderId.current
         }
+        console.log('asddsd===>', param)
         dispatch(saveGenderAction(param))
     }
 
@@ -50,7 +60,18 @@ const ProfileSetupFour = ({ navigation }) => {
             <MyView style={{ alignItems: 'center', flex: 1 }}>
                 <MyText style={[commonStyle['extraBoldText'], commonStyle['profileTitle'], { marginTop: SCREEN_HEIGHT * 0.1 }]}>{I_AM_A}</MyText>
                 <MyView style={styles['genderParent']}>
-                    <MyView style={styles['row']}>
+                    <CustomDropDown
+                        onChange={_changeGender}
+                        data={genderList || []}
+                        value={gender}
+                        style={{ width: SCREEN_WIDTH - dynamicSize(50) }}
+                        topOffset={dynamicSize(20)}
+                        containerStyle={{
+                            borderBottomColor: BLACK,
+                            borderBottomWidth: 2,
+                        }}
+                    />
+                    {/* <MyView style={styles['row']}>
                         <SecondaryButton
                             onPress={_selectGender(TYPES['MALE'])}
                             style={gender === 1 ? styles['selected'] : styles['unselected']}
@@ -89,7 +110,7 @@ const ProfileSetupFour = ({ navigation }) => {
                             textStyle={gender === 6 ? styles['selectedText'] : styles['unselectedText']}
                             text={OTHER}
                         />
-                    </MyView>
+                    </MyView> */}
                 </MyView>
                 <Button onPress={_saveGender} style={styles['buttonStyle']} text={CONTINUE} />
             </MyView>

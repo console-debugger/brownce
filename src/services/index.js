@@ -5,6 +5,9 @@ import io from 'socket.io-client';
 export const socket = io('http://54.160.37.157:3007/');
 
 const apiRequest = (body, URL, apiMethod, isMedia) => {
+  console.log('asdasd==>0',URL)
+  console.log('asdasd==>1',body)
+  console.log('asdasd==>2',apiMethod)
   const init =
     apiMethod === method.POST
       ? {

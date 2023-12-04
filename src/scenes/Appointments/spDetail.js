@@ -491,7 +491,7 @@ const SpDetail = ({ navigation, route }) => {
                   label={RATING}
                   mytext={`${providerprofile['OverallRating']}/5`}
                 />
-
+              {console.log('sasasdasd===>',providerprofile?.['Reviews'])}
                 {providerprofile?.['Reviews']?.map((item, index) => {
                   return (
                     <MyView>

@@ -9,7 +9,7 @@ import { dismissKeyboard, locationMapping, SCREEN_HEIGHT, showToast } from '../.
 import { dynamicSize } from '../../utils/responsive'
 import { montserrat, montserratBold } from '../../utils/fontFamily'
 import ImagePickerSelection from '../../components/imagePickerSelection'
-import { getProviderProfileAction, loaderAction, saveLicenseAction, saveProviderProfileAction, updateEmailAction } from '../../redux/action'
+import { getGenderAction, getProviderProfileAction, loaderAction, saveLicenseAction, saveProviderProfileAction, updateEmailAction } from '../../redux/action'
 import MyListPicker from '../../components/myListPicker'
 import { apiKey } from '../../services/serviceConstant'
 import { useFocusEffect } from '@react-navigation/native'
@@ -35,33 +35,7 @@ const EditProviderProfile = ({ navigation }) => {
     const emailRef = useRef('emailRef')
     const mapRef = useRef('mapRef')
     const [modalVisible, setmodalVisible] = useState(false)
-
-    const genderData = [
-        {
-            value: MALE,
-            id: 1
-        },
-        {
-            value: FEMALE,
-            id: 2
-        },
-        {
-            value: TRANSGENDER_FEMALE,
-            id: 3
-        },
-        {
-            value: TRANSGENDER_MALE,
-            id: 4
-        },
-        {
-            value: NON_BINARY,
-            id: 5
-        },
-        {
-            value: OTHER,
-            id: 6
-        }
-    ]
+    const [genderData, setGenderData] = useState([])
 
     // initial data mapping of provider detail to local states
     const initialFormField = {
@@ -91,6 +65,15 @@ const EditProviderProfile = ({ navigation }) => {
     const [isMapModalVisible, setModalVisible] = useState(false)
     const [latitude, setlatitude] = useState(providerprofile?.Latitude || 40.38190380557175)
     const [longitude, setlongitude] = useState(providerprofile?.Longitude || -75.90530281564186)
+
+    useEffect(() => {
+        dispatch(getGenderAction((response) => {
+            if (response.status == 200) {
+                const newResult = response.data?.result?.map(each => { return { ...each, value: each['Name'], id: each['Id'] } }) || []
+                setGenderData(newResult || [])
+            }
+        }))
+    }, [])
 
     // fetching provider detail
     useFocusEffect(

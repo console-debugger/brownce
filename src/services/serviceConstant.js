@@ -324,3 +324,5 @@ export const UPDATE_PROVIDER_SETTING_URL = `${BASE_URL}/api/sp/UpdateSetting`
 export const UPDATE_SP_PROFILE_PIC_URL = `${BASE_URL}/api/sp/UpdateProfilePic`
 
 export const UPDATE_CUSTOMER_PROFILE_PIC_URL = `${BASE_URL}/api/customer/UpdateProfilePic`
+
+export const GET_GENDERS_URL = `${BASE_URL}/api/common/genders`
