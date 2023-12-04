@@ -2,7 +2,7 @@ import { all, fork } from 'redux-saga/effects';
 import { CityListSaga, CountryListSaga, getAllCityListSaga, SaveLocationSaga, StateListSaga } from './address.Saga';
 import { ChangePasswordSaga, ForgotSaga, LoginSaga, LoginWithPhoneSaga, OTPVerification, PhoneOTPVerification, Registration, ResetPasswordSaga, UpdateEmailSaga, updateCustomerProfilePicSaga, updateProviderSettingSaga, updateServiceProviderProfilePicSaga, validateEmailOtpSaga } from './auth.Saga';
 import { GetHairTypes, SaveHairTypeSaga, UpdateTenderHeadLevelSaga } from './hair.Saga';
-import { GetAllServicesSaga, SaveEditServicesPriceSaga, GetProfileQuestionSaga, GetProfileSaga, DeleteProviderPortfolioSaga, SaveProviderPortfolioSaga, GetSavedServicesSaga, ProfileOneSetup, ProfileTwoSetup, ProviderProfileSetupThree, ProviderSaveDepositeFeesSaga, SaveGenderSaga, SaveProfileSaga, SaveProviderProfileSaga, SaveQuestionAnswerSaga, SaveServicesPriceSaga, UpdateServicesSaga, SaveServicesSaga, SaveLicenseSaga, ProviderBioSaga, GetCustomerDetailSaga, GetSpDetailSaga, GetCustomServicesSaga, AddCustomServicesSaga, GetSpCustomServicesSaga, OpenTimeSaga, NotificationListSaga, NotificationCountSaga, GetProfessionsListSaga, GetServicesByProfessionSaga, AddProviderProfessionSaga, DeleteAccountSaga } from './profileSetup.Saga';
+import { GetAllServicesSaga, SaveEditServicesPriceSaga, GetProfileQuestionSaga, GetProfileSaga, DeleteProviderPortfolioSaga, SaveProviderPortfolioSaga, GetSavedServicesSaga, ProfileOneSetup, ProfileTwoSetup, ProviderProfileSetupThree, ProviderSaveDepositeFeesSaga, SaveGenderSaga, SaveProfileSaga, SaveProviderProfileSaga, SaveQuestionAnswerSaga, SaveServicesPriceSaga, UpdateServicesSaga, SaveServicesSaga, SaveLicenseSaga, ProviderBioSaga, GetCustomerDetailSaga, GetSpDetailSaga, GetCustomServicesSaga, AddCustomServicesSaga, GetSpCustomServicesSaga, OpenTimeSaga, NotificationListSaga, NotificationCountSaga, GetProfessionsListSaga, GetServicesByProfessionSaga, AddProviderProfessionSaga, DeleteAccountSaga, getGender, GetGenderSaga } from './profileSetup.Saga';
 import { CancelPlanSaga, GetSubscriptionPlanSaga, SaveSubscriptionPlanSaga } from './subscriptionPlan.Saga';
 import { GetProviderListSaga, GetProviderProfileSaga, GetCompleteProviderDetailSaga, GetFiltePriceListSaga, AddRemoveToFavouriteSaga, GetFavProviderListSaga } from "./providerlist.Saga"
 import { BookingSaga, SupportSaga, PaymentSaga, RequestFundSaga, FundListSaga, GetBrownceStatsSaga } from './booking.Saga';
@@ -142,6 +142,7 @@ export function* rootSaga() {
         fork(GetBrownceStatsSaga),
         fork(updateProviderSettingSaga),
         fork(updateServiceProviderProfilePicSaga),
-        fork(updateCustomerProfilePicSaga)
+        fork(updateCustomerProfilePicSaga),
+        fork(GetGenderSaga)
     ])
 }

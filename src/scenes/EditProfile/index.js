@@ -9,7 +9,7 @@ import { dismissKeyboard, locationMapping, SCREEN_HEIGHT, showToast } from '../.
 import { dynamicSize } from '../../utils/responsive'
 import { montserratBold, montserratSemiBold } from '../../utils/fontFamily'
 import ImagePickerSelection from '../../components/imagePickerSelection'
-import { getCityListAction, getCountryListAction, getStateListAction, saveProfileAction, updateEmailAction } from '../../redux/action'
+import { getCityListAction, getCountryListAction, getGenderAction, getStateListAction, saveProfileAction, updateEmailAction } from '../../redux/action'
 import MyListPicker from '../../components/myListPicker'
 import { apiKey } from '../../services/serviceConstant'
 import commonStyle from '../../components/commonStyle'
@@ -36,33 +36,6 @@ const EditProfile = ({ navigation }) => {
     const cityRef = useRef('cityRef')
     const stateRef = useRef('stateRef')
     const mapRef = useRef('mapRef')
-
-    const genderData = [
-        {
-            value: MALE,
-            id: 1
-        },
-        {
-            value: FEMALE,
-            id: 2
-        },
-        {
-            value: TRANSGENDER_FEMALE,
-            id: 3
-        },
-        {
-            value: TRANSGENDER_MALE,
-            id: 4
-        },
-        {
-            value: NON_BINARY,
-            id: 5
-        },
-        {
-            value: OTHER,
-            id: 6
-        }
-    ]
 
     // data mapping of cutome detail
     const initialFormField = {
@@ -94,22 +67,16 @@ const EditProfile = ({ navigation }) => {
     const [isMapModalVisible, setModalVisible] = useState(false)
     const [latitude, setlatitude] = useState(profile?.Latitude || 40.38190380557175)
     const [longitude, setlongitude] = useState(profile?.Longitude || -75.90530281564186)
+    const [genderData, setGenderData] = useState([])
 
-    // fetching state, country and city list
-    // useEffect(() => {
-    //     dispatch(getCountryListAction())
-    //     dispatch(getStateListAction(profile.CountryId))
-    //     dispatch(getCityListAction(profile.StateId))
-    // }, [])
-
-    // focus next on submit
-    const _focusNext = type => () => {
-        if (type === TYPES['USERNAME']) emailRef.current.focus()
-        else if (type === TYPES['NAME']) emailRef.current.focus()
-        // else if (type === TYPES['EMAIL']) cityRef.current.focus()
-        // else if (type === TYPES['CITY']) stateRef.current.focus()
-        // else if (type === TYPES['STATE']) dismissKeyboard
-    }
+    useEffect(() => {
+        dispatch(getGenderAction((response) => {
+            if (response.status == 200) {
+                const newResult = response.data?.result?.map(each => { return { ...each, value: each['Name'], id: each['Id'] } }) || []
+                setGenderData(newResult || [])
+            }
+        }))
+    }, [])
 
     // onchange ofminput field
     const _onChangeText = type => text => {
@@ -119,34 +86,9 @@ const EditProfile = ({ navigation }) => {
         // else if (type === TYPES['EMAIL']) { setFormField(prevState => ({ ...prevState, password: text })), setError(prevState => ({ ...prevState, passwordError: '' })) }
     }
 
-    // const _selectedCountry = data => {
-    //     setFormField(prevState => ({ ...prevState, selectedCountry: data['Name'], selectedUserState: '', selectedCity: '', selectedCityId: '' }))
-    //     dispatch(getStateListAction(data['CountryId']))
-    // }
-
-    // const _selectedState = data => {
-    //     setFormField(prevState => ({ ...prevState, selectedUserState: data['Name'], selectedCity: '', selectedCityId: '' }))
-    //     dispatch(getCityListAction(data['StateId']))
-    // }
-
-    // const _selectedCity = data => {
-    //     setFormField(prevState => ({ ...prevState, selectedCity: data['Name'], selectedCityId: data['CityId'] }))
-    // }
-
-    const _openPicker = () => setShow(true)
-
-    const _closePicker = () => setShow(false)
-
-    const _getImage = data => {
-        if (data?.['uri']) {
-            seturi(data?.['uri'])
-            setImageData(data)
-            setProfilePic(data?.['uri'])
-            setShow(false)
-        }
+    const _changeGender = (value, index, data) => {
+        setFormField(prevState => ({ ...prevState, genderId: data[index]['Id'] }))
     }
-
-    const _changeGender = (value, index, data) => setFormField(prevState => ({ ...prevState, genderId: data[index]['id'] }))
 
     // validate before save data via api
     const _validate = () => {
@@ -211,7 +153,6 @@ const EditProfile = ({ navigation }) => {
                     place?.address_components?.filter(address => address.types.includes('political'))?.[0]?.short_name || ''
             })()
             setFormField(prevState => ({ ...prevState, selectedCity: city, selectedUserState: userState }))
-            console.log('response===>', city, userState)
         }
 
     }

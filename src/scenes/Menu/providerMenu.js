@@ -103,7 +103,7 @@ const ProviderMenu = ({ navigation }) => {
         else if (index === 1) navigation.navigate('serviceHistory')
         else if (index === 2) navigation.navigate('earnings')
         else if (index === 3) navigation.navigate('myBrownceStats')
-        else if (index === 4) navigation.navigate('providerProfile') // navigation.navigate('providerSetting')
+        else if (index === 4) navigation.navigate('editProviderProfile') // navigation.navigate('providerSetting')
         else if (index === 5) navigation.navigate('funds')
         else if (index === 6) navigation.navigate('webView', { id: 5, title: "Community guidelines " })
         // else if (index === 7) navigation.navigate('referral')

@@ -870,3 +870,7 @@ export const updateServiceProviderProfilePicAction = (payload) => ({
 export const updateCustomerProfilePicAction = (payload, callBack) => ({
     type: TYPES.UPDATE_CUSTOMER_PROFILE_PIC_ACTION, payload, callBack
 })
+
+export const getGenderAction = (callBack) => ({
+    type: TYPES.GET_GENDER_ACTION, callBack
+})
