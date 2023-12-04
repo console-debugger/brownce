@@ -45,7 +45,7 @@
     "react-native-gesture-handler": "1.8.0",
     "react-native-google-mobile-ads": "^9.1.2",
     "react-native-google-places-autocomplete": "^2.5.1",
-    "react-native-iap": "7.4.1",
+    "react-native-iap": "9.0.0",
     "react-native-image-crop-picker": "^0.39.0",
     "react-native-image-slider-box": "1.0.12",
     "react-native-in-app-review": "^4.3.3",
