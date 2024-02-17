@@ -28,7 +28,7 @@ const apiRequest = (body, URL, apiMethod, isMedia) => {
   return fetch(`${URL}`, init)
     .then((resp) =>
       resp.json().then((resp) => {
-        // console.log(URL, 'Response -->>', JSON.stringify(resp));
+        console.log(URL, 'Response -->>', JSON.stringify(resp));
         const jsonResp = {
           status: resp.Status,
           data: resp,
@@ -42,7 +42,7 @@ const apiRequest = (body, URL, apiMethod, isMedia) => {
       }),
     )
     .catch((error) => {
-      // console.log(URL, 'error -->>', error);
+      console.log(URL, 'error -->>', error);
       const catchErr = {
         status: 900,
         message: serviceError['NETWORK_ERROR'],
