@@ -518,7 +518,7 @@ PODS:
     - Google-Mobile-Ads-SDK (= 9.14.0)
     - GoogleUserMessagingPlatform (= 2.0.0)
     - React-Core
-  - RNIap (7.4.1):
+  - RNIap (9.0.0):
     - React-Core
   - RNImageCropPicker (0.39.0):
     - React-Core
@@ -853,7 +853,7 @@ SPEC CHECKSUMS:
   RNFBMessaging: c873e6c37f69d22de22cab134413030a9c6330a9
   RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
   RNGoogleMobileAds: 6b2f80de78d8644f5220f9bd7df7953542b550c6
-  RNIap: 814be4e76c3d47bd2993cc67282be537fde17a9e
+  RNIap: 69cd89c7713291d878d04b5b99b61d201430e3a4
   RNImageCropPicker: 14fe1c29298fb4018f3186f455c475ab107da332
   RNPaypal: ac01980ea29ad4df3b46f99ea58fa290914d734f
   RNPermissions: a5c15b75a4909fb839d639e0f16c4982254b4c17

@@ -21,6 +21,12 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import { reverseGeocode } from '../../services'
 
 // Profile setup UI
+
+const STATIC_LOCATION = {
+    lat: 40.4021999,
+    long: -75.9096994
+}
+
 const ProfileSetupThree = ({ navigation }) => {
 
     const dispatch = useDispatch()
@@ -139,7 +145,7 @@ const ProfileSetupThree = ({ navigation }) => {
 
     const openMapModal = async () => {
         setModalVisible(true)
-return
+        return
         if (latitude && longitude) setModalVisible(true)
         else {
             try {
@@ -160,7 +166,9 @@ return
     const closeMapModalFuntion = async () => {
         closeMapModal()
         // const lat = 40.335725019928844, -75.92821932920248
-        const response = await reverseGeocode({ latitude, longitude })
+        if (!latitude) setlatitude(STATIC_LOCATION.lat)
+        if (!longitude) setlongitude(STATIC_LOCATION.long)
+        const response = await reverseGeocode({ latitude: latitude || STATIC_LOCATION.lat, longitude: longitude || STATIC_LOCATION.long })
         if (response.status == 'OK') {
             const place = response?.result?.[0]
             console.log('place==>', place?.address_components)
@@ -231,7 +239,7 @@ return
                     </MyView>
                     <Button onPress={openMapModal} style={[styles['buttonStyle'], { marginTop: dynamicSize(25) }]} text={LOCATE_ON_MAP} />
                     <Button disabled={(!latitude && !longitude)} onPress={_validate} style={[styles['buttonStyle'], { marginVertical: dynamicSize(10), backgroundColor: (latitude && longitude) ? THEME : LIGHT_BROWN }]} text={CONTINUE} />
-                    {isCustomer() && <Button disabled={(!latitude && !longitude)} onPress={_complete_later} style={[styles['buttonStyle'], { backgroundColor: (latitude && longitude) ? THEME : LIGHT_BROWN }]} text={'COMPLETE LATER'} />}
+                    {isCustomer() && <Button onPress={_complete_later} style={[styles['buttonStyle'], { backgroundColor: THEME }]} text={'COMPLETE LATER'} />}
                 </MyView>
                 <CustomModal
                     isVisible={isMapModalVisible}
@@ -242,8 +250,8 @@ return
                         provider={PROVIDER_GOOGLE}
                         style={styles['mapView']}
                         initialRegion={{
-                            latitude: latitude ? latitude : 40.38190380557175,
-                            longitude: longitude ? longitude : -75.90530281564186,
+                            latitude: latitude ? latitude : STATIC_LOCATION.lat,
+                            longitude: longitude ? longitude : STATIC_LOCATION.long,
                             latitudeDelta: 0.015,
                             longitudeDelta: 0.0121,
 
@@ -257,7 +265,7 @@ return
                         <MapView.Marker
                             draggable
                             onDragEnd={_onDragEnd}
-                            coordinate={{ latitude: latitude ? latitude : 40.38190380557175, longitude: longitude ? longitude : -75.90530281564186 }}
+                            coordinate={{ latitude: latitude ? latitude : STATIC_LOCATION.lat, longitude: longitude ? longitude : STATIC_LOCATION.long }}
                             pinColor={THEME}
                         />
 
