@@ -225,7 +225,6 @@ const Login = ({ navigation }) => {
                 <ApprovalPopup Visible={isVisible} text={message} onPress={_onPress} />
                 <KeyboardAwareScroll contentContainerStyle={{ alignItems: 'center' }}>
                     <MyImage source={logo} style={[styles['logo']]} />
-                    {console.log(' selectedTab==>', selectedTab)}
                     <MyView style={styles.tabContainer}>
                         <Touchable
                             onPress={selectTab(LOGIN_TYPE.EMAIL)}
@@ -238,7 +237,6 @@ const Login = ({ navigation }) => {
                             <MyText style={[styles.tabText, selectedTab == LOGIN_TYPE.PHONE ? styles.selectedTabText : styles.unSelectedTabText]}>{PHONE}</MyText>
                         </Touchable>
                     </MyView>
-                    {console.log('calling_code==>', calling_code)}
                     {selectedTab == LOGIN_TYPE.EMAIL ?
                         <>
                             <Input

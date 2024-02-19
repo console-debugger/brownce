@@ -10,20 +10,37 @@ import { dynamicSize, getFontSize } from '../../utils/responsive'
 import { apiKey } from '../../services/serviceConstant'
 import { MyAlert } from '../../components/alert'
 import { CANCEL_SUBSCRIPTION_SUCCESS_ACTION } from '../../redux/action/type'
-import { SCREEN_HEIGHT, isCustomer, isIOS, locationMapping, logAnalyticEvent, validateUrl } from '../../components/helper'
+import { SCREEN_HEIGHT, SCREEN_WIDTH, getData, isAndroid, isCustomer, isIOS, locationMapping, logAnalyticEvent, storeData, validateUrl } from '../../components/helper'
 import { PROVIDER_DASHBOARD } from '../../components/eventName'
 import { montserratBold, montserratSemiBold } from '../../utils/fontFamily'
 import { THEME, WHITE } from '../../utils/colors'
+import MyCoachMarks from '../../components/coachmarks'
+import { coachmarkBeautyBooker, coachmarkHome, coachmarkMarketPlace, coachmarkMenu, coachmarkMessage, coachmarkShopTalk, crossBold, pointerFinger } from '../../components/icons'
+import localKey from '../../utils/localKey'
 
 // @ provider profile UI
-
+let timeout
 const ProviderProfile = ({ navigation }) => {
 
     // @ initailization of local and store state
 
     const dispatch = useDispatch()
     const state = useSelector(state => { return state })
-    const { EDIT, MY_SUBSCRIPTION, LOCATION, LOADING, RATING, PORTFOLIO, NOT_AVAILABLE, HOURS_OF_OPERATION, CANCEL_PLAN_MESSAGE } = state['localeReducer']['locale']
+    const { EDIT, MY_SUBSCRIPTION, LOCATION, LOADING, RATING, PORTFOLIO, NOT_AVAILABLE, HOURS_OF_OPERATION, CANCEL_PLAN_MESSAGE, THIS_IS_HOME, THIS_IS_BEAUTY_BOOKER, THIS_IS_MESSAGE_CENTER, THIS_IS_SHOP_TALK, THIS_IS_MARKET_PLACE, HERE_IS_YOUR_MENU,
+        THIS_IS_HOME_DESCRIPTION,
+        THIS_IS_BEAUTY_BOOKER_DESCRIPTION,
+        THIS_IS_MESSAGE_CENTER_DESCRIPTION,
+        THIS_IS_SHOP_TALK_DESCRIPTION,
+        THIS_IS_MARKET_PLACE_DESCRIPTION,
+        HERE_IS_YOUR_MENU_DESCRIPTION,
+        DONE,
+        NEXT,
+        WELCOME_CAPS,
+        WELCOME_DESCRIPTION,
+        WELCOME_SUB_DESCRIPTION,
+        TAKE_THE_TOUR,
+        SKIP_FOR_NOW
+    } = state['localeReducer']['locale']
     const { loading } = state['loaderReducer']
     const { providerprofile } = state['profileReducer']
     const { ServicesProvided } = state['profileReducer']['providerprofile']
@@ -33,6 +50,69 @@ const ProviderProfile = ({ navigation }) => {
     const [selectedWeekDayIndex, setSelectedWeekDayIndex] = useState(0)
     const [weeklyTimeTable, setWeekltTimeTable] = useState([])
     const [isRefresh, setRefresh] = useState(false)
+    const [visibleCoachMark, setVisibleCoachMark] = useState(false)
+    const [coachMarkData] = useState([
+        {
+            title: THIS_IS_HOME,
+            icon: coachmarkHome,
+            description: THIS_IS_HOME_DESCRIPTION,
+            buttonTitle: NEXT,
+            position: {
+                bottom: isAndroid ? SCREEN_HEIGHT * 0.08 : SCREEN_HEIGHT * 0.07,
+                left: 10,
+            },
+        },
+        {
+            title: THIS_IS_BEAUTY_BOOKER,
+            icon: coachmarkBeautyBooker,
+            description: THIS_IS_BEAUTY_BOOKER_DESCRIPTION,
+            buttonTitle: NEXT,
+            position: {
+                bottom: isAndroid ? SCREEN_HEIGHT * 0.08 : SCREEN_HEIGHT * 0.07,
+                left: (SCREEN_WIDTH / 6) + 5,
+            },
+        },
+        {
+            title: THIS_IS_MESSAGE_CENTER,
+            icon: coachmarkMessage,
+            description: THIS_IS_MESSAGE_CENTER_DESCRIPTION,
+            buttonTitle: NEXT,
+            position: {
+                bottom: isAndroid ? SCREEN_HEIGHT * 0.08 : SCREEN_HEIGHT * 0.07,
+                left: ((SCREEN_WIDTH / 6) * 2) + 5,
+            },
+        },
+        {
+            title: THIS_IS_SHOP_TALK,
+            icon: coachmarkShopTalk,
+            description: THIS_IS_SHOP_TALK_DESCRIPTION,
+            buttonTitle: NEXT,
+            position: {
+                bottom: isAndroid ? SCREEN_HEIGHT * 0.08 : SCREEN_HEIGHT * 0.07,
+                left: ((SCREEN_WIDTH / 6) * 3) + 5,
+            },
+        },
+        {
+            title: THIS_IS_MARKET_PLACE,
+            icon: coachmarkMarketPlace,
+            description: THIS_IS_MARKET_PLACE_DESCRIPTION,
+            buttonTitle: NEXT,
+            position: {
+                bottom: isAndroid ? SCREEN_HEIGHT * 0.08 : SCREEN_HEIGHT * 0.07,
+                left: ((SCREEN_WIDTH / 6) * 4) + 5,
+            },
+        },
+        {
+            title: HERE_IS_YOUR_MENU,
+            icon: coachmarkMenu,
+            description: HERE_IS_YOUR_MENU_DESCRIPTION,
+            buttonTitle: DONE,
+            position: {
+                bottom: isAndroid ? SCREEN_HEIGHT * 0.08 : SCREEN_HEIGHT * 0.07,
+                left: ((SCREEN_WIDTH / 6) * 5) + 5,
+            },
+        },
+    ])
 
     // @ refetch details of provider profile
     useEffect(() => {
@@ -45,6 +125,7 @@ const ProviderProfile = ({ navigation }) => {
     // @ fetch details of provider profile
     useFocusEffect(
         useCallback(() => {
+            getLocalTutorialDemo()
             // dispatch(loaderAction(true))
             if (isCustomer()) {
                 dispatch(getProfileAction())
@@ -80,6 +161,20 @@ const ProviderProfile = ({ navigation }) => {
         }
         else return NOT_AVAILABLE
     }, [selectedWeekDayIndex, weeklyTimeTable])
+
+    const getLocalTutorialDemo = async () => {
+        const value = await getData(localKey.PROVIDER_TUTORIAL_DEMO)
+        console.log('valuevalue==>00', value)
+        if (!value) {
+            dispatch(loaderAction(false))
+            if (timeout) clearTimeout(timeout)
+            timeout = setTimeout(() => {
+                timeout = null
+                openCoachMark()
+            }, 500);
+
+        }
+    }
 
     const _cancel = () => {
         // setcancelModal(true)
@@ -137,6 +232,13 @@ const ProviderProfile = ({ navigation }) => {
         if (selectedWeekDayIndex > 0) setSelectedWeekDayIndex(prevState => prevState - 1)
     }
 
+    const closeCoackMark = () => {
+        storeData(localKey.PROVIDER_TUTORIAL_DEMO, 'true')
+        setVisibleCoachMark(false)
+    }
+
+    const openCoachMark = () => setVisibleCoachMark(true)
+
     // @ Render protfolio of flatlist
     const _renderPortfolio = ({ item, index }) => {
         return (
@@ -170,7 +272,27 @@ const ProviderProfile = ({ navigation }) => {
             <MyAlert onYesPress={_onYesPress} onNoPress={_onNoPress} message={CANCEL_PLAN_MESSAGE} isVisible={cancelModalVisible} />
 
             <MyView style={styles['mainContainer']}>
+                {visibleCoachMark ? <MyCoachMarks
+                    visible={visibleCoachMark}
+                    title={WELCOME_CAPS}
+                    description={WELCOME_DESCRIPTION}
+                    subDescription={WELCOME_SUB_DESCRIPTION}
+                    buttonTitle={TAKE_THE_TOUR}
+                    skipTitle={SKIP_FOR_NOW}
+                    crossIcon={crossBold}
+                    data={coachMarkData}
+                    onClose={closeCoackMark}
+                    pointerIcon={pointerFinger}
+                    circularOverlayStyle={{
+                        width: 50,
+                        height: 50,
+                        borderRadius: 25,
+                    }}
+                    isCircleMask
+                    onSkip={closeCoackMark}
+                /> : null}
                 <ScrollView style={{ paddingBottom: 15 }}>
+
                     <CurveView />
                     <Loader isVisible={loading} />
 

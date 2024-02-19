@@ -4,9 +4,9 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useDispatch, useSelector } from 'react-redux'
 import { MyAlert } from '../../components/alert'
 import { MyImage, MyText, MyView, SafeArea, Touchable } from '../../components/customComponent'
-import { logAnalyticEvent, onShare, SCREEN_HEIGHT } from '../../components/helper'
+import { logAnalyticEvent, onShare, removeData, SCREEN_HEIGHT, storeData } from '../../components/helper'
 import { arrowForeward, smallStar } from '../../components/icons'
-import { logout } from '../../navigation/rootNav'
+import { logout, reset } from '../../navigation/rootNav'
 import { logoutAction, getProviderProfileAction, getAllServicesAction, getSpCustomServicesAction, loaderAction, getCustomServicesAction, deleteAccountAction } from '../../redux/action'
 import { BLACK, LIGHT_WHITE, RED, THEME } from '../../utils/colors'
 import styles from './styles'
@@ -14,6 +14,7 @@ import { useFocusEffect } from '@react-navigation/native'
 import { getFontSize } from '../../utils/responsive'
 import { generateDynamicLink } from '../../utils/dynamicLinkHelper'
 import { PROVIDER_MENU } from '../../components/eventName'
+import localKey from '../../utils/localKey'
 
 // UI of provide menu list
 const ProviderMenu = ({ navigation }) => {
@@ -43,6 +44,9 @@ const ProviderMenu = ({ navigation }) => {
     },
     {
         label: "Funds"
+    },
+    {
+        label: "How it works"
     },
     {
         label: "FAQ & Community Guidelines"
@@ -105,13 +109,16 @@ const ProviderMenu = ({ navigation }) => {
         else if (index === 3) navigation.navigate('myBrownceStats')
         else if (index === 4) navigation.navigate('editProviderProfile') // navigation.navigate('providerSetting')
         else if (index === 5) navigation.navigate('funds')
-        else if (index === 6) navigation.navigate('webView', { id: 5, title: "Community guidelines " })
-        // else if (index === 7) navigation.navigate('referral')
-        else if (index === 7) navigation.navigate('support')
-        else if (index === 8) navigation.navigate('webView', { id: 1, title: "Terms & Conditions" })
-        else if (index === 9) navigation.navigate('webView', { id: 2, title: "Privacy Policy" })
-        else if (index === 10) openDeleteModal()
-        else if (index === 11) _onYesPress()
+        else if (index === 6) {
+            removeData(localKey.PROVIDER_TUTORIAL_DEMO)
+            reset('bottomTab')
+        }
+        else if (index === 7) navigation.navigate('webView', { id: 5, title: "Community guidelines " })
+        else if (index === 8) navigation.navigate('support')
+        else if (index === 9) navigation.navigate('webView', { id: 1, title: "Terms & Conditions" })
+        else if (index === 10) navigation.navigate('webView', { id: 2, title: "Privacy Policy" })
+        else if (index === 11) openDeleteModal()
+        else if (index === 12) _onYesPress()
     }
 
     const _renderSeperator = () => (<MyView style={styles['seperator']} />)
