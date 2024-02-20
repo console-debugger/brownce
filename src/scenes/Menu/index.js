@@ -42,7 +42,8 @@ const Menu = ({ navigation }) => {
     LOGOUT,
     HOME,
     DELETE_ACCOUNT,
-    DELETE_MESSAGE
+    DELETE_MESSAGE,
+    HOW_IT_WORKS
   } = state['localeReducer']['locale'];
   const { profile } = state['profileReducer'];
 
@@ -79,13 +80,13 @@ const Menu = ({ navigation }) => {
       label: SUPPORT,
     },
     {
+      label: HOW_IT_WORKS,
+    },
+    {
       label: 'Terms & Conditions',
     },
     {
       label: 'Privacy Policy',
-    },
-    {
-      label: "How it works",
     },
     {
       label: DELETE_ACCOUNT
@@ -130,13 +131,12 @@ const Menu = ({ navigation }) => {
     else if (index === 6) navigation.navigate('myorders');
     // else if (index === 7) navigation.navigate('referral');
     else if (index === 7) navigation.navigate('support');
-
-    else if (index === 8) navigation.navigate('webView', { id: 1, title: 'Terms & Conditions' });
-    else if (index == 9) navigation.navigate('webView', { id: 2, title: 'Privacy Policy' });
-    else if (index === 10) {
+    else if (index === 8) {
       removeData(localKey.CUSTOMER_TUTORIAL_DEMO)
       reset('bottomTab')
     }
+    else if (index === 9) navigation.navigate('webView', { id: 1, title: 'Terms & Conditions' });
+    else if (index == 10) navigation.navigate('webView', { id: 2, title: 'Privacy Policy' });
     else if (index === 11) openDeleteModal()
     else if (index == 12) _onYesPress()
   };

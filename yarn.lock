@@ -7828,11 +7828,6 @@
   "resolved" "https://registry.npmjs.org/react-native-app-intro-slider/-/react-native-app-intro-slider-4.0.4.tgz"
   "version" "4.0.4"
 
-"react-native-coachmarks@^1.1.0":
-  "integrity" "sha512-fdVSr5vLcdXyA4UoaR43DV5H8iXsF/wzYzPdeLhhCLombdeKb/CDR0hTHBpsInYg4FP3rZyTboVXU+qoT/DgtQ=="
-  "resolved" "https://registry.npmjs.org/react-native-coachmarks/-/react-native-coachmarks-1.1.0.tgz"
-  "version" "1.1.0"
-
 "react-native-codegen@^0.0.18":
   "integrity" "sha512-XPI9aVsFy3dvgDZvyGWrFnknNiyb22kg5nHgxa0vjWTH9ENLBgVRZt9A64xHZ8BYihH+gl0p/1JNOCIEUzRPBg=="
   "resolved" "https://registry.npmjs.org/react-native-codegen/-/react-native-codegen-0.0.18.tgz"

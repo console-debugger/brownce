@@ -150,6 +150,7 @@ function* loginSaga(param) {
             }
             else multiRemoveData([localKey['IS_REMEMBER'], localKey['EMAIL'], localKey['PASSWORD']])
             yield put(loaderAction(false))
+            yield delay(600)
             serviceConst['token'] = loginRes['result']['Token']
             if (loginRes['result']['UserStatus'] === 1) {
                 yield storeData(localKey['ROLE'], serviceConst['role'])

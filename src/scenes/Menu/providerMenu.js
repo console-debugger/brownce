@@ -21,7 +21,7 @@ const ProviderMenu = ({ navigation }) => {
 
     const dispatch = useDispatch()
     const state = useSelector(state => { return state })
-    const { PROFILE, DELETE_ACCOUNT, SERVICE_HISTORY, MY_BROWNCE_STATS, SETTINGS, EARNINGS, LOGOUT, LOADING, LOGOUT_MESSAGE, DELETE_MESSAGE, SUPPORT, REFERRALS } = state['localeReducer']['locale']
+    const { PROFILE, DELETE_ACCOUNT, SERVICE_HISTORY, MY_BROWNCE_STATS, SETTINGS, EARNINGS, LOGOUT, LOADING, LOGOUT_MESSAGE, DELETE_MESSAGE, SUPPORT, REFERRALS, HOW_IT_WORKS } = state['localeReducer']['locale']
     const { providerprofile } = state['profileReducer']
     const [logoutModalVisible, setLogoutModal] = useState(false)
     const [indicator, setIndicator] = useState(false)
@@ -46,7 +46,7 @@ const ProviderMenu = ({ navigation }) => {
         label: "Funds"
     },
     {
-        label: "How it works"
+        label: HOW_IT_WORKS
     },
     {
         label: "FAQ & Community Guidelines"

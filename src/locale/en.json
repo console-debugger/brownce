@@ -28,7 +28,7 @@
   "CANCEL": "Cancel",
   "MY": "MY",
   "BIRTHDAY_IS": "BIRTHDAY IS",
-  "DD_MM_YYYY": "DD/MM/YYYY",
+  "MM_DD_YYYY": "MM/DD/YYYY",
   "LOCATION_IS": "LOCATION IS",
   "COUNTRY": "Country",
   "CITY": "City",
@@ -285,5 +285,7 @@
   "THIS_IS_MARKET_PLACE_CUSTOMER": "This is The Marketplace",
   "THIS_IS_MARKET_PLACE_CUSTOMER_DESCRIPTION": "Welcome to the Marketplace – your destination for products from diverse beauty vendors. Explore and support our businesses here!",
   "HERE_IS_YOUR_MENU_CUSTOMER": "Here is Your Menu",
-  "HERE_IS_YOUR_MENU_CUSTOMER_DESCRIPTION": "Welcome to the Menu – this is where you will manage appointments and marketplace purchases, review your Brownce Stats, update settings, and fine-tune your profile."
+  "HERE_IS_YOUR_MENU_CUSTOMER_DESCRIPTION": "Welcome to the Menu – this is where you will manage appointments and marketplace purchases, review your Brownce Stats, update settings, and fine-tune your profile.",
+  "HOW_IT_WORKS": "How it works",
+  "WELCOME_DESCRIPTION_CUSTOMER":"Congratulations, Browncer! You've successfully joined the Brownce community, where beauty meets belonging."
 }

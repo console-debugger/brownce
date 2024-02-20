@@ -125,7 +125,6 @@ const ProviderProfile = ({ navigation }) => {
     // @ fetch details of provider profile
     useFocusEffect(
         useCallback(() => {
-            getLocalTutorialDemo()
             // dispatch(loaderAction(true))
             if (isCustomer()) {
                 dispatch(getProfileAction())
@@ -145,6 +144,7 @@ const ProviderProfile = ({ navigation }) => {
                     username: providerprofile?.Username || ''
                 }
                 logAnalyticEvent(PROVIDER_DASHBOARD, data)
+                getLocalTutorialDemo()
             }
             console.log('providerprofile?.Timings==>', JSON.stringify(providerprofile))
             if (providerprofile?.Timings?.length) {
@@ -167,11 +167,9 @@ const ProviderProfile = ({ navigation }) => {
         console.log('valuevalue==>00', value)
         if (!value) {
             dispatch(loaderAction(false))
-            if (timeout) clearTimeout(timeout)
-            timeout = setTimeout(() => {
-                timeout = null
+            setTimeout(() => {
                 openCoachMark()
-            }, 500);
+            }, 600);
 
         }
     }

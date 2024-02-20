@@ -40,7 +40,7 @@ const MyProfile = ({ navigation }) => {
   });
   const { EDIT, GENDER, LOCATION, HAIR_TYPE, SHARE, LOADING,
     WELCOME_CAPS,
-    WELCOME_DESCRIPTION,
+    WELCOME_DESCRIPTION_CUSTOMER,
     WELCOME_SUB_DESCRIPTION,
     TAKE_THE_TOUR,
     SKIP_FOR_NOW,
@@ -228,7 +228,7 @@ const MyProfile = ({ navigation }) => {
       {visibleCoachMark ? <MyCoachMarks
         visible={visibleCoachMark}
         title={WELCOME_CAPS}
-        description={WELCOME_DESCRIPTION}
+        description={WELCOME_DESCRIPTION_CUSTOMER}
         subDescription={WELCOME_SUB_DESCRIPTION}
         buttonTitle={TAKE_THE_TOUR}
         skipTitle={SKIP_FOR_NOW}
