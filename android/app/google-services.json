@@ -30,6 +30,14 @@
           }
         },
         {
+          "client_id": "544272050884-sn288fs3jamrs9kgbfc4o1q0r6q7duaq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.browncecustomer",
+            "certificate_hash": "1bc27972310f8d0fef7d7d5af563ba9eeba73275"
+          }
+        },
+        {
           "client_id": "544272050884-m7uh5o0gvitqodhqt1cpnr1fu21gut19.apps.googleusercontent.com",
           "client_type": 3
         }
