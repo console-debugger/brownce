@@ -4,7 +4,9 @@ const localKey = {
     DEVICE_TOKEN: 'deviceToken',
     EMAIL: 'email',
     PASSWORD: 'password',
-    ROLE:'role'
+    ROLE: 'role',
+    CUSTOMER_TUTORIAL_DEMO: 'customerTutorialDemo',
+    PROVIDER_TUTORIAL_DEMO: 'providerTutorialDemo',
 }
 
 export default localKey

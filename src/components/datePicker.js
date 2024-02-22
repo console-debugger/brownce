@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 const _DateTimePicker = props => {
     const { Locale, is24, selectedDate, selectedTime, children, style, placeholder, textStyle, mode, maxDate, minDate } = props
     const state = useSelector(state => { return state })
-    const { DD_MM_YYYY } = state['localeReducer']['locale']
+    const { MM_DD_YYYY } = state['localeReducer']['locale']
 
     const [showPicker, setPicker] = useState(false)
     const [dob, setDob] = useState('')
@@ -42,7 +42,7 @@ const _DateTimePicker = props => {
     return (
         <>
             <Touchable onPress={_showPicker} style={[commonStyle['datePickerView'], style]}>
-                <MyText style={[[commonStyle['datePlaceholder'], { color: dob ? BLACK : LIGHT_GRAY }], textStyle]}>{dob ? dob : placeholder ? placeholder : DD_MM_YYYY}</MyText>
+                <MyText style={[[commonStyle['datePlaceholder'], { color: dob ? BLACK : LIGHT_GRAY }], textStyle]}>{dob ? dob : placeholder ? placeholder : MM_DD_YYYY}</MyText>
                 {children}
             </Touchable>
             <DateTimePickerModal

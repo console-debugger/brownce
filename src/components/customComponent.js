@@ -274,7 +274,8 @@ export const Button = (props) => {
     iconStyle,
     iconImageStyle,
     indicator,
-    color
+    color,
+    avoidLowerCase
   } = props;
   const state = useSelector((state) => {
     return state;
@@ -289,7 +290,7 @@ export const Button = (props) => {
       {indicator ? <ActivityIndicator color={color || WHITE} size='small' />
         :
         <MyText style={[commonStyle['commonButtonText'], textStyle]}>
-          {text ? text.toString().toUpperCase() : '' || SUBMIT}
+          {text ? avoidLowerCase ? text : text.toString().toUpperCase() : '' || SUBMIT}
         </MyText>
       }
       {icon && (

@@ -153,8 +153,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         vectorDrawables.useSupportLibrary = true
-        versionCode 29
-        versionName "1.5"
+        versionCode 31
+        versionName "1.6"
         multiDexEnabled =true
         missingDimensionStrategy 'store', 'play'
     }
@@ -218,6 +218,7 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
+    compileOnly 'com.braintreepayments.api:data-collector:3.+'
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation platform('com.google.firebase:firebase-bom:30.1.0')
     implementation("com.google.firebase:firebase-iid")

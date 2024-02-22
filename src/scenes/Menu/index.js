@@ -13,14 +13,15 @@ import {
   TouchableIcon,
 } from '../../components/customComponent';
 import { imagePlaceholder, rightArrow, shareIcon } from '../../components/icons';
-import { logout } from '../../navigation/rootNav';
+import { logout, reset } from '../../navigation/rootNav';
 import { deleteAccountAction, getProfileAction, loaderAction, logoutAction } from '../../redux/action';
 import { BLACK, LIGHT_WHITE, THEME } from '../../utils/colors';
 import { getFontSize } from '../../utils/responsive';
-import { isCustomer, logAnalyticEvent, onShare } from '../../components/helper';
+import { isCustomer, logAnalyticEvent, onShare, removeData } from '../../components/helper';
 import styles from './styles';
 import { generateDynamicLink } from '../../utils/dynamicLinkHelper';
 import { CUSTOMER_MENU } from '../../components/eventName';
+import localKey from '../../utils/localKey';
 
 // Menu list of customer UI design
 const Menu = ({ navigation }) => {
@@ -41,7 +42,8 @@ const Menu = ({ navigation }) => {
     LOGOUT,
     HOME,
     DELETE_ACCOUNT,
-    DELETE_MESSAGE
+    DELETE_MESSAGE,
+    HOW_IT_WORKS
   } = state['localeReducer']['locale'];
   const { profile } = state['profileReducer'];
 
@@ -76,6 +78,9 @@ const Menu = ({ navigation }) => {
     // },
     {
       label: SUPPORT,
+    },
+    {
+      label: HOW_IT_WORKS,
     },
     {
       label: 'Terms & Conditions',
@@ -126,11 +131,14 @@ const Menu = ({ navigation }) => {
     else if (index === 6) navigation.navigate('myorders');
     // else if (index === 7) navigation.navigate('referral');
     else if (index === 7) navigation.navigate('support');
-
-    else if (index === 8) navigation.navigate('webView', { id: 1, title: 'Terms & Conditions' });
-    else if (index == 9) navigation.navigate('webView', { id: 2, title: 'Privacy Policy' });
-    else if (index === 10) openDeleteModal()
-    else if (index == 11) _onYesPress()
+    else if (index === 8) {
+      removeData(localKey.CUSTOMER_TUTORIAL_DEMO)
+      reset('bottomTab')
+    }
+    else if (index === 9) navigation.navigate('webView', { id: 1, title: 'Terms & Conditions' });
+    else if (index == 10) navigation.navigate('webView', { id: 2, title: 'Privacy Policy' });
+    else if (index === 11) openDeleteModal()
+    else if (index == 12) _onYesPress()
   };
 
   const _renderSeperator = () => <MyView styl={styles['seperator']} />;
@@ -144,7 +152,7 @@ const Menu = ({ navigation }) => {
           styles['menuItem'],
           { borderBottomWidth: index === menuOption.length - 1 ? 0 : 1 },
         ]}>
-        <MyText style={[styles['labelStyle'], { color: index == 10 ? 'red' : BLACK }]}>{item['label']}</MyText>
+        <MyText style={[styles['labelStyle'], { color: index == 11 ? 'red' : BLACK }]}>{item['label']}</MyText>
         <MyImage source={rightArrow} style={styles['arrowStyle']} />
       </Touchable>
     );
