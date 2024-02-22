@@ -84,7 +84,6 @@ const RecentChat = ({ navigation }) => {
   };
 
   const _renderItem = ({ item, index }) => {
-    console.log('item || => ', item);
     return (
       <Touchable
         onPress={() =>
@@ -106,11 +105,11 @@ const RecentChat = ({ navigation }) => {
           />
         </Touchable>
         <MyView style={styles['rightContainer']}>
-          <MyView style={{ flex: 1, paddingHorizontal: dynamicSize(13) }}>
-            <MyText style={styles['name']}>{item['UserName']}</MyText>
-            <MyText style={styles['text']}>{item['Message']}</MyText>
+          <MyView style={{ flexDirection: 'row', width: '100%' }}>
+            <MyText numberOfLines={2} style={styles['name']}>{item['UserName']}</MyText>
+            <MyText style={styles['text']}>{item['CreatedOn']}</MyText>
           </MyView>
-          <MyText style={styles['text']}>{item['CreatedOn']}</MyText>
+          <MyText numberOfLines={2} style={[styles['text'], { flex: 1 }]}>{item['Message']}</MyText>
         </MyView>
       </Touchable>
     );

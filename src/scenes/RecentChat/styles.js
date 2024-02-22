@@ -12,7 +12,8 @@ const styles = StyleSheet.create({
     },
     rightContainer: {
         flex: 1,
-        flexDirection: 'row'
+        paddingHorizontal: dynamicSize(13) 
+        // flexDirection: 'row'
     },
     chatTitle: {
         backgroundColor: 'green',
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
     name: {
         fontSize: getFontSize(16),
         fontFamily: montserratSemiBold,
-        width: '85%'
+        flex:1
     },
     text: {
         alignSelf: 'flex-start',

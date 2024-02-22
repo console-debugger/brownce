@@ -22,6 +22,7 @@ const ProductDetails = ({ navigation, route }) => {
 
   const dispatch = useDispatch()
   const state = useSelector(state => { return state })
+  const { SELLER } = state['localeReducer']['locale'];
   const { myaddress, messageCase } = state['OrderReducer']
   const { Object } = state['OrderReducer']['addorderDetails']
   const { loading } = state['loaderReducer']
@@ -235,7 +236,7 @@ const ProductDetails = ({ navigation, route }) => {
             <MyText style={{ color: THEME, fontFamily: montserratSemiBold, fontSize: 15, marginRight: 30 }}>{`$${route.params.item.Price}`}</MyText>
           </MyView>
           <MyText style={{ color: BLACK, fontSize: 15, marginLeft: 32, marginTop: 4 }}>{route.params.item.BrandName}</MyText>
-          <MyText style={{ lineHeight: 22, color: BLACK, fontSize: 15, marginLeft: 32, marginTop: 4 }}>{`Sell By - `}
+          <MyText style={{ lineHeight: 22, color: BLACK, fontSize: 15, marginLeft: 32, marginTop: 4 }}>{`${SELLER} - `}
             <MyText style={{ lineHeight: 22, color: BLACK, fontSize: 15, marginLeft: 32, marginTop: 4, color: THEME }}>{route.params.item.SellerName}</MyText>
           </MyText>
           <MyView style={{}}>
