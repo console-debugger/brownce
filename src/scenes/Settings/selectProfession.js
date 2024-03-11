@@ -7,7 +7,7 @@ import commonStyle from '../../components/commonStyle'
 import { Button, KeyboardAwareScroll, MyText, MyView, SafeArea, SecondaryButton, Touchable } from '../../components/customComponent'
 import { isAndroid, SCREEN_HEIGHT, SCREEN_WIDTH, showToast } from '../../components/helper'
 import { navigateToScreen } from '../../navigation/rootNav'
-import { getAllServicesAction, saveServiceAction, loaderAction, getSpDataStepAction, updateProfileSetupervicesAction, getProfessionsListAction, addProviderProfessionAction, getProfileAction, getProviderProfileAction } from '../../redux/action'
+import { getAllServicesAction, saveServiceAction, loaderAction, getSpDataStepAction, updateProfileSetupervicesAction, getProfessionsListAction, addProviderProfessionAction, getProfileAction, getProviderProfileAction, getServicesListAction } from '../../redux/action'
 import { apiKey } from '../../services/serviceConstant'
 import { LIGHT_BROWN, LIGHT_WHITE, THEME, WHITE } from '../../utils/colors'
 import { dynamicSize } from '../../utils/responsive'
@@ -21,14 +21,30 @@ const SelectProfession = ({ }) => {
     const { SELECT, YOUR_SERVICES, CONTINUE } = state['localeReducer']['locale']
     const { loading } = state['loaderReducer']
     const { professionsList } = state['hairReducer']
-    const { ServicesProvided, Professional } = state.profileReducer.providerprofile
+    const { providerprofile } = state.profileReducer
     const [selectedServices, setSelectedServices] = useState([])
+    const [servicesLoader, setServicesLoader] = useState(false)
+    const [Professional, setProfessional] = useState([])
 
     useEffect(() => {
         fetchSelectedServices()
         dispatch(getProfessionsListAction())
         dispatch(getProviderProfileAction())
     }, [])
+
+    useEffect(() => {
+        if (providerprofile?.UserId) {
+            setServicesLoader(true)
+            dispatch(getServicesListAction({
+                UserId: providerprofile?.UserId
+            }, response => {
+                setServicesLoader(false)
+                if (response) {
+                    setProfessional(response?.Professional || [])
+                }
+            }))
+        }
+    }, [providerprofile?.UserId])
 
     useEffect(() => {
         fetchSelectedServices()

@@ -1,6 +1,6 @@
 import { takeLatest, put, delay } from 'redux-saga/effects';
 import { isCustomer, showToast, storeData } from '../../components/helper'
-import { method, OPEN_TIME_URL, serviceError, MY_SP_CUSTOM_SERVICE_URL, ADD_CUSTOM_SERVICE_URL, SP_CUSTOM_SERVICES_URL, PROVIDER_BIO_URL, GET_CUSTOMER_DETAIL_URL, PROFILE_SETUP_ONE_URL, DELETE_PROVIDER_PORTFOLIO_URL, SAVE_PROVIDER_PROFILE_URL, SAVE_PROVIDER_PORTFOLIO_URL, SAVE_USER_PROFILE_URL, PROFILE_SETUP_TWO_URL, SAVE_GENDER_URL, GET_ALL_PROFILE_QUESTION_URL, SAVE_ALL_QUESTIONS_URL, GET_PROFILE_URL, PROVIDER_PROFILE_SETUP_ONE, PROVIDER_PROFILE_SETUP_THREE_URL, PROVIDER_PROFILE_SETUP_FOUR_URL, GET_HAIR_SERVICES_URL, SAVE_SERVICES_URL, GET_SAVED_SERVICES_URL, SAVE_SERVICES_PRICE_URL, SAVE_LICENSE, GET_SP_DETAIL_URL, serviceConst, NOTIFICATION_LIST_URL, NOTIFICATION_COUNT_URL, GET_PROFESSIONS_LIST_URL, GET_SERVICES_BY_PROFESSION_URL, ADD_PROVIDER_PROFESSION_URL, DELETE_ACCOUNT_URL, GET_GENDERS_URL } from '../../services/serviceConstant'
+import { method, OPEN_TIME_URL, serviceError, MY_SP_CUSTOM_SERVICE_URL, ADD_CUSTOM_SERVICE_URL, SP_CUSTOM_SERVICES_URL, PROVIDER_BIO_URL, GET_CUSTOMER_DETAIL_URL, PROFILE_SETUP_ONE_URL, DELETE_PROVIDER_PORTFOLIO_URL, SAVE_PROVIDER_PROFILE_URL, SAVE_PROVIDER_PORTFOLIO_URL, SAVE_USER_PROFILE_URL, PROFILE_SETUP_TWO_URL, SAVE_GENDER_URL, GET_ALL_PROFILE_QUESTION_URL, SAVE_ALL_QUESTIONS_URL, GET_PROFILE_URL, PROVIDER_PROFILE_SETUP_ONE, PROVIDER_PROFILE_SETUP_THREE_URL, PROVIDER_PROFILE_SETUP_FOUR_URL, GET_HAIR_SERVICES_URL, SAVE_SERVICES_URL, GET_SAVED_SERVICES_URL, SAVE_SERVICES_PRICE_URL, SAVE_LICENSE, GET_SP_DETAIL_URL, serviceConst, NOTIFICATION_LIST_URL, NOTIFICATION_COUNT_URL, GET_PROFESSIONS_LIST_URL, GET_SERVICES_BY_PROFESSION_URL, ADD_PROVIDER_PROFESSION_URL, DELETE_ACCOUNT_URL, GET_GENDERS_URL, GET_SP_PROFILE_NEW_URL } from '../../services/serviceConstant'
 import { getAllServicesSuccessAction, getCustomServicesSuccessAction, getNotificationCountSuccessAction, getOtherProfileDetailSuccessAction, getProfessionsListSuccessAction, getProfileQuestionSuccessAction, getProfileSuccessAction, getProviderCompleteProducts, getProviderProfileSuccessAction, getSavedServicesSuccessAction, getServicesByProfessionSuccessAction, getSpCustomServiceSuccessAction, loaderAction, logoutAction, popupAction, SearchloaderAction, updateProfileQuestionAnswerListAction, updateSavedServicesAction, updateServicesAction } from '../action'
 import * as TYPES from '../action/type'
 import apiRequest from '../../services'
@@ -276,12 +276,12 @@ export function* GetSpDetailSaga() {
 
 function* getspDetail(param) {
     try {
-        const profileRes = yield apiRequest({}, `${GET_SP_DETAIL_URL}${param['payload']} `, method['GET'])
+        // //GET_SP_DETAIL_URL
+        const profileRes = yield apiRequest({}, `${GET_SP_PROFILE_NEW_URL}${param['payload']} `, method['GET'])
         console.log('spprofilerespppp==>', JSON.stringify(profileRes['result']))
         if (profileRes['status'] === 200) {
             yield put(loaderAction(false))
-            yield put(getProviderProfileSuccessAction(profileRes['result']['lstPortfolio']))
-            yield put(getProviderCompleteProducts(profileRes['result']['Products']))
+            yield put(getProviderProfileSuccessAction(profileRes['result']))
         }
 
         else {

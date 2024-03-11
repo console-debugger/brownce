@@ -66,45 +66,6 @@ function* getProviderProfile(param) {
     }
 }
 
-
-export function* GetCompleteProviderDetailSaga() {
-    try {
-        yield takeLatest(TYPES.GET_COMPLETE_PROVIDER_DETAIL_ACTION, getCompleteProvider)
-    }
-    catch (err) {
-        showToast('Error in get profile observer')
-    }
-}
-
-function* getCompleteProvider(param) {
-    try {
-        const profileRes = yield apiRequest({}, `${GET_COMPLETE_PROVIDER_DETAIL_URL}${param['payload']}`, method['GET'])
-        console.log('profileRes===>', JSON.stringify(profileRes))
-        if (profileRes['status'] === 200) {
-            let newResult = []
-            if (profileRes['result']['spProfile']['Services']) {
-                for (let i = 0; i < profileRes['result']['spProfile']['Services'].length; i++) {
-                    newResult.push(profileRes['result']['spProfile']['Services'][i].map(item => { return { ...item, status: false } }))
-                }
-            }
-            yield put(loaderAction(false))
-            yield put(getProviderCompleteDetailSuccesAction(profileRes['result']['spProfile']))
-            yield put(getProviderCompleteServices(newResult))
-            yield put(getProviderCompleteProducts(profileRes['result']['Products']))
-        }
-        else {
-            yield put(loaderAction(false))
-            yield delay(600)
-            showToast(profileRes['message'] || profileRes['Message'])
-        }
-    } catch (err) {
-        console.log('====>>>', JSON.stringify(err))
-        yield put(loaderAction(false))
-        yield delay(600)
-        showToast(serviceError['CATCH_ERROR'])
-    }
-}
-
 export function* GetFiltePriceListSaga() {
     try {
         yield takeLatest(TYPES.GET_FILTER_PRICE_LIST_ACTION, getPriceFilterListSaga)

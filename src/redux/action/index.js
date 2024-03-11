@@ -256,9 +256,6 @@ export const getProviderListSuccesAction = payload => ({
     type: TYPES['GET_PROVIDER_LIST_SUCCESS_ACTION'], payload
 })
 
-export const getProviderCompleteDetailAction = payload => ({
-    type: TYPES['GET_COMPLETE_PROVIDER_DETAIL_ACTION'], payload
-})
 export const getProviderCompleteDetailSuccesAction = payload => ({
     type: TYPES['GET_COMPLETE_PROVIDER_DETAIL_SUCCESS_ACTION'], payload
 })
@@ -873,4 +870,16 @@ export const updateCustomerProfilePicAction = (payload, callBack) => ({
 
 export const getGenderAction = (callBack) => ({
     type: TYPES.GET_GENDER_ACTION, callBack
+})
+
+export const getServicesListAction = (payload, callBack) => ({
+    type: TYPES.GET_SERVICES_LIST_ACTION, payload, callBack
+})
+
+export const getProviderAllServicesListAction = (payload, callBack) => ({
+    type: TYPES.GET_PROVIDER_ALL_SERVICES_ACTION, payload, callBack
+})
+
+export const getProviderAllProductsAction = (payload) => ({
+    type: TYPES.GET_PROVIDER_PRODUCT_LIST_ACTION, payload
 })

@@ -38,7 +38,9 @@ import styles from './styles';
 import {
   addRemoveProfileToFavourite,
   getProfessionsListAction,
-  getProviderCompleteDetailAction,
+  getProviderAllProductsAction,
+  getProviderAllServicesListAction,
+  getServicesListAction,
   getSpDetailAction,
   loaderAction,
   refreshDataAction,
@@ -55,13 +57,13 @@ const SpDetail = ({ navigation, route }) => {
   const state = useSelector((state) => {
     return state;
   });
-  const { LOADING, RATING, LOCATION, PORTFOLIO, SHARE,HOURS_OF_OPERATION,NOT_AVAILABLE } = state['localeReducer'][
+  const { LOADING, RATING, LOCATION, PORTFOLIO, SHARE, HOURS_OF_OPERATION, NOT_AVAILABLE } = state['localeReducer'][
     'locale'
   ];
   const { loading, refreshData } = state['loaderReducer'];
   const { otherProfile, profile, providerprofile, completeproviderproducts } = state['profileReducer'];
   const { professionsList } = state['hairReducer'];
-  const { ServicesProvided } = state.profileReducer.providerprofile;
+  // const { ServicesProvided } = state.profileReducer.providerprofile;
   // const { List } = state.profileReducer.completeproviderproducts;
   const [isRefresh, setRefresh] = useState(false);
   const [buttonVisible, setButtonVisible] = useState(false);
@@ -78,14 +80,33 @@ const SpDetail = ({ navigation, route }) => {
   });
   const [selectedWeekDayIndex, setSelectedWeekDayIndex] = useState(0)
   const [weeklyTimeTable, setWeekltTimeTable] = useState([])
+  const [ServicesProvided, setServicesProvidedData] = useState([])
+  const [servicesLoader, setServicesLoader] = useState(false)
 
   // @ fetch Service Provide details
   useEffect(() => {
     console.log('route.params.id--->', JSON.stringify(providerprofile), route.params.id)
+    setServicesLoader(true)
     dispatch(loaderAction(true));
     dispatch(getSpDetailAction(route.params.id));
+    dispatch(getServicesListAction({
+      UserId: route.params.id
+    }, response => {
+      console.log('responseresponse==>>>>>>>>>>', JSON.stringify(response))
+      setServicesLoader(false)
+      if (response) {
+        setServicesProvidedData(response?.ServicesProvided || [])
+      }
+    }))
     dispatch(getProfessionsListAction());
-    dispatch(getProviderCompleteDetailAction(route.params.id));
+
+    const params = {
+      ProviderId: route.params.id,
+      PageNo: 1,
+      RecordsPerPage: 10000
+    }
+    dispatch(getProviderAllProductsAction(params))
+    // dispatch(getProviderAllServicesListAction(route.params.id))
   }, []);
 
   console.log('providerprofileproviderprofile=>', JSON.stringify(providerprofile))
@@ -165,7 +186,7 @@ const SpDetail = ({ navigation, route }) => {
   const selectedWeekDay = useMemo(() => {
     if (weeklyTimeTable?.length) {
       const selectedData = weeklyTimeTable.filter(each => (each.StartTime || each.EndTime))
-      if(selectedData.length) return `${selectedData[selectedWeekDayIndex].WeekDay} : ${selectedData[selectedWeekDayIndex].StartTime} - ${selectedData[selectedWeekDayIndex].EndTime}`
+      if (selectedData.length) return `${selectedData[selectedWeekDayIndex].WeekDay} : ${selectedData[selectedWeekDayIndex].StartTime} - ${selectedData[selectedWeekDayIndex].EndTime}`
       else return NOT_AVAILABLE
     }
     else return NOT_AVAILABLE
@@ -444,7 +465,7 @@ const SpDetail = ({ navigation, route }) => {
               <MyText style={styles['spname']}>
                 {providerprofile?.FirstName
                   ? providerprofile.FirstName
-                  : LOADING}
+                  : 'N/A'}
               </MyText>
 
               <MyText style={[styles['spname'], { fontSize: getFontSize(14) }]}>
@@ -457,7 +478,7 @@ const SpDetail = ({ navigation, route }) => {
                   styles['detail'],
                   { textDecorationLine: 'underline' },
                 ]}>{providerprofile?.['Weblink'] || ''}</MyText> : null}
-             <MyText style={{fontSize:12,alignSelf:'center', fontFamily:montserratSemiBold, marginTop:10}}>{HOURS_OF_OPERATION}</MyText>
+              <MyText style={{ fontSize: 12, alignSelf: 'center', fontFamily: montserratSemiBold, marginTop: 10 }}>{HOURS_OF_OPERATION}</MyText>
               <WeekDayTimings
                 jumpToPreviousWeek={jumpToPreviousWeek}
                 jumpToNextWeek={jumpToNextWeek}
@@ -491,7 +512,6 @@ const SpDetail = ({ navigation, route }) => {
                   label={RATING}
                   mytext={`${providerprofile['OverallRating']}/5`}
                 />
-              {console.log('sasasdasd===>',providerprofile?.['Reviews'])}
                 {providerprofile?.['Reviews']?.map((item, index) => {
                   return (
                     <MyView>
@@ -568,7 +588,6 @@ const SpDetail = ({ navigation, route }) => {
                               key="hairType"
                               showsVerticalScrollIndicator={false}
                               data={arr}
-                              // data={item.filter(item => item['ProfessionId'] == category['Id'])}
                               keyExtractor={_keyExtractor}
                               renderItem={_renderHairType(index1)}
                               contentContainerStyle={styles['hairTypeFlatList']}
@@ -594,30 +613,9 @@ const SpDetail = ({ navigation, route }) => {
                           </MyText>
                         );
                       }
-                      // return (
-
-                      // )
                     })}
                   </Swiper>
                 </MyView>
-                {/* {servicesData?.length ? <>
-                  <Carousel
-                    key="portfolio"
-                    data={servicesData}
-                    renderItem={_renderServicesCrousel}
-                    keyExtractor={_keyExtractor}
-                    sliderWidth={SCREEN_WIDTH}
-                    removeClippedSubviews={false}
-                    // contentContainerStyle={styles['portfolioFlatList']}
-                    itemWidth={SCREEN_WIDTH}
-                    onSnapToItem={_onSnapToItem(TYPES.SERVICES)}
-                  />
-                  <MyPagination
-                    length={servicesData.length}
-                    activeSlideIndex={servicespageIndex}
-                  />
-                </>
-                  : null} */}
                 {productData?.length ?
                   <>
                     <MyText

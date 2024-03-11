@@ -8,7 +8,7 @@ import { cameraIcon, downArrow, imagePlaceholder, plusIcon, redCrossIcon } from 
 import { DARK_GRAY, GRAY, LIGHT_GRAY, TRANSPARENT_LIGHT_BLACK, WHITE } from '../../utils/colors'
 import { dynamicSize } from '../../utils/responsive'
 import styles from './styles'
-import { saveProviderPortfolioAction, deleteProviderPortfolio, getAllServicesAction, updateServicesAction, getCustomServicesAction, updateCustomServicesAction, getServicesByProfessionAction, updateProviderSettingAction, loaderAction, updateServiceProviderProfilePicAction } from '../../redux/action'
+import { saveProviderPortfolioAction, deleteProviderPortfolio, getAllServicesAction, updateServicesAction, getCustomServicesAction, updateCustomServicesAction, getServicesByProfessionAction, updateProviderSettingAction, loaderAction, updateServiceProviderProfilePicAction, getServicesListAction } from '../../redux/action'
 import { useFocusEffect } from '@react-navigation/native'
 import { apiKey } from '../../services/serviceConstant'
 import MultipleImagePickerSelection from '../../components/multipleImageSelection'
@@ -99,7 +99,6 @@ const ProviderSetting = ({ navigation }) => {
     const state = useSelector(state => { return state })
     const { CHANGE_PORTFOLIO, UPDATE, WEBSITE, HOURS_CAPS, BIO, CLOSED, BIO_SMALL, HOURS_OF_OPERATION, PORTFOLIO, SERVICES, WEBSITE_SMALL } = state['localeReducer']['locale']
     const { providerprofile } = state.profileReducer
-    const { ServicesProvided } = state.profileReducer.providerprofile
     const { services } = state['hairReducer']
     const { loading } = state['loaderReducer']
 
@@ -137,6 +136,9 @@ const ProviderSetting = ({ navigation }) => {
     const [refresh, setRefresh] = useState(false)
     const [websiteLink, setWebsiteLink] = useState(providerprofile?.Weblink || '')
     const [bio, setBio] = useState(providerprofile?.Bio || '')
+    const [ServicesProvided, setServicesProvidedData] = useState([])
+    const [servicesLoader, setServicesLoader] = useState(false)
+    const [ServicesProvidedCustom, setServicesProvidedCustom] = useState([])
 
     const scrollViewRef = useRef()
 
@@ -144,6 +146,21 @@ const ProviderSetting = ({ navigation }) => {
         getImages()
         console.log('asdasasddsad===>', JSON.stringify(providerprofile))
     }, [])
+
+    useEffect(() => {
+        if (providerprofile?.UserId) {
+            setServicesLoader(true)
+            dispatch(getServicesListAction({
+                UserId: providerprofile?.UserId
+            }, response => {
+                setServicesLoader(false)
+                if (response) {
+                    setServicesProvidedData(response?.ServicesProvided || [])
+                    setServicesProvidedCustom(response?.ServicesProvidedCustom || [])
+                }
+            }))
+        }
+    }, [providerprofile?.UserId])
 
     useEffect(() => {
         if (providerprofile?.Timings) {
@@ -163,7 +180,7 @@ const ProviderSetting = ({ navigation }) => {
             }
             dispatch(getCustomServicesAction(param))
             const servicesList = ServicesProvided?.map(item => { return { ...item, status: true } }) || []
-            const customservicesList = providerprofile?.['ServicesProvidedCustom']?.map(item => { return { ...item, status: true } }) || []
+            const customservicesList = ServicesProvidedCustom?.map(item => { return { ...item, status: true } }) || []
             dispatch(updateServicesAction(servicesList))
             dispatch(updateCustomServicesAction(customservicesList))
         }, [])
@@ -515,7 +532,7 @@ const ProviderSetting = ({ navigation }) => {
                         <MyText style={[styles['title'], { marginTop: SCREEN_HEIGHT * 0.02 }]}>{"CUSTOM SERVICES"}</MyText>
                         <FlatList
                             key='serviceProviderCustom'
-                            data={providerprofile['ServicesProvidedCustom']}
+                            data={ServicesProvidedCustom}
                             keyExtractor={_keyExtractor}
                             showsVerticalScrollIndicator={false}
                             renderItem={(item, index) => _renderHairType1(item, index)}

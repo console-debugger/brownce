@@ -326,3 +326,8 @@ export const UPDATE_SP_PROFILE_PIC_URL = `${BASE_URL}/api/sp/UpdateProfilePic`
 export const UPDATE_CUSTOMER_PROFILE_PIC_URL = `${BASE_URL}/api/customer/UpdateProfilePic`
 
 export const GET_GENDERS_URL = `${BASE_URL}/api/common/genders`
+
+export const GET_SP_PROFILE_NEW_URL = `${BASE_URL}/api/customer/sp-profile?userid=`
+export const GET_SERVICES_NEW_URL = `${BASE_URL}/api/customer/sp-profile-services?userid=`
+export const GET_PROVIDER_ALL_SERVICES_URL = `${BASE_URL}/api/customer/sp-complete-Profile-services?userid=`
+export const GET_PROVIDER_PRODUCT_LIST_URL = `${BASE_URL}/api/products/GetProducts`

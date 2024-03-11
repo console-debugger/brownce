@@ -20,7 +20,9 @@ import { FlatList, ScrollView, Linking } from 'react-native';
 import { BLACK, LIGHT_WHITE, THEME } from '../../utils/colors';
 import {
   getProfessionsListAction,
-  getProviderCompleteDetailAction,
+  getProviderAllProductsAction,
+  getServicesListAction,
+  getSpDetailAction,
   loaderAction,
   updateServicesAction,
 } from '../../redux/action';
@@ -52,9 +54,8 @@ const ProviderDetail = (props) => {
     VIEW_LICENSE,
     SHARE,
   } = state['localeReducer']['locale'];
-  const { completeprovider, completeproviderproducts, completeproviderservices } = state['profileReducer'];
+  const { providerprofile, completeproviderproducts, completeproviderservices } = state['profileReducer'];
   const { professionsList } = state['hairReducer'];
-  const { List } = state['profileReducer']['completeproviderproducts'];
   const [modalVisible, setmodalVisible] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const [category, setCategory] = useState({
@@ -70,7 +71,13 @@ const ProviderDetail = (props) => {
 
   useEffect(() => {
     dispatch(loaderAction(true));
-    dispatch(getProviderCompleteDetailAction(props.route.params.id));
+    dispatch(getSpDetailAction(props.route.params.id));
+    const params = {
+      ProviderId: props.route.params.id,
+      PageNo: 1,
+      RecordsPerPage: 10000
+    }
+    dispatch(getProviderAllProductsAction(params))
     dispatch(getProfessionsListAction());
   }, []);
 
@@ -164,7 +171,7 @@ const ProviderDetail = (props) => {
 
   const _openLink = async () => {
     try {
-      const url = validateUrl(completeprovider?.['Weblink'])
+      const url = validateUrl(providerprofile?.['Weblink'])
       if (url) Linking.openURL(url)
     } catch (error) {
       console.log('err-->', error)
@@ -180,7 +187,7 @@ const ProviderDetail = (props) => {
 
   const _onShareButton = async () => {
     const profileType = 'provider';
-    const userId = completeprovider?.['UserId'];
+    const userId = providerprofile?.['UserId'];
     const newLink = await generateDynamicLink(profileType, userId)
     console.log('new short link =>', newLink)
     onShare(newLink)
@@ -191,7 +198,7 @@ const ProviderDetail = (props) => {
       <MyView style={{ alignItems: 'center', backgroundColor: LIGHT_WHITE }}>
         <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
           <LicensePopup
-            source={{ uri: completeprovider['DocumentPath'] }}
+            source={{ uri: providerprofile['DocumentPath'] }}
             dismiss={() => setmodalVisible(false)}
             isVisible={modalVisible}
           />
@@ -200,7 +207,7 @@ const ProviderDetail = (props) => {
           <MyView style={{ flex: 1 }}>
             <MyView style={styles['header']}>
               <MyImage
-                source={{ uri: completeprovider?.['ProfilePic'] }}
+                source={{ uri: providerprofile?.['ProfilePic'] }}
                 style={styles['imageStyle']}
               />
               <MyView style={{ flex: 1 }}>
@@ -212,8 +219,8 @@ const ProviderDetail = (props) => {
                       width: '90%',
                     }}>
                     <MyText style={styles['nameStyle']}>
-                      {completeprovider?.['Name']
-                        ? `${completeprovider['Name']} | `
+                      {providerprofile?.['Name']
+                        ? `${providerprofile['Name']} | `
                         : LOADING}
                     </MyText>
 
@@ -222,15 +229,15 @@ const ProviderDetail = (props) => {
                         styles['nameStyle'],
                         { fontSize: getFontSize(12) },
                       ]}>
-                      {completeprovider?.['Username']
-                        ? completeprovider['Username']
+                      {providerprofile?.['Username']
+                        ? providerprofile['Username']
                         : LOADING}
                     </MyText>
                   </MyView>
 
                   <MyText style={styles['priceStyle']}>
-                    {completeprovider?.['UserId']
-                      ? `$ ${completeprovider['DepositFee'] ? completeprovider['DepositFee'] : 0}`
+                    {providerprofile?.['UserId']
+                      ? `$ ${providerprofile['DepositFee'] ? providerprofile['DepositFee'] : 0}`
                       : LOADING}
                   </MyText>
                 </MyView>
@@ -242,8 +249,8 @@ const ProviderDetail = (props) => {
                   }}>
                   <TouchableIcon source={mapPin} />
                   <MyText style={styles['address']}>
-                    {completeprovider?.['CityName']
-                      ? completeprovider['CityName']
+                    {providerprofile?.['CityName']
+                      ? providerprofile['CityName']
                       : LOADING}
                   </MyText>
                 </MyView>
@@ -257,7 +264,7 @@ const ProviderDetail = (props) => {
                     source={chatIcon}
                     onPress={() =>
                       props.navigation.navigate('chat', {
-                        id: completeprovider['UserId'],
+                        id: providerprofile['UserId'],
                         type: 'provider',
                       })
                     }
@@ -266,8 +273,8 @@ const ProviderDetail = (props) => {
                   <MyView style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <MyImage source={smallStar} />
                     <MyText style={styles['starCount']}>
-                      {`${completeprovider['UserRating']}`
-                        ? `${completeprovider['UserRating']}/5`
+                      {`${providerprofile['UserRating']}`
+                        ? `${providerprofile['UserRating']}/5`
                         : '0/5'}
                     </MyText>
                   </MyView>
@@ -296,22 +303,22 @@ const ProviderDetail = (props) => {
               </MyView>
             </MyView>
             <MyText style={styles['description']}>
-              {completeprovider['Bio']}
+              {providerprofile['Bio']}
             </MyText>
-            {completeprovider?.['Weblink'] ? <MyText
+            {providerprofile?.['Weblink'] ? <MyText
               onPress={_openLink}
               style={[
                 styles['title'],
                 { textDecorationLine: 'underline' },
-              ]}>{completeprovider?.['Weblink']}</MyText>
+              ]}>{providerprofile?.['Weblink']}</MyText>
               : null}
 
-            <MyText style={[styles['title'], { marginTop: 10 }]}>{`${'Hours'}: ${completeprovider?.['OpeningTime'] === null
+            <MyText style={[styles['title'], { marginTop: 10 }]}>{`${'Hours'}: ${providerprofile?.['OpeningTime'] === null
               ? '--'
-              : completeprovider?.['OpeningTime']
-              } To ${completeprovider?.['ClosingTime'] === null
+              : providerprofile?.['OpeningTime']
+              } To ${providerprofile?.['ClosingTime'] === null
                 ? '--'
-                : completeprovider?.['ClosingTime']
+                : providerprofile?.['ClosingTime']
               }`}</MyText>
             <MyText style={[styles['title'], { marginTop: 10 }]}>
               {PORTFOLIO.toUpperCase()}
@@ -319,7 +326,7 @@ const ProviderDetail = (props) => {
 
             <FlatList
               key="portfolio"
-              data={completeprovider.Portfolios}
+              data={providerprofile.Portfolios}
               numColumns={3}
               renderItem={_renderPortfolio}
               keyExtractor={_keyExtractor}

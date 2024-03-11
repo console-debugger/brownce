@@ -9,7 +9,7 @@ import { LIGHT_WHITE, THEME } from '../../utils/colors'
 import { montserratBold, montserratSemiBold } from '../../utils/fontFamily'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
 import styles from './styles'
-import { getMyProductListAction, getProviderProfileAction } from '../../redux/action'
+import { getMyProductListAction, getProviderProfileAction, getServicesListAction } from '../../redux/action'
 import { LicensePopup } from '../../components/alert'
 import { useFocusEffect } from '@react-navigation/native'
 import { productImg2 } from '../../components/icons'
@@ -25,18 +25,35 @@ const ProviderCompleteProfile = ({ navigation }) => {
     const { EDIT, LOADING, RATING, LOCATION, NOT_AVAILABLE, PORTFOLIO, HOURS_OF_OPERATION } = state['localeReducer']['locale']
     const { loading } = state['loaderReducer']
     const providerprofile = state.profileReducer.providerprofile
-    const { ServicesProvided } = state['profileReducer']['providerprofile']
+    // const { ServicesProvided } = state['profileReducer']['providerprofile']
     const { spProducts } = state['productReducer']
     const [modalVisible, setmodalVisible] = useState(false)
     const [isRefresh, setRefresh] = useState(false)
     const [selectedWeekDayIndex, setSelectedWeekDayIndex] = useState(0)
     const [weeklyTimeTable, setWeekltTimeTable] = useState([])
+    const [ServicesProvided, setServicesProvidedData] = useState([])
+    const [servicesLoader, setServicesLoader] = useState(false)
+
 
     console.log('providerprofile==>', JSON.stringify(providerprofile))
 
     useEffect(() => {
         dispatch(getProviderProfileAction())
     }, [])
+
+    useEffect(() => {
+        if (providerprofile?.UserId) {
+            setServicesLoader(true)
+            dispatch(getServicesListAction({
+                UserId: providerprofile?.UserId
+            }, response => {
+                setServicesLoader(false)
+                if (response) {
+                    setServicesProvidedData(response?.ServicesProvided || [])
+                }
+            }))
+        }
+    }, [providerprofile?.UserId])
 
     useEffect(() => {
         if (providerprofile?.Timings?.length) {
@@ -135,7 +152,7 @@ const ProviderCompleteProfile = ({ navigation }) => {
 
     const jumpToNextWeek = () => {
         const selectedData = weeklyTimeTable.filter(each => (each.StartTime || each.EndTime))
-    if (selectedWeekDayIndex < (selectedData.length - 1)) setSelectedWeekDayIndex(prevState => prevState + 1)
+        if (selectedWeekDayIndex < (selectedData.length - 1)) setSelectedWeekDayIndex(prevState => prevState + 1)
     }
 
     const jumpToPreviousWeek = () => {

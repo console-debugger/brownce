@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import commonStyle from '../../components/commonStyle'
 import { Button, KeyboardAwareScroll, MyText, MyView, SafeArea, SecondaryButton } from '../../components/customComponent'
 import { isAndroid, SCREEN_HEIGHT, SCREEN_WIDTH, showToast } from '../../components/helper'
-import { updateServicesAction, changeServiceAction, clearMessageCase, getServicesByProfessionAction } from '../../redux/action'
+import { updateServicesAction, changeServiceAction, clearMessageCase, getServicesByProfessionAction, getServicesListAction } from '../../redux/action'
 import { apiKey } from '../../services/serviceConstant'
 import { BLACK, LIGHT_WHITE, THEME } from '../../utils/colors'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
@@ -20,14 +20,30 @@ const AllServices = ({ navigation, route }) => {
     const state = useSelector(state => { return state })
     const { CONTINUE } = state['localeReducer']['locale']
     const { services, customservices, messageCase, allservices, servicesByProfession } = state['hairReducer']
-    const { ServicesProvided } = state.profileReducer.providerprofile
+    const { providerprofile } = state.profileReducer.providerprofile
     const [servs, setServs] = useState([])
-
     const [selectedSubServices, setSelectedSubServices] = useState([])
+    const [ServicesProvided, setServicesProvidedData] = useState([])
+    const [servicesLoader, setServicesLoader] = useState(false)
 
     useEffect(() => {
         dispatch(getServicesByProfessionAction(selectedServices))
+
     }, [])
+
+    useEffect(() => {
+        if (providerprofile?.UserId) {
+            setServicesLoader(true)
+            dispatch(getServicesListAction({
+                UserId: providerprofile?.UserId
+            }, (response) => {
+                setServicesLoader(false)
+                if (response) {
+                    setServicesProvidedData(response?.ServicesProvided || [])
+                }
+            }))
+        }
+    }, [providerprofile?.UserId])
 
     useEffect(() => {
         setServs([...servicesByProfession])

@@ -21,9 +21,9 @@ const Booking = (props) => {
   let filterServiceid = []
 
   const state = useSelector(state => { return state })
-  const { completeprovider } = state['profileReducer']
-  console.log('completeprovider===>', JSON.stringify(completeprovider))
-  let deposit = completeprovider['DepositFee'] ? completeprovider['DepositFee']?.toString() : '0'
+  const { providerprofile } = state['profileReducer']
+  console.log('providerprofile===>', JSON.stringify(providerprofile))
+  let deposit = providerprofile['DepositFee'] ? providerprofile['DepositFee']?.toString() : '0'
 
   const [amount, setAmount] = useState(deposit);
   const [error, setError] = useState('');
@@ -79,7 +79,7 @@ const Booking = (props) => {
       [apiKey['SPServiceMapId']]: newArr,
       [apiKey['BookingDate']]: date,
       [apiKey["BookingTime"]]: time,
-      [apiKey['DepositFee']]: completeprovider['DepositFee'],
+      [apiKey['DepositFee']]: providerprofile['DepositFee'],
       [apiKey['Notes']]: notes,
       [apiKey['NounceId']]: nonce
     }
@@ -141,7 +141,7 @@ const Booking = (props) => {
           onChangeText={(value) => setnotes(value)}
           style={styles['textInput']}
         />
-        <MyText style={styles['deposite']}>{`MAKE A DEPOSIT OF ${completeprovider['DepositFee']} USD TO SEND A BOOKING REQUEST`}</MyText>
+        <MyText style={styles['deposite']}>{`MAKE A DEPOSIT OF ${providerprofile['DepositFee']} USD TO SEND A BOOKING REQUEST`}</MyText>
         <Button onPress={_booking} style={styles['buttonStyle']} />
       </KeyboardAwareScroll>
     </SafeArea>

@@ -1,7 +1,7 @@
 import { takeLatest, put, delay } from 'redux-saga/effects';
 import { isCustomer, multiRemoveData, showToast, storeData } from '../../components/helper'
-import { method, serviceError, VALIDATE_EMAIL_OTP_URL, UPDATE_EMAIL_URL, RESET_PASSWORD_URL, REGISTRATION_URL, OTP_VERIFICATION_URL, serviceConst, LOGIN_URL, FORGOT_PASSWORD_URL, CHANGE_PASSWORD_URL, apiKey, REGISTER_WITH_PHONE_URL, PHONE_OTP_VERIFICATION_URL, LOGIN_WITH_PHONE_URL, VALIDATE_PHONE_LOGIN_URL, UPDATE_PROVIDER_SETTING_URL, UPDATE_SP_PROFILE_PIC_URL, UPDATE_CUSTOMER_PROFILE_PIC_URL } from '../../services/serviceConstant'
-import { loaderAction, otpViewAction, popupAction, signupUserDataAction } from '../action'
+import { method, serviceError, VALIDATE_EMAIL_OTP_URL, UPDATE_EMAIL_URL, RESET_PASSWORD_URL, REGISTRATION_URL, OTP_VERIFICATION_URL, serviceConst, LOGIN_URL, FORGOT_PASSWORD_URL, CHANGE_PASSWORD_URL, apiKey, REGISTER_WITH_PHONE_URL, PHONE_OTP_VERIFICATION_URL, LOGIN_WITH_PHONE_URL, VALIDATE_PHONE_LOGIN_URL, UPDATE_PROVIDER_SETTING_URL, UPDATE_SP_PROFILE_PIC_URL, UPDATE_CUSTOMER_PROFILE_PIC_URL, GET_SERVICES_NEW_URL, GET_PROVIDER_ALL_SERVICES_URL, GET_PROVIDER_PRODUCT_LIST_URL } from '../../services/serviceConstant'
+import { getProviderCompleteProducts, loaderAction, otpViewAction, popupAction, signupUserDataAction } from '../action'
 import * as TYPES from '../action/type'
 import apiRequest from '../../services'
 import { navigateToScreen, reset } from '../../navigation/rootNav'
@@ -458,6 +458,86 @@ function* updateCustomerProfilePic(param) {
         }
     } catch (err) {
         yield put(loaderAction(false))
+        showToast(serviceError['CATCH_ERROR'])
+    }
+}
+
+export function* GetServicesListSaga() {
+    try {
+        yield takeLatest(TYPES.GET_SERVICES_LIST_ACTION, getServicesListApi)
+    }
+    catch (err) {
+        showToast('Error in GET_SERVICES_LIST_ACTION observer')
+    }
+}
+
+function* getServicesListApi(param) {
+    try {
+        const response = yield apiRequest({}, `${GET_SERVICES_NEW_URL}${param['payload']?.['UserId']}`, method['GET'])
+        console.log('responseresponse===>', JSON.stringify(response))
+        if (response['status'] === 200) {
+            if (param?.callBack) param?.callBack(response?.result)
+        }
+        else {
+            if (param?.callBack) param?.callBack()
+            showToast(response['message'])
+        }
+    } catch (err) {
+        if (param?.callBack) param?.callBack()
+        showToast(serviceError['CATCH_ERROR'])
+    }
+}
+
+export function* GetProviderAllServicesListSaga() {
+    try {
+        yield takeLatest(TYPES.GET_PROVIDER_ALL_SERVICES_ACTION, getProviderAllServicesListApi)
+    }
+    catch (err) {
+        showToast('Error in GET_PROVIDER_ALL_SERVICES_ACTION observer')
+    }
+}
+
+function* getProviderAllServicesListApi(param) {
+    try {
+        const response = yield apiRequest({}, `${GET_PROVIDER_ALL_SERVICES_URL}${param['payload']}`, method['GET'])
+        console.log('responseresponse===>', JSON.stringify(response))
+        if (response['status'] === 200) {
+            let newResult = []
+            if (response['result']['Services']) {
+                for (let i = 0; i < response['result']['Services'].length; i++) {
+                    newResult.push(response['result']['Services'][i].map(item => { return { ...item, status: false } }))
+                }
+            }
+            // yield put(getProviderCgetProviderCompleteProductsompleteServices(newResult))
+        }
+        else {
+            showToast(response['message'])
+        }
+    } catch (err) {
+        showToast(serviceError['CATCH_ERROR'])
+    }
+}
+
+export function* GetProviderAllProductListSaga() {
+    try {
+        yield takeLatest(TYPES.GET_PROVIDER_PRODUCT_LIST_ACTION, getProviderAllProductListApi)
+    }
+    catch (err) {
+        showToast('Error in GET_PROVIDER_PRODUCT_LIST_ACTION observer')
+    }
+}
+
+function* getProviderAllProductListApi(param) {
+    try {
+        const response = yield apiRequest(param.payload, GET_PROVIDER_PRODUCT_LIST_URL, method['POST'])
+        console.log('responseresponse===>@@', JSON.stringify(response))
+        if (response['status'] === 200) {
+            yield put(getProviderCompleteProducts(response['result']))
+        }
+        else {
+            showToast(response['message'])
+        }
+    } catch (err) {
         showToast(serviceError['CATCH_ERROR'])
     }
 }
