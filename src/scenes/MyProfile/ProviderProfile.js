@@ -292,7 +292,7 @@ const ProviderProfile = ({ navigation }) => {
                 <ScrollView style={{ paddingBottom: 15 }}>
 
                     <CurveView />
-                    <Loader isVisible={loading} />
+                    {loading ? <Loader isVisible={loading} /> : null}
 
                     <MyText onPress={_navToEditProfile} style={[styles['editText'], { alignSelf: 'flex-end' }]}>{EDIT}</MyText>
                     <MyImage source={{ uri: state.profileReducer.providerprofile?.['ProfilePic'] }} style={styles['image']} />

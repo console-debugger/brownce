@@ -193,12 +193,6 @@ const ProviderMenu = ({ navigation }) => {
                                 {state.profileReducer.providerprofile?.['Email'] ? `Share` : LOADING}
                             </MyText>
                         </Touchable>
-                        {/* <TouchableIcon
-                source={shareIcon}
-                indicator={false}
-                imageStyle={styles['shareImage']}
-               
-              /> */}
                     </MyView>
                 </MyView>
                 <FlatList
