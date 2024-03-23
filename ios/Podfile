@@ -15,8 +15,8 @@ target 'BrownceCustomer' do
   pod 'react-native-google-maps', :path => rn_maps_path
   pod 'GoogleMaps'
   pod 'Google-Maps-iOS-Utils'
-  pod 'Braintree', '~> 4.35.0'
-  pod 'RNPaypal', :path => '../node_modules/react-native-paypal'
+  # pod 'Braintree', '~> 4.35.0'
+  # pod 'RNPaypal', :path => '../node_modules/react-native-paypal'
   pod 'Braintree/DataCollector'
   pod 'Google-Mobile-Ads-SDK'
   # pod 'OneSignalXCFramework', '>= 3.0', '< 4.0'

@@ -1,5 +1,5 @@
 #import "AppDelegate.h"
-#import "RNPaypal.h"
+//#import "RNPaypal.h"
 #import <Firebase.h>
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
@@ -55,14 +55,14 @@ static void InitializeFlipper(UIApplication *application) {
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
-   [[RNPaypal sharedInstance] configure];
+//   [[RNPaypal sharedInstance] configure];
   return YES;
 }
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
-  options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
-{
-  return [[RNPaypal sharedInstance] application:application openURL:url options:options];
-}
+//- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+//  options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+//{
+//  return [[RNPaypal sharedInstance] application:application openURL:url options:options];
+//}
 
 // Required for the register event.
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
