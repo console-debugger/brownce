@@ -140,9 +140,9 @@ export const PaymentPopup = props => {
     return (
         <CustomModal1 dismiss={dismiss} isVisible={Visible} animationType={animationType}>
             <MyView style={commonStyle['alertContainer3']}>
-                <MyView style={{ marginTop: SCREEN_HEIGHT * 0.02, marginLeft: SCREEN_WIDTH * 0.03 }} >
-                    <Button onPress={onPressRight} style={[commonStyle['buttonContainer'], {}]} textStyle={{ fontSize: getFontSize(12) }} text={"Pay With Cash"} />
-                    <Button onPress={onPressLeft} style={[commonStyle['buttonContainer'], {}]} textStyle={{ fontSize: getFontSize(12) }} text={"Pay With PayPal"} />
+                <MyView style={{ marginLeft: SCREEN_WIDTH * 0.03 }} >
+                    <Button onPress={onPressRight} style={[commonStyle['buttonContainer'], { marginTop: 0 }]} textStyle={{ fontSize: getFontSize(12) }} text={"Pay With Cash"} />
+                    {/* <Button onPress={onPressLeft} style={[commonStyle['buttonContainer'], {}]} textStyle={{ fontSize: getFontSize(12) }} text={"Pay With PayPal"} /> */}
 
                 </MyView>
             </MyView>

@@ -10,7 +10,7 @@ import { dynamicSize, getFontSize } from '../../utils/responsive'
 import { isAndroid, SCREEN_WIDTH, SCREEN_HEIGHT, showToast } from '../../components/helper'
 import { loaderAction, getCustomerAppointementsAction, getRatingTypeAction, saveRatingAction, makePaymentAction, clearMessageCase } from '../../redux/action'
 import { useFocusEffect } from '@react-navigation/native'
-import { requestOneTimePayment } from 'react-native-paypal';
+// import { requestOneTimePayment } from 'react-native-paypal';
 import { PaymentPopup, RatingPopup } from '../../components/alert'
 import { MAKE_PAYMENT_SUCCESS_ACTION } from '../../redux/action/type'
 import { token } from "../../services/serviceConstant"
@@ -64,7 +64,7 @@ const PastAppointment = ({ navigation }) => {
     const _keyExtractor = (item, index) => item + index
 
     // @ Make paypal payment
-    const makePayment = nonce => {
+    const makePayment = (nonce = '') => {
         dispatch(loaderAction(false))
         const param = {
             "AppointmentId": apptid,
@@ -193,7 +193,10 @@ const PastAppointment = ({ navigation }) => {
                 <RatingPopup getAllRatings={_submitRating} onPress={() => setModalVisible(false)} isVisible={ModalVisible} />
                 <PaymentPopup
                     dismiss={() => setPaymentPopup(false)}
-                    Visible={paymentPopup} onPressRight={() => cashPress()} onPressLeft={() => payment()} />
+                    Visible={paymentPopup}
+                    onPressRight={() => cashPress()}
+                // onPressLeft={() => payment()}
+                />
                 <Loader
                     isVisible={loading} />
                 {customerpastappointment.length != 0 ?

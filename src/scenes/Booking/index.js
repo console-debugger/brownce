@@ -11,14 +11,13 @@ import { apiKey } from "../../services/serviceConstant"
 import { useLinkProps } from '@react-navigation/native'
 import { loaderAction, saveBooking } from '../../redux/action'
 import { token } from "../../services/serviceConstant"
-import {
-  requestOneTimePayment,
-  requestBillingAgreement,
-  PaypalResponse,
-} from 'react-native-paypal';
+// import {
+//   requestOneTimePayment,
+//   requestBillingAgreement,
+//   PaypalResponse,
+// } from 'react-native-paypal';
 const Booking = (props) => {
   let newArr = []
-  let filterServiceid = []
 
   const state = useSelector(state => { return state })
   const { providerprofile } = state['profileReducer']
@@ -64,29 +63,36 @@ const Booking = (props) => {
       : showToast("Please select date")
   }
 
-  const _saveBooking = (nonce) => {
+  const _saveBooking = () => {
+    const filterServiceid =[]
     dispatch(loaderAction(false))
+    console.log('services===>',services)
     for (let i = 0; i < services.length; i++) {
       filterServiceid.push(services[i].filter(item => { if (item['status']) return item }).map(each => { return each['SPServiceMappingId'] }))
     }
 
-
+    console.log('filterServiceid===>',filterServiceid)
     for (var i = 0; i < filterServiceid.length; i++) {
       newArr = newArr.concat(filterServiceid[i]);
     }
+    console.log('newArrnewArr==>',newArr)
+    // return
     let param = {
       [apiKey['SPId']]: props.route.params.providerId,
       [apiKey['SPServiceMapId']]: newArr,
       [apiKey['BookingDate']]: date,
       [apiKey["BookingTime"]]: time,
       [apiKey['DepositFee']]: providerprofile['DepositFee'],
-      [apiKey['Notes']]: notes,
-      [apiKey['NounceId']]: nonce
+      // [apiKey['Notes']]: notes,
+      // [apiKey['NounceId']]: nonce
     }
+    console.log('param==>',param)
     dispatch(saveBooking(param))
   }
 
   const requestPayment = () => {
+    _saveBooking()
+    return
     //props.navigation.navigate('deposit')
     dispatch(loaderAction(true))
     requestOneTimePayment(token,
@@ -113,7 +119,7 @@ const Booking = (props) => {
       <CurveView />
       <KeyboardAwareScroll contentContainerStyle={{ alignItems: 'center', backgroundColor: LIGHT_WHITE }}>
 
-        <MyText style={styles['label']}>{DATE}</MyText>
+       <MyText style={styles['label']}>{DATE}</MyText>
         <DateTimePicker
           minDate={new Date(d)}
           style={styles['picker']}
@@ -141,7 +147,8 @@ const Booking = (props) => {
           onChangeText={(value) => setnotes(value)}
           style={styles['textInput']}
         />
-        <MyText style={styles['deposite']}>{`MAKE A DEPOSIT OF ${providerprofile['DepositFee']} USD TO SEND A BOOKING REQUEST`}</MyText>
+        <MyText style={styles['deposite']}>{`SEND A BOOKING REQUEST`}</MyText>
+        {/* <MyText style={styles['deposite']}>{`MAKE A DEPOSIT OF ${providerprofile['DepositFee']} USD TO SEND A BOOKING REQUEST`}</MyText> */}
         <Button onPress={_booking} style={styles['buttonStyle']} />
       </KeyboardAwareScroll>
     </SafeArea>

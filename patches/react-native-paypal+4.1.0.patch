@@ -1,5 +1,6 @@
+Binary files /dev/null and b/node_modules/react-native-paypal/android/build/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin differ
 diff --git a/node_modules/react-native-paypal/android/src/main/AndroidManifest.xml b/node_modules/react-native-paypal/android/src/main/AndroidManifest.xml
-index 0f44673..f6a1058 100644
+index 0f44673..c79ce6e 100644
 --- a/node_modules/react-native-paypal/android/src/main/AndroidManifest.xml
 +++ b/node_modules/react-native-paypal/android/src/main/AndroidManifest.xml
 @@ -7,7 +7,9 @@
@@ -8,8 +9,8 @@ index 0f44673..f6a1058 100644
        android:launchMode="singleTask"
 -      android:theme="@android:style/Theme.Translucent.NoTitleBar">
 +      android:theme="@android:style/Theme.Translucent.NoTitleBar"
-+        android:exported="true"
-+        >
++      android:exported="true"
++      >
        <intent-filter>
            <action android:name="android.intent.action.VIEW" />
            <category android:name="android.intent.category.DEFAULT" />
