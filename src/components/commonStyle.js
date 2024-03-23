@@ -264,7 +264,8 @@ const commonStyle = StyleSheet.create({
     alertContainer3: {
         backgroundColor: WHITE,
         width: SCREEN_WIDTH - dynamicSize(70),
-        height: SCREEN_HEIGHT * 0.2,
+        paddingVertical:20,
+        // height: SCREEN_HEIGHT * 0.2,
         borderRadius: dynamicSize(5)
     },
     alertText: {

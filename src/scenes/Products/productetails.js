@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { addOrderAction, clearMessageCase, loaderAction, myAddressAction, paymentSaveAction } from "../../redux/action"
 import { ADD_ORDER_SUCCESS_ACTION, MY_ADDRESS_SUCCESS_ACTION } from "../../redux/action/type"
 import { token } from "../../services/serviceConstant"
-import { requestOneTimePayment, } from 'react-native-paypal';
+// import { requestOneTimePayment, } from 'react-native-paypal';
 import commonStyle from "../../components/commonStyle"
 
 const TYPES = { PHONE: 'phone', ADDRESS: 'address' }

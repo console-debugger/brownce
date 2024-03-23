@@ -90,6 +90,7 @@
         <activity android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
             android:launchMode="singleTask"
             android:exported="true"
+            tools:replace="android:exported"
             >
             <intent-filter
             android:autoVerify="true"

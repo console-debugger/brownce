@@ -153,8 +153,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         vectorDrawables.useSupportLibrary = true
-        versionCode 36
-        versionName "1.7"
+        versionCode 41
+        versionName "1.8"
         multiDexEnabled =true
         missingDimensionStrategy 'store', 'play'
     }
@@ -229,7 +229,10 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:18.0.0'
     implementation("com.squareup.okhttp3:okhttp:4.9.1")
     implementation("com.squareup.okhttp3:okhttp-urlconnection:4.9.1")
-    implementation "com.braintreepayments.api:braintree:3.14.1"
+    // implementation "com.braintreepayments.api:braintree:3.14.1"
+    // implementation 'com.paypal.android.sdk:data-collector:3.21.0'
+    // implementation 'org.jfrog.cardinalcommerce.gradle:cardinalmobilesdk:2.2.7-5'
+    // implementation 'com.paypal.checkout:android-sdk:1.2.0'
     // compileOnly "com.braintreepayments.api:data-collector:3.21.0"
     implementation 'androidx.work:work-runtime:2.7.1'
     implementation 'androidx.multidex:multidex:2.0.1'

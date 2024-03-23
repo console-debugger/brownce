@@ -8020,11 +8020,6 @@
   dependencies:
     "invariant" "^2.2.2"
 
-"react-native-paypal@3.1.1":
-  "integrity" "sha512-tnrhAVB8eYda0u1zE0uB6tayYe8CB5GBKey4Q8DI9s/+MR4OhpceoG9peIrL3AmKe+hWGf4zVCxdS2viW0fDHw=="
-  "resolved" "https://registry.npmjs.org/react-native-paypal/-/react-native-paypal-3.1.1.tgz"
-  "version" "3.1.1"
-
 "react-native-permissions@^3.10.0":
   "integrity" "sha512-6SB6JInfC0u54Wco8M1QsRoOGThnVjrhaks5IDWyYgwfi6JpXfTIi+F9fZZmRycyyPCgU8vGtht/5gF4VWEB/A=="
   "resolved" "https://registry.npmjs.org/react-native-permissions/-/react-native-permissions-3.10.0.tgz"
@@ -8213,7 +8208,7 @@
     "whatwg-fetch" "^3.0.0"
     "ws" "^6.1.4"
 
-"react-native@*", "react-native@^0.69.0", "react-native@>= 0.51", "react-native@>= 0.51.0", "react-native@>= 0.59", "react-native@>= 0.60.0", "react-native@>=0.33", "react-native@>=0.40.0", "react-native@>=0.41.2", "react-native@>=0.42.0", "react-native@>=0.47.0", "react-native@>=0.48.4", "react-native@>=0.57", "react-native@>=0.58.4", "react-native@>=0.59", "react-native@>=0.59.0", "react-native@>=0.60", "react-native@>=0.63.3", "react-native@>=0.65.1", "react-native@>0.57.0", "react-native@0.68.5":
+"react-native@*", "react-native@^0.69.0", "react-native@>= 0.51", "react-native@>= 0.51.0", "react-native@>= 0.59", "react-native@>= 0.60.0", "react-native@>=0.33", "react-native@>=0.40.0", "react-native@>=0.42.0", "react-native@>=0.47.0", "react-native@>=0.48.4", "react-native@>=0.57", "react-native@>=0.58.4", "react-native@>=0.59", "react-native@>=0.59.0", "react-native@>=0.60", "react-native@>=0.63.3", "react-native@>=0.65.1", "react-native@>0.57.0", "react-native@0.68.5":
   "integrity" "sha512-t3kiQ/gumFV+0r/NRSIGtYxanjY4da0utFqHgkMcRPJVwXFWC0Fr8YiOeRGYO1dp8EfrSsOjtfWic/inqVYlbQ=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.68.5.tgz"
   "version" "0.68.5"

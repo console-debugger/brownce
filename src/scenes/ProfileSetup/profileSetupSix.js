@@ -13,7 +13,7 @@ import styles from './styles'
 import { tickIcon } from "../../components/icons"
 import { useFocusEffect } from '@react-navigation/native'
 import { token } from "../../services/serviceConstant"
-import { requestBillingAgreement } from 'react-native-paypal';
+// import { requestBillingAgreement } from 'react-native-paypal';
 import Subscriptions from '../../components/subscriptions'
 
 // Provider profile setup

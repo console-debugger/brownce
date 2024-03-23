@@ -341,8 +341,8 @@ const ProviderList = ({ navigation }) => {
               </MyText>
             </MyView>
 
-            <MyText
-              style={[styles['priceStyle']]}>{`$ ${item['Price'] || 0}`}</MyText>
+            {/* <MyText
+              style={[styles['priceStyle']]}>{`$ ${item['Price'] || 0}`}</MyText> */}
           </MyView>
           <MyView
             style={{

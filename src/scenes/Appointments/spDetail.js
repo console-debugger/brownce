@@ -44,6 +44,7 @@ import {
   getSpDetailAction,
   loaderAction,
   refreshDataAction,
+  updateServicesAction,
 } from '../../redux/action';
 import { activeFavHeartIcon, inactiveFavHeartIcon, productImg2 } from '../../components/icons';
 import { navigateToScreen } from '../../navigation/rootNav';
@@ -197,6 +198,7 @@ const SpDetail = ({ navigation, route }) => {
     replica[index1][index]['status'] = !replica[index1][index]['status'];
     setRefresh(!isRefresh);
     setServicesData(replica)
+    dispatch(updateServicesAction(replica))
   };
 
   const _renderPortfolio = ({ item, index }) => {
@@ -422,7 +424,6 @@ const SpDetail = ({ navigation, route }) => {
     // const selectedData = weeklyTimeTable.filter(each=> (each.StartTime || each.EndTime))
     if (selectedWeekDayIndex > 0) setSelectedWeekDayIndex(prevState => prevState - 1)
   }
-
 
   return (
     <SafeArea style={{ paddingTop: -useSafeAreaInsets().top }}>

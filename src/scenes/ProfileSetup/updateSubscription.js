@@ -13,7 +13,7 @@ import styles from './styles'
 import { tickIcon } from "../../components/icons"
 import { useFocusEffect } from '@react-navigation/native'
 import { backIcon } from '../../components/icons'
-import { requestBillingAgreement } from 'react-native-paypal';
+// import { requestBillingAgreement } from 'react-native-paypal';
 import { GET_SUBSCRIPTION_PLAN_SUCCESS_ACTION } from '../../redux/action/type'
 import Subscriptions from '../../components/subscriptions'
 
