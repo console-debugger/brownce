@@ -401,3 +401,12 @@ export const checkDialCodePlusSymbol = dialCode => {
   else if (dialCode) return `+${dialCode}`
   else return ''
 }
+
+export const appendAtTheRateInUserName = (userName = '') => {
+  if (typeof userName == 'string') {
+    if (userName.startsWith('@')) return userName
+    else if (userName?.trim()) return `@${userName}`
+    else return userName
+  }
+  else return userName
+}

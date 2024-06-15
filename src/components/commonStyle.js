@@ -264,7 +264,7 @@ const commonStyle = StyleSheet.create({
     alertContainer3: {
         backgroundColor: WHITE,
         width: SCREEN_WIDTH - dynamicSize(70),
-        paddingVertical:20,
+        paddingVertical: 20,
         // height: SCREEN_HEIGHT * 0.2,
         borderRadius: dynamicSize(5)
     },
@@ -349,7 +349,7 @@ const commonStyle = StyleSheet.create({
         fontSize: getFontSize(12)
     },
     starView: {
-        paddingVertical: dynamicSize(5),
+        // paddingVertical: dynamicSize(5),
         flexDirection: 'row',
         alignItems: 'center'
     },
@@ -457,6 +457,10 @@ const commonStyle = StyleSheet.create({
     weekdayText: {
         fontFamily: montserratSemiBold,
         fontSize: 11
+    },
+    profileVettedIcon: {
+        width: 35,
+        height: 35
     }
 })
 

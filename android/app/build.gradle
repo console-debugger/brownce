@@ -153,7 +153,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         vectorDrawables.useSupportLibrary = true
-        versionCode 41
+        versionCode 43
         versionName "1.8"
         multiDexEnabled =true
         missingDimensionStrategy 'store', 'play'

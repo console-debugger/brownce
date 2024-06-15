@@ -21,8 +21,8 @@ import {
 } from '../../components/customComponent';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BLACK, LIGHT_WHITE, THEME, WHITE } from '../../utils/colors';
-import { mapPin, chatIcon, smallStar, filterIcon } from '../../components/icons';
-import { FlatList, Modal, ScrollView } from 'react-native';
+import { mapPin, chatIcon, smallStar, filterIcon, toggleOff, vettedIcon } from '../../components/icons';
+import { FlatList, Modal, ScrollView, Switch } from 'react-native';
 import styles from './styles';
 import { useSelector, useDispatch } from 'react-redux';
 import { dynamicSize, getFontSize } from '../../utils/responsive';
@@ -43,6 +43,7 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import { GOOGLE_API_KEY } from '../../services/serviceConfig';
 import { getCurrentLocation } from '../../components/geolocation';
 import { CUSTOMER_SEARCH_PROVIDER } from '../../components/eventName';
+import { height } from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
 
 const MAX_FILTER_DISTANCE = 100
 let timeout
@@ -54,7 +55,7 @@ const ProviderList = ({ navigation }) => {
   const state = useSelector((state) => {
     return state;
   });
-  const { AVAILABLE, BOOK_NOW, APPLY, DISTANCE, PRICE, SERVICE, CITY } = state['localeReducer']['locale'];
+  const { AVAILABLE, BOOK_NOW, APPLY, DISTANCE, PRICE, SERVICE, CITY, BROWNCE_VETTED } = state['localeReducer']['locale'];
   const { loading, searchloading } = state['loaderReducer'];
   const { profile } = state['profileReducer'];
 
@@ -70,6 +71,7 @@ const ProviderList = ({ navigation }) => {
   const [selectedPrice, setSelectedPrice] = useState('')
   const [coordinates, setCoordinates] = useState({ latitude: 0, longitude: 0 })
   const [footerIndicator, setFooterIndicator] = useState(false)
+  const [isVettedEnabled, setIsVettedEnabled] = useState(false)
 
   const paginationOffset = useRef(1)
   const callNextRecordStatus = useRef(true)
@@ -166,13 +168,14 @@ const ProviderList = ({ navigation }) => {
     formdata.append(apiKey['searchString'], searchText);
     formdata.append(apiKey['pageNo'], pageOffset);
     formdata.append(apiKey['pageSize'], 20);
-    coordinates.latitude && formdata.append('latitude', coordinates.latitude);
-    coordinates.longitude && formdata.append('longitude', coordinates.longitude);
+    // coordinates.latitude && formdata.append('latitude', coordinates.latitude);
+    // coordinates.longitude && formdata.append('longitude', coordinates.longitude);
     formdata.append('Location', '');
     selectedMultipleServices?.length && formdata.append('serviceIds', selectedMultipleServices)
     selectedPrice && formdata.append('prices', [selectedPrice])
     rating && formdata.append('rating', rating)
     filterDistance && formdata.append('distance', filterDistance)
+    formdata.append('IsVetted', isVettedEnabled)
     console.log('param-<>', formdata)
     searchText ? dispatch(SearchloaderAction(true)) : _handle;
     dispatch(getProviderListAction(formdata, result => {
@@ -299,7 +302,9 @@ const ProviderList = ({ navigation }) => {
     paginationOffset.current = 1
     isCallNextApi.current = true
     callNextRecordStatus.current = true
-    _fetchList(1, search)
+    setTimeout(() => {
+      _fetchList(1, search)
+    }, 500)
   }
 
   const _getRating = rate => {
@@ -313,6 +318,8 @@ const ProviderList = ({ navigation }) => {
   const getPlaceDetail = (data, detail) => {
     setCoordinates(prevState => ({ ...prevState, latitude: detail?.geometry?.location?.lat, longitude: detail?.geometry?.location?.lng }))
   }
+
+  const toggleVettedSwitch = () => setIsVettedEnabled(prevState => !prevState)
 
   const _renderItem = ({ item, index }) => {
     return (
@@ -332,15 +339,16 @@ const ProviderList = ({ navigation }) => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 width: '90%',
+                flex: 1,
               }}>
               <MyText
-                style={styles['nameStyle']}>{`${item['Name']} | `}</MyText>
+                style={[styles['nameStyle']]}>{`${item['Name']} | `}</MyText>
               <MyText
                 style={[styles['nameStyle'], { fontSize: getFontSize(12) }]}>
                 {item['Username']}
               </MyText>
             </MyView>
-
+            {item?.IsVetted ? <MyImage source={vettedIcon} style={{ width: 30, height: 30 }} /> : null}
             {/* <MyText
               style={[styles['priceStyle']]}>{`$ ${item['Price'] || 0}`}</MyText> */}
           </MyView>
@@ -490,6 +498,16 @@ const ProviderList = ({ navigation }) => {
                 <MyText style={{ color: selectedPrice == item.Id ? WHITE : BLACK }}>{item?.Name || ''}</MyText>
               </Touchable>)
             })}
+          </MyView>
+          <MyText style={styles.label}>{BROWNCE_VETTED}</MyText>
+          <MyView style={{ alignSelf: 'flex-start', marginTop: 10 }}>
+            <Switch
+              trackColor={{ false: '#D9D9D9', true: '#D9D9D9' }}
+              thumbColor={isVettedEnabled ? THEME : WHITE}
+              ios_backgroundColor={'#D9D9D9'}
+              onValueChange={toggleVettedSwitch}
+              value={isVettedEnabled}
+            />
           </MyView>
         </ScrollView>
         <Button onPress={_applyFilter} style={[styles['applyButtonStyle'], { marginVertical: dynamicSize(10) }]} text={APPLY} />

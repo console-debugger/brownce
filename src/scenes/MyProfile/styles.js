@@ -7,6 +7,7 @@ import {
   BLACK,
   LIGHT_BROWN,
   LIGHT_GRAY,
+  GRAY,
 } from '../../utils/colors';
 import {
   montserratSemiBold,
@@ -38,18 +39,16 @@ const styles = StyleSheet.create({
   },
   image: {
     alignSelf: 'center',
-    width: isAndroid ? SCREEN_HEIGHT * 0.16 : SCREEN_HEIGHT * 0.14,
-    height: isAndroid ? SCREEN_HEIGHT * 0.16 : SCREEN_HEIGHT * 0.14,
-    borderRadius: (isAndroid ? SCREEN_HEIGHT * 0.16 : SCREEN_HEIGHT * 0.14) / 2,
+    width: isAndroid ? SCREEN_HEIGHT * 0.11 : SCREEN_HEIGHT * 0.11,
+    height: isAndroid ? SCREEN_HEIGHT * 0.11 : SCREEN_HEIGHT * 0.11,
+    borderRadius: (isAndroid ? SCREEN_HEIGHT * 0.11 : SCREEN_HEIGHT * 0.11) / 2,
   },
   name: {
-    alignSelf: 'center',
-    fontSize: getFontSize(16),
-    fontFamily: montserratSemiBold,
+    fontSize: getFontSize(14),
+    fontFamily: montserratBold,
     marginBottom: dynamicSize(8),
   },
   detail: {
-    alignSelf: 'center',
     fontSize: getFontSize(12),
     marginBottom: dynamicSize(5),
     fontFamily: montserratSemiBold,
@@ -176,7 +175,7 @@ const styles = StyleSheet.create({
     marginLeft: dynamicSize(10),
   },
   portFolioText: {
-    marginVertical: dynamicSize(20),
+    // marginVertical: dynamicSize(20),
     alignSelf: 'flex-start',
     marginLeft: dynamicSize(25),
     fontFamily: montserratBold,
@@ -253,7 +252,26 @@ const styles = StyleSheet.create({
   weekdayText: {
     fontFamily: montserratSemiBold,
     fontSize: 11
-  }
+  },
+  topTabContainer: {
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: GRAY,
+    flexDirection: 'row',
+    // width: '100%',
+    marginHorizontal: dynamicSize(15)
+  },
+  tabItem: {
+    flex: 1,
+    paddingVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: WHITE
+  },
+  tabText: {
+    fontSize: 9,
+    fontFamily: montserratBold
+  },
 });
 
 export default styles;

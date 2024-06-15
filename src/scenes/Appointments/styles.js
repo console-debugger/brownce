@@ -9,6 +9,7 @@ import {
   WHITE,
   LIGHT_GRAY,
   MID_GRAY,
+  GRAY,
 } from '../../utils/colors';
 import {
   montserratMedium,
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: getFontSize(14),
     fontFamily: montserratBold,
-    bottom: 3,
+    marginBottom: dynamicSize(8),
   },
   innerContainer: {
     flexDirection: 'row',
@@ -111,7 +112,6 @@ const styles = StyleSheet.create({
     marginBottom: dynamicSize(8),
   },
   detail: {
-    alignSelf: 'center',
     fontSize: getFontSize(12),
     marginBottom: dynamicSize(5),
     fontFamily: montserratSemiBold,
@@ -124,7 +124,6 @@ const styles = StyleSheet.create({
     paddingTop: dynamicSize(15),
   },
   portFolioText: {
-    marginVertical: dynamicSize(20),
     alignSelf: 'flex-start',
     marginLeft: dynamicSize(25),
     fontFamily: montserratBold,
@@ -202,6 +201,38 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: LIGHT_BROWN,
     marginTop: 30
+  },
+  topTabContainer: {
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: GRAY,
+    flexDirection: 'row',
+    // width: '100%',
+    marginHorizontal: dynamicSize(15)
+  },
+  tabItem: {
+    flex: 1,
+    paddingVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: WHITE
+  },
+  tabText: {
+    fontSize: 9,
+    fontFamily: montserratBold
+  },
+  curveMain: {
+    marginTop: SCREEN_HEIGHT * 0.04,
+    backgroundColor: LIGHT_WHITE,
+  },
+  innerStyle: {
+    backgroundColor: WHITE,
+  },
+  lowerContainer: {
+    flex: 1,
+    width: SCREEN_WIDTH,
+    backgroundColor: WHITE,
+    paddingBottom:10
   },
 });
 

@@ -113,5 +113,5 @@ export const coachmarkMenu = require('../assets/icons/coachMarkMenu.png')
 export const pointerMask = require('../assets/icons/mask.png')
 export const pointerFinger = require('../assets/icons/fingerPointer.png')
 export const coachmarkBeautyBooker = require('../assets/icons/coachmarkBeautyBooker.png')
-
+export const vettedIcon = require('../assets/icons/isVetted.png')
 

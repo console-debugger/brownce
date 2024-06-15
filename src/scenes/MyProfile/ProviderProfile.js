@@ -1,22 +1,25 @@
-import React, { useCallback, useEffect, useState, useMemo } from 'react'
+import React, { useCallback, useRef, useEffect, useState, useMemo } from 'react'
 import { FlatList, Linking, ScrollView, TouchableOpacity } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useSelector, useDispatch } from 'react-redux'
-import { CurveView, Loader, MyImage, MyText, Button, MyView, SafeArea, WeekDayTimings, RatingWithLabel, SecondaryButton } from '../../components/customComponent'
+import { CurveView, Loader, MyImage, MyText, Button, MyView, SafeArea, WeekDayTimings, RatingWithLabel, SecondaryButton, Touchable } from '../../components/customComponent'
 import styles from './styles'
 import { useFocusEffect } from '@react-navigation/native'
-import { cancelSubscriptionAction, getNotificationCountAction, getProfileAction, getProviderProfileAction, loaderAction } from '../../redux/action'
+import { cancelSubscriptionAction, getMyProductListAction, getNotificationCountAction, getProfileAction, getProviderProfileAction, loaderAction } from '../../redux/action'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
 import { apiKey } from '../../services/serviceConstant'
-import { MyAlert } from '../../components/alert'
+import { LicensePopup, MyAlert } from '../../components/alert'
 import { CANCEL_SUBSCRIPTION_SUCCESS_ACTION } from '../../redux/action/type'
-import { SCREEN_HEIGHT, SCREEN_WIDTH, getData, isAndroid, isCustomer, isIOS, locationMapping, logAnalyticEvent, storeData, validateUrl } from '../../components/helper'
+import { SCREEN_HEIGHT, SCREEN_WIDTH, appendAtTheRateInUserName, getData, isAndroid, isCustomer, isIOS, locationMapping, logAnalyticEvent, onShare, showToast, storeData, validateUrl } from '../../components/helper'
 import { PROVIDER_DASHBOARD } from '../../components/eventName'
 import { montserratBold, montserratSemiBold } from '../../utils/fontFamily'
-import { THEME, WHITE } from '../../utils/colors'
+import { BLACK, GRAY, LIGHT_THEME_34, OFF_THEME, THEME, THEME_OFFSET, WHITE } from '../../utils/colors'
 import MyCoachMarks from '../../components/coachmarks'
-import { coachmarkBeautyBooker, coachmarkHome, coachmarkMarketPlace, coachmarkMenu, coachmarkMessage, coachmarkShopTalk, crossBold, pointerFinger } from '../../components/icons'
+import { coachmarkBeautyBooker, coachmarkHome, coachmarkMarketPlace, coachmarkMenu, coachmarkMessage, coachmarkShopTalk, crossBold, pointerFinger, vettedIcon } from '../../components/icons'
 import localKey from '../../utils/localKey'
+import commonStyle from '../../components/commonStyle'
+import { navigateToScreen } from '../../navigation/rootNav'
+import { generateDynamicLink } from '../../utils/dynamicLinkHelper'
 
 // @ provider profile UI
 let timeout
@@ -26,7 +29,7 @@ const ProviderProfile = ({ navigation }) => {
 
     const dispatch = useDispatch()
     const state = useSelector(state => { return state })
-    const { EDIT, MY_SUBSCRIPTION, LOCATION, LOADING, RATING, PORTFOLIO, NOT_AVAILABLE, HOURS_OF_OPERATION, CANCEL_PLAN_MESSAGE, THIS_IS_HOME, THIS_IS_BEAUTY_BOOKER, THIS_IS_MESSAGE_CENTER, THIS_IS_SHOP_TALK, THIS_IS_MARKET_PLACE, HERE_IS_YOUR_MENU,
+    const { EDIT, MY_SUBSCRIPTION, LOCATION, EDIT_PROFILE, SHARE_PROFILE, VIEW_LICENSE, LOADING, RATING, PORTFOLIO, NOT_AVAILABLE, HOURS_OF_OPERATION, CANCEL_PLAN_MESSAGE, THIS_IS_HOME, THIS_IS_BEAUTY_BOOKER, THIS_IS_MESSAGE_CENTER, THIS_IS_SHOP_TALK, THIS_IS_MARKET_PLACE, HERE_IS_YOUR_MENU,
         THIS_IS_HOME_DESCRIPTION,
         THIS_IS_BEAUTY_BOOKER_DESCRIPTION,
         THIS_IS_MESSAGE_CENTER_DESCRIPTION,
@@ -39,18 +42,27 @@ const ProviderProfile = ({ navigation }) => {
         WELCOME_DESCRIPTION,
         WELCOME_SUB_DESCRIPTION,
         TAKE_THE_TOUR,
-        SKIP_FOR_NOW
+        SKIP_FOR_NOW,
+        WEBSITE,
+        HOURS_CAPS,
+        BIO,
+        SERVICES,
+        PRODUCTS
     } = state['localeReducer']['locale']
     const { loading } = state['loaderReducer']
     const { providerprofile } = state['profileReducer']
     const { ServicesProvided } = state['profileReducer']['providerprofile']
     const { messageCase } = state['subscriptionPlanReducer']
+    const { spProducts } = state['productReducer']
+
+    const scrollViewRef = useRef()
 
     const [cancelModalVisible, setcancelModal] = useState(false)
     const [selectedWeekDayIndex, setSelectedWeekDayIndex] = useState(0)
     const [weeklyTimeTable, setWeekltTimeTable] = useState([])
     const [isRefresh, setRefresh] = useState(false)
     const [visibleCoachMark, setVisibleCoachMark] = useState(false)
+    const [modalVisible, setmodalVisible] = useState(false)
     const [coachMarkData] = useState([
         {
             title: THIS_IS_HOME,
@@ -113,6 +125,34 @@ const ProviderProfile = ({ navigation }) => {
             },
         },
     ])
+    const [tabData] = useState([
+        {
+            name: BIO,
+            type: 'bio',
+            key: 0
+        },
+        {
+            name: RATING,
+            type: 'rating',
+            key: 1
+        },
+        {
+            name: PORTFOLIO,
+            type: 'portfolio',
+            key: 2
+        },
+        {
+            name: SERVICES,
+            type: 'services',
+            key: 3
+        },
+        {
+            name: PRODUCTS,
+            type: 'products',
+            key: 4
+        },
+    ])
+    const [selectedTab, setSelectedTab] = useState(tabData[0].type)
 
     // @ refetch details of provider profile
     useEffect(() => {
@@ -237,6 +277,18 @@ const ProviderProfile = ({ navigation }) => {
 
     const openCoachMark = () => setVisibleCoachMark(true)
 
+    const onTabPress = (item) => () => {
+        setSelectedTab(item.type)
+        if (item.type == 'products') {
+            const params = {
+                'PageNo': '1',
+                'RecordsPerPage': '100',
+                'Search': ''
+            }
+            dispatch(getMyProductListAction(params))
+        }
+    }
+
     // @ Render protfolio of flatlist
     const _renderPortfolio = ({ item, index }) => {
         return (
@@ -262,7 +314,32 @@ const ProviderProfile = ({ navigation }) => {
 
     const _keyExtractor = (item, index) => item + index
 
+    const _onShareButton = async () => {
+        const profileType = 'provider';
+        const userId = providerprofile?.['UserId'];
+        const newLink = await generateDynamicLink(profileType, userId)
+        onShare(newLink)
+    };
+
     const _renderSeperator = () => (<MyView style={styles['seperator']} />)
+
+    // @ Render Products
+    const _renderProducts = ({ item, index }) => {
+        return (
+            <Touchable onPress={() => navigateToScreen('productDetails', { item: item })} style={{ marginTop: SCREEN_HEIGHT * 0.02, marginHorizontal: 12 }}>
+                <MyView style={styles.view}>
+                    <MyImage
+                        style={styles['productImage']}
+                        source={item?.['ProductFiles']?.[0]?.['FilePath'] ? { uri: item?.['ProductFiles']?.[0]?.['FilePath'] } : productImg2} />
+                </MyView>
+                <MyView style={{ marginLeft: SCREEN_WIDTH * 0.02 }}>
+                    <MyText style={styles['price']}>{`$${item['Price']}`}</MyText>
+                    <MyText style={styles['desc']}>{item['ProductName']}</MyText>
+                    <MyText style={styles['desc']}>{item['BrandName']}</MyText>
+                </MyView>
+            </Touchable>
+        )
+    }
 
     return (
         <SafeArea style={{ paddingTop: -useSafeAreaInsets().top, paddingBottom: -useSafeAreaInsets().bottom }}>
@@ -289,87 +366,132 @@ const ProviderProfile = ({ navigation }) => {
                     isCircleMask
                     onSkip={closeCoackMark}
                 /> : null}
-                <ScrollView style={{ paddingBottom: 15 }}>
+                <ScrollView style={{ paddingBottom: 15, flexGrow: 1 }}
+                    ref={scrollViewRef}
+                >
 
                     <CurveView />
                     {loading ? <Loader isVisible={loading} /> : null}
 
-                    <MyText onPress={_navToEditProfile} style={[styles['editText'], { alignSelf: 'flex-end' }]}>{EDIT}</MyText>
-                    <MyImage source={{ uri: state.profileReducer.providerprofile?.['ProfilePic'] }} style={styles['image']} />
-                    <MyText style={[styles['name'], { marginBottom: 0 }]}>{providerprofile?.['FirstName'] ? providerprofile?.['FirstName'] : LOADING}</MyText>
-
-                    <MyText style={[styles['name'], { marginBottom: 0 }]}>{providerprofile?.['Username'] ? providerprofile?.['Username'] : LOADING}</MyText>
-                    <MyText style={[styles['detail'], { marginBottom: 0 }]}>{`${LOCATION}: ${locationMapping(providerprofile)}`}</MyText>
-                    {providerprofile?.['Weblink'] ? <TouchableOpacity activeOpacity={0.7} onPress={_openLink}>
-                        <MyText style={[styles['detail'], { textDecorationLine: 'underline' }]}>{providerprofile?.['Weblink'] || ''}</MyText>
-                    </TouchableOpacity>
-                        :
-                        null}
-                    {/* <MyText style={styles['detail']}>{`${'Hours'}: ${providerprofile?.['OpeningTime'] === null ? '--' : providerprofile['OpeningTime']} To ${providerprofile?.['ClosingTime'] === null ? '--' : providerprofile['ClosingTime']}`}</MyText> */}
-                    <MyText style={{ fontSize: 12, alignSelf: 'center', fontFamily: montserratSemiBold, marginTop: 10 }}>{HOURS_OF_OPERATION}</MyText>
+                    {/* <MyText onPress={_navToEditProfile} style={[styles['editText'], { alignSelf: 'flex-end' }]}>{EDIT}</MyText> */}
+                    <MyView style={{ flexDirection: 'row', paddingHorizontal: 15, alignItems: 'center' }}>
+                        <MyImage source={{ uri: state.profileReducer.providerprofile?.['ProfilePic'] }} style={styles['image']} />
+                        <MyView style={{ flex: 1, marginHorizontal: 10 }}>
+                            <MyText style={[styles['name'], { marginBottom: 0 }]}>{providerprofile?.['FirstName'] ? providerprofile?.['FirstName'] : LOADING}</MyText>
+                            <MyText style={[styles['detail'], { marginBottom: 0 }]}>{providerprofile?.['Username'] ? appendAtTheRateInUserName(providerprofile?.['Username']) : LOADING}</MyText>
+                            <MyText style={[styles['detail'], { marginBottom: 0 }]}>{`${LOCATION}: ${locationMapping(providerprofile)}`}</MyText>
+                            {providerprofile?.['Weblink'] ? <TouchableOpacity activeOpacity={0.7} onPress={_openLink}>
+                                <MyText style={[styles['detail'], { textDecorationLine: 'underline' }]}>{providerprofile?.['Weblink'] || ''}</MyText>
+                            </TouchableOpacity> : null}
+                        </MyView>
+                        {providerprofile?.IsVetted ? <MyView style={{ justifyContent: 'space-between' }}>
+                            <MyView style={{ flex: 1 }} />
+                            <MyImage source={vettedIcon} style={[commonStyle.profileVettedIcon, { marginBottom: 10 }]} />
+                        </MyView> : null}
+                    </MyView>
+                    <MyView style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 15, marginTop: 30 }}>
+                        <Button onPress={_navToEditProfile} avoidLowerCase text={EDIT_PROFILE} style={{ width: SCREEN_WIDTH / 3.5, borderRadius: 10, backgroundColor: THEME_OFFSET, paddingHorizontal: 3, height: isAndroid ? dynamicSize(35) : dynamicSize(43), }} textStyle={{ fontSize: 13, fontFamily: montserratBold, textStyle: 'center' }} />
+                        <Button onPress={_onShareButton} avoidLowerCase text={SHARE_PROFILE} style={{ width: SCREEN_WIDTH / 3.5, borderRadius: 10, backgroundColor: THEME_OFFSET, paddingHorizontal: 3, height: isAndroid ? dynamicSize(35) : dynamicSize(43), }} textStyle={{ fontSize: 13, fontFamily: montserratBold, textStyle: 'center' }} />
+                        <Button onPress={() => providerprofile?.DocumentPath ? setmodalVisible(true) : showToast('This provider does not have liscence yet.')} avoidLowerCase text={VIEW_LICENSE} style={{ width: SCREEN_WIDTH / 3.5, borderRadius: 10, backgroundColor: THEME_OFFSET, paddingHorizontal: 3, height: isAndroid ? dynamicSize(35) : dynamicSize(43), }} textStyle={{ fontSize: 13, fontFamily: montserratBold, textStyle: 'center' }} />
+                    </MyView>
+                    <MyText style={{ fontSize: 12, alignSelf: 'center', fontFamily: montserratBold, marginTop: 20 }}>{HOURS_OF_OPERATION}</MyText>
                     <WeekDayTimings
                         jumpToPreviousWeek={jumpToPreviousWeek}
                         jumpToNextWeek={jumpToNextWeek}
                         text={selectedWeekDay}
                     />
-
+                    <MyView style={styles.topTabContainer}>
+                        {tabData.map((each, index) => {
+                            return (<Touchable onPress={onTabPress(each)} key={index.toString()} style={[styles.tabItem, { borderLeftWidth: index == 0 ? 0 : 1, borderLeftColor: GRAY, backgroundColor: selectedTab == each.type ? THEME : WHITE }]}>
+                                <MyText style={[styles.tabText, { color: selectedTab == each.type ? WHITE : BLACK }]}>{each.name}</MyText>
+                            </Touchable>)
+                        })}
+                    </MyView>
                     <CurveView style={styles['curveMain']} innerStyle={styles['innerStyle']} />
                     <MyView style={styles['lowerContainer']}>
-                        <RatingWithLabel style={{ backgroundColor: WHITE }} labelStyle={{ fontFamily: montserratBold }} isRateCount label={RATING} mytext={`${providerprofile['OverallRating']}/5`} />
-                        {providerprofile?.['Reviews']?.map((item, index) => {
-                            return (
-                                <MyView key={index}>
-                                    <RatingWithLabel imageStyle={{ marginHorizontal: 3 }} style={{ backgroundColor: WHITE, paddingTop: 3 }} label={item.RatingTypeName} rating={item.UserRating || 0} />
+                        {selectedTab == 'bio' ? <>
+                            <MyText style={[styles['portFolioText'], { backgroundColor: WHITE }]}>{BIO}</MyText>
+                            {providerprofile?.Bio ? <MyText style={{ marginTop: 10, marginHorizontal: 25 }}>{providerprofile?.Bio || ''}</MyText> : <MyText style={{ color: THEME, textAlign: 'center' }}>{'No Data Found.'}</MyText>}
+                        </> : null}
+                        {selectedTab == 'rating' ? <>
+                            <RatingWithLabel style={{ backgroundColor: WHITE }} labelStyle={{ fontFamily: montserratBold }} isRateCount label={RATING} mytext={`${providerprofile['OverallRating']}/5`} />
+                            {providerprofile?.['Reviews']?.map((item, index) => {
+                                return (
+                                    <MyView key={index}>
+                                        <RatingWithLabel imageStyle={{ marginHorizontal: 3 }} style={{ backgroundColor: WHITE, paddingTop: 3 }} label={item.RatingTypeName} rating={item.UserRating || 0} />
+                                    </MyView>
+                                )
+                            })}
+                        </> : null}
+                        {selectedTab == 'portfolio' ? <>
+                            <MyText style={[styles['portFolioText'], { backgroundColor: WHITE }]}>{PORTFOLIO}</MyText>
+                            {providerprofile?.Portfolios?.length > 0 ? <FlatList
+                                key='portfolio'
+                                data={providerprofile.Portfolios}
+                                numColumns={3}
+                                renderItem={_renderPortfolio}
+                                keyExtractor={_keyExtractor}
+                                contentContainerStyle={styles['portfolioFlatList']}
+                                ItemSeparatorComponent={_renderSeperator}
+                            /> :
+                                <MyText style={{ color: THEME, textAlign: 'center' }}>{'No Data Found.'}</MyText>
+                            }
+                        </> : null}
+                        {selectedTab == 'services' ? <>
+                            <MyText style={[styles['portFolioText'], { marginVertical: null }]}>{"SERVICES"}</MyText>
+                            {ServicesProvided?.length > 0 ? <FlatList
+                                key='hairType'
+                                data={ServicesProvided}
+                                keyExtractor={_keyExtractor}
+                                renderItem={_renderHairType}
+                                contentContainerStyle={styles['hairTypeFlatList']}
+                                numColumns={2}
+                                extraData={isRefresh}
+                                columnWrapperStyle={{ justifyContent: 'space-between' }}
+                            /> :
+                                <MyText style={{ color: THEME, textAlign: 'center' }}>{'No Data Found.'}</MyText>
+                            }
+                        </> : null}
+                        {selectedTab == 'products' ?
+                            <>
+                                <MyText style={[styles['portFolioText'], { marginVertical: null }]}>{PRODUCTS}</MyText>
+                                {spProducts?.length > 0 ? <FlatList
+                                    key={'serviceProviderProducts'}
+                                    data={spProducts}
+                                    showsVerticalScrollIndicator={false}
+                                    renderItem={_renderProducts}
+                                    keyExtractor={_keyExtractor}
+                                    ItemSeparatorComponent={_renderSeperator}
+                                    numColumns={2}
+                                /> : <MyText style={{ color: THEME, textAlign: 'center' }}>{'No Data Found.'}</MyText>}
+                            </> : null
+                        }
+                        {providerprofile['IsAdMobSubscribe'] ?
+                            <MyView style={styles['lowerContainer']}>
+                                <MyText style={styles['subscriptionTitle']}>{MY_SUBSCRIPTION}</MyText>
+                                <MyView style={styles['subscriptionContainer']}>
+                                    <MyText style={styles['subscriptionPrice']}>{`$ ${providerprofile?.AdMobSubscribtion?.['Price']}`}</MyText>
+                                    <MyText style={[styles['subscriptionDescription'], {}]}>{`Trial Period- 2 Months`}</MyText>
+                                    <MyText style={styles['subscriptionPeriod']}>{getPlanTitle() || 'Loading'}</MyText>
+                                    <MyText style={styles['subscriptionDescription']}>Removal of in-app ads</MyText>
                                 </MyView>
-                            )
-                        })}
-                        <MyText style={[styles['portFolioText'], { backgroundColor: WHITE }]}>{PORTFOLIO}</MyText>
-                        {providerprofile?.Portfolios?.length > 0 ? <FlatList
-                            key='portfolio'
-                            data={providerprofile.Portfolios}
-                            numColumns={3}
-                            renderItem={_renderPortfolio}
-                            keyExtractor={_keyExtractor}
-                            contentContainerStyle={styles['portfolioFlatList']}
-                            ItemSeparatorComponent={_renderSeperator}
-                        /> :
-                            <MyText style={{ color: THEME, textAlign: 'center' }}>{'No Data Found.'}</MyText>
-                        }
-                        <MyText style={[styles['portFolioText'], { marginVertical: null, marginTop: SCREEN_HEIGHT * 0.02 }]}>{"SERVICES"}</MyText>
-                        {ServicesProvided?.length > 0 ? <FlatList
-                            key='hairType'
-                            data={ServicesProvided}
-                            keyExtractor={_keyExtractor}
-                            renderItem={_renderHairType}
-                            contentContainerStyle={styles['hairTypeFlatList']}
-                            numColumns={2}
-                            extraData={isRefresh}
-                            columnWrapperStyle={{ justifyContent: 'space-between' }}
-                        /> :
-                            <MyText style={{ color: THEME, textAlign: 'center', paddingVertical: 15 }}>{'No Data Found.'}</MyText>
-                        }
-                    </MyView>
-                    {providerprofile['IsAdMobSubscribe'] ?
-                        <MyView style={styles['lowerContainer']}>
-                            <MyText style={styles['subscriptionTitle']}>{MY_SUBSCRIPTION}</MyText>
-                            <MyView style={styles['subscriptionContainer']}>
-                                <MyText style={styles['subscriptionPrice']}>{`$ ${providerprofile?.AdMobSubscribtion?.['Price']}`}</MyText>
-                                <MyText style={[styles['subscriptionDescription'], {}]}>{`Trial Period- 2 Months`}</MyText>
-                                <MyText style={styles['subscriptionPeriod']}>{getPlanTitle() || 'Loading'}</MyText>
-                                <MyText style={styles['subscriptionDescription']}>Removal of in-app ads</MyText>
-                            </MyView>
-                            <MyView style={styles['buttonRow']} >
-                                <Button onPress={_cancel} style={[styles['buttonContainer'], {}]} textStyle={{ fontSize: getFontSize(15) }} text={"CANCEL PLAN"} />
-                                <Button onPress={_change} style={[styles['buttonContainer'], {}]} textStyle={{ fontSize: getFontSize(15) }} text={"CHANGE PLAN"} />
+                                <MyView style={styles['buttonRow']} >
+                                    <Button onPress={_cancel} style={[styles['buttonContainer'], {}]} textStyle={{ fontSize: getFontSize(15) }} text={"CANCEL PLAN"} />
+                                    <Button onPress={_change} style={[styles['buttonContainer'], {}]} textStyle={{ fontSize: getFontSize(15) }} text={"CHANGE PLAN"} />
 
-                            </MyView>
-                        </MyView> :
-                        <MyView style={[styles['lowerContainer'], { paddingBottom: 10 }]}>
-                            <MyText style={styles['subscriptionBuyDescription']}>{"Upgrade your plan!"}</MyText>
-                            <MyView style={styles['button']} >
-                                <Button onPress={_buy} style={[styles['buttonContainer'], {}]} textStyle={{ fontSize: getFontSize(15) }} text={"BUY PLAN"} />
-                            </MyView>
-                        </MyView>}
+                                </MyView>
+                            </MyView> :
+                            <MyView style={[styles['lowerContainer'], { paddingBottom: 10 }]}>
+                                <MyText style={styles['subscriptionBuyDescription']}>{"Upgrade your plan!"}</MyText>
+                                <MyView style={styles['button']} >
+                                    <Button onPress={_buy} style={[styles['buttonContainer'], {}]} textStyle={{ fontSize: getFontSize(15) }} text={"BUY PLAN"} />
+                                </MyView>
+                            </MyView>}
+                    </MyView>
+                    <LicensePopup
+                        source={{ uri: providerprofile['DocumentPath'] }}
+                        dismiss={() => setmodalVisible(false)}
+                        isVisible={modalVisible} />
                 </ScrollView>
             </MyView>
         </SafeArea>

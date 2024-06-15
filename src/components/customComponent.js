@@ -1065,13 +1065,13 @@ export const WeekDayTimings = props => {
   const { jumpToNextWeek, jumpToPreviousWeek, text } = props
 
   return (
-    <MyView style={commonStyle.weekScheduleContainer}>
+    <MyView style={[commonStyle.weekScheduleContainer, { alignItems: 'center' }]}>
       <Touchable style={commonStyle.weekScheduleArrowTouch} onPress={jumpToPreviousWeek}>
-        <Triangle size={15} style={{ transform: [{ rotate: "-90deg" }] }} />
+        <Triangle size={10} style={{ transform: [{ rotate: "-90deg" }] }} />
       </Touchable>
       <MyText style={commonStyle.weekdayText}>{text}</MyText>
       <Touchable style={commonStyle.weekScheduleArrowTouch} onPress={jumpToNextWeek}>
-        <Triangle size={15} style={{ transform: [{ rotate: "90deg" }] }} />
+        <Triangle size={10} style={{ transform: [{ rotate: "90deg" }] }} />
       </Touchable>
     </MyView>
   )

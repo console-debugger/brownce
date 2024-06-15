@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { FlatList, Linking, ScrollView } from 'react-native';
+import { FlatList, Linking, ScrollView, TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector, useDispatch } from 'react-redux';
 import Carousel from 'react-native-snap-carousel';
 import Swiper from 'react-native-swiper';
 import {
   Button,
+  CurveView,
   CustomDropDown,
   Loader,
   MyImage,
@@ -21,6 +22,7 @@ import {
   WeekDayTimings,
 } from '../../components/customComponent';
 import {
+  appendAtTheRateInUserName,
   Base64,
   getData,
   isAndroid,
@@ -31,7 +33,7 @@ import {
   showToast,
   validateUrl,
 } from '../../components/helper';
-import { BLACK, LIGHT_WHITE, THEME } from '../../utils/colors';
+import { BLACK, GRAY, LIGHT_WHITE, THEME, THEME_OFFSET, WHITE } from '../../utils/colors';
 import { montserratBold, montserratMedium, montserratSemiBold } from '../../utils/fontFamily';
 import { dynamicSize, getFontSize } from '../../utils/responsive';
 import styles from './styles';
@@ -40,16 +42,19 @@ import {
   getProfessionsListAction,
   getProviderAllProductsAction,
   getProviderAllServicesListAction,
+  getProviderCompleteProducts,
   getServicesListAction,
   getSpDetailAction,
   loaderAction,
   refreshDataAction,
   updateServicesAction,
 } from '../../redux/action';
-import { activeFavHeartIcon, inactiveFavHeartIcon, productImg2 } from '../../components/icons';
+import { activeFavHeartIcon, inactiveFavHeartIcon, productImg2, vettedIcon } from '../../components/icons';
 import { navigateToScreen } from '../../navigation/rootNav';
 import localKey from '../../utils/localKey';
 import { generateDynamicLink } from '../../utils/dynamicLinkHelper';
+import commonStyle from '../../components/commonStyle';
+import { LicensePopup } from '../../components/alert';
 
 const TYPES = { PORTFOLIO: 'portfolio', SERVICES: 'services', PRODUCT: 'product' }
 
@@ -58,7 +63,7 @@ const SpDetail = ({ navigation, route }) => {
   const state = useSelector((state) => {
     return state;
   });
-  const { LOADING, RATING, LOCATION, PORTFOLIO, SHARE, HOURS_OF_OPERATION, NOT_AVAILABLE } = state['localeReducer'][
+  const { LOADING, SHARE_PROFILE, VIEW_LICENSE, BIO, SERVICES, PRODUCTS, RATING, LOCATION, PORTFOLIO, SHARE, HOURS_OF_OPERATION, NOT_AVAILABLE } = state['localeReducer'][
     'locale'
   ];
   const { loading, refreshData } = state['loaderReducer'];
@@ -83,9 +88,39 @@ const SpDetail = ({ navigation, route }) => {
   const [weeklyTimeTable, setWeekltTimeTable] = useState([])
   const [ServicesProvided, setServicesProvidedData] = useState([])
   const [servicesLoader, setServicesLoader] = useState(false)
-
+  const [tabData] = useState([
+    {
+      name: BIO,
+      type: 'bio',
+      key: 0
+    },
+    {
+      name: RATING,
+      type: 'rating',
+      key: 1
+    },
+    {
+      name: PORTFOLIO,
+      type: 'portfolio',
+      key: 2
+    },
+    {
+      name: SERVICES,
+      type: 'services',
+      key: 3
+    },
+    {
+      name: PRODUCTS,
+      type: 'products',
+      key: 4
+    },
+  ])
+  const [selectedTab, setSelectedTab] = useState(tabData[0].type)
+  const [modalVisible, setmodalVisible] = useState(false)
+  console.log('providerprofile==>', JSON.stringify(providerprofile))
   // @ fetch Service Provide details
   useEffect(() => {
+    dispatch(getProviderCompleteProducts([]))
     console.log('route.params.id--->', JSON.stringify(providerprofile), route.params.id)
     setServicesLoader(true)
     dispatch(loaderAction(true));
@@ -102,7 +137,7 @@ const SpDetail = ({ navigation, route }) => {
     dispatch(getProfessionsListAction());
 
     const params = {
-      ProviderId: route.params.id,
+      ProviderUserId: route.params.id,
       PageNo: 1,
       RecordsPerPage: 10000
     }
@@ -153,6 +188,7 @@ const SpDetail = ({ navigation, route }) => {
       }
       setProductData(newData)
     }
+    else setProductData([])
   }, [completeproviderproducts?.List])
 
   useEffect(() => {
@@ -425,6 +461,10 @@ const SpDetail = ({ navigation, route }) => {
     if (selectedWeekDayIndex > 0) setSelectedWeekDayIndex(prevState => prevState - 1)
   }
 
+  const onTabPress = (item) => () => {
+    setSelectedTab(item.type)
+  }
+
   return (
     <SafeArea style={{ paddingTop: -useSafeAreaInsets().top }}>
       <MyView style={styles['mainContainer']}>
@@ -444,92 +484,72 @@ const SpDetail = ({ navigation, route }) => {
               nestedScrollEnabled={false}
             >
               <Loader isVisible={loading} />
-              <MyView style={styles['shareContainer']}>
-                <MyText onPress={_onShareButton} style={styles['shareText']}>
-                  {SHARE}
-                </MyText>
-                <MyView style={{ width: dynamicSize(30), height: dynamicSize(30), alignItems: updating ? 'center' : 'flex-end', marginRight: dynamicSize(20), marginTop: dynamicSize(20) }}>
-                  {updating ? <MyIndicator />
-                    :
-                    <TouchableIcon
-                      onPress={_addOrRemovefav}
-                      source={providerprofile.IsFavorite ? activeFavHeartIcon : inactiveFavHeartIcon}
-                      style={{}}
-                    />
-                  }
+              <MyView style={{ flexDirection: 'row', paddingHorizontal: 15, alignItems: 'center', marginTop: dynamicSize(20) }}>
+                <MyImage source={{ uri: providerprofile?.['ProfilePic'] }} style={styles['image']} />
+                <MyView style={{ flex: 1, marginHorizontal: 10 }}>
+                  <MyText style={[styles['name'], { marginBottom: 0 }]}>{providerprofile?.['FirstName'] ? providerprofile?.['FirstName'] : LOADING}</MyText>
+                  <MyText style={[styles['detail'], { marginBottom: 0 }]}>{providerprofile?.['Username'] ? appendAtTheRateInUserName(providerprofile?.['Username']) : LOADING}</MyText>
+                  <MyText style={[styles['detail'], { marginBottom: 0 }]}>{`${LOCATION}: ${locationMapping(providerprofile)}`}</MyText>
+                  {providerprofile?.['Weblink'] ? <TouchableOpacity activeOpacity={0.7} onPress={_openLink}>
+                    <MyText style={[styles['detail'], { textDecorationLine: 'underline' }]}>{providerprofile?.['Weblink'] || ''}</MyText>
+                  </TouchableOpacity> : null}
+                </MyView>
+                <MyView style={{ justifyContent: 'space-between' }}>
+                  <MyView style={{ flex: 1 }}>
+                    <MyView style={{ width: dynamicSize(30), height: dynamicSize(30), alignItems: updating ? 'center' : 'flex-end', marginRight: dynamicSize(20) }}>
+                      {updating ? <MyIndicator />
+                        :
+                        <TouchableIcon
+                          onPress={_addOrRemovefav}
+                          source={providerprofile.IsFavorite ? activeFavHeartIcon : inactiveFavHeartIcon}
+                          style={{}}
+                        />
+                      }
+                    </MyView>
+                  </MyView>
+                  {providerprofile?.IsVetted ? <MyImage source={vettedIcon} style={commonStyle.profileVettedIcon} /> : null}
                 </MyView>
               </MyView>
-              <MyImage
-                source={{ uri: providerprofile.ProfilePic }}
-                style={styles['spimage']}
-              />
-              <MyText style={styles['spname']}>
-                {providerprofile?.FirstName
-                  ? providerprofile.FirstName
-                  : 'N/A'}
-              </MyText>
-
-              <MyText style={[styles['spname'], { fontSize: getFontSize(14) }]}>
-                {providerprofile?.Username ? providerprofile.Username : LOADING}
-              </MyText>
-              <MyText style={styles['detail']}>{`${LOCATION}:  ${locationMapping(providerprofile)}`}</MyText>
-              {providerprofile?.['Weblink'] ? <MyText
-                onPress={_openLink}
-                style={[
-                  styles['detail'],
-                  { textDecorationLine: 'underline' },
-                ]}>{providerprofile?.['Weblink'] || ''}</MyText> : null}
+              <MyView style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 15, marginTop: 30 }}>
+                {buttonVisible ? <Button onPress={() => navigation.navigate('chat', {
+                  id: route.params.id,
+                  type: 'provider',
+                })} avoidLowerCase text={"Message"} style={{ width: SCREEN_WIDTH / 3.5, borderRadius: 10, backgroundColor: THEME_OFFSET, paddingHorizontal: 3, height: isAndroid ? dynamicSize(35) : dynamicSize(43), }} textStyle={{ fontSize: 13, fontFamily: montserratBold, textStyle: 'center' }} /> : null}
+                <Button onPress={_onShareButton} avoidLowerCase text={SHARE_PROFILE} style={{ width: SCREEN_WIDTH / 3.5, borderRadius: 10, backgroundColor: THEME_OFFSET, paddingHorizontal: 3, height: isAndroid ? dynamicSize(35) : dynamicSize(43), }} textStyle={{ fontSize: 13, fontFamily: montserratBold, textStyle: 'center' }} />
+                <Button onPress={() => providerprofile?.DocumentPath ? setmodalVisible(true) : showToast('This provider does not have liscence yet.')} avoidLowerCase text={VIEW_LICENSE} style={{ width: SCREEN_WIDTH / 3.5, borderRadius: 10, backgroundColor: THEME_OFFSET, paddingHorizontal: 3, height: isAndroid ? dynamicSize(35) : dynamicSize(43), }} textStyle={{ fontSize: 13, fontFamily: montserratBold, textStyle: 'center' }} />
+              </MyView>
               <MyText style={{ fontSize: 12, alignSelf: 'center', fontFamily: montserratSemiBold, marginTop: 10 }}>{HOURS_OF_OPERATION}</MyText>
               <WeekDayTimings
                 jumpToPreviousWeek={jumpToPreviousWeek}
                 jumpToNextWeek={jumpToNextWeek}
                 text={selectedWeekDay}
               />
-
-              {buttonVisible && (
-                <Button
-                  onPress={() =>
-                    navigation.navigate('chat', {
-                      id: route.params.id,
-                      type: 'provider',
-                    })
-                  }
-                  text="Message"
-                  style={{
-                    marginTop: SCREEN_HEIGHT * 0.01,
-                    borderRadius: dynamicSize(10),
-                    height: isAndroid ? dynamicSize(33) : dynamicSize(38),
-                    width: SCREEN_WIDTH / 2.5,
-                    marginBottom: SCREEN_HEIGHT * 0.02,
-                    alignSelf: 'center',
-                  }}
-                />
-              )}
-              <MyView style={[styles['lowerInnerCurve']]}>
-                <RatingWithLabel
-                  style={{ marginTop: dynamicSize(7) }}
-                  labelStyle={{ fontFamily: montserratBold }}
-                  isRateCount
-                  label={RATING}
-                  mytext={`${providerprofile['OverallRating']}/5`}
-                />
-                {providerprofile?.['Reviews']?.map((item, index) => {
-                  return (
-                    <MyView>
-                      <RatingWithLabel
-                        key={index}
-                        style={{ marginTop: dynamicSize(7) }}
-                        labelStyle={{ fontFamily: montserratBold }}
-                        isRateCount
-                        label={item.RatingTypeName}
-                        mytext={`${item.UserRating}/5`}
-                      />
-                    </MyView>
-                  );
+              <MyView style={styles.topTabContainer}>
+                {tabData.map((each, index) => {
+                  return (<Touchable onPress={onTabPress(each)} key={index.toString()} style={[styles.tabItem, { borderLeftWidth: index == 0 ? 0 : 1, borderLeftColor: GRAY, backgroundColor: selectedTab == each.type ? THEME : WHITE }]}>
+                    <MyText style={[styles.tabText, { color: selectedTab == each.type ? WHITE : BLACK }]}>{each.name}</MyText>
+                  </Touchable>)
                 })}
-                {portfolioData?.length ?
-                  <>
-                    <MyText style={styles['portFolioText']}>{PORTFOLIO}</MyText>
+              </MyView>
+              <CurveView style={styles['curveMain']} innerStyle={styles['innerStyle']} />
+              <MyView style={styles['lowerContainer']}>
+                {selectedTab == 'bio' ? <>
+                  <MyText style={[styles['portFolioText'], { backgroundColor: WHITE }]}>{BIO}</MyText>
+                  {providerprofile?.Bio ? <MyText style={{ marginTop: 10, marginHorizontal: 25, flex: 1 }}>{providerprofile?.Bio || ''}</MyText> : <MyText style={{ color: THEME, textAlign: 'center' }}>{'No Data Found.'}</MyText>}
+                </> : null}
+                {selectedTab == 'rating' ? <>
+                  <RatingWithLabel style={{ backgroundColor: WHITE }} labelStyle={{ fontFamily: montserratBold }} isRateCount label={RATING} mytext={`${providerprofile['OverallRating']}/5`} />
+                  {providerprofile?.['Reviews']?.map((item, index) => {
+                    return (
+                      <MyView key={index}>
+                        <RatingWithLabel imageStyle={{ marginHorizontal: 3 }} style={{ backgroundColor: WHITE, paddingTop: 3 }} label={item.RatingTypeName} rating={item.UserRating || 0} />
+                      </MyView>
+                    )
+                  })}
+                </> : null}
+                {selectedTab == 'portfolio' ? <>
+                  <MyText style={[styles['portFolioText'], { backgroundColor: WHITE }]}>{PORTFOLIO}</MyText>
+                  {portfolioData?.length > 0 ? <>
                     <Carousel
                       key="portfolio"
                       data={portfolioData}
@@ -546,110 +566,108 @@ const SpDetail = ({ navigation, route }) => {
                       activeSlideIndex={portfoliopageIndex}
                     />
                   </>
-                  : null}
-                <MyText
-                  style={[
-                    styles['portFolioText'],
-                    { marginVertical: null, marginTop: SCREEN_HEIGHT * 0.02 },
-                  ]}>
-                  {'SERVICES'}
-                </MyText>
-                <CustomDropDown
-                  onChange={_changeCategory}
-                  data={professionsList.map((item) => {
-                    return { value: item['Name'], id: item['Id'] };
-                  })}
-                  value={category?.name}
-                  style={{ width: SCREEN_WIDTH - dynamicSize(50) }}
-                  topOffset={dynamicSize(20)}
-                  containerStyle={{
-                    borderBottomColor: BLACK,
-                    borderBottomWidth: 2,
-                  }}
-                />
-                <MyView style={{ height: 200, marginBottom: useSafeAreaInsets().bottom }}>
-                  <Swiper
-                    key={servicesData.length}
-                    style={{ paddingVertical: SCREEN_HEIGHT * 0.03 }}
-                    dotStyle={styles['dotStyle']}
-                    activeDotColor={THEME}
-                    loadMinimal={true}
-                    loop={true}
-                    loadMinimalSize={1}
-                    removeClippedSubviews={false}
-                    activeDotStyle={[styles['dotStyle'], { backgroundColor: THEME }]}>
-                    {servicesData.map((item, index1) => {
-                      let arr = item.filter(
-                        (item) => item['ProfessionId'] == category['Id'],
-                      );
-                      if (arr.length) {
-                        return (
-                          <MyView style={{}}>
-                            <FlatList
-                              key="hairType"
-                              showsVerticalScrollIndicator={false}
-                              data={arr}
-                              keyExtractor={_keyExtractor}
-                              renderItem={_renderHairType(index1)}
-                              contentContainerStyle={styles['hairTypeFlatList']}
-                              numColumns={2}
-                              extraData={isRefresh}
-                              columnWrapperStyle={{
-                                paddingHorizontal: dynamicSize(1),
-                                justifyContent: 'space-between',
-                              }}
-                            />
-                          </MyView>
-                        );
-                      } else {
-                        return (
-                          <MyText
-                            style={{
-                              paddingHorizontal: dynamicSize(25),
-                              fontSize: getFontSize(14),
-                              color: BLACK,
-                              fontFamily: montserratMedium,
-                            }}>
-                            {'No services found for this profession'}
-                          </MyText>
-                        );
-                      }
+                    :
+                    <MyText style={{ color: THEME, textAlign: 'center' }}>{'No Data Found.'}</MyText>
+                  }
+                </> : null}
+                {selectedTab == 'services' ? <>
+                  <MyText style={[styles['portFolioText'], { marginVertical: null }]}>{"SERVICES"}</MyText>
+                  <CustomDropDown
+                    onChange={_changeCategory}
+                    data={professionsList.map((item) => {
+                      return { value: item['Name'], id: item['Id'] };
                     })}
-                  </Swiper>
-                </MyView>
-                {productData?.length ?
-                  <>
-                    <MyText
-                      style={[
-                        styles['portFolioText'],
-                        { marginVertical: null, marginTop: SCREEN_HEIGHT * 0.02 },
-                      ]}>
-                      {'PRODUCTS'}
-                    </MyText>
-                    <Carousel
-                      key="portfolio"
-                      data={productData}
-                      renderItem={_renderProductCrousel}
-                      keyExtractor={_keyExtractor}
-                      sliderWidth={SCREEN_WIDTH}
+                    value={category?.name}
+                    style={{ width: SCREEN_WIDTH - dynamicSize(50), alignSelf: 'center' }}
+                    topOffset={dynamicSize(20)}
+                    containerStyle={{
+                      borderBottomColor: BLACK,
+                      borderBottomWidth: 2,
+                    }}
+                  />
+                  <MyView style={{ height: 210, marginBottom: useSafeAreaInsets().bottom }}>
+                    <Swiper
+                      key={servicesData.length}
+                      style={{ paddingVertical: SCREEN_HEIGHT * 0.03 }}
+                      dotStyle={styles['dotStyle']}
+                      activeDotColor={THEME}
+                      loadMinimal={true}
+                      loop={true}
+                      loadMinimalSize={1}
                       removeClippedSubviews={false}
-                      contentContainerStyle={styles['portfolioFlatList']}
-                      itemWidth={SCREEN_WIDTH}
-                      onSnapToItem={_onSnapToItem(TYPES.PRODUCT)}
-                    />
-                    <MyPagination
-                      length={productData.length}
-                      activeSlideIndex={productpageIndex}
-                    />
-                  </>
-                  :
-                  null}
-                <Button
-                  onPress={_validate}
-                  style={styles['buttonStyle']}
-                  text={'CONTINUE'}
-                />
+                      activeDotStyle={[styles['dotStyle'], { backgroundColor: THEME }]}>
+                      {servicesData.map((item, index1) => {
+                        let arr = item.filter(
+                          (item) => item['ProfessionId'] == category['Id'],
+                        );
+                        if (arr.length) {
+                          return (
+                            <MyView style={{}}>
+                              <FlatList
+                                key="hairType"
+                                showsVerticalScrollIndicator={false}
+                                data={arr}
+                                keyExtractor={_keyExtractor}
+                                renderItem={_renderHairType(index1)}
+                                contentContainerStyle={styles['hairTypeFlatList']}
+                                numColumns={2}
+                                extraData={isRefresh}
+                                columnWrapperStyle={{
+                                  paddingHorizontal: dynamicSize(1),
+                                  justifyContent: 'space-between',
+                                }}
+                              />
+                            </MyView>
+                          );
+                        } else {
+                          return (
+                            <MyText
+                              style={{
+                                paddingHorizontal: dynamicSize(25),
+                                fontSize: getFontSize(14),
+                                color: BLACK,
+                                fontFamily: montserratMedium,
+                              }}>
+                              {'No services found for this profession'}
+                            </MyText>
+                          );
+                        }
+                      })}
+                    </Swiper>
+                  </MyView>
+                </> : null}
+                {selectedTab == 'products' ?
+                  <>
+                    <MyText style={[styles['portFolioText'], { marginVertical: null }]}>{PRODUCTS}</MyText>
+                    {productData?.length ? <>
+                      <Carousel
+                        key="portfolio"
+                        data={productData}
+                        renderItem={_renderProductCrousel}
+                        keyExtractor={_keyExtractor}
+                        sliderWidth={SCREEN_WIDTH}
+                        removeClippedSubviews={false}
+                        contentContainerStyle={styles['portfolioFlatList']}
+                        itemWidth={SCREEN_WIDTH}
+                        onSnapToItem={_onSnapToItem(TYPES.PRODUCT)}
+                      />
+                      <MyPagination
+                        length={productData.length}
+                        activeSlideIndex={productpageIndex}
+                      />
+                    </> : <MyText style={{ color: THEME, textAlign: 'center' }}>{'No Data Found.'}</MyText>}
+                  </> : null
+                }
               </MyView>
+              <LicensePopup
+                source={{ uri: providerprofile['DocumentPath'] }}
+                dismiss={() => setmodalVisible(false)}
+                isVisible={modalVisible} />
+              {selectedTab == 'services' ? <Button
+                onPress={_validate}
+                style={styles['buttonStyle']}
+                text={'CONTINUE'}
+              /> : null}
             </ScrollView>
           </MyView>
         </MyView>

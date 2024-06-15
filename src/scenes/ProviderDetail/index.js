@@ -73,7 +73,7 @@ const ProviderDetail = (props) => {
     dispatch(loaderAction(true));
     dispatch(getSpDetailAction(props.route.params.id));
     const params = {
-      ProviderId: props.route.params.id,
+      ProviderUserId: props.route.params.id,
       PageNo: 1,
       RecordsPerPage: 10000
     }
