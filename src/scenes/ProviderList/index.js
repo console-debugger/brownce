@@ -36,6 +36,7 @@ import {
   getFilterPriceListAction,
   getAllCityListAction,
   getAllServicesAction,
+  getProviderProfileSuccessAction,
 } from '../../redux/action/index';
 import { apiKey } from '../../services/serviceConstant';
 import { GET_PROVIDER_LIST_SUCCESS_ACTION } from '../../redux/action/type';
@@ -324,9 +325,10 @@ const ProviderList = ({ navigation }) => {
   const _renderItem = ({ item, index }) => {
     return (
       <Touchable
-        onPress={() =>
+        onPress={() =>{
+          dispatch(getProviderProfileSuccessAction({}))
           navigation.navigate('spDetail', { id: item['UserId'] })
-        }
+        }}
         style={styles['header']}>
         <MyImage
           source={{ uri: item['ProfilePic'] }}
@@ -388,9 +390,10 @@ const ProviderList = ({ navigation }) => {
               )}/5`}</MyText>
             </MyView>
             <Button
-              onPress={() =>
+              onPress={() =>{
+                dispatch(getProviderProfileSuccessAction({}))
                 navigation.navigate('spDetail', { id: item['UserId'] })
-              }
+              }}
               text={BOOK_NOW}
               style={styles['buttonStyle']}
             />

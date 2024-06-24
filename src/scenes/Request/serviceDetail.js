@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { chatIcon } from '../../components/icons'
 import styles from './styles'
 import { useFocusEffect } from '@react-navigation/native'
-import { appointmentDetailAction } from '../../redux/action'
+import { appointmentDetailAction, getProviderProfileSuccessAction } from '../../redux/action'
 import { dynamicSize } from '../../utils/responsive'
 import { isCustomer, isProvider } from '../../components/helper'
 
@@ -53,10 +53,14 @@ const ServiceDetail = ({ navigation, route }) => {
                 <MyView style={{ backgroundColor: LIGHT_WHITE }}>
                     <MyView style={styles['flatList']} >
                         <Card style={styles['itemContainer']}>
-                            <Touchable onPress={() =>
-                                isCustomer() ?
-                                    navigation.navigate('spDetail', { id: appointmentdetail['SPId'] }) :
-                                    navigation.navigate('customerDetail', { id: appointmentdetail['CustomerId'] })}>
+                            <Touchable onPress={() => {
+                                if (isCustomer()) {
+                                    dispatch(getProviderProfileSuccessAction({}))
+                                    navigation.navigate('spDetail', { id: appointmentdetail['SPId'] })
+                                }
+                                else navigation.navigate('customerDetail', { id: appointmentdetail['CustomerId'] })
+                            }
+                            }>
                                 <MyView style={styles['headerContent']}>
                                     <MyText style={styles['bookingId']}>{`${BOOKING_ID} : `}<MyText style={styles['idvalue']}>{appointmentdetail['AppointmentId']}</MyText></MyText>
                                     <MyText style={styles['bookingId']}>{dateHandler(appointmentdetail['AppointmentDate']) + ' ' + appointmentdetail['AppointmentTime']}</MyText>

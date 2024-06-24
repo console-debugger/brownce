@@ -20,6 +20,7 @@ import {
   getAllQuestionAction,
   getNotificationCountSuccessAction,
   getNotificationListAction,
+  getProviderProfileSuccessAction,
   getQuestionByQuestionIdAction,
   likeDislikeQuestionAction,
   loaderAction,
@@ -221,13 +222,17 @@ const ForumList = ({ navigation }) => {
     const user = isCustomer() ? profile['UserId'] : providerprofile['UserId'];
     return (
       <QuestionsView
-        onPicPress={() =>
-          item['UserType'] === 3
-            ? navigation.navigate('customerDetail', {
+        onPicPress={() => {
+          if (item['UserType'] === 3) {
+            navigation.navigate('customerDetail', {
               id: item['User']['UserId'],
             })
-            : navigation.navigate('spDetail', { id: item['User']['UserId'] })
-        }
+          }
+          else {
+            dispatch(getProviderProfileSuccessAction({}))
+            navigation.navigate('spDetail', { id: item['User']['UserId'] })
+          }
+        }}
         source={{ uri: item?.User?.['ProfilePic'] }}
         question={item?.['QuestionText'] ? item['QuestionText'] : 'LOADING'}
         date={item?.['CreatedOnStr'] ? moment(item?.CreatedOnStr, 'DD/MM/YYYY').format('MMM Do, YYYY') : ''}

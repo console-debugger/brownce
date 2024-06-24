@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Button, EmptyMessage, Loader, MyImage, MyIndicator, MyText, MyView, SafeArea, Touchable, TouchableIcon } from '../../components/customComponent'
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../components/helper'
 import { activeFavHeartIcon, chatIcon, mapPin, smallStar } from '../../components/icons'
-import { addRemoveProfileToFavourite, getfavProviderListAction } from '../../redux/action'
+import { addRemoveProfileToFavourite, getProviderProfileSuccessAction, getfavProviderListAction } from '../../redux/action'
 import { LIGHT_WHITE, THEME } from '../../utils/colors'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
 import styles from './styles'
@@ -127,9 +127,10 @@ const FavouriteProvider = ({ navigation }) => {
     const _renderItem = ({ item, index }) => {
         return (
             <Touchable
-                onPress={() =>
+                onPress={() =>{
+                    dispatch(getProviderProfileSuccessAction({}))
                     navigation.navigate('spDetail', { id: item['UserId'] })
-                }
+                }}
                 style={styles['header']}>
                 <MyImage
                     source={{ uri: item['ProfilePic'] }}

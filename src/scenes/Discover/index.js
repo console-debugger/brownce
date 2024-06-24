@@ -11,7 +11,7 @@ import { getFontSize } from '../../utils/responsive';
 import { getCurrentLocation } from '../../components/geolocation';
 import { isIOS } from '../../components/helper';
 import { BLACK, THEME } from '../../utils/colors';
-import { SearchProviderAction } from '../../redux/action'
+import { SearchProviderAction, getProviderProfileSuccessAction } from '../../redux/action'
 import { apiKey } from '../../services/serviceConstant'
 
 const Discover = ({ navigation }) => {
@@ -127,7 +127,10 @@ const Discover = ({ navigation }) => {
                                     alphaHitTest
                                     tooltip={Platform.OS === 'ios'}
                                     style={styles.customView}
-                                    onPress={() => navigation.navigate('spDetail', { id: item.UserId })}>
+                                    onPress={() => {
+                                        dispatch(getProviderProfileSuccessAction({}))
+                                        navigation.navigate('spDetail', { id: item.UserId })
+                                    }}>
                                     <ImageBackground
                                         source={mapbgIcon}
                                         style={styles.bubble}>

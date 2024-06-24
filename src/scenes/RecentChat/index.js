@@ -19,6 +19,7 @@ import {
   loaderAction,
   getChatListAction,
   markNotificationAsReadAction,
+  getProviderProfileSuccessAction,
 } from '../../redux/action';
 import { useDispatch, useSelector } from 'react-redux';
 import { isCustomer, logAnalyticEvent, SCREEN_HEIGHT } from '../../components/helper';
@@ -94,11 +95,13 @@ const RecentChat = ({ navigation }) => {
         }
         style={styles['chatContainer']}>
         <Touchable
-          onPress={() =>
-            isCustomer()
-              ? navigation.navigate('spDetail', { id: item['UserId'] })
-              : navigation.navigate('customerDetail', { id: item['UserId'] })
-          }>
+          onPress={() => {
+            if (isCustomer()) {
+              dispatch(getProviderProfileSuccessAction({}))
+              navigation.navigate('spDetail', { id: item['UserId'] })
+            }
+            else navigation.navigate('customerDetail', { id: item['UserId'] })
+          }}>
           <MyImage
             source={{ uri: item['ProfilePic'] }}
             style={styles['imageStyle']}

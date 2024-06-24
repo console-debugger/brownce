@@ -9,7 +9,7 @@ import { KeyboardAvoidingView, Pressable, ActivityIndicator } from 'react-native
 import { useSelector, useDispatch } from 'react-redux'
 import { THEME, WHITE } from '../../utils/colors'
 import Header from '../../components/header'
-import { commentAction, getCommentsHistoryAction, deleteCommentAction, likeDislikeCommentAction, getSuggestionsAction, getSuggestionsSuccessAction, refreshDataAction } from '../../redux/action'
+import { commentAction, getCommentsHistoryAction, deleteCommentAction, likeDislikeCommentAction, getSuggestionsAction, getSuggestionsSuccessAction, refreshDataAction, getProviderProfileSuccessAction } from '../../redux/action'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import { montserratMedium } from '../../utils/fontFamily'
 import { MentionInput, replaceMentionValues } from 'react-native-controlled-mentions'
@@ -178,7 +178,15 @@ const ForumDetail = ({ navigation, route }) => {
         return (
             <MyView key={item + index} style={styles['itemContainer']}>
                 <MyView style={{ flexDirection: 'row', maxWidth: '70%', }}>
-                    <TouchableIcon source={{ uri: item['ProfilePic'] }} imageStyle={styles['imageStyle']} onPress={() => item.UserType == ROLE_TYPES.CUSTOMER ? navigation.navigate('customerDetail', { id: item['UserId'] }) : navigation.navigate('spDetail', { id: item['UserId'] })} />
+                    <TouchableIcon source={{ uri: item['ProfilePic'] }} imageStyle={styles['imageStyle']}
+                        onPress={() => {
+                            if (item.UserType == ROLE_TYPES.CUSTOMER) navigation.navigate('customerDetail', { id: item['UserId'] })
+                            else {
+                                dispatch(getProviderProfileSuccessAction({}))
+                                navigation.navigate('spDetail', { id: item['UserId'] })
+                            }
+                        }}
+                    />
                     <Touchable activeOpacity={profile.UserId == item.UserId ? 0.5 : 1} style={styles['chatWrapper']}>
                         <MentionInput
                             value={item['CommentText']}
@@ -246,7 +254,15 @@ const ForumDetail = ({ navigation, route }) => {
                     {item?.CommentReplies?.map((itemm, eachIndex) => {
                         return (<MyView key={itemm + eachIndex} style={[styles['itemContainer'], { marginLeft: dynamicSize(50), maxWidth: '80%', }]}>
                             <MyView style={{ flexDirection: 'row', }}>
-                                <TouchableIcon source={{ uri: itemm['ProfilePic'] }} imageStyle={styles['imageStyle']} onPress={() => item.UserType == 3 ? navigation.navigate('customerDetail', { id: item['UserId'] }) : navigation.navigate('spDetail', { id: itemm['UserId'] })} />
+                                <TouchableIcon source={{ uri: itemm['ProfilePic'] }} imageStyle={styles['imageStyle']}
+                                    onPress={() => {
+                                        if (item.UserType == 3) navigation.navigate('customerDetail', { id: item['UserId'] })
+                                        else {
+                                            dispatch(getProviderProfileSuccessAction({}))
+                                            navigation.navigate('spDetail', { id: itemm['UserId'] })
+                                        }
+                                    }}
+                                />
                                 <Touchable activeOpacity={profile.UserId == itemm.UserId ? 0.5 : 1} style={styles['chatWrapper']}>
                                     <MentionInput
                                         value={itemm['CommentText']}
@@ -338,7 +354,13 @@ const ForumDetail = ({ navigation, route }) => {
         return (
             <>
                 <Touchable
-                    onPress={() => detail['UserType'] === 3 ? navigation.navigate('customerDetail', { id: detail['User']['UserId'] }) : navigation.navigate('spDetail', { id: detail['User']['UserId'] })}
+                    onPress={() => {
+                        if (detail['UserType'] === 3) navigation.navigate('customerDetail', { id: detail['User']['UserId'] })
+                        else {
+                            dispatch(getProviderProfileSuccessAction({}))
+                            navigation.navigate('spDetail', { id: detail['User']['UserId'] })
+                        }
+                    }}
                     style={styles['imageName']}>
                     <MyImage source={{ uri: detail['User']['ProfilePic'] }} style={styles['smallImage']} />
                     <MyText style={styles['name']}>{detail['UserName']}</MyText>

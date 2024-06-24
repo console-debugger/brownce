@@ -70,7 +70,7 @@ const Chat = ({ navigation, route }) => {
     // @ Render blank chat messages
     const _renderEmptyChat = () => {
         if (!loading) {
-            return (<EmptyMessage style={{ marginVertical: SCREEN_HEIGHT * 0.37 }} message={`You are yet to chat with this user`} />)
+            return (<EmptyMessage style={{ marginVertical: SCREEN_HEIGHT * 0.37 }} message={`You have not chat with this user yet`} />)
         }
         else return (<EmptyMessage message={""} />)
     }
