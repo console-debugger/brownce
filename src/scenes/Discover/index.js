@@ -122,7 +122,8 @@ const Discover = ({ navigation }) => {
                             <MapView.Marker
                                 key={index}
                                 coordinate={{ latitude: Number(item['Lat']), longitude: Number(item['Lng']) }}
-                                pinColor={THEME}>
+                                pinColor={Platform.OS == 'ios' ? THEME : 'tan'}
+                            >
                                 <Callout
                                     alphaHitTest
                                     tooltip={Platform.OS === 'ios'}
