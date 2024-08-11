@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: SCREEN_WIDTH * 0.15
     },
     bottomSheet: {
+        width: '100%',
         position: 'absolute',
         bottom: 0,
     },

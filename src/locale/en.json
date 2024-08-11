@@ -292,5 +292,7 @@
   "BROWNCE_VETTED": "BROWNCE-VETTED",
   "SHARE_PROFILE": "Share Profile",
   "EDIT_PROFILE": "Edit Profile",
-  "PRODUCTS": "PRODUCTS"
+  "PRODUCTS": "PRODUCTS",
+  "UPDATE_SERVICES":"Update Services",
+  "UPDATE_CUSTOM_SERVICES":"Update Custom Services"
 }

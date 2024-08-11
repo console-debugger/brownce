@@ -163,10 +163,10 @@ const Discover = ({ navigation }) => {
                 <Touchable onPress={accessLocation} style={styles['locateIcon']}>
                     <MyImage source={locateIcon} />
                 </Touchable>
-                <MyView style={styles['bottomView']} >
+                {/* <MyView style={styles['bottomView']} >
                     <MyText style={styles['helpText']}>{LET_US_FIND_YOU_FIND_YOUR_STYLIST}</MyText>
                     <Button onPress={_navToNext} text={GO} style={styles['buttonStyle']} />
-                </MyView>
+                </MyView> */}
             </MyView>
         </SafeArea>
     )

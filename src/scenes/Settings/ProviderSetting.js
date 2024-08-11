@@ -97,7 +97,7 @@ const ProviderSetting = ({ navigation }) => {
 
     const dispatch = useDispatch()
     const state = useSelector(state => { return state })
-    const { CHANGE_PORTFOLIO, UPDATE, WEBSITE, HOURS_CAPS, BIO, CLOSED, BIO_SMALL, HOURS_OF_OPERATION, PORTFOLIO, SERVICES, WEBSITE_SMALL } = state['localeReducer']['locale']
+    const { CHANGE_PORTFOLIO, UPDATE, WEBSITE, HOURS_CAPS, BIO, CLOSED, BIO_SMALL, HOURS_OF_OPERATION, PORTFOLIO, SERVICES, WEBSITE_SMALL, UPDATE_SERVICES, UPDATE_CUSTOM_SERVICES } = state['localeReducer']['locale']
     const { providerprofile } = state.profileReducer
     const { services } = state['hairReducer']
     const { loading } = state['loaderReducer']
@@ -138,7 +138,7 @@ const ProviderSetting = ({ navigation }) => {
     const [bio, setBio] = useState(providerprofile?.Bio || '')
     const [ServicesProvided, setServicesProvidedData] = useState([])
     const [servicesLoader, setServicesLoader] = useState(false)
-    const [ServicesProvidedCustom, setServicesProvidedCustom] = useState([])
+    // const [ServicesProvidedCustom, setServicesProvidedCustom] = useState([])
 
     const scrollViewRef = useRef()
 
@@ -155,8 +155,7 @@ const ProviderSetting = ({ navigation }) => {
             }, response => {
                 setServicesLoader(false)
                 if (response) {
-                    setServicesProvidedData(response?.ServicesProvided || [])
-                    setServicesProvidedCustom(response?.ServicesProvidedCustom || [])
+                    setServicesProvidedData([...response?.ServicesProvided, ...response?.ServicesProvidedCustom])
                 }
             }))
         }
@@ -180,9 +179,9 @@ const ProviderSetting = ({ navigation }) => {
             }
             dispatch(getCustomServicesAction(param))
             const servicesList = ServicesProvided?.map(item => { return { ...item, status: true } }) || []
-            const customservicesList = ServicesProvidedCustom?.map(item => { return { ...item, status: true } }) || []
+            // const customservicesList = ServicesProvidedCustom?.map(item => { return { ...item, status: true } }) || []
             dispatch(updateServicesAction(servicesList))
-            dispatch(updateCustomServicesAction(customservicesList))
+            // dispatch(updateCustomServicesAction(customservicesList))
         }, [])
     )
 
@@ -218,9 +217,11 @@ const ProviderSetting = ({ navigation }) => {
     const _closeImagePicker = () => setShowImagePicker(false)
 
     const _selectHairType = (item, index) => {
-        const replica = [...services]
-        replica[index]['status'] = !replica[index]['status']
-        dispatch(updateServicesAction(replica))
+        const replica = [...ServicesProvided]
+        console.log("adasds====>", JSON.stringify(replica[index]))
+        replica[index].status = !replica[index].status
+        // dispatch(updateServicesAction(replica))
+        setServicesProvidedData([...replica])
         setisrefresh(!isrefresh)
     }
 
@@ -293,18 +294,18 @@ const ProviderSetting = ({ navigation }) => {
     }
 
 
-    const _renderHairType1 = ({ item, index }) => {
-        return (
-            <SecondaryButton
-                price
-                onPress={() => _selectHairType(item, index)}
-                style={[styles['selected'], { borderRadius: dynamicSize(5) }]}
-                textStyle={styles['selectedText']}
-                text={item['ServiceName']}
-                pricetext={item['Price']}
-            />
-        )
-    }
+    // const _renderHairType1 = ({ item, index }) => {
+    //     return (
+    //         <SecondaryButton
+    //             price
+    //             onPress={() => _selectHairType(item, index)}
+    //             style={[styles['selected'], { borderRadius: dynamicSize(5) }]}
+    //             textStyle={styles['selectedText']}
+    //             text={item['ServiceName']}
+    //             pricetext={item['Price'] ? `${item['Price']} USD` : null}
+    //         />
+    //     )
+    // }
 
     const _validate = () => {
         navigation.navigate('selectProfession')
@@ -528,8 +529,8 @@ const ProviderSetting = ({ navigation }) => {
                             extraData={isrefresh}
                             columnWrapperStyle={{ justifyContent: 'space-between' }}
                         />
-                        <Button onPress={_validate} style={{ alignSelf: 'center', marginBottom: SCREEN_HEIGHT * 0.02 }} text={UPDATE} />
-                        <MyText style={[styles['title'], { marginTop: SCREEN_HEIGHT * 0.02 }]}>{"CUSTOM SERVICES"}</MyText>
+                        <Button onPress={_validate} style={{ alignSelf: 'center', marginBottom: SCREEN_HEIGHT * 0.02 }} text={UPDATE_SERVICES} />
+                        {/* <MyText style={[styles['title'], { marginTop: SCREEN_HEIGHT * 0.02 }]}>{"CUSTOM SERVICES"}</MyText>
                         <FlatList
                             key='serviceProviderCustom'
                             data={ServicesProvidedCustom}
@@ -540,8 +541,8 @@ const ProviderSetting = ({ navigation }) => {
                             numColumns={2}
                             extraData={isrefresh}
                             columnWrapperStyle={{ justifyContent: 'space-between' }}
-                        />
-                        <Button onPress={_validate1} style={{ alignSelf: 'center', marginBottom: SCREEN_HEIGHT * 0.02 }} text={UPDATE} />
+                        /> */}
+                        <Button onPress={_validate1} style={{ alignSelf: 'center', marginBottom: SCREEN_HEIGHT * 0.02 }} text={UPDATE_CUSTOM_SERVICES} />
                     </MyView>
                 </ScrollView>
             </MyView>
