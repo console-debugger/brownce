@@ -18,7 +18,7 @@ const AllServices = ({ navigation, route }) => {
     const { selectedServices } = route.params
     const dispatch = useDispatch()
     const state = useSelector(state => { return state })
-    const { CONTINUE } = state['localeReducer']['locale']
+    const { CONTINUE, ADD_CUSTOM_SERVICES } = state['localeReducer']['locale']
     const { services, customservices, messageCase, allservices, servicesByProfession } = state['hairReducer']
     const { providerprofile } = state.profileReducer.providerprofile
     const [servs, setServs] = useState([])
@@ -145,6 +145,10 @@ const AllServices = ({ navigation, route }) => {
         }
     }
 
+    const _validate1 = () => {
+        navigation.navigate('changeCustomList')
+    }
+
 
     return (
         <SafeArea style={{ backgroundColor: LIGHT_WHITE, paddingTop: -useSafeAreaInsets().top }}>
@@ -160,6 +164,7 @@ const AllServices = ({ navigation, route }) => {
                 // numColumns={2}
                 // columnWrapperStyle={{ justifyContent: 'space-between' }}
                 />
+                <Button avoidLowerCase onPress={_validate1} style={[styles['buttonStyleCont'], { width: SCREEN_WIDTH - dynamicSize(70), marginBottom: 0 }]} text={ADD_CUSTOM_SERVICES} />
                 <Button onPress={_validate} style={[styles['buttonStyleCont'], { width: SCREEN_WIDTH - dynamicSize(70) }]} text={CONTINUE} />
             </KeyboardAwareScroll>
         </SafeArea>

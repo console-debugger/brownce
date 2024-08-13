@@ -542,7 +542,7 @@ const ProviderSetting = ({ navigation }) => {
                             extraData={isrefresh}
                             columnWrapperStyle={{ justifyContent: 'space-between' }}
                         /> */}
-                        <Button onPress={_validate1} style={{ alignSelf: 'center', marginBottom: SCREEN_HEIGHT * 0.02 }} text={UPDATE_CUSTOM_SERVICES} />
+                        {/* <Button onPress={_validate1} style={{ alignSelf: 'center', marginBottom: SCREEN_HEIGHT * 0.02 }} text={UPDATE_CUSTOM_SERVICES} /> */}
                     </MyView>
                 </ScrollView>
             </MyView>
