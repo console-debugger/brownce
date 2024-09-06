@@ -47,7 +47,7 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
-    initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
+    // initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
   }
 
   /**
@@ -57,27 +57,27 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
    * @param context
    * @param reactInstanceManager
    */
-  private static void initializeFlipper(
-      Context context, ReactInstanceManager reactInstanceManager) {
-    if (BuildConfig.DEBUG) {
-      try {
-        /*
-         We use reflection here to pick up the class that initializes Flipper,
-        since Flipper library is not available in release mode
-        */
-        Class<?> aClass = Class.forName("com.browncecustomer.ReactNativeFlipper");
-        aClass
-            .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
-            .invoke(null, context, reactInstanceManager);
-      } catch (ClassNotFoundException e) {
-        e.printStackTrace();
-      } catch (NoSuchMethodException e) {
-        e.printStackTrace();
-      } catch (IllegalAccessException e) {
-        e.printStackTrace();
-      } catch (InvocationTargetException e) {
-        e.printStackTrace();
-      }
-    }
-  }
+  // private static void initializeFlipper(
+  //     Context context, ReactInstanceManager reactInstanceManager) {
+  //   if (BuildConfig.DEBUG) {
+  //     try {
+  //       /*
+  //        We use reflection here to pick up the class that initializes Flipper,
+  //       since Flipper library is not available in release mode
+  //       */
+  //       Class<?> aClass = Class.forName("com.browncecustomer.ReactNativeFlipper");
+  //       aClass
+  //           .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
+  //           .invoke(null, context, reactInstanceManager);
+  //     } catch (ClassNotFoundException e) {
+  //       e.printStackTrace();
+  //     } catch (NoSuchMethodException e) {
+  //       e.printStackTrace();
+  //     } catch (IllegalAccessException e) {
+  //       e.printStackTrace();
+  //     } catch (InvocationTargetException e) {
+  //       e.printStackTrace();
+  //     }
+  //   }
+  // }
 }

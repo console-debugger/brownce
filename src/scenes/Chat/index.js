@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import { SafeArea, MyView, MyText, MyImage, CurveView, TouchableIcon, EmptyMessage } from '../../components/customComponent'
 import { KeyboardAvoidingView, TextInput, FlatList } from 'react-native'
 import { WHITE, THEME } from '../../utils/colors'
-import AndroidKeyboardAdjust from 'react-native-android-keyboard-adjust';
+import AndroidKeyboardAdjust from 'rn-android-keyboard-adjust';
 import { sendIcon } from '../../components/icons'
 import { isIOS, SCREEN_WIDTH, isAndroid, isCustomer, SCREEN_HEIGHT, convertToLocal } from '../../components/helper'
 import styles from './styles'

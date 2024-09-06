@@ -7813,11 +7813,6 @@
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   "version" "17.0.2"
 
-"react-native-android-keyboard-adjust@1.2.0":
-  "integrity" "sha512-Q280bmf0zXnzLbHU9DcVoKZSKihd0s3hltz2kIUCJ5Q9EhLVR/pjgZ3Bwd1VgrHxQPnduHXdCp0432msklRMow=="
-  "resolved" "https://registry.npmjs.org/react-native-android-keyboard-adjust/-/react-native-android-keyboard-adjust-1.2.0.tgz"
-  "version" "1.2.0"
-
 "react-native-android-location-enabler@1.2.2":
   "integrity" "sha512-CC5ghRoK3jkGNK8jdIiYIc3l0XZuQuMt2KEfldDpnMCkNz2aAfUWyLCoOniFLqtdD9poA3az+kCmUzTvLAyTiA=="
   "resolved" "https://registry.npmjs.org/react-native-android-location-enabler/-/react-native-android-location-enabler-1.2.2.tgz"
@@ -8565,6 +8560,11 @@
   "integrity" "sha1-5Dm+Kq7jJzIZUnMPmaiSnk/FBYI= sha512-R5KMKHnPAQaZMqLOsyuyUmcIjSeDm+73eoqQpaXA7AZ22BL+6C+1mcUscgOsNd8WVlJuvlgAPsegcx7pjlV0Dg=="
   "resolved" "https://registry.npmjs.org/rimraf/-/rimraf-2.2.8.tgz"
   "version" "2.2.8"
+
+"rn-android-keyboard-adjust@^2.1.2":
+  "integrity" "sha512-pUYiMT7aucw5YnV4geGdalyl6o6rEwRYhDnw2oPQwDym1BZHtmKsxFLupky1Kj2ZNkNKadpEyoyHOElLo+f3sA=="
+  "resolved" "https://registry.npmjs.org/rn-android-keyboard-adjust/-/rn-android-keyboard-adjust-2.1.2.tgz"
+  "version" "2.1.2"
 
 "rn-textinputlayout@1.0.5":
   "integrity" "sha512-6tgjkbqaUqdMRw5wVQDeGJhQsUlboAbKv3/PqAptqbCPBq5dO5R60N7j0zow9RvWHnBzvQLcqKd6jw1PBUxovw=="
