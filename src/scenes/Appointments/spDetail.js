@@ -203,7 +203,7 @@ const SpDetail = ({ navigation, route }) => {
             newData[count - 1] = [ServicesProvided[i]]
           }
           else {
-            newData[count - 1].push(ServicesProvided[i])
+            newData[count - 1]?.push(ServicesProvided[i])
           }
         }
       }

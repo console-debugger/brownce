@@ -155,7 +155,7 @@ const ProviderList = ({ navigation }) => {
   useFocusEffect(
     useCallback(() => {
       paginationOffset.current = 1
-      _fetchList(1)
+      _fetchList(1, search)
     }, []),
   );
 
@@ -169,20 +169,20 @@ const ProviderList = ({ navigation }) => {
     formdata.append(apiKey['searchString'], searchText);
     formdata.append(apiKey['pageNo'], pageOffset);
     formdata.append(apiKey['pageSize'], 20);
-    // coordinates.latitude && formdata.append('latitude', coordinates.latitude);
-    // coordinates.longitude && formdata.append('longitude', coordinates.longitude);
-    formdata.append('Location', '');
-    selectedMultipleServices?.length && formdata.append('serviceIds', selectedMultipleServices)
-    selectedPrice && formdata.append('prices', [selectedPrice])
+    coordinates.latitude && formdata.append('latitude', coordinates.latitude);
+    coordinates.longitude && formdata.append('longitude', coordinates.longitude);
+    // formdata.append('Location', '');
+    selectedMultipleServices?.length && formdata.append('serviceIds', JSON.stringify(selectedMultipleServices))
+    selectedPrice && formdata.append('prices', JSON.stringify([selectedPrice]))
     rating && formdata.append('rating', rating)
     filterDistance && formdata.append('distance', filterDistance)
     formdata.append('IsVetted', isVettedEnabled)
-    console.log('param-<>', formdata)
+    console.log('param-<>', JSON.stringify(formdata))
     searchText ? dispatch(SearchloaderAction(true)) : _handle;
     dispatch(getProviderListAction(formdata, result => {
       console.log('result===>0', result)
       if (result) {
-        paginationOffset.current == 1 ? setdata(result?.Data || []) : setdata(prevState => [...prevState, ...result?.Data])
+        pageOffset == 1 ? setdata(result?.Data || []) : setdata(prevState => [...prevState, ...result?.Data])
         if (!result?.Data?.length) {
           isCallNextApi.current = false
           callNextRecordStatus.current = false
@@ -325,7 +325,7 @@ const ProviderList = ({ navigation }) => {
   const _renderItem = ({ item, index }) => {
     return (
       <Touchable
-        onPress={() =>{
+        onPress={() => {
           dispatch(getProviderProfileSuccessAction({}))
           navigation.navigate('spDetail', { id: item['UserId'] })
         }}
@@ -390,7 +390,7 @@ const ProviderList = ({ navigation }) => {
               )}/5`}</MyText>
             </MyView>
             <Button
-              onPress={() =>{
+              onPress={() => {
                 dispatch(getProviderProfileSuccessAction({}))
                 navigation.navigate('spDetail', { id: item['UserId'] })
               }}
