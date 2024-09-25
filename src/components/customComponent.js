@@ -58,6 +58,8 @@ import Slider from 'react-native-slider';
 import { editIcon } from '../components/icons';
 import { Pagination } from 'react-native-snap-carousel';
 import { Menu, MenuOption, MenuOptions, MenuTrigger, renderers } from 'react-native-popup-menu';
+import MultiSlider from '@ptomasroos/react-native-multi-slider';
+
 
 export const SafeArea = (props) => {
   const { children, style } = props;
@@ -1261,3 +1263,28 @@ export const NewThemeDropdown = (props) => {
     </MyView>
   )
 }
+
+export const CustomMultiSlider = (props) => {
+  const {
+    values,
+    sliderLength = 100,
+    min = 0,
+    max = 100,
+    onValuesChange,
+  } = props;
+
+  return (
+    <MultiSlider
+      sliderLength={(SCREEN_WIDTH - dynamicSize(200)) || sliderLength}
+      values={values}
+      min={min}
+      max={max}
+      allowOverlap={false}
+      onValuesChange={onValuesChange}
+      trackStyle={{ height: 9, borderRadius: 10, backgroundColor: LIGHT_GRAY, }}
+      snapped
+      markerStyle={{ height: 20, width: 20, borderRadius: 20, backgroundColor: LIGHT_BROWN, top: 4 }}
+      selectedStyle={{ backgroundColor: THEME }}
+    />
+  );
+};

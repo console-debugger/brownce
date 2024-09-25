@@ -18,6 +18,7 @@ import {
   CustomDropDown,
   RatingWithLabel1,
   ShowStarRating,
+  CustomMultiSlider,
 } from '../../components/customComponent';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BLACK, LIGHT_WHITE, THEME, WHITE } from '../../utils/colors';
@@ -47,6 +48,8 @@ import { CUSTOMER_SEARCH_PROVIDER } from '../../components/eventName';
 import { height } from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
 
 const MAX_FILTER_DISTANCE = 100
+const MIN_PRICE = 0
+const MAX_PRICE = 1000
 let timeout
 
 
@@ -73,6 +76,7 @@ const ProviderList = ({ navigation }) => {
   const [coordinates, setCoordinates] = useState({ latitude: 0, longitude: 0 })
   const [footerIndicator, setFooterIndicator] = useState(false)
   const [isVettedEnabled, setIsVettedEnabled] = useState(false)
+  const [multiSliderPrice, setMultiSliderPrice] = useState([MIN_PRICE, MAX_PRICE]);
 
   const paginationOffset = useRef(1)
   const callNextRecordStatus = useRef(true)
@@ -173,7 +177,9 @@ const ProviderList = ({ navigation }) => {
     coordinates.longitude && formdata.append('longitude', coordinates.longitude);
     // formdata.append('Location', '');
     selectedMultipleServices?.length && formdata.append('serviceIds', JSON.stringify(selectedMultipleServices))
-    selectedPrice && formdata.append('prices', JSON.stringify([selectedPrice]))
+    formdata.append('minPrice', multiSliderPrice[0]);
+    formdata.append('maxPrice', multiSliderPrice[1]);
+    // selectedPrice && formdata.append('prices', JSON.stringify([selectedPrice]))
     rating && formdata.append('rating', rating)
     filterDistance && formdata.append('distance', filterDistance)
     formdata.append('IsVetted', isVettedEnabled)
@@ -235,6 +241,11 @@ const ProviderList = ({ navigation }) => {
   const _onSlidingComplete = value => setFilteredDistance(value)
 
   const _onSliderChange = value => setFilteredDistance(value)
+
+  const _onPriceValueChange = (values) => {
+    console.log("values===>", values)
+    setMultiSliderPrice(values)
+  }
 
   const _renderEmpty = () => {
     if (!loading) {
@@ -495,13 +506,29 @@ const ProviderList = ({ navigation }) => {
             <MyText style={[styles['value'], { right: 0 }]}>{MAX_FILTER_DISTANCE}</MyText>
           </MyView>
           <MyText style={styles.label}>{PRICE}</MyText>
-          <MyView style={styles.row} >
+          <MyView style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+            <MyView style={{ borderWidth: 1, borderColor: THEME, marginRight: 15, width: 30, flex: 1, alignItems: 'center', justifyContent: 'center', height: 40 }}>
+              <MyText>{multiSliderPrice[0]}</MyText>
+            </MyView>
+            <CustomMultiSlider
+              values={[multiSliderPrice[0], multiSliderPrice[1]]}
+              sliderLength={MAX_PRICE}
+              min={MIN_PRICE}
+              max={MAX_PRICE}
+              step={5}
+              onValuesChange={_onPriceValueChange}
+            />
+            <MyView style={{ borderWidth: 1, borderColor: THEME, marginLeft: 15, width: 30, flex: 1, alignItems: 'center', justifyContent: 'center', height: 40 }}>
+              <MyText>{multiSliderPrice[1]}</MyText>
+            </MyView>
+          </MyView>
+          {/* <MyView style={styles.row} >
             {filterPriceList.map((item, index) => {
               return (<Touchable onPress={_selectPrice(item)} style={[styles.priceItem, { borderLeftWidth: index ? 1 : 0, borderLeftColor: THEME, backgroundColor: selectedPrice == item.Id ? THEME : WHITE }]}>
                 <MyText style={{ color: selectedPrice == item.Id ? WHITE : BLACK }}>{item?.Name || ''}</MyText>
               </Touchable>)
             })}
-          </MyView>
+          </MyView> */}
           <MyText style={styles.label}>{BROWNCE_VETTED}</MyText>
           <MyView style={{ alignSelf: 'flex-start', marginTop: 10 }}>
             <Switch
