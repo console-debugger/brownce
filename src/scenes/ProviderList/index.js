@@ -506,7 +506,7 @@ const ProviderList = ({ navigation }) => {
             <MyText style={[styles['value'], { right: 0 }]}>{MAX_FILTER_DISTANCE}</MyText>
           </MyView>
           <MyText style={styles.label}>{PRICE}</MyText>
-          <MyView style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+          <MyView style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginVertical: SCREEN_HEIGHT * 0.03, }}>
             <MyView style={{ borderWidth: 1, borderColor: THEME, marginRight: 15, width: 30, flex: 1, alignItems: 'center', justifyContent: 'center', height: 40 }}>
               <MyText>{multiSliderPrice[0]}</MyText>
             </MyView>
@@ -519,7 +519,7 @@ const ProviderList = ({ navigation }) => {
               onValuesChange={_onPriceValueChange}
             />
             <MyView style={{ borderWidth: 1, borderColor: THEME, marginLeft: 15, width: 30, flex: 1, alignItems: 'center', justifyContent: 'center', height: 40 }}>
-              <MyText>{multiSliderPrice[1]}</MyText>
+              <MyText>{multiSliderPrice[1] == MAX_PRICE ? `${multiSliderPrice[1]}+` : multiSliderPrice[1]}</MyText>
             </MyView>
           </MyView>
           {/* <MyView style={styles.row} >
