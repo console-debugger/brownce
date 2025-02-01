@@ -497,7 +497,7 @@ PODS:
     - Google-Mobile-Ads-SDK (= 9.14.0)
     - GoogleUserMessagingPlatform (= 2.0.0)
     - React-Core
-  - RNIap (9.0.0):
+  - RNIap (12.15.7):
     - React-Core
   - RNImageCropPicker (0.39.0):
     - React-Core
@@ -825,7 +825,7 @@ SPEC CHECKSUMS:
   RNFBMessaging: c873e6c37f69d22de22cab134413030a9c6330a9
   RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
   RNGoogleMobileAds: 6b2f80de78d8644f5220f9bd7df7953542b550c6
-  RNIap: 69cd89c7713291d878d04b5b99b61d201430e3a4
+  RNIap: f3ca6e7597afccb2c1631de97d88f2e33b10dafd
   RNImageCropPicker: 14fe1c29298fb4018f3186f455c475ab107da332
   RNPermissions: a5c15b75a4909fb839d639e0f16c4982254b4c17
   RNReanimated: 73afd1a9b4087e403163e0d300854cb99260c9b6
@@ -837,4 +837,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: ceb0376468f1b39ff4c25bf3c4fb991171fda6ad
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2

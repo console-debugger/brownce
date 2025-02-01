@@ -230,6 +230,9 @@ const ForumDetail = ({ navigation, route }) => {
                         <MentionInput
                             value={reply}
                             onChange={setReply}
+                            enterKeyHint={'next'}
+                            returnKeyType='next'
+                            blurOnSubmit={false}
                             onFocus={() => flatListref.current.scrollToIndex({ animated: true, index: index })}
                             style={{ width: '90%' }}
                             containerStyle={[styles['textinput']]}
@@ -241,7 +244,7 @@ const ForumDetail = ({ navigation, route }) => {
                                     textStyle: { fontWeight: 'bold', color: THEME },
                                 },
                             ]}
-                            onSubmitEditing={() => submitComment(item?.QuestionCommentId, index)}
+                            // onSubmitEditing={() => submitComment(item?.QuestionCommentId, index)}
                             autoCorrect={false}
                         />
                         <TouchableIcon
@@ -395,6 +398,9 @@ const ForumDetail = ({ navigation, route }) => {
                             onFocus={_scrollEnd}
                             onChange={setComment}
                             style={{ width: '90%' }}
+                            enterKeyHint={'next'}
+                            returnKeyType='next'
+                            blurOnSubmit={false}
                             containerStyle={[styles['textinput']]}
                             placeholder={WRITE_A_COMMENT}
                             partTypes={[
@@ -404,7 +410,7 @@ const ForumDetail = ({ navigation, route }) => {
                                     textStyle: { fontWeight: 'bold', color: THEME },
                                 },
                             ]}
-                            onSubmitEditing={() => submitComment(null)}
+                            // onSubmitEditing={() => submitComment(null)}
                             autoCorrect={false}
                         />
                         <TouchableIcon

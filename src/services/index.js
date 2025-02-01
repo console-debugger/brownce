@@ -24,7 +24,7 @@ const apiRequest = (body, URL, apiMethod, isMedia) => {
             : {...jsonHeader, token: serviceConst['token']},
         };
 
-  // console.log(URL, 'Request -->>', init);
+  console.log(URL, 'Request -->>', init);
   return fetch(`${URL}`, init)
     .then((resp) =>
       resp.json().then((resp) => {

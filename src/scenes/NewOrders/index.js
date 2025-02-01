@@ -21,7 +21,7 @@ const NewOrders = ({ navigation }) => {
     const { loading, refreshData } = state['loaderReducer']
     const { List } = state['OrderReducer']['providerOrders']
     const { messageCase } = state['OrderReducer']
-    const { VIEW_MORE, VIEW_LESS, CUSTOMER_DETAILS, PHONE, EMAIL, LOCATION, PAYMENT_TYPE } = state['localeReducer']['locale']
+    const { VIEW_MORE, VIEW_LESS, CUSTOMER_DETAILS, PHONE, EMAIL, ADDRESS, PAYMENT_TYPE } = state['localeReducer']['locale']
 
     // fetch provider order list
     useFocusEffect(
@@ -151,7 +151,7 @@ const NewOrders = ({ navigation }) => {
                         <MyText style={styles.customerDetailBold}>{CUSTOMER_DETAILS}</MyText>
                         <MyText style={styles.label}>{`${PHONE} : `}<MyText style={styles.value}>{item.ContactNumber}</MyText></MyText>
                         <MyText style={[styles.label, { marginVertical: dynamicSize(3) }]}>{`${EMAIL} : `}<MyText style={styles.value}>{item.CustomerEmail}</MyText></MyText>
-                        <MyText style={styles.label}>{`${LOCATION} : `}<MyText style={styles.value}>{item.Address}</MyText></MyText>
+                        <MyText style={styles.label}>{`${ADDRESS} : `}<MyText style={styles.value}>{item.Address}</MyText></MyText>
                         <MyText style={[styles.label, { marginTop: dynamicSize(3) }]}>{`${PAYMENT_TYPE} : `}<MyText style={styles.value}>{item.PaymentMethodName}</MyText></MyText>
                     </>
                         :

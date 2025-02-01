@@ -1,7 +1,7 @@
 import { takeLatest, put } from 'redux-saga/effects';
 import { showToast } from '../../components/helper'
 import { method, serviceError, NOTIFICATION_READ_URL, GET_CHAT_LIST_URL, GET_CHAT_MESSAGES_URL, CHAT_ROOM_URL, SAVE_CHAT_URL } from '../../services/serviceConstant'
-import { loaderAction, chatRoomSuccessAction, getChatMessagessuccessAction, getChatListSuccessAction } from '../action'
+import { loaderAction, chatRoomSuccessAction, getChatMessagessuccessAction, getChatListSuccessAction, updateChatHistoryAction } from '../action'
 import * as TYPES from '../action/type'
 import apiRequest from '../../services'
 
@@ -19,23 +19,30 @@ function* chatroom(param) {
         const profileRes = yield apiRequest(param['payload'], CHAT_ROOM_URL, method['POST'])
         if (profileRes['status'] === 201) {
             yield put(chatRoomSuccessAction(profileRes['result']))
-            const param = {
+            const newParam = {
                 "RoomId": profileRes['result']['RoomId'],
                 "pageNo": '1',
                 "pageSize": '20'
 
             }
-            const profileRess = yield apiRequest(param, GET_CHAT_MESSAGES_URL, method['POST'])
+            const profileRess = yield apiRequest(newParam, GET_CHAT_MESSAGES_URL, method['POST'])
+            console.log("profileResprofileRes===>",JSON.stringify(profileRes))
             if (profileRes['status'] === 201) {
                 yield put(loaderAction(false))
                 yield put(getChatMessagessuccessAction(profileRess['result']['Data']))
+                if (param?.callBack) param?.callBack(profileRess)
+            }
+            else {
+                if (param?.callBack) param?.callBack()
             }
         }
         else {
+            if (param?.callBack) param?.callBack()
             yield put(loaderAction(false))
             showToast(profileRes['message'])
         }
     } catch (err) {
+        if (param?.callBack) param?.callBack()
         yield put(loaderAction(false))
         showToast(serviceError['CATCH_ERROR'])
     }
@@ -79,14 +86,19 @@ function* chatmessages(param) {
     try {
         const profileRes = yield apiRequest(param['payload'], GET_CHAT_MESSAGES_URL, method['POST'])
         if (profileRes['status'] === 201) {
+            if (param?.callBack) {
+                param?.callBack(profileRes)
+            }
             yield put(loaderAction(false))
-            yield put(getChatMessagessuccessAction(profileRes['result']['Data']))
+            yield put(updateChatHistoryAction(profileRes['result']['Data']))
         }
         else {
+            if (param?.callBack) param?.callBack()
             yield put(loaderAction(false))
             showToast(profileRes['message'])
         }
     } catch (err) {
+        if (param?.callBack) param?.callBack()
         yield put(loaderAction(false))
         showToast(serviceError['CATCH_ERROR'])
     }

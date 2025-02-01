@@ -11,13 +11,13 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useSelector, useDispatch } from 'react-redux'
 import Header from '../../components/header'
 import "./UserAgent"
-import { loaderAction, chatRoomAction, saveChatAction, getChatMessagesAction, clearMessageCase, markNotificationAsReadAction } from '../../redux/action';
+import { loaderAction, chatRoomAction, saveChatAction, getChatMessagesAction, clearMessageCase, markNotificationAsReadAction, getProviderProfileSuccessAction } from '../../redux/action';
 import { socket } from '../../services'
 import { GET_CHAT_MESSAGE_SUCCESS_ACTION } from '../../redux/action/type'
 import ReadMore from 'react-native-read-more-text';
 import moment from 'moment';
 
-
+let timeout
 // @ Render Chat UI
 const Chat = ({ navigation, route }) => {
     const dispatch = useDispatch()
@@ -27,9 +27,10 @@ const Chat = ({ navigation, route }) => {
     const { WRITE_A_MESSAGE, CHAT } = state['localeReducer']['locale']
     const [history, setChatHistory] = useState([])
     const [chatMessage, setchatMessage] = useState('')
-    const [page, setpage] = useState(2)
 
     const flatListref = useRef('flatListref')
+    const pageRef = useRef(1)
+    const callApi = useRef(false)
 
     socket.on(room['RoomName'], data => {
         setChatHistory([...history, JSON.parse(data)])
@@ -43,27 +44,83 @@ const Chat = ({ navigation, route }) => {
             "MsgTo": route.params.id
         }
         dispatch(loaderAction(true))
-        dispatch(chatRoomAction(param))
+        dispatch(chatRoomAction(param, (response) => {
+            console.log("response====>@@@", JSON.stringify(response?.result?.Data))
+            if (response?.status == 201 && response?.result?.Data?.length) {
+                console.log("response?.result?.data====>@@", response?.result?.Data)
+                callApi.current = true
+                setChatHistory(response?.result?.Data)
+                if (timeout) clearTimeout(timeout)
+                timeout = setTimeout(() => {
+                    timeout = null
+                    flatListref?.current?.scrollToEnd({ animated: true })
+                }, 600)
+            }
+            else {
+                callApi.current = true
+                setChatHistory([])
+            }
+        }))
     }, [])
 
     //@ Chat messages data mapping 
-    useEffect(() => {
-        if (messageCase === GET_CHAT_MESSAGE_SUCCESS_ACTION) {
-            page === 2 ? setChatHistory(messagesHistory) : setChatHistory([...messagesHistory, ...history])
-            dispatch(clearMessageCase())
-        }
-    }, [messageCase])
+    // useEffect(() => {
+    //     if (messageCase === GET_CHAT_MESSAGE_SUCCESS_ACTION) {
+    //         page === 2 ? setChatHistory(messagesHistory) : setChatHistory([...messagesHistory, ...history])
+    //         dispatch(clearMessageCase())
+    //     }
+    // }, [messageCase])
 
     // @ Loadmore chat messages 
-    const loadmore = async () => {
-        setpage(page + 1)
-        const param = {
-            "RoomId": room['RoomId'],
-            "pageNo": page,
-            "pageSize": 20
-        }
-        dispatch(getChatMessagesAction(param))
 
+
+    const onContentOffsetChanged = event => {
+        loadmore(event.nativeEvent.contentOffset.y)
+    }
+
+    const loadmore = async (distanceFromTop) => {
+        if (distanceFromTop ==0) {
+            if (callApi.current) {
+                callApi.current = false
+                const param = {
+                    "RoomId": room['RoomId'],
+                    "pageNo": pageRef.current + 1,
+                    "pageSize": 20
+                }
+                dispatch(getChatMessagesAction(param, (response) => {
+                    console.log('response=>@@@@@@@', response)
+                    if (response?.status == 201 && response?.result?.Data?.length) {
+                        console.log("response?.result?.data====>@@", response?.result?.Data)
+                        pageRef.current += pageRef.current
+                        callApi.current = true
+                        setChatHistory(prevState => ([...response?.result?.Data, ...prevState]))
+                    }
+                    else {
+                        callApi.current = true
+                    }
+                }))
+            }
+        }
+    }
+
+    const navigateToOwnProfile = item => () => {
+        if (isCustomer()) {
+            navigation.navigate('customerDetail', { id: profile['UserId'] })
+        }
+        else {
+            dispatch(getProviderProfileSuccessAction({}))
+            navigation.navigate('spDetail', { id: providerprofile['UserId'] })
+        }
+    }
+
+    const navigateToOtherProfile = item => () => {
+        if (isCustomer()) {
+            dispatch(getProviderProfileSuccessAction({}))
+            navigation.navigate('spDetail', { id: route.params.id })
+        }
+        else {
+            navigation.navigate('customerDetail', { id: route.params.id })
+        }
     }
 
     //message={`You are yet to chat with this ${route?.params?.type == 'provider' ? 'service provider' : 'user'}`}
@@ -108,11 +165,11 @@ const Chat = ({ navigation, route }) => {
                             </ReadMore>
                             <MyText style={styles['rightMsgTime']}>{moment(convertToLocal(item.CreatedOn)).format('MMM Do, YYYY, hh:mm:ss A')}</MyText>
                         </MyView>
-                        <MyImage source={{ uri: item['myPic'] || item['UFProfilePic'] }} style={styles['imageStyle']} />
+                        <TouchableIcon onPress={navigateToOwnProfile(item)} source={{ uri: item['myPic'] || item['UFProfilePic'] }} imageStyle={styles['imageStyle']} />
                     </MyView>
                     :
                     <MyView style={{ flexDirection: "row" }}>
-                        <MyImage source={{ uri: item['myPic'] || item['UFProfilePic'] }} style={styles['imageStyle']} />
+                        <TouchableIcon onPress={navigateToOtherProfile(item)} source={{ uri: item['myPic'] || item['UFProfilePic'] }} imageStyle={styles['imageStyle']} />
                         <MyView style={[styles['chatWrapper'], isSender ? styles['leftChatWraper'] : styles['rightChatWrapper']]}>
                             <ReadMore
                                 numberOfLines={3}
@@ -148,6 +205,11 @@ const Chat = ({ navigation, route }) => {
                 "Message": chatMessage
             }
             dispatch(saveChatAction(param))
+            if (timeout) clearTimeout(timeout)
+            timeout = setTimeout(() => {
+                timeout = null
+                flatListref.current.scrollToEnd({ animated: true })
+            }, 500);
         }
 
     }
@@ -167,11 +229,13 @@ const Chat = ({ navigation, route }) => {
                         data={history}
                         ListEmptyComponent={_renderEmptyChat}
                         renderItem={_renderChat}
-                        onContentSizeChange={() => page !== 2 ? '' : flatListref.current.scrollToEnd({ animated: true })}
+                        keyboardDismissMode='none'
+                        // onContentSizeChange={() => flatListref?.current?.scrollToEnd({ animated: true })}
                         onLayout={() => flatListref.current.scrollToEnd({ animated: true })}
                         contentContainerStyle={{ paddingBottom: dynamicSize(10), width: SCREEN_WIDTH, paddingHorizontal: dynamicSize(10) }}
                         onEndReachedThreshold={0}
-                        onMomentumScrollBegin={loadmore}
+                        onScroll={onContentOffsetChanged}
+                        // onMomentumScrollBegin={loadmore}
                         keyExtractor={(item, index) => index}
                     />
                     <MyView style={styles['textContainer']}>

@@ -1,19 +1,21 @@
-import { FlatList, Platform, RefreshControl, View, StyleSheet } from 'react-native';
-import RNIap, { requestPurchase, requestSubscription, useIAP, consumePurchaseAndroid, flushFailedPurchasesCachedAsPendingAndroid } from 'react-native-iap';
-import React, { useEffect, useState } from 'react';
+import { FlatList, Platform, RefreshControl, View, StyleSheet, TouchableOpacity } from 'react-native';
+import RNIap, { requestPurchase, initConnection, purchaseUpdatedListener, purchaseErrorListener, validateReceiptAndroid, requestSubscription, endConnection, useIAP, consumePurchaseAndroid, flushFailedPurchasesCachedAsPendingAndroid } from 'react-native-iap';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { isAndroid, SCREEN_HEIGHT, SCREEN_WIDTH, showToast } from './helper';
 import { Button, Loader, MyImage, MyText, MyView, Touchable } from './customComponent';
 import styles from '../navigation/styles';
 import { dynamicSize, getFontSize } from '../utils/responsive';
-import { BLACK, LIGHT_BROWN, LIGHT_GRAY, LIGHT_WHITE, THEME, WHITE } from '../utils/colors';
+import { BLACK, LIGHT_BROWN, LIGHT_GRAY, LIGHT_WHITE, THEME, THEME_OFFSET, WHITE } from '../utils/colors';
 import { montserratBold, montserratMedium } from '../utils/fontFamily';
 import { tickIcon } from "./icons"
 import { saveSubscriptionAction } from '../redux/action';
 import { useRoute } from '@react-navigation/native';
 import apiRequest from '../services';
 import { navigateToScreen } from '../navigation/rootNav';
+import { method } from '../services/serviceConstant';
+import { BASE_URL } from '../services/serviceConfig';
 
 const itemSubs = Platform.select({
     ios: [
@@ -44,11 +46,17 @@ export const validateIAP = async transactionData => {
         else return null
     }
     else {
-        const { packageNameAndroid, productId, purchaseToken, transactionId, googleAccessToken } = transactionData
-        console.log('reqparam==>', packageNameAndroid, productId, purchaseToken, transactionId, googleAccessToken)
-        const androidValidate = await RNIap.validateReceiptAndroid(packageNameAndroid, productId, purchaseToken, googleAccessToken, true) || null
-        if (androidValidate) return androidValidate
-        else return null
+        try {
+            const { packageNameAndroid, productId, purchaseToken, transactionId, googleAccessToken } = transactionData
+            console.log('reqparam==>', packageNameAndroid, productId, purchaseToken, transactionId, googleAccessToken)
+            const androidValidate = await validateReceiptAndroid(packageNameAndroid, productId, purchaseToken, googleAccessToken, true) || null
+            console.log("androidValidate===>0", androidValidate)
+            if (androidValidate) return androidValidate
+            else return null
+        } catch (error) {
+            console.log("androidValidate===>1", error, JSON.stringify(error))
+            return null
+        }
     }
 }
 
@@ -66,9 +74,11 @@ const Subscriptions = ({ navigation }) => {
         getProducts,
         getSubscriptions,
         getAvailablePurchases,
-        getPurchaseHistories
+        // getPurchaseHistories
     } = useIAP();
     const route = useRoute();
+    const purchaseUpdateSubscription = useRef(null);
+    const purchaseErrorSubscription = useRef(null);
 
     const rstate = useSelector(state => { return state })
     const { PURCHASE } = rstate['localeReducer']['locale']
@@ -79,11 +89,10 @@ const Subscriptions = ({ navigation }) => {
     const [selectedPlan, setSelectedPlan] = useState(null)
 
     useEffect(() => {
-        console.log("connected => ", connected)
-        if (connected) {
-            getPurchaseHistories()
+        return () => {
+            endConnection()
         }
-    }, [connected])
+    }, [])
 
     const flushPurchaseAndroid = async () => {
         const flushFailedPurchase = await flushFailedPurchasesCachedAsPendingAndroid()
@@ -91,8 +100,32 @@ const Subscriptions = ({ navigation }) => {
     }
 
     useEffect(() => {
-        getSubscriptions(itemSubs);
-    }, [getProducts, getSubscriptions]);
+        getSubs()
+        return () => {
+            if (purchaseUpdateSubscription?.current) {
+                purchaseUpdateSubscription?.current?.remove();
+                purchaseUpdateSubscription.current = null;
+            }
+
+            if (purchaseErrorSubscription?.current) {
+                purchaseErrorSubscription?.current?.remove();
+                purchaseErrorSubscription.current = null;
+            }
+        }
+    }, [itemSubs, getProducts, getSubscriptions]);
+
+    const getSubs = async () => {
+        try {
+            await initConnection();
+            if (Platform.OS === 'android') {
+                flushPurchaseAndroid()
+            }
+            const data = await getSubscriptions({ skus: itemSubs });
+            console.log("sdfdsfd==>", data)
+        } catch (error) {
+            console.log("errorr==>", error)
+        }
+    }
 
     useEffect(() => {
         console.log("subscriptions =>> ", subscriptions)
@@ -102,6 +135,26 @@ const Subscriptions = ({ navigation }) => {
     useEffect(() => {
         getAvailablePurchases()
     }, [subscriptions])
+
+    // Set up listeners using useRef
+    useEffect(() => {
+        purchaseUpdateSubscription.current =
+            purchaseUpdatedListener(checkCurrentPurchase);
+        purchaseErrorSubscription.current =
+            purchaseErrorListener(handlePurchaseError);
+
+        return () => {
+            if (purchaseUpdateSubscription.current) {
+                purchaseUpdateSubscription.current.remove();
+                purchaseUpdateSubscription.current = null;
+            }
+
+            if (purchaseErrorSubscription.current) {
+                purchaseErrorSubscription.current.remove();
+                purchaseErrorSubscription.current = null;
+            }
+        };
+    }, []);
 
     useEffect(() => {
         console.log("currentPurchaseError =>> ", currentPurchaseError)
@@ -124,7 +177,8 @@ const Subscriptions = ({ navigation }) => {
     useEffect(() => {
         console.log("availablePurchases =>> ", availablePurchases)
         if (availablePurchases?.length > 0) {
-            handleChange(availablePurchases[0], 'purchasedItem')
+            const purchasedItem = availablePurchases[0]
+            setSelectedPlan(purchasedItem.productId)
         }
     }, [availablePurchases])
 
@@ -137,70 +191,87 @@ const Subscriptions = ({ navigation }) => {
     }
 
     useEffect(() => {
-        const checkCurrentPurchase = async (purchase) => {
-            if (purchase) {
-                const receipt = purchase.transactionReceipt;
-                if (receipt) {
-                    try {
-                        const ackResult = await finishTransaction(purchase);
-                        console.log('ackResult', ackResult);
-                        if (Platform.OS == 'ios') {
-                            const validateiOSReceipt = await validateIAP(purchase)
-                            console.log('validateiOSReceipt=>', validateiOSReceipt)
-                            const param = {
-                                "PackageName": purchase.productId,
-                                "PlatFormType": Platform.OS == "ios" ? 2 : 1,
-                                "TnxId": purchase?.transactionId,
-                                "Price": selectedIAPPayment?.price,
-                                "SubscriptionStart": moment(purchase?.transactionDate).utc(),
-                                "RecieptData": receipt,
-                            }
-                            console.log("Subscription Data =>>", { ...param })
-                            dispatch(saveSubscriptionAction(param, route.name == "providerProfileSetupSix" ? false : true))
-                        } else {
-                            // TO DO : TESTING
-                            if (ackResult['code'] == 'OK' && ackResult['responseCode'] === 0) {
-                                const accessTokenResp = await apiRequest({}, '/api/Transaction/GetGoogleAccessToken', method['GET'])
-                                console.log('access token=>', accessTokenResp)
-                                if (accessTokenResp?.Status === 200) {
-                                    if (accessTokenResp?.result?.Token) {
-                                        const accessToken = accessTokenResp?.result?.Token
-                                        const validateAndroidReceipt = await validateIAP({ ...purchase, googleAccessToken: accessToken })
-                                        console.log('validateAndroidReceipt==>', validateAndroidReceipt)
-                                        const { packageNameAndroid, productId, purchaseToken, transactionId } = purchase
-                                        if (validateAndroidReceipt) {
-                                            const param = {
-                                                "PackageName": purchase.productId,
-                                                "PlatFormType": Platform.OS == "ios" ? 2 : 1,
-                                                "TnxId": purchase?.transactionId,
-                                                "Price": selectedIAPPayment?.price,
-                                                "SubscriptionStart": purchase?.transactionDate,
-                                                "RecieptData": receipt,
-                                            }
-                                            console.log("Subscription Data =>>", { ...param })
-                                            dispatch(saveSubscriptionAction(param, route.name == "providerProfileSetupSix" ? false : true))
-                                        }
-                                        else {
-                                            showToast('Error in validating android receipt', 'danger')
-                                        }
+        console.log("asdasda=sd=asd=a==s=====>###1")
+        if (currentPurchase?.productId) {
+            console.log("asdasda=sd=asd=a==s=====>###2")
+            checkCurrentPurchase(currentPurchase);
+        }
+    }, [currentPurchase, finishTransaction]);
+
+    const checkCurrentPurchase = async (purchase) => {
+        console.log("asdasda=sd=asd=a==s=====>###3", JSON.stringify(purchase))
+        if (purchase) {
+            console.log("asdasda=sd=asd=a==s=====>###4", JSON.stringify(selectedIAPPayment))
+            const receipt = purchase.transactionReceipt;
+            console.log("asdasda=sd=asd=a==s=====>###5")
+            try {
+                console.log("asdasda=sd=asd=a==s=====>###6")
+                const ackResult = await finishTransaction({ purchase: purchase });
+                console.log("asdasda=sd=asd=a==s=====>###7")
+                console.log('ackResult', ackResult);
+                if (Platform.OS == 'ios') {
+                    const validateiOSReceipt = await validateIAP(purchase)
+                    console.log('validateiOSReceipt=>', validateiOSReceipt)
+                    const param = {
+                        "PackageName": purchase.productId,
+                        "PlatFormType": Platform.OS == "ios" ? 2 : 1,
+                        "TnxId": purchase?.transactionId,
+                        "Price": selectedIAPPayment?.priceAmountMicros,
+                        "SubscriptionStart": moment(purchase?.transactionDate).utc(),
+                        "RecieptData": receipt,
+                    }
+                    console.log("Subscription Data =>>", { ...param })
+                    dispatch(saveSubscriptionAction(param, route.name == "providerProfileSetupSix" ? false : true))
+                } else {
+                    // TO DO : TESTING
+                    if (ackResult['code'] == 'OK' && ackResult['responseCode'] === 0) {
+                        const accessTokenResp = await apiRequest({}, `${BASE_URL}/api/Transaction/GetGoogleAccessToken`, method['GET'])
+                        console.log('access token=>', accessTokenResp)
+                        if (accessTokenResp?.status === 200) {
+                            if (accessTokenResp?.result?.Token) {
+                                const accessToken = accessTokenResp?.result?.Token
+                                console.log("accessToken====>", accessToken)
+                                const validateIAPParams = { ...purchase, googleAccessToken: accessToken }
+                                console.log('validateAndroidReceipt==>0', validateIAPParams)
+                                const validateAndroidReceipt = await validateIAP(validateIAPParams)
+                                console.log('validateAndroidReceipt==>1', validateAndroidReceipt)
+                                const { packageNameAndroid, productId, purchaseToken, transactionId } = purchase
+                                // if (validateAndroidReceipt) {
+                                    const param = {
+                                        "PackageName": purchase.productId,
+                                        "PlatFormType": Platform.OS == "ios" ? 2 : 1,
+                                        "TnxId": purchase?.transactionId,
+                                        "Price": selectedIAPPayment?.priceAmountMicros,
+                                        "SubscriptionStart": purchase?.transactionDate,
+                                        "RecieptData": receipt,
                                     }
-                                }
-                                else {
-                                    showToast(accessTokenResp.message, 'danger')
-                                }
+                                    console.log("Subscription Data =>>", { ...param })
+                                    dispatch(saveSubscriptionAction(param, route.name == "providerProfileSetupSix" ? false : true))
+                                // }
+                                // else {
+                                //     showToast('Error in validating android receipt', 'danger')
+                                // }
                             }
                         }
-                    } catch (ackErr) {
-                        console.log('ackErr', ackErr);
-                        showToast(ackErr.message, 'danger')
-                    } finally {
-                        getAvailablePurchases()
+                        else {
+                            showToast(accessTokenResp.message, 'danger')
+                        }
                     }
                 }
+            } catch (ackErr) {
+                console.log("asdasda=sd=asd=a==s=====>###8")
+                console.log('ackErr', ackErr);
+                showToast(ackErr.message, 'danger')
+            } finally {
+                getAvailablePurchases()
             }
-        };
-        checkCurrentPurchase(currentPurchase);
-    }, [currentPurchase, finishTransaction]);
+        }
+    };
+
+    const handlePurchaseError = error => {
+        console.warn('purchaseErrorListener', error);
+    };
+
 
     const [state, setState] = useState({
         subscriptions: [],
@@ -208,13 +279,23 @@ const Subscriptions = ({ navigation }) => {
         purchasedItem: ''
     })
 
-    const purchase = () => {
-        if (selectedPlan) {
-            let item = state.subscriptions.filter(plan => plan.productId == selectedPlan)[0]
+    const purchase = async (item, ppl, offer) => {
+        if (item) {
+            setSelectedPlan(item.productId)
+            // let item = state.subscriptions.filter(plan => plan.productId == selectedPlan)[0]
+            console.log("selectedPlan===>", offer?.offerToken, JSON.stringify(ppl), JSON.stringify(offer))
             try {
-                setSelectedIAP(item)
-                requestSubscription(item.productId);
+                setSelectedIAP(ppl)
+                console.log("selectedPlan===>1", item.productId, JSON.stringify(item))
+                const res = await requestSubscription({
+                    sku: item.productId,
+                    ...(offer?.offerToken && {
+                        subscriptionOffers: [{ sku: item.productId, offerToken: offer?.offerToken }],
+                    })
+                });
+                console.log("resres==>", res)
             } catch (error) {
+                console.log("selectedPlan===>2", JSON.stringify(error))
                 showToast(error.message, 'info')
             }
         }
@@ -228,22 +309,36 @@ const Subscriptions = ({ navigation }) => {
     // /****************************** Flatlist Functions *************************************/
     const _keyExtractor = (item, index) => item + index
 
+    const renderPrice = (ppl) => {
+        const isFree = ppl.priceAmountMicros == 0 && ppl.formattedPrice == 'Free'
+        if (isFree) return (<MyText key={ppl.formattedPrice} style={{ ...styless.subscriptionPrice, color: WHITE }}>{`${ppl.formattedPrice} for 7 days`}</MyText>)
+        else return (<MyText key={ppl.formattedPrice} style={{ ...styless.subscriptionPrice, color: WHITE }}>{`Subscribe now for ${ppl.formattedPrice}`}</MyText>)
+    }
+
     const _renderNormalList = ({ item, index }) => {
         const pur_plan_id = rstate.profileReducer?.providerprofile?.AdMobSubscribtion?.PackageName
         const is_subscribed = pur_plan_id == item.productId
+        const offer = item.subscriptionOfferDetails?.[0]
         return (
-            <Touchable onPress={() => setSelectedPlan(item.productId)} style={[styless['subscriptionContainer'], { backgroundColor: selectedPlan == item.productId ? THEME : LIGHT_WHITE }]}>
+            <MyView style={[styless['subscriptionContainer'], { backgroundColor: selectedPlan == item.productId ? LIGHT_BROWN : LIGHT_WHITE }]}>
                 {is_subscribed ?
                     <MyImage
                         style={styless['tickStyle']}
                         resizeMode={"contain"}
                         source={tickIcon} />
                     : null}
-                <MyText style={{ ...styless.subscriptionPrice, color: selectedPlan == item.productId ? WHITE : BLACK }}>{item.localizedPrice}</MyText>
+                {offer.pricingPhases.pricingPhaseList.map((ppl) => {
+                    const isFree = ppl.priceAmountMicros == 0 && ppl.formattedPrice == 'Free'
+                    return (
+                        <TouchableOpacity key={index?.toString()} onPress={() => purchase(item, ppl, offer)} style={{ alignItems: 'center', width: '80%', backgroundColor: THEME, borderRadius: 5, padding: 10, marginTop: isFree ? 0 : 10 }}>
+                            {renderPrice(ppl)}
+                        </TouchableOpacity>
+                    )
+                })}
+
                 <MyText style={{ ...styless.subscriptionPeriod, color: selectedPlan == item.productId ? WHITE : BLACK }}>{item.title}</MyText>
-                <MyText style={{ ...styless.subscriptionDescription, color: selectedPlan == item.productId ? WHITE : BLACK }}>{"Trial period : 2 months"}</MyText>
                 <MyText style={{ ...styless.subscriptionDescription, color: selectedPlan == item.productId ? WHITE : BLACK }}>{item.description}</MyText>
-            </Touchable>
+            </MyView>
         )
     }
 
@@ -257,31 +352,33 @@ const Subscriptions = ({ navigation }) => {
 
     return (
         <View style={{ flex: 1 }}>
-            <FlatList
-                keyExtractor={_keyExtractor}
-                contentContainerStyle={{ marginTop: '5%', /* justifyContent:'space-around', flex: 1 */ }}
-                data={[...state.subscriptions]}
-                renderItem={_renderNormalList}
-                ItemSeparatorComponent={() => <MyView style={{ height: dynamicSize(15) }} />}
-                showsVerticalScrollIndicator={false}
-                ListEmptyComponent={<MyView style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginTop: SCREEN_HEIGHT * 0.2
-                }}>
-                    <MyText style={{}}>No Subscriptions found !</MyText>
-                </MyView>}
-            // refreshControl={<RefreshControl
-            //     refreshing={false}
-            //     onRefresh={() => onSwipeDown()}
-            // />}
-            />
+            <View style={{ flex: 1, marginBottom: 10 }}>
+                <FlatList
+                    keyExtractor={_keyExtractor}
+                    contentContainerStyle={{ marginTop: '5%', paddingVertical: 15,/* justifyContent:'space-around', flex: 1 */ }}
+                    data={[...state.subscriptions]}
+                    renderItem={_renderNormalList}
+                    ItemSeparatorComponent={() => <MyView style={{ height: dynamicSize(15) }} />}
+                    showsVerticalScrollIndicator={false}
+                    ListEmptyComponent={<MyView style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginTop: SCREEN_HEIGHT * 0.2
+                    }}>
+                        <MyText style={{}}>No Subscriptions found !</MyText>
+                    </MyView>}
+                // refreshControl={<RefreshControl
+                //     refreshing={false}
+                //     onRefresh={() => onSwipeDown()}
+                // />}
+                />
+            </View>
             <MyView style={{ alignItems: "center" }}>
-                {state.subscriptions.length > 0 && <Button
+                {/* {state.subscriptions.length > 0 && <Button
                     onPress={() => purchase()}
                     style={[styles['buttonStyleCont'], { width: SCREEN_WIDTH - dynamicSize(70) }]}
                     text={'Subscribe'}
-                />}
+                />} */}
                 <Button
                     onPress={_continue}
                     style={[styles['buttonStyleCont'], { width: SCREEN_WIDTH - dynamicSize(70), marginVertical: dynamicSize(10) }]}
@@ -314,8 +411,9 @@ const styless = StyleSheet.create({
         elevation: 7,
     },
     subscriptionPrice: {
+        textAlign: 'center',
         fontFamily: montserratBold,
-        fontSize: getFontSize(20)
+        fontSize: getFontSize(16)
     },
     subscriptionPeriod: {
         marginTop: SCREEN_HEIGHT * 0.01,

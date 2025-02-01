@@ -301,13 +301,17 @@ export const UPDATE_SERVICE_PRICE_URL = `${BASE_URL}/api/SPAppointment/UpdateApp
 
 export const GET_PROFESSIONS_LIST_URL = `${BASE_URL}/api/sp/GetProfessionalList`
 
-export const GET_SERVICES_BY_PROFESSION_URL = data => {
+export const GET_SERVICES_BY_PROFESSION_URL = (data, search) => {
     let str = ''
     data.forEach((element, index) => {
         2 < 1
         str += index < data.length - 1 ? `ProfessionIds=${element}&` : `ProfessionIds=${element}`
     });
-    return `${BASE_URL}/api/sp/GetServicesByProfessionIds?${str}`
+    let searchParam = ''
+    if(search) {
+        searchParam = `&search=${search}`
+    }
+    return `${BASE_URL}/api/sp/GetServicesByProfessionIds?${str}${searchParam}`
 }
 
 export const ADD_PROVIDER_PROFESSION_URL = `${BASE_URL}/api/sp/AddProviderProfessionals`

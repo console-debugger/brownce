@@ -1876,6 +1876,21 @@ const TabFive = ({ navigation }) => {
           component={Chat}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="spDetail"
+          isBack
+          component={SpDetail}
+          options={{
+            header: ({ scene, previous, navigation }) => (
+              <Header
+                isTheme
+                isBack
+                navigation={navigation}
+                title={'PROVIDER DETAIL'}
+              />
+            ),
+          }}
+        />
       </Stack.Navigator>
       {(focused && !isCustomer()) ? <AdView /> : null}
     </>
@@ -2047,11 +2062,11 @@ const RootNavigation = () => {
         await request(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY);
       }
       mobileAds()
-      .initialize()
-      .then(adapterStatuses => {
-        console.log('adapterStatuses=>,Initialization complete!',adapterStatuses)
-        // Initialization complete!
-      });
+        .initialize()
+        .then(adapterStatuses => {
+          console.log('adapterStatuses=>,Initialization complete!', adapterStatuses)
+          // Initialization complete!
+        });
       if (logToken) {
         serviceConst['token'] = logToken;
         serviceConst['role'] = userRole;

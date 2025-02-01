@@ -371,7 +371,7 @@ const ProviderProfile = ({ navigation }) => {
                 >
 
                     <CurveView />
-                    {loading ? <Loader isVisible={loading} /> : null}
+                    {/* {loading ? <Loader isVisible={loading} /> : null} */}
 
                     {/* <MyText onPress={_navToEditProfile} style={[styles['editText'], { alignSelf: 'flex-end' }]}>{EDIT}</MyText> */}
                     <MyView style={{ flexDirection: 'row', paddingHorizontal: 15, alignItems: 'center' }}>
@@ -390,9 +390,9 @@ const ProviderProfile = ({ navigation }) => {
                         </MyView> : null}
                     </MyView>
                     <MyView style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 15, marginTop: 30 }}>
-                        <Button onPress={_navToEditProfile} avoidLowerCase text={EDIT_PROFILE} style={{ width: SCREEN_WIDTH / 3.5, borderRadius: 10, backgroundColor: THEME_OFFSET, paddingHorizontal: 3, height: isAndroid ? dynamicSize(35) : dynamicSize(43), }} textStyle={{ fontSize: 13, fontFamily: montserratBold, textStyle: 'center' }} />
-                        <Button onPress={_onShareButton} avoidLowerCase text={SHARE_PROFILE} style={{ width: SCREEN_WIDTH / 3.5, borderRadius: 10, backgroundColor: THEME_OFFSET, paddingHorizontal: 3, height: isAndroid ? dynamicSize(35) : dynamicSize(43), }} textStyle={{ fontSize: 13, fontFamily: montserratBold, textStyle: 'center' }} />
-                        <Button onPress={() => providerprofile?.DocumentPath ? setmodalVisible(true) : showToast('This provider does not have license yet.')} avoidLowerCase text={VIEW_LICENSE} style={{ width: SCREEN_WIDTH / 3.5, borderRadius: 10, backgroundColor: THEME_OFFSET, paddingHorizontal: 3, height: isAndroid ? dynamicSize(35) : dynamicSize(43), }} textStyle={{ fontSize: 13, fontFamily: montserratBold, textStyle: 'center' }} />
+                        <Button onPress={_navToEditProfile} avoidLowerCase text={EDIT_PROFILE} style={{ width: SCREEN_WIDTH / 3.5, borderRadius: 10, backgroundColor: THEME_OFFSET, paddingHorizontal: 3, height: isAndroid ? dynamicSize(35) : dynamicSize(43), }} textStyle={{ fontSize: 13, fontFamily: montserratBold, textAlign: 'center' }} />
+                        <Button onPress={_onShareButton} avoidLowerCase text={SHARE_PROFILE} style={{ width: SCREEN_WIDTH / 3.5, borderRadius: 10, backgroundColor: THEME_OFFSET, paddingHorizontal: 3, height: isAndroid ? dynamicSize(35) : dynamicSize(43), }} textStyle={{ fontSize: 13, fontFamily: montserratBold, textAlign: 'center' }} />
+                        <Button onPress={() => providerprofile?.DocumentPath ? setmodalVisible(true) : showToast('This provider does not have license yet.')} avoidLowerCase text={VIEW_LICENSE} style={{ width: SCREEN_WIDTH / 3.5, borderRadius: 10, backgroundColor: THEME_OFFSET, paddingHorizontal: 3, height: isAndroid ? dynamicSize(35) : dynamicSize(43), }} textStyle={{ fontSize: 13, fontFamily: montserratBold, textAlign: 'center' }} />
                     </MyView>
                     <MyText style={{ fontSize: 12, alignSelf: 'center', fontFamily: montserratBold, marginTop: 20 }}>{HOURS_OF_OPERATION}</MyText>
                     <WeekDayTimings

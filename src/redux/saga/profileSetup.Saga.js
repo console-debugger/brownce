@@ -952,9 +952,9 @@ export function* GetServicesByProfessionSaga() {
 
 function* getServicesByProfession(param) {
     try {
-        const { payload } = param
+        const { payload, search } = param
         yield put(loaderAction(true))
-        const getServicesRes = yield apiRequest({}, GET_SERVICES_BY_PROFESSION_URL(payload), method['GET'])
+        const getServicesRes = yield apiRequest({}, GET_SERVICES_BY_PROFESSION_URL(payload, search), method['GET'])
 
         if (getServicesRes['status'] === 200) {
             const newResult = getServicesRes['result'].map((item, index) => {
@@ -994,8 +994,11 @@ export function* AddProviderProfessionSaga() {
 function* addProviderProfession(param) {
     try {
         const { payload } = param
+        yield put(loaderAction(true))
         const professionResp = yield apiRequest({ "ProfessionalIds": payload.services }, ADD_PROVIDER_PROFESSION_URL, method['POST'])
         if (professionResp['status'] === 200) {
+            yield put(loaderAction(false))
+            delay(500)
             if (payload.isSetupComplete) {
                 navigateToScreen('allServices', { selectedServices: payload.services })
             } else {
@@ -1005,6 +1008,7 @@ function* addProviderProfession(param) {
             showToast(professionResp['message'])
         }
     } catch (err) {
+        yield put(loaderAction(false))
         showToast(serviceError['CATCH_ERROR'])
     }
 }

@@ -3,7 +3,7 @@ import { FlatList, } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useDispatch, useSelector } from 'react-redux'
 import commonStyle from '../../components/commonStyle'
-import { Button, KeyboardAwareScroll, MyText, MyView, SafeArea, SecondaryButton } from '../../components/customComponent'
+import { Button, KeyboardAwareScroll, Loader, MyText, MyView, SafeArea, SearchInput, SecondaryButton } from '../../components/customComponent'
 import { isAndroid, SCREEN_HEIGHT, SCREEN_WIDTH, showToast } from '../../components/helper'
 import { updateServicesAction, changeServiceAction, clearMessageCase, getServicesByProfessionAction, getServicesListAction } from '../../redux/action'
 import { apiKey } from '../../services/serviceConstant'
@@ -13,6 +13,7 @@ import styles from './styles'
 import { GET_ALL_SERVIES_SUCCESS_ACTION, GET_SERVICES_BY_PROFESSION_SUCCESS_ACTION } from '../../redux/action/type'
 import { montserratBold, montserratMedium } from '../../utils/fontFamily'
 
+let timeout
 // All services UI
 const AllServices = ({ navigation, route }) => {
     const { selectedServices } = route.params
@@ -20,22 +21,38 @@ const AllServices = ({ navigation, route }) => {
     const state = useSelector(state => { return state })
     const { CONTINUE, ADD_CUSTOM_SERVICES } = state['localeReducer']['locale']
     const { services, customservices, messageCase, allservices, servicesByProfession } = state['hairReducer']
+    const { loading } = state['loaderReducer']
     const { providerprofile } = state.profileReducer.providerprofile
     const [servs, setServs] = useState([])
     const [selectedSubServices, setSelectedSubServices] = useState([])
     const [ServicesProvided, setServicesProvidedData] = useState([])
     const [servicesLoader, setServicesLoader] = useState(false)
+    const [search, setsearch] = useState('')
+
+    // useEffect(() => {
+    //     if (search.trim().length) {
+    //         const param = {
+    //             "Search": search
+    //         }
+    //         search ? dispatch(SearchloaderAction(true)) : dispatch(getCustomServicesAction(param))
+    //         dispatch(getCustomServicesAction(param))
+    //     }
+    // }, [search])
 
     useEffect(() => {
-        dispatch(getServicesByProfessionAction(selectedServices))
-
-    }, [])
+        if (timeout) clearTimeout(timeout)
+        timeout = setTimeout(() => {
+            timeout = null
+            dispatch(getServicesByProfessionAction(selectedServices, search))
+        }, 500);
+    }, [search])
 
     useEffect(() => {
+        console.log("asd=asd=sa====>", search, providerprofile?.UserId)
         if (providerprofile?.UserId) {
             setServicesLoader(true)
             dispatch(getServicesListAction({
-                UserId: providerprofile?.UserId
+                UserId: providerprofile?.UserId,
             }, (response) => {
                 setServicesLoader(false)
                 if (response) {
@@ -43,7 +60,7 @@ const AllServices = ({ navigation, route }) => {
                 }
             }))
         }
-    }, [providerprofile?.UserId])
+    }, [search, providerprofile?.UserId])
 
     useEffect(() => {
         setServs([...servicesByProfession])
@@ -154,6 +171,10 @@ const AllServices = ({ navigation, route }) => {
         <SafeArea style={{ backgroundColor: LIGHT_WHITE, paddingTop: -useSafeAreaInsets().top }}>
             <KeyboardAwareScroll contentContainerStyle={{ alignItems: 'center' }}>
                 <MyText style={[commonStyle['extraBoldText'], commonStyle['profileTitle'], { marginTop: SCREEN_HEIGHT * 0.01 }]}>{''}</MyText>
+                <SearchInput
+                    style={{ width: '85%', marginTop: 10 }}
+                    value={search}
+                    onChangeText={(value) => setsearch(value)} />
                 <FlatList
                     key='services'
                     keyExtractor={_keyExtractor}
@@ -166,6 +187,7 @@ const AllServices = ({ navigation, route }) => {
                 />
                 <Button avoidLowerCase onPress={_validate1} style={[styles['buttonStyleCont'], { width: SCREEN_WIDTH - dynamicSize(70), marginBottom: 0 }]} text={ADD_CUSTOM_SERVICES} />
                 <Button onPress={_validate} style={[styles['buttonStyleCont'], { width: SCREEN_WIDTH - dynamicSize(70) }]} text={CONTINUE} />
+                {loading ? <Loader /> : null}
             </KeyboardAwareScroll>
         </SafeArea>
     )

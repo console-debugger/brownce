@@ -12,6 +12,7 @@ import { plusBrownIcon } from "../../components/icons"
 import styles from './styles'
 import { useState } from 'react'
 
+let timeout = null
 // CHnage of servieces list UI
 const ChangeCustomServiceList = ({ navigation }) => {
 
@@ -30,11 +31,15 @@ const ChangeCustomServiceList = ({ navigation }) => {
 
     useEffect(() => {
         if (search.trim().length) {
-            const param = {
-                "Search": search
-            }
-            search ? dispatch(SearchloaderAction(true)) : dispatch(getCustomServicesAction(param))
-            dispatch(getCustomServicesAction(param))
+            if (timeout) clearTimeout(timeout)
+            timeout = setTimeout(() => {
+                timeout = null
+                const param = {
+                    "Search": search
+                }
+                search ? dispatch(SearchloaderAction(true)) : dispatch(getCustomServicesAction(param))
+                dispatch(getCustomServicesAction(param))
+            }, 500);
         }
     }, [search])
 

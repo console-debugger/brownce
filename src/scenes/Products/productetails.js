@@ -10,7 +10,7 @@ import { ActivityIndicator, ScrollView } from "react-native"
 import { minusicon, plusicon } from '../../components/icons'
 import { PaymentPopup, AddressPopup } from "../../components/alert"
 import { useDispatch, useSelector } from "react-redux"
-import { addOrderAction, clearMessageCase, loaderAction, myAddressAction, paymentSaveAction } from "../../redux/action"
+import { addOrderAction, clearMessageCase, getProviderProfileSuccessAction, loaderAction, myAddressAction, paymentSaveAction } from "../../redux/action"
 import { ADD_ORDER_SUCCESS_ACTION, MY_ADDRESS_SUCCESS_ACTION } from "../../redux/action/type"
 import { token } from "../../services/serviceConstant"
 // import { requestOneTimePayment, } from 'react-native-paypal';
@@ -237,7 +237,10 @@ const ProductDetails = ({ navigation, route }) => {
           </MyView>
           <MyText style={{ color: BLACK, fontSize: 15, marginLeft: 32, marginTop: 4 }}>{route.params.item.BrandName}</MyText>
           <MyText style={{ lineHeight: 22, color: BLACK, fontSize: 15, marginLeft: 32, marginTop: 4 }}>{`${SELLER} - `}
-            <MyText style={{ lineHeight: 22, color: BLACK, fontSize: 15, marginLeft: 32, marginTop: 4, color: THEME }}>{route.params.item.SellerName}</MyText>
+            <MyText onPress={() => {
+              dispatch(getProviderProfileSuccessAction({}))
+              navigation.navigate('spDetail', { id: route.params?.item?.['SellerId'] })
+            }} style={{ lineHeight: 22, color: BLACK, fontSize: 15, marginLeft: 32, marginTop: 4, color: THEME }}>{route.params.item.SellerName}</MyText>
           </MyText>
           <MyView style={{}}>
             <MyText style={{ lineHeight: 22, color: BLACK, fontSize: 15, marginLeft: 32, marginTop: 4 }}>{route.params.item.Description}</MyText>

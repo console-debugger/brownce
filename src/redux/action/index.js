@@ -407,8 +407,8 @@ export const getHistoryAppointmentSuccessAction = payload => ({
     type: TYPES['GET_HISTORY_APPOINTMENT_SUCCESS_ACTION'], payload
 })
 
-export const chatRoomAction = payload => ({
-    type: TYPES['CHAT_ROOM_ACTION'], payload
+export const chatRoomAction = (payload, callBack) => ({
+    type: TYPES['CHAT_ROOM_ACTION'], payload, callBack
 })
 
 export const chatRoomSuccessAction = payload => ({
@@ -439,11 +439,11 @@ export const saveChatAction = payload => ({
     type: TYPES['SAVE_CHAT_ACTION'], payload
 })
 
-export const getChatMessagesAction = payload => ({
-    type: TYPES['GET_CHAT_MESSAGE_ACTION'], payload
+export const getChatMessagesAction = (payload, callBack) => ({
+    type: TYPES['GET_CHAT_MESSAGE_ACTION'], payload, callBack
 })
 
-export const getChatMessagessuccessAction = payload => ({
+export const getChatMessagessuccessAction = (payload) => ({
     type: TYPES['GET_CHAT_MESSAGE_SUCCESS_ACTION'], payload
 })
 
@@ -455,7 +455,7 @@ export const getChatListSuccessAction = payload => ({
     type: TYPES['GET_CHAT_LIST_SUCCESS_ACTION'], payload
 })
 
-export const updateChatHistory = payload => ({
+export const updateChatHistoryAction = payload => ({
     type: TYPES['UPDATE_CHAT_MESSAGE_HISTORY_ACTION'], payload
 })
 
@@ -796,8 +796,8 @@ export const updateServicePriceSuccessAction = (payload, callBack) => ({
     type: TYPES.UPDATE_SERVICE_PRICE_SUCCESS_ACTION, payload, callBack
 })
 
-export const getServicesByProfessionAction = (payload, callBack) => ({
-    type: TYPES.GET_SERVICES_BY_PROFESSION_ACTION, payload, callBack
+export const getServicesByProfessionAction = (payload, search) => ({
+    type: TYPES.GET_SERVICES_BY_PROFESSION_ACTION, payload, search
 })
 
 export const getServicesByProfessionSuccessAction = (payload, callBack) => ({

@@ -4,7 +4,7 @@ import { FlatList, } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useDispatch, useSelector } from 'react-redux'
 import commonStyle from '../../components/commonStyle'
-import { Button, KeyboardAwareScroll, MyText, MyView, SafeArea, SecondaryButton, Touchable } from '../../components/customComponent'
+import { Button, KeyboardAwareScroll, Loader, MyText, MyView, SafeArea, SecondaryButton, Touchable } from '../../components/customComponent'
 import { isAndroid, SCREEN_HEIGHT, SCREEN_WIDTH, showToast } from '../../components/helper'
 import { navigateToScreen } from '../../navigation/rootNav'
 import { getAllServicesAction, saveServiceAction, loaderAction, getSpDataStepAction, updateProfileSetupervicesAction, getProfessionsListAction, addProviderProfessionAction, getProfileAction, getProviderProfileAction, getServicesListAction } from '../../redux/action'
@@ -101,6 +101,7 @@ const SelectProfession = ({ }) => {
             <MyView style={{ alignItems: 'center', }}>
                 <Button onPress={_validate} style={[styles['buttonStyleCont'], { width: SCREEN_WIDTH - dynamicSize(70) }]} text={CONTINUE} />
             </MyView>
+            {loading ? <Loader /> : null}
             {/* </KeyboardAwareScroll> */}
         </SafeArea>
     )

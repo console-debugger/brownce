@@ -506,7 +506,7 @@ const ForumList = ({ navigation }) => {
               }
               maxToRenderPerBatch={8}
               onEndReachedThreshold={0.7}
-              ListFooterComponent={footerRender}
+              // ListFooterComponent={footerRender}
               onEndReached={_onEndReachedFeeds}
             />
           </>

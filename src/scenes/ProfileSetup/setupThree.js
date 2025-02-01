@@ -23,8 +23,8 @@ import { reverseGeocode } from '../../services'
 // Profile setup UI
 
 const STATIC_LOCATION = {
-    lat: 40.4021999,
-    long: -75.9096994
+    lat: 37.774929,
+    long: -122.419418
 }
 
 const ProfileSetupThree = ({ navigation }) => {

@@ -293,7 +293,8 @@
   "SHARE_PROFILE": "Share Profile",
   "EDIT_PROFILE": "Edit Profile",
   "PRODUCTS": "PRODUCTS",
-  "UPDATE_SERVICES":"Update Services",
-  "UPDATE_CUSTOM_SERVICES":"Update Custom Services",
-  "ADD_CUSTOM_SERVICES":"Add Custom Service"
+  "UPDATE_SERVICES": "Update Services",
+  "UPDATE_CUSTOM_SERVICES": "Update Custom Services",
+  "ADD_CUSTOM_SERVICES": "Add Custom Service",
+  "ADDRESS": "Address"
 }
