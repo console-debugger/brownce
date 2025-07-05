@@ -6,7 +6,7 @@ import { BLACK, LIGHT_GRAY, WHITE } from '../utils/colors'
 import { useSelector } from 'react-redux'
 import { downArrow } from './icons'
 import { dynamicSize, getFontSize } from '../utils/responsive'
-import { montserratSemiBold } from '../utils/fontFamily'
+import { interSemiBold } from '../utils/fontFamily'
 
 const MyCountryPicker = props => {
 
@@ -36,7 +36,7 @@ const MyCountryPicker = props => {
             </Touchable>
             <CountryPicker
                 containerButtonStyle={[{ height: dynamicSize(40), justifyContent: 'center', height: 0, opacity: 0 }, pickerStyle]}
-                theme={{ fontSize: getFontSize(16), fontFamily: montserratSemiBold, onBackgroundTextColor: BLACK }}
+                theme={{ fontSize: getFontSize(16), fontFamily: interSemiBold, onBackgroundTextColor: BLACK }}
                 {...{
                     countryCode,
                     withFilter: true,

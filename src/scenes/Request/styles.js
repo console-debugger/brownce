@@ -10,9 +10,9 @@ import {
   BLACK,
 } from '../../utils/colors';
 import {
-  montserratMedium,
-  montserratBold,
-  montserratSemiBold,
+  interMedium,
+  interBold,
+  interSemiBold,
 } from '../../utils/fontFamily';
 
 const styles = StyleSheet.create({
@@ -34,15 +34,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   bookingId: {
-    fontFamily: montserratMedium,
+    fontFamily: interMedium,
     color: MID_LIGHT_GRAY,
   },
   service: {
-    fontFamily: montserratMedium,
+    fontFamily: interMedium,
     color: MID_LIGHT_GRAY,
   },
   idvalue: {
-    fontFamily: montserratBold,
+    fontFamily: interBold,
   },
   itemMainContainer: {
     marginTop: SCREEN_HEIGHT * 0.015,
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: getFontSize(14),
-    fontFamily: montserratBold,
+    fontFamily: interBold,
   },
   mainContainer: {
     flex: 1,
@@ -79,20 +79,20 @@ const styles = StyleSheet.create({
   shareText: {
     marginLeft: dynamicSize(20),
     color: THEME,
-    fontFamily: montserratSemiBold,
+    fontFamily: interSemiBold,
     fontSize: getFontSize(16),
   },
   customername: {
     alignSelf: 'center',
     fontSize: getFontSize(16),
-    fontFamily: montserratSemiBold,
+    fontFamily: interSemiBold,
     marginBottom: dynamicSize(8),
   },
   detail: {
     alignSelf: 'center',
     fontSize: getFontSize(12),
     marginBottom: dynamicSize(5),
-    fontFamily: montserratSemiBold,
+    fontFamily: interSemiBold,
   },
   curveMain: {
     marginTop: SCREEN_HEIGHT * 0.04,
@@ -105,11 +105,11 @@ const styles = StyleSheet.create({
   },
   hairType: {
     marginLeft: dynamicSize(35),
-    fontFamily: montserratMedium,
+    fontFamily: interMedium,
     marginBottom: dynamicSize(10),
   },
   value: {
-    fontFamily: montserratBold,
+    fontFamily: interBold,
   },
   cardStyle: {
     borderWidth: 0.5,
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   },
   uploadText: {
     color: BLACK,
-    fontFamily: montserratSemiBold,
+    fontFamily: interSemiBold,
     marginVertical: SCREEN_HEIGHT * 0.015,
   },
   innerStyle: {
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
   },
   services: {
     marginLeft: SCREEN_WIDTH * 0.05,
-    fontFamily: montserratBold,
+    fontFamily: interBold,
     fontSize: getFontSize(14),
   },
   selected: {
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: dynamicSize(22),
   },
   notetitle: {
-    fontFamily: montserratBold,
+    fontFamily: interBold,
     fontSize: getFontSize(14),
   },
   notes: {

@@ -23,11 +23,8 @@ target 'BrownceCustomer' do
   setup_permissions([
     'AppTrackingTransparency'
   ])
+  pod 'boost', :podspec => '../node_modules/react-native/third-party-podspecs/boost.podspec'
 
-  target 'BrownceCustomerTests' do
-    inherit! :complete
-    # Pods for testing
-  end
 
   # Enables Flipper.
   #
@@ -38,21 +35,12 @@ target 'BrownceCustomer' do
   #   flipper_post_install(installer)
   # end
 
-  # post_install do |installer|
-  #   installer.pods_project.build_configurations.each do |config|
-  #     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
-  #     end
-  #   end
+  post_install do |installer|
+    installer.pods_project.build_configurations.each do |config|
+      config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+      end
+    end
 
-end
-
-target 'BrownceCustomer-tvOS' do
-  # Pods for BrownceCustomer-tvOS
-
-  target 'BrownceCustomer-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
 end
 
 target 'OneSignalNotificationServiceExtension' do

@@ -5,7 +5,7 @@ import { MyView, TouchableIcon, MyText, SafeArea } from './customComponent'
 import { SCREEN_WIDTH, SCREEN_HEIGHT, isAndroid } from './helper'
 import { backIcon, menuIcon } from './icons'
 import { dynamicSize, getFontSize } from '../utils/responsive'
-import { montserratBold } from '../utils/fontFamily'
+import { interBold } from '../utils/fontFamily'
 import { useSafeAreaInsets, SafeAreaView } from 'react-native-safe-area-context'
 
 const Header = props => {
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         flex: 1,
         fontSize: getFontSize(16),
-        fontFamily: montserratBold
+        fontFamily: interBold
     },
     rightIcon: {
         padding: dynamicSize(10),
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     leftText: {
         paddingHorizontal: dynamicSize(10),
         paddingVertical: dynamicSize(10),
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         color: THEME,
         zIndex: 2,
         position: 'absolute',
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     rightText: {
         paddingHorizontal: dynamicSize(10),
         paddingVertical: dynamicSize(10),
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         color: THEME,
         zIndex: 2,
         position: 'absolute',

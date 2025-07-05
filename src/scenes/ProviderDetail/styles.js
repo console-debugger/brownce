@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native'
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from '../../components/helper'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
-import { montserratSemiBold, montserratBold, montserratMedium } from '../../utils/fontFamily'
+import { interSemiBold, interBold, interMedium } from '../../utils/fontFamily'
 import { MID_LIGHT_GRAY, THEME, LIGHT_BROWN, LIGHT_WHITE, LIGHT_GRAY, WHITE, MID_GRAY, BACKGROUND, BLACK } from '../../utils/colors'
 
 const styles = StyleSheet.create({
@@ -21,10 +21,10 @@ const styles = StyleSheet.create({
     },
     nameStyle: {
         fontSize: getFontSize(14),
-        fontFamily: montserratBold
+        fontFamily: interBold
     },
     priceStyle: {
-        fontFamily: montserratMedium,
+        fontFamily: interMedium,
         fontSize: getFontSize(14),
     },
     address: {
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     title: {
         alignSelf: 'flex-start',
         fontSize: getFontSize(14),
-        fontFamily: montserratSemiBold,
+        fontFamily: interSemiBold,
         paddingHorizontal: dynamicSize(25)
     },
     buttonStyle: {
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     text: {
         color: BLACK,
         fontSize: 30,
-        fontWeight: 'bold'
+        fontFamily: interBold,
     },
     portfolioFlatList: {
         width: SCREEN_WIDTH,
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     },
     price: {
         color: THEME,
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         marginTop: 10,
         width: '50%'
     },

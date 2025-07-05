@@ -2,7 +2,7 @@ import { StyleSheet, Platform } from 'react-native'
 import { SCREEN_HEIGHT, SCREEN_WIDTH, isAndroid } from '../../components/helper'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
 import { MID_LIGHT_GRAY, LIGHT_BROWN, THEME, BLACK } from '../../utils/colors'
-import { montserratMedium, montserratBold, montserratSemiBold } from '../../utils/fontFamily'
+import { interMedium, interBold, interSemiBold } from '../../utils/fontFamily'
 
 const styles = StyleSheet.create({
     seperator: {
@@ -23,11 +23,11 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     bookingId: {
-        fontFamily: montserratMedium,
+        fontFamily: interMedium,
         color: MID_LIGHT_GRAY
     },
     idvalue: {
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         color: BLACK
     },
     itemMainContainer: {
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     name: {
         marginTop: Platform.OS == "ios" ? SCREEN_HEIGHT * 0.01 : SCREEN_HEIGHT * 0.01,
         fontSize: getFontSize(15),
-        fontFamily: montserratBold
+        fontFamily: interBold
     },
     innerContainer: {
         flexDirection: 'row',
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
         fontSize: getFontSize(12)
     },
     service: {
-        fontFamily: montserratMedium,
+        fontFamily: interMedium,
         color: MID_LIGHT_GRAY,
         marginTop: Platform.OS == "ios" ? SCREEN_HEIGHT * 0.01 : 0
     },
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         marginTop: SCREEN_HEIGHT * 0.001,
         marginLeft: dynamicSize(4),
-        fontFamily: montserratSemiBold,
+        fontFamily: interSemiBold,
         fontSize: getFontSize(12)
     },
     starView: {
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
         marginLeft: SCREEN_WIDTH * 0.35,
         color: THEME,
         fontSize: getFontSize(15),
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         marginBottom: 10,
         marginTop: isAndroid ? 0 : 0
     }

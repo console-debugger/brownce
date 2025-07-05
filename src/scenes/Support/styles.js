@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../components/helper'
 import { THEME, WHITE } from '../../utils/colors'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
-import { montserratBold, montserratMedium, montserratSemiBold } from '../../utils/fontFamily'
+import { interBold, interMedium, interSemiBold } from '../../utils/fontFamily'
 
 const styles = StyleSheet.create({
     upperContainer: {
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     referText: {
         textAlign: 'center',
         marginVertical: SCREEN_HEIGHT * 0.04,
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         fontSize: getFontSize(16)
     },
     referContainer: {
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     refCode: {
         flex: 1,
         alignSelf: 'center',
-        fontFamily: montserratSemiBold,
+        fontFamily: interSemiBold,
         fontSize: getFontSize(14)
     },
     copyContainer: {
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     copy: {
         color: WHITE,
         fontSize: getFontSize(15),
-        fontFamily: montserratMedium
+        fontFamily: interMedium
     },
     socialShare: {
         alignSelf: 'center',
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     },
     feedbackTitle: {
         alignSelf: 'flex-start',
-        fontFamily: montserratSemiBold,
+        fontFamily: interSemiBold,
         fontSize: 14,
     },
     feedbackContainer: {

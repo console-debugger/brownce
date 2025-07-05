@@ -2,13 +2,13 @@ import { StyleSheet } from 'react-native'
 import { WHITE } from '../../utils/colors'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from '../../components/helper'
-import { montserratBold } from '../../utils/fontFamily'
+import { interBold } from '../../utils/fontFamily'
 
 const styles = StyleSheet.create({
     label: {
         alignSelf: 'flex-start',
         marginLeft: dynamicSize(35),
-        fontFamily: montserratBold,
+        fontFamily: interBold,
     },
     picker: {
         flexDirection: 'row',
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
         marginVertical: SCREEN_HEIGHT * 0.01,
     },
     deposite: {
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         textAlign: 'center',
         paddingHorizontal: dynamicSize(35),
         flex: 1

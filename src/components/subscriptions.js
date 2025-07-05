@@ -8,7 +8,7 @@ import { Button, Loader, MyImage, MyText, MyView, Touchable } from './customComp
 import styles from '../navigation/styles';
 import { dynamicSize, getFontSize } from '../utils/responsive';
 import { BLACK, LIGHT_BROWN, LIGHT_GRAY, LIGHT_WHITE, THEME, THEME_OFFSET, WHITE } from '../utils/colors';
-import { montserratBold, montserratMedium } from '../utils/fontFamily';
+import { interBold, interMedium } from '../utils/fontFamily';
 import { tickIcon } from "./icons"
 import { saveSubscriptionAction } from '../redux/action';
 import { useRoute } from '@react-navigation/native';
@@ -415,12 +415,12 @@ const styless = StyleSheet.create({
     },
     subscriptionPrice: {
         textAlign: 'center',
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         fontSize: getFontSize(16)
     },
     subscriptionPeriod: {
         marginTop: SCREEN_HEIGHT * 0.01,
-        fontFamily: montserratMedium,
+        fontFamily: interMedium,
         fontSize: getFontSize(14)
     },
     subscriptionDescription: {

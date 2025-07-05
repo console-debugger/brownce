@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import { GRAY, THEME, WHITE } from "../../utils/colors";
 import { dynamicSize } from "../../utils/responsive";
 import { SCREEN_WIDTH } from "../../components/helper";
-import { montserratBold, montserratSemiBold } from "../../utils/fontFamily";
+import { interBold, interSemiBold } from "../../utils/fontFamily";
 
 const styles = StyleSheet.create({
     mainContainer: {
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 15,
         flex: 1,
         fontSize: 16,
-        fontFamily: montserratBold
+        fontFamily: interBold
     },
     sortIcon: {
         width: 30,
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15
     },
     bold: {
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         fontSize: 25
     },
     mediumText: {
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     statsValue: {
         marginTop: 5,
         fontSize: 14,
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         color: THEME
     },
     statsLabel: {
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     },
     sortText: {
         color: THEME,
-        fontFamily: montserratBold
+        fontFamily: interBold
     },
     smallCardIcon: {
         // marginTop: 15,

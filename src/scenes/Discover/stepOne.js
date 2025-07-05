@@ -9,7 +9,7 @@ import { FlatList } from 'react-native'
 import { THEME, LIGHT_WHITE, BLACK } from '../../utils/colors'
 import { loaderAction, getSearchServiceAction, updateServicesAction, getProfessionsListAction } from '../../redux/action'
 import { backIcon } from '../../components/icons'
-import { montserratMedium } from '../../utils/fontFamily'
+import { interMedium } from '../../utils/fontFamily'
 
 // @ Discover UI
 
@@ -129,7 +129,7 @@ const DiscoverOne = ({ navigation }) => {
                                     paddingHorizontal: dynamicSize(25),
                                     fontSize: getFontSize(14),
                                     color: BLACK,
-                                    fontFamily: montserratMedium
+                                    fontFamily: interMedium
                                 }}>
                                     {'No services found for this profession'}
                                 </MyText>

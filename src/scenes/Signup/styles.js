@@ -1,13 +1,13 @@
 import { StyleSheet } from 'react-native'
 import { BLACK, LIGHT_WHITE, MID_GRAY, THEME } from '../../utils/colors'
-import { montserrat, montserratMedium, montserratSemiBold } from '../../utils/fontFamily'
+import { inter, interMedium, interSemiBold } from '../../utils/fontFamily'
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../components/helper'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
 
 const styles = StyleSheet.create({
     signupDescription: {
         color: MID_GRAY,
-        fontFamily: montserratSemiBold,
+        fontFamily: interSemiBold,
         textAlign: 'center'
     },
     logo: {
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
         marginTop: dynamicSize(5),
         color: BLACK,
         fontSize: getFontSize(10),
-        fontFamily: montserratMedium,
+        fontFamily: interMedium,
         marginBottom: SCREEN_HEIGHT * 0.02 - dynamicSize(5)
     },
     buttonStyle: {
@@ -44,13 +44,13 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2
     },
     tabText: {
-        fontFamily: montserratSemiBold
+        fontFamily: interSemiBold
     },
     selectedTabText: {
-        fontFamily: montserratSemiBold
+        fontFamily: interSemiBold
     },
     unSelectedTabText: {
-        fontFamily: montserrat
+        fontFamily: inter
     }
 })
 

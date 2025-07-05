@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from '../../components/helper'
 import { LIGHT_WHITE, WHITE } from '../../utils/colors'
 import { getFontSize } from '../../utils/responsive'
-import { montserratSemiBold } from '../../utils/fontFamily'
+import { interSemiBold } from '../../utils/fontFamily'
 
 const styles = StyleSheet.create({
     seperator: {
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     },
     name: {
         fontSize: getFontSize(16),
-        fontFamily: montserratSemiBold
+        fontFamily: interSemiBold
     }
 })
 

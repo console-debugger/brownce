@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 import { LIGHT_GRAY, LIGHT_WHITE } from '../../utils/colors'
 import { SCREEN_WIDTH, SCREEN_HEIGHT, isAndroid } from '../../components/helper'
 import { dynamicSize } from '../../utils/responsive'
-import { montserratSemiBold } from '../../utils/fontFamily'
+import { interSemiBold } from '../../utils/fontFamily'
 
 const styles = StyleSheet.create({
     textInputWithImageContainer: {
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
     },
     answer: {
-        fontFamily: montserratSemiBold,
+        fontFamily: interSemiBold,
         paddingHorizontal: dynamicSize(15),
         width: '85%',
     },

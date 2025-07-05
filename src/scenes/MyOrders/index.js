@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   MyImage,
   MyText,
@@ -7,16 +7,16 @@ import {
   Loader,
   EmptyMessage,
 } from '../../components/customComponent';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {FlatList} from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { FlatList } from 'react-native';
 import styles from './style';
-import {GRAY, WHITE} from '../../utils/colors';
-import {montserratMedium} from '../../utils/fontFamily';
-import {useDispatch, useSelector} from 'react-redux';
-import {cancelOrderAction, customerOrderAction} from '../../redux/action';
-import {RemarkPopUp} from '../../components/alert';
-import {CANCEL_ORDER_SUCCESS_ACTION} from '../../redux/action/type';
-import {SCREEN_HEIGHT, convertToLocal} from '../../components/helper';
+import { GRAY, WHITE } from '../../utils/colors';
+import { interBold, interMedium } from '../../utils/fontFamily';
+import { useDispatch, useSelector } from 'react-redux';
+import { cancelOrderAction, customerOrderAction } from '../../redux/action';
+import { RemarkPopUp } from '../../components/alert';
+import { CANCEL_ORDER_SUCCESS_ACTION } from '../../redux/action/type';
+import { SCREEN_HEIGHT, convertToLocal } from '../../components/helper';
 import moment from 'moment';
 
 // Order List UI
@@ -25,8 +25,8 @@ const MyOrders = () => {
   const state = useSelector((state) => {
     return state;
   });
-  const {List, messageCase} = state['OrderReducer']['customerorders'];
-  const {loading} = state['loaderReducer'];
+  const { List, messageCase } = state['OrderReducer']['customerorders'];
+  const { loading } = state['loaderReducer'];
   const [modalVisible, setmodalVisible] = useState(false);
   const [remark, setremark] = useState('');
   const [orderId, setorderId] = useState('');
@@ -54,7 +54,7 @@ const MyOrders = () => {
   }, [messageCase]);
 
   const _seperator = () => {
-    return <MyView style={{height: 10}}></MyView>;
+    return <MyView style={{ height: 10 }}></MyView>;
   };
 
   const dateHandler = (dateItem) => {
@@ -85,7 +85,7 @@ const MyOrders = () => {
     if (!loading) {
       return (
         <EmptyMessage
-          style={{marginVertical: SCREEN_HEIGHT * 0.45}}
+          style={{ marginVertical: SCREEN_HEIGHT * 0.45 }}
           message={'No orders yet.'}
         />
       );
@@ -102,8 +102,8 @@ const MyOrders = () => {
     remark ? dispatch(cancelOrderAction(param)) : null;
   };
 
-  const renderItem = ({item}) => {
-    console.log('==>>>>', )
+  const renderItem = ({ item }) => {
+    console.log('==>>>>',)
     return (
       <MyView activeOpacity={1} style={styles.cardView}>
         <MyView style={styles.topView}>
@@ -111,7 +111,7 @@ const MyOrders = () => {
             <MyText
               numberOfLines={1}
               ellipsizeMode="tail"
-              style={[styles.id, {color: GRAY, fontFamily: montserratMedium}]}>
+              style={[styles.id, { color: GRAY, fontFamily: interMedium }]}>
               {`${'Order Id: '}`}
               <MyText
                 numberOfLines={1}
@@ -124,23 +124,23 @@ const MyOrders = () => {
           </MyView>
         </MyView>
         <MyView
-          style={{flexDirection: 'row', marginTop: 10, marginHorizontal: 7}}>
+          style={{ flexDirection: 'row', marginTop: 10, marginHorizontal: 7 }}>
           <MyImage
             source={{
               uri: item['ProductDetails']?.['ProductFiles']?.[0]?.['FilePath'],
             }}
             style={styles.thumbnail}
           />
-          <MyView style={{flex: 1}}>
+          <MyView style={{ flex: 1 }}>
             <MyView style={styles.contentContainer2}>
               <MyView style={styles.priceRow}>
                 <MyText style={styles.title}>
                   {item['ProductDetails']['ProductName']}
                 </MyText>
               </MyView>
-              <MyText style={{fontWeight: '500', marginVertical: 3}}>
+              <MyText style={{ fontFamily: interMedium, marginVertical: 3 }}>
                 {'By '}
-                <MyText style={{fontWeight: '700', fontSize: 13}}>
+                <MyText style={{ fontFamily: interBold, fontSize: 13 }}>
                   {item['ProductDetails']['SellerName']}
                 </MyText>
               </MyText>
@@ -157,7 +157,7 @@ const MyOrders = () => {
                     // {left: item['Status'] === 1 ? 90 : 140},
                   ]}>
                   <MyText
-                    style={{color: WHITE, fontWeight: '500', fontSize: 12}}>
+                    style={{ color: WHITE, fontFamily: interMedium, fontSize: 12 }}>
                     {item['StatusName']}
                   </MyText>
                 </MyView>
@@ -170,7 +170,7 @@ const MyOrders = () => {
   };
 
   return (
-    <SafeArea style={{paddingTop: -useSafeAreaInsets().top}}>
+    <SafeArea style={{ paddingTop: -useSafeAreaInsets().top }}>
       <Loader isVisible={loading} />
       <RemarkPopUp
         value={remark}

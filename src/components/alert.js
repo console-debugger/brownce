@@ -6,7 +6,7 @@ import { THEME, LIGHT_BROWN } from '../utils/colors'
 import { useSelector } from 'react-redux'
 import { TextInput } from 'react-native-gesture-handler'
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from './helper'
-import { montserratBold } from '../utils/fontFamily'
+import { interBold } from '../utils/fontFamily'
 
 export const MyAlert = props => {
 
@@ -232,7 +232,7 @@ export const UpdatePrice = props => {
     return (
         <CustomModal1 dismiss={dismiss} isVisible={isVisible} animationType={animationType}>
             <MyView style={[commonStyle['alertContainer1'], { justifyContent: 'center', }]}>
-                <MyText style={{ marginTop: SCREEN_HEIGHT * 0.02, alignSelf: 'center', fontFamily: montserratBold, fontSize: getFontSize(16) }} >
+                <MyText style={{ marginTop: SCREEN_HEIGHT * 0.02, alignSelf: 'center', fontFamily: interBold, fontSize: getFontSize(16) }} >
                     {"Adjust Total Price"}
                 </MyText>
                 <MyView style={{ flex: 1, justifyContent: 'center' }}>

@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 import { LIGHT_WHITE, THEME, LIGHT_GREY } from '../../utils/colors'
 import { SCREEN_HEIGHT, isAndroid, SCREEN_WIDTH } from '../../components/helper'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
-import { montserratBold, montserratSemiBold } from '../../utils/fontFamily'
+import { interBold, interSemiBold } from '../../utils/fontFamily'
 
 const styles = StyleSheet.create({
     mainContainer: {
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     mediumBoldText: {
         marginVertical: SCREEN_HEIGHT * 0.01,
         alignSelf: 'center',
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         fontSize: SCREEN_HEIGHT * 0.025,
     },
     messageText: {
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     },
     messageTextBold: {
         color: THEME,
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         fontSize: SCREEN_HEIGHT * 0.02
     },
     otpView: {
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
         marginTop: dynamicSize(20),
         marginHorizontal: dynamicSize(35),
         alignSelf: 'flex-start',
-        fontFamily: montserratSemiBold,
+        fontFamily: interSemiBold,
         fontSize: getFontSize(14)
     }
 })

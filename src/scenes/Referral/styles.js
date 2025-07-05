@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 import { THEME, WHITE } from '../../utils/colors'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../components/helper'
-import { montserratBold, montserratMedium } from '../../utils/fontFamily'
+import { interBold, interMedium } from '../../utils/fontFamily'
 
 const styles = StyleSheet.create({
     upperContainer: {
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     referText: {
         textAlign: 'center',
         marginVertical: SCREEN_HEIGHT * 0.04,
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         fontSize: getFontSize(16)
     },
     referContainer: {
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
     },
     refCode: {
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         fontSize: getFontSize(26)
     },
     copyContainer: {
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     copy: {
         color: WHITE,
         fontSize: getFontSize(15),
-        fontFamily: montserratMedium
+        fontFamily: interMedium
     },
     socialShare: {
         alignSelf: 'center',

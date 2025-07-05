@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import styles from './styles'
 import { locateIcon, backIcon, mapbgIcon, blackbackIcon } from '../../components/icons';
 import Geolocation from "react-native-geolocation-service"
-import { montserratBold } from '../../utils/fontFamily';
+import { interBold } from '../../utils/fontFamily';
 import { getFontSize } from '../../utils/responsive';
 import { getCurrentLocation } from '../../components/geolocation';
 import { isIOS } from '../../components/helper';
@@ -142,7 +142,7 @@ const Discover = ({ navigation }) => {
                                                     style={styles['image']} />
                                             </Text>
                                         </View>
-                                        <Text style={{ alignSelf: "center", left: Platform.OS == "ios" ? 6 : 5, bottom: -8, fontFamily: montserratBold, fontSize: getFontSize(12) }}>
+                                        <Text style={{ alignSelf: "center", left: Platform.OS == "ios" ? 6 : 5, bottom: -8, fontFamily: interBold, fontSize: getFontSize(12) }}>
                                             {item['Name']}
                                         </Text>
                                     </ImageBackground>

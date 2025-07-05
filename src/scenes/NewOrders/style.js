@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native'
 import { SCREEN_WIDTH } from '../../components/helper'
 import { BLACK, GRAY, THEME, WHITE } from '../../utils/colors'
-import { montserrat, montserratBold, montserratMedium } from '../../utils/fontFamily'
+import { inter, interBold, interMedium } from '../../utils/fontFamily'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
 
 const styles = StyleSheet.create({
@@ -27,17 +27,16 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     id: {
-        fontWeight: "bold",
+        fontFamily: interBold,
         fontSize: getFontSize(13),
         width: '35%',
         color: BLACK
     },
     date: {
-        fontWeight: "500",
         marginLeft: 20,
         fontSize: getFontSize(13),
         color: GRAY,
-        fontFamily: montserratMedium
+        fontFamily: interMedium
     },
     thumbnail: {
         width: dynamicSize(80),
@@ -51,11 +50,11 @@ const styles = StyleSheet.create({
     title: {
         marginVertical: 5,
         fontSize: 13,
-        fontWeight: Platform.OS === "ios" ? '800' : 'bold'
+        fontFamily: interBold,
     },
     price: {
         fontSize: 16,
-        fontWeight: Platform.OS === "ios" ? '800' : 'bold',
+        fontFamily: interBold,
         color: THEME,
         marginLeft: SCREEN_WIDTH * 0.1
     },
@@ -71,7 +70,7 @@ const styles = StyleSheet.create({
     descText: {
         color: BLACK,
         marginTop: 10,
-        fontWeight: '500',
+        fontFamily: interMedium,
         fontSize: getFontSize(14),
     },
     costRow: {
@@ -83,7 +82,7 @@ const styles = StyleSheet.create({
     cost: {
         fontSize: getFontSize(18),
         color: THEME,
-        fontWeight: 'bold',
+        fontFamily: interBold,
         alignSelf: 'flex-end'
     },
     itineraryBtn: {
@@ -99,7 +98,7 @@ const styles = StyleSheet.create({
     },
     emptytext: {
         fontSize: getFontSize(15),
-        fontWeight: '700'
+        fontFamily: interBold,
     },
     bottomRow: {
         overflow: 'hidden',
@@ -140,15 +139,15 @@ const styles = StyleSheet.create({
     },
     customerDetailBold: {
         marginVertical: dynamicSize(5),
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         fontSize: getFontSize(13)
     },
     label: {
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         fontSize: getFontSize(11)
     },
     value: {
-        fontFamily: montserrat,
+        fontFamily: inter,
         fontSize: getFontSize(11)
     }
 })

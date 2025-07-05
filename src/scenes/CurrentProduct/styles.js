@@ -1,13 +1,13 @@
 import { StyleSheet } from 'react-native'
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../components/helper'
 import { BLACK, LIGHT_BROWN, LIGHT_GRAY, LIGHT_WHITE, MID_GRAY, THEME, WHITE } from '../../utils/colors'
-import { montserratBold, montserratMedium, montserratSemiBold } from '../../utils/fontFamily'
+import { interBold, interMedium, interSemiBold } from '../../utils/fontFamily'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
 
 const styles = StyleSheet.create({
     shoptext: {
         fontSize: getFontSize(25),
-        fontFamily: montserratBold,
+        fontFamily: interBold,
     },
     button: {
         marginTop: '5%',
@@ -22,12 +22,12 @@ const styles = StyleSheet.create({
     },
     customerText: {
         color: WHITE,
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         fontSize: getFontSize(14)
     },
     providerText: {
         color: WHITE,
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         fontSize: getFontSize(14)
     },
     headerView: {
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     },
     userName: {
         color: WHITE,
-        fontFamily: montserratSemiBold,
+        fontFamily: interSemiBold,
         fontSize: getFontSize(16)
     },
     starView: {
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     },
     ratingText: {
         marginTop: 2,
-        fontFamily: montserratSemiBold,
+        fontFamily: interSemiBold,
         color: WHITE,
         fontSize: getFontSize(10),
         marginLeft: dynamicSize(5)
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     },
     price: {
         color: THEME,
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         marginTop: 10
     },
     desc: {
@@ -116,11 +116,11 @@ const styles = StyleSheet.create({
     text: {
         marginTop: 9,
         fontSize: getFontSize(10),
-        fontFamily: montserratBold
+        fontFamily: interBold
     },
     title: {
         fontSize: getFontSize(22),
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         paddingHorizontal: dynamicSize(35)
     },
     hairTypeFlatList: {
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     },
     uploadText: {
         color: BLACK,
-        fontFamily: montserratSemiBold,
+        fontFamily: interSemiBold,
         marginVertical: SCREEN_HEIGHT * 0.015
     },
     description: {
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
         fontSize: getFontSize(9),
         color: BLACK,
         borderWidth: 0,
-        fontFamily: montserratSemiBold
+        fontFamily: interSemiBold
     },
     seperatorStyle: {
         height: dynamicSize(20)
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginVertical: SCREEN_HEIGHT * 0.01,
         width: '50%',
-        fontFamily: montserratMedium,
+        fontFamily: interMedium,
         borderBottomWidth: 0.5,
         borderBottomColor: LIGHT_GRAY,
         marginBottom: 0
@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
     value: {
         position: 'absolute',
         fontSize: getFontSize(12),
-        fontFamily: montserratMedium,
+        fontFamily: interMedium,
         top: dynamicSize(-5)
     },
     addCustomService: {
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
     },
     addText: {
         color: WHITE,
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         fontSize: getFontSize(12)
     },
     addCircle: {

@@ -12,7 +12,7 @@ import { LicensePopup, MyAlert } from '../../components/alert'
 import { CANCEL_SUBSCRIPTION_SUCCESS_ACTION } from '../../redux/action/type'
 import { SCREEN_HEIGHT, SCREEN_WIDTH, appendAtTheRateInUserName, getData, isAndroid, isCustomer, isIOS, locationMapping, logAnalyticEvent, onShare, showToast, storeData, validateUrl } from '../../components/helper'
 import { PROVIDER_DASHBOARD } from '../../components/eventName'
-import { montserratBold, montserratSemiBold } from '../../utils/fontFamily'
+import { interBold, interSemiBold } from '../../utils/fontFamily'
 import { BLACK, GRAY, LIGHT_THEME_34, OFF_THEME, THEME, THEME_OFFSET, WHITE } from '../../utils/colors'
 import MyCoachMarks from '../../components/coachmarks'
 import { coachmarkBeautyBooker, coachmarkHome, coachmarkMarketPlace, coachmarkMenu, coachmarkMessage, coachmarkShopTalk, crossBold, pointerFinger, vettedIcon } from '../../components/icons'
@@ -390,11 +390,11 @@ const ProviderProfile = ({ navigation }) => {
                         </MyView> : null}
                     </MyView>
                     <MyView style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 15, marginTop: 30 }}>
-                        <Button onPress={_navToEditProfile} avoidLowerCase text={EDIT_PROFILE} style={{ width: SCREEN_WIDTH / 3.5, borderRadius: 10, backgroundColor: THEME_OFFSET, paddingHorizontal: 3, height: isAndroid ? dynamicSize(35) : dynamicSize(43), }} textStyle={{ fontSize: 13, fontFamily: montserratBold, textAlign: 'center' }} />
-                        <Button onPress={_onShareButton} avoidLowerCase text={SHARE_PROFILE} style={{ width: SCREEN_WIDTH / 3.5, borderRadius: 10, backgroundColor: THEME_OFFSET, paddingHorizontal: 3, height: isAndroid ? dynamicSize(35) : dynamicSize(43), }} textStyle={{ fontSize: 13, fontFamily: montserratBold, textAlign: 'center' }} />
-                        <Button onPress={() => providerprofile?.DocumentPath ? setmodalVisible(true) : showToast('This provider does not have license yet.')} avoidLowerCase text={VIEW_LICENSE} style={{ width: SCREEN_WIDTH / 3.5, borderRadius: 10, backgroundColor: THEME_OFFSET, paddingHorizontal: 3, height: isAndroid ? dynamicSize(35) : dynamicSize(43), }} textStyle={{ fontSize: 13, fontFamily: montserratBold, textAlign: 'center' }} />
+                        <Button onPress={_navToEditProfile} avoidLowerCase text={EDIT_PROFILE} style={{ width: SCREEN_WIDTH / 3.5, borderRadius: 10, backgroundColor: THEME_OFFSET, paddingHorizontal: 3, height: isAndroid ? dynamicSize(35) : dynamicSize(43), }} textStyle={{ fontSize: 13, fontFamily: interBold, textAlign: 'center' }} />
+                        <Button onPress={_onShareButton} avoidLowerCase text={SHARE_PROFILE} style={{ width: SCREEN_WIDTH / 3.5, borderRadius: 10, backgroundColor: THEME_OFFSET, paddingHorizontal: 3, height: isAndroid ? dynamicSize(35) : dynamicSize(43), }} textStyle={{ fontSize: 13, fontFamily: interBold, textAlign: 'center' }} />
+                        <Button onPress={() => providerprofile?.DocumentPath ? setmodalVisible(true) : showToast('This provider does not have license yet.')} avoidLowerCase text={VIEW_LICENSE} style={{ width: SCREEN_WIDTH / 3.5, borderRadius: 10, backgroundColor: THEME_OFFSET, paddingHorizontal: 3, height: isAndroid ? dynamicSize(35) : dynamicSize(43), }} textStyle={{ fontSize: 13, fontFamily: interBold, textAlign: 'center' }} />
                     </MyView>
-                    <MyText style={{ fontSize: 12, alignSelf: 'center', fontFamily: montserratBold, marginTop: 20 }}>{HOURS_OF_OPERATION}</MyText>
+                    <MyText style={{ fontSize: 12, alignSelf: 'center', fontFamily: interBold, marginTop: 20 }}>{HOURS_OF_OPERATION}</MyText>
                     <WeekDayTimings
                         jumpToPreviousWeek={jumpToPreviousWeek}
                         jumpToNextWeek={jumpToNextWeek}
@@ -414,7 +414,7 @@ const ProviderProfile = ({ navigation }) => {
                             {providerprofile?.Bio ? <MyText style={{ marginTop: 10, marginHorizontal: 25 }}>{providerprofile?.Bio || ''}</MyText> : <MyText style={{ color: THEME, textAlign: 'center' }}>{'No Data Found.'}</MyText>}
                         </> : null}
                         {selectedTab == 'rating' ? <>
-                            <RatingWithLabel style={{ backgroundColor: WHITE }} labelStyle={{ fontFamily: montserratBold }} isRateCount label={RATING} mytext={`${providerprofile['OverallRating']}/5`} />
+                            <RatingWithLabel style={{ backgroundColor: WHITE }} labelStyle={{ fontFamily: interBold }} isRateCount label={RATING} mytext={`${providerprofile['OverallRating']}/5`} />
                             {providerprofile?.['Reviews']?.map((item, index) => {
                                 return (
                                     <MyView key={index}>

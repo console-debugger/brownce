@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 import { SCREEN_HEIGHT, isAndroid, SCREEN_WIDTH } from '../components/helper'
 import { dynamicSize, getFontSize } from '../utils/responsive'
 import { WHITE, LIGHT_WHITE, THEME, LIGHT_BROWN, BLACK } from '../utils/colors'
-import { montserratSemiBold, montserratMedium } from '../utils/fontFamily'
+import { interSemiBold, interMedium } from '../utils/fontFamily'
 
 const styles = StyleSheet.create({
     drawerHeader: {
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         marginLeft: dynamicSize(15),
         color: WHITE,
         fontSize: getFontSize(16),
-        fontFamily: montserratMedium
+        fontFamily: interMedium
     },
     drawerLowerContent: {
         flex: 1,
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     },
     topTabBarText: {
         color: WHITE,
-        fontFamily: montserratSemiBold,
+        fontFamily: interSemiBold,
         fontSize: getFontSize(14)
     },
     borderView: {

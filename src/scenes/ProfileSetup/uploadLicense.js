@@ -14,6 +14,7 @@ import ImagePickerSelection from '../../components/imagePickerSelection'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
 import { logout, navigateToScreen } from '../../navigation/rootNav'
 import { ApprovalPopup } from '../../components/alert'
+import { interBold } from '../../utils/fontFamily'
 
 let timeout
 
@@ -84,9 +85,9 @@ const uploadLicense = ({ navigation }) => {
                         }
                     </Touchable>
                 </View>
-                <MyText style={{ textAlign: 'center', alignSelf: 'center', color: THEME, fontWeight: 'bold', fontSize: getFontSize(15), marginHorizontal: 20, marginTop: 10 }}>
+                <MyText style={{ textAlign: 'center', alignSelf: 'center', color: THEME, fontFamily: interBold, fontSize: getFontSize(15), marginHorizontal: 20, marginTop: 10 }}>
                     {'Note: '}
-                    <MyText style={{ color: BLACK, fontWeight: 'bold', fontSize: getFontSize(13) }}>
+                    <MyText style={{ color: BLACK, fontFamily: interBold, fontSize: getFontSize(13) }}>
                         {'Upload a blank image if you do not have your beauty license on hand. Remember to upload your beauty license later.'}
                     </MyText>
 

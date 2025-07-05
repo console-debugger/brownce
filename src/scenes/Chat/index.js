@@ -16,6 +16,7 @@ import { socket } from '../../services'
 import { GET_CHAT_MESSAGE_SUCCESS_ACTION } from '../../redux/action/type'
 import ReadMore from 'react-native-read-more-text';
 import moment from 'moment';
+import { interBold } from '../../utils/fontFamily';
 
 let timeout
 // @ Render Chat UI
@@ -134,7 +135,7 @@ const Chat = ({ navigation, route }) => {
 
     const _renderTruncatedFooter = isSender => (handlePress) => {
         return (
-            <MyText style={[{ fontWeight: 'bold', marginTop: 5 }, isSender ? styles['leftMsg'] : styles['rightMsg']]} onPress={handlePress}>
+            <MyText style={[{ fontFamily:interBold, marginTop: 5 }, isSender ? styles['leftMsg'] : styles['rightMsg']]} onPress={handlePress}>
                 Read more
             </MyText>
         );
@@ -142,7 +143,7 @@ const Chat = ({ navigation, route }) => {
 
     const _renderRevealedFooter = isSender => (handlePress) => {
         return (
-            <MyText style={[{ fontWeight: 'bold', marginTop: 5 }, isSender ? styles['leftMsg'] : styles['rightMsg']]} onPress={handlePress}>
+            <MyText style={[{ fontFamily:interBold, marginTop: 5 }, isSender ? styles['leftMsg'] : styles['rightMsg']]} onPress={handlePress}>
                 Show less
             </MyText>
         );

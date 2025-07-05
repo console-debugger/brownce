@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Animated } from 'react-native';
 import PropTypes from 'prop-types';
+import { interBold } from '../../../utils/fontFamily';
 
 const returnTrue = () => true;
 const itemHeight = 20;
@@ -107,7 +108,7 @@ let styles = StyleSheet.create({
   },
 
   text: {
-    fontWeight: '700',
+    fontFamily:interBold,
     color: '#008fff'
   }
 });

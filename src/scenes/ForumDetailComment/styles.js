@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native'
 import { isIOS, SCREEN_HEIGHT, SCREEN_WIDTH } from '../../components/helper'
 import { BLACK, LIGHT_GRAY, WHITE } from '../../utils/colors'
-import { montserratBold, montserratMedium, montserratSemiBold } from '../../utils/fontFamily'
+import { interBold, interMedium, interSemiBold } from '../../utils/fontFamily'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
 
 const styles = StyleSheet.create({
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
         marginVertical: SCREEN_HEIGHT * 0.01,
         paddingHorizontal: dynamicSize(20),
         fontSize: getFontSize(14),
-        fontFamily: montserratSemiBold
+        fontFamily: interSemiBold
     },
     line: {
         alignSelf: 'center',
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     msgText: {
         lineHeight: dynamicSize(18),
         fontSize: getFontSize(10),
-        fontFamily: montserratMedium,
+        fontFamily: interMedium,
         color: BLACK
     },
     textContainer: {

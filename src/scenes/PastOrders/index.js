@@ -4,7 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { FlatList, View, Text } from 'react-native'
 import styles from './style'
 import { GRAY, WHITE } from '../../utils/colors'
-import { montserratMedium } from '../../utils/fontFamily'
+import { interBold, interMedium } from '../../utils/fontFamily'
 import { useDispatch, useSelector } from 'react-redux'
 import { providerOrderAction, refreshDataAction } from '../../redux/action'
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../components/helper'
@@ -43,7 +43,7 @@ const PastOrders = () => {
 
         else return (<EmptyMessage message={""} />)
     }
-    
+
     // date format change
     const dateHandler = dateItem => {
         const dateTimeStamp = new Date(dateItem);
@@ -65,9 +65,9 @@ const PastOrders = () => {
             <Touchable activeOpacity={1} style={styles.cardView}>
                 <View style={styles.topView}>
                     <View style={styles.insideView} >
-                        <Text numberOfLines={1} ellipsizeMode='tail' style={[styles.id, { color: GRAY, fontFamily: montserratMedium }]}>{`${'Order Id: '}`}
+                        <Text numberOfLines={1} ellipsizeMode='tail' style={[styles.id, { color: GRAY, fontFamily: interMedium }]}>{`${'Order Id: '}`}
                             <Text numberOfLines={1} ellipsizeMode={'tail'} style={styles.id}>{item['Id']}</Text></Text>
-                        <MyText style={styles.date}>{`${moment(convertToLocal(item['CreatedAt']),'YYYY-MM-DD').format('MMM Do, YYYY')}`}</MyText>
+                        <MyText style={styles.date}>{`${moment(convertToLocal(item['CreatedAt']), 'YYYY-MM-DD').format('MMM Do, YYYY')}`}</MyText>
                     </View>
 
                 </View>
@@ -76,16 +76,16 @@ const PastOrders = () => {
                     <View style={styles.contentContainer}>
                         <MyText style={styles.title}>{item['ProductDetails']['ProductName']}</MyText>
                         <MyView style={styles.middleRow}>
-                            <MyText style={{ fontWeight: '500', marginVertical: 3 }}>{'By '}
-                                <MyText style={{ fontWeight: '700', fontSize: 13 }}>{item['CustomerName']}</MyText></MyText>
+                            <MyText style={{ fontFamily: interMedium, marginVertical: 3 }}>{'By '}
+                                <MyText style={{ fontFamily: interBold, fontSize: 13 }}>{item['CustomerName']}</MyText></MyText>
                             <MyText style={[styles.price, { marginLeft: item['PaymentMethod'] ? SCREEN_WIDTH * 0.0 : SCREEN_WIDTH * 0.1 }]}>{`$${item['ProductDetails']['Price']}`}</MyText>
                         </MyView>
                         <MyView style={styles.bottomRow}>
                             <MyText style={{ fontSize: 12 }}>{'Qty '}
-                                <MyText style={{ fontSize: 13, fontWeight: '700' }}>{item['Quantity']}</MyText> </MyText>
+                                <MyText style={{ fontSize: 13, fontFamily: interBold, }}>{item['Quantity']}</MyText> </MyText>
 
                             <MyView style={styles.complete}>
-                                <MyText style={{ color: WHITE, fontWeight: '500' }}>{item['StatusName']}</MyText>
+                                <MyText style={{ color: WHITE, fontFamily: interMedium, }}>{item['StatusName']}</MyText>
                             </MyView>
                         </MyView>
                     </View>

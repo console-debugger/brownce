@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from '../../components/helper'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
 import { MID_GRAY, BLACK, THEME, LIGHT_WHITE } from '../../utils/colors'
-import { montserratSemiBold, montserratMedium, montserrat } from '../../utils/fontFamily'
+import { interSemiBold, interMedium, inter } from '../../utils/fontFamily'
 
 const styles = StyleSheet.create({
     mainContainer: {
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
         marginTop: dynamicSize(5),
         color: BLACK,
         fontSize: getFontSize(10),
-        fontFamily: montserratMedium,
+        fontFamily: interMedium,
         marginBottom: SCREEN_HEIGHT * 0.06 - dynamicSize(5)
     },
     rowContainer: {
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     },
     forgotText: {
         color: MID_GRAY,
-        fontFamily: montserratSemiBold
+        fontFamily: interSemiBold
     },
     buttonStyle: {
         marginVertical: SCREEN_HEIGHT * 0.05
@@ -54,13 +54,13 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2
     },
     tabText: {
-        fontFamily: montserratSemiBold
+        fontFamily: interSemiBold
     },
     selectedTabText: {
-        fontFamily: montserratSemiBold
+        fontFamily: interSemiBold
     },
     unSelectedTabText: {
-        fontFamily: montserrat
+        fontFamily: inter
     }
 })
 

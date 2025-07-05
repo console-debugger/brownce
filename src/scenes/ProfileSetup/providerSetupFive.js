@@ -10,7 +10,7 @@ import { navigateToScreen } from '../../navigation/rootNav'
 import { getAllServicesAction, saveServiceAction, loaderAction, getSpDataStepAction, updateProfileSetupervicesAction, getServicesByProfessionAction } from '../../redux/action'
 import { apiKey } from '../../services/serviceConstant'
 import { BLACK, LIGHT_BROWN, LIGHT_WHITE, THEME } from '../../utils/colors'
-import { montserratBold, montserratMedium } from '../../utils/fontFamily'
+import { interBold, interMedium } from '../../utils/fontFamily'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
 import styles from './styles'
 
@@ -57,7 +57,7 @@ const ProviderProfileSetupFive = ({ navigation, route }) => {
     const _renderServies = ({ item, index }) => {
         return (
             <MyView>
-                <MyText style={{ fontSize: getFontSize(14), color: THEME, fontFamily: montserratBold }}>{item['Name']}</MyText>
+                <MyText style={{ fontSize: getFontSize(14), color: THEME, fontFamily: interBold }}>{item['Name']}</MyText>
                 <MyView style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', marginTop: dynamicSize(10) }}>
                     {
                         item['Services']?.length
@@ -73,7 +73,7 @@ const ProviderProfileSetupFive = ({ navigation, route }) => {
                             })
                             :
                             <MyView>
-                                <MyText style={{ fontSize: getFontSize(14), color: BLACK, fontFamily: montserratMedium }}>{'No services found for this profession'}</MyText>
+                                <MyText style={{ fontSize: getFontSize(14), color: BLACK, fontFamily: interMedium }}>{'No services found for this profession'}</MyText>
                             </MyView>
                     }
                 </MyView>

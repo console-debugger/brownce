@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native'
 import { SCREEN_HEIGHT, SCREEN_WIDTH, isAndroid } from '../../components/helper'
 import { GRAY, BLACK, LIGHT_BROWN, WHITE, LIGHT_GRAY, MID_GRAY, LIGHT_WHITE } from '../../utils/colors'
-import { montserrat, montserratBold, montserratMedium, montserratSemiBold } from '../../utils/fontFamily'
+import { inter, interBold, interMedium, interSemiBold } from '../../utils/fontFamily'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
 
 const styles = StyleSheet.create({
@@ -16,12 +16,12 @@ const styles = StyleSheet.create({
         backgroundColor: LIGHT_WHITE
     },
     subscriptionPrice: {
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         fontSize: getFontSize(20)
     },
     subscriptionPeriod: {
         marginTop: SCREEN_HEIGHT * 0.001,
-        fontFamily: montserratMedium,
+        fontFamily: interMedium,
         fontSize: getFontSize(14)
     },
     subscriptionDescription: {

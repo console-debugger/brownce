@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native'
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../components/helper'
 import { THEME, WHITE } from '../../utils/colors'
-import { montserratBold } from '../../utils/fontFamily'
+import { interBold } from '../../utils/fontFamily'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
 
 const styles = StyleSheet.create({
@@ -22,12 +22,12 @@ const styles = StyleSheet.create({
     },
     customerText: {
         color: WHITE,
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         fontSize: getFontSize(14)
     },
     providerText: {
         color: THEME,
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         fontSize: getFontSize(14)
     }
 })

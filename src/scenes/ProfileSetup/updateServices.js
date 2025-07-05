@@ -8,7 +8,7 @@ import { Button, KeyboardAwareScroll, MyText, MyView, SafeArea, SecondaryButton 
 import { isAndroid, SCREEN_HEIGHT, SCREEN_WIDTH } from '../../components/helper'
 import { getAllServicesAction, updateSavedServicesAction, updateServicesAction } from '../../redux/action'
 import { BLACK, LIGHT_WHITE, THEME } from '../../utils/colors'
-import { montserratBold, montserratMedium } from '../../utils/fontFamily'
+import { interBold, interMedium } from '../../utils/fontFamily'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
 import styles from './styles'
 
@@ -72,7 +72,7 @@ const UpdateProviderService = ({ navigation }) => {
     const _renderServies = ({ item, index }) => {
         return (
             <MyView>
-                <MyText style={{ fontSize: getFontSize(14), color: THEME, fontFamily: montserratBold }}>{item['Name']}</MyText>
+                <MyText style={{ fontSize: getFontSize(14), color: THEME, fontFamily: interBold }}>{item['Name']}</MyText>
                 <MyView style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', marginTop: dynamicSize(10) }}>
                     {
                         item['Services']?.length
@@ -88,7 +88,7 @@ const UpdateProviderService = ({ navigation }) => {
                             })
                             :
                             <MyView>
-                                <MyText style={{ fontSize: getFontSize(14), color: BLACK, fontFamily: montserratMedium }}>{'No services found for this profession'}</MyText>
+                                <MyText style={{ fontSize: getFontSize(14), color: BLACK, fontFamily: interMedium }}>{'No services found for this profession'}</MyText>
                             </MyView>
                     }
                 </MyView>

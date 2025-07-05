@@ -7,7 +7,7 @@ import { TRANSPARENT_LIGHT_BLACK, BLACK, LIGHT_WHITE, THEME, WHITE } from '../..
 import { useDispatch, useSelector } from 'react-redux'
 import { dismissKeyboard, locationMapping, SCREEN_HEIGHT, showToast } from '../../components/helper'
 import { dynamicSize } from '../../utils/responsive'
-import { montserrat, montserratBold } from '../../utils/fontFamily'
+import { inter, interBold } from '../../utils/fontFamily'
 import ImagePickerSelection from '../../components/imagePickerSelection'
 import { getGenderAction, getProviderProfileAction, loaderAction, saveLicenseAction, saveProviderProfileAction, updateEmailAction } from '../../redux/action'
 import MyListPicker from '../../components/myListPicker'
@@ -193,7 +193,7 @@ const EditProviderProfile = ({ navigation }) => {
                         <MyImage source={cameraIcon} />
                     </Touchable>
                 </MyView> */}
-                <MyText style={{ fontSize: 19, fontFamily: montserratBold, marginTop: 10 }}>{ACCOUNT}</MyText>
+                <MyText style={{ fontSize: 19, fontFamily: interBold, marginTop: 10 }}>{ACCOUNT}</MyText>
                 {/* <MyText onPress={() => setVisible(true)} style={{ textDecorationLine: "underline", color: THEME, marginTop: 5, marginLeft: 5 }}>
                     {"Update License"}
                 </MyText> */}
@@ -260,21 +260,21 @@ const EditProviderProfile = ({ navigation }) => {
                 />
                 {/* </MyView> */}
                 {/* </Touchable> */}
-                <MyText style={{ fontSize: 19, fontFamily: montserratBold, marginVertical: 15 }}>{LICENSE}</MyText>
+                <MyText style={{ fontSize: 19, fontFamily: interBold, marginVertical: 15 }}>{LICENSE}</MyText>
 
                 <NewThemeInput
                     textOnly
                     source={certificateIcon}
                     sourceStyle={{ width: 25, height: 25 }}
                     onTextPress={() => setmodalVisible(true)}
-                    inputStyle={{ fontFamily: montserrat, fontSize: 14, textAlign: 'center' }}
+                    inputStyle={{ fontFamily: inter, fontSize: 14, textAlign: 'center' }}
                     value={'View Lisense'}
                     rightLabel={UPDATE}
                     rightLabelStyle={{ fontSize: 14 }}
                     onRightPress={() => setVisible(true)}
                 />
 
-                <MyText style={{ fontSize: 19, fontFamily: montserratBold, marginVertical: 15 }}>{PRIVACY_AND_SECURITY}</MyText>
+                <MyText style={{ fontSize: 19, fontFamily: interBold, marginVertical: 15 }}>{PRIVACY_AND_SECURITY}</MyText>
                 <NewThemeInput
                     containerStyle={{ alignItems: 'center' }}
                     source={lockIcon}

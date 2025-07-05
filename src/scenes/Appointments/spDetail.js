@@ -34,7 +34,7 @@ import {
   validateUrl,
 } from '../../components/helper';
 import { BLACK, GRAY, LIGHT_WHITE, THEME, THEME_OFFSET, WHITE } from '../../utils/colors';
-import { montserratBold, montserratMedium, montserratSemiBold } from '../../utils/fontFamily';
+import { interBold, interMedium, interSemiBold } from '../../utils/fontFamily';
 import { dynamicSize, getFontSize } from '../../utils/responsive';
 import styles from './styles';
 import {
@@ -514,11 +514,11 @@ const SpDetail = ({ navigation, route }) => {
                 {buttonVisible ? <Button onPress={() => navigation.navigate('chat', {
                   id: route.params.id,
                   type: 'provider',
-                })} avoidLowerCase text={"Message"} style={{ width: SCREEN_WIDTH / 3.5, borderRadius: 10, backgroundColor: THEME_OFFSET, paddingHorizontal: 3, height: isAndroid ? dynamicSize(35) : dynamicSize(43), }} textStyle={{ fontSize: 13, fontFamily: montserratBold, textAlign: 'center' }} /> : null}
-                <Button onPress={_onShareButton} avoidLowerCase text={SHARE_PROFILE} style={{ width: SCREEN_WIDTH / 3.5, borderRadius: 10, backgroundColor: THEME_OFFSET, paddingHorizontal: 3, height: isAndroid ? dynamicSize(35) : dynamicSize(43), }} textStyle={{ fontSize: 13, fontFamily: montserratBold, textAlign: 'center' }} />
-                <Button onPress={() => providerprofile?.DocumentPath ? setmodalVisible(true) : showToast('This provider does not have license yet.')} avoidLowerCase text={VIEW_LICENSE} style={{ width: SCREEN_WIDTH / 3.5, borderRadius: 10, backgroundColor: THEME_OFFSET, paddingHorizontal: 3, height: isAndroid ? dynamicSize(35) : dynamicSize(43), }} textStyle={{ fontSize: 13, fontFamily: montserratBold, textAlign: 'center' }} />
+                })} avoidLowerCase text={"Message"} style={{ width: SCREEN_WIDTH / 3.5, borderRadius: 10, backgroundColor: THEME_OFFSET, paddingHorizontal: 3, height: isAndroid ? dynamicSize(35) : dynamicSize(43), }} textStyle={{ fontSize: 13, fontFamily: interBold, textAlign: 'center' }} /> : null}
+                <Button onPress={_onShareButton} avoidLowerCase text={SHARE_PROFILE} style={{ width: SCREEN_WIDTH / 3.5, borderRadius: 10, backgroundColor: THEME_OFFSET, paddingHorizontal: 3, height: isAndroid ? dynamicSize(35) : dynamicSize(43), }} textStyle={{ fontSize: 13, fontFamily: interBold, textAlign: 'center' }} />
+                <Button onPress={() => providerprofile?.DocumentPath ? setmodalVisible(true) : showToast('This provider does not have license yet.')} avoidLowerCase text={VIEW_LICENSE} style={{ width: SCREEN_WIDTH / 3.5, borderRadius: 10, backgroundColor: THEME_OFFSET, paddingHorizontal: 3, height: isAndroid ? dynamicSize(35) : dynamicSize(43), }} textStyle={{ fontSize: 13, fontFamily: interBold, textAlign: 'center' }} />
               </MyView>
-              <MyText style={{ fontSize: 12, alignSelf: 'center', fontFamily: montserratSemiBold, marginTop: 10 }}>{HOURS_OF_OPERATION}</MyText>
+              <MyText style={{ fontSize: 12, alignSelf: 'center', fontFamily: interSemiBold, marginTop: 10 }}>{HOURS_OF_OPERATION}</MyText>
               <WeekDayTimings
                 jumpToPreviousWeek={jumpToPreviousWeek}
                 jumpToNextWeek={jumpToNextWeek}
@@ -538,7 +538,7 @@ const SpDetail = ({ navigation, route }) => {
                   {providerprofile?.Bio ? <MyText style={{ marginTop: 10, marginHorizontal: 25, flex: 1 }}>{providerprofile?.Bio || ''}</MyText> : <MyText style={{ color: THEME, textAlign: 'center' }}>{'No Data Found.'}</MyText>}
                 </> : null}
                 {selectedTab == 'rating' ? <>
-                  <RatingWithLabel style={{ backgroundColor: WHITE }} labelStyle={{ fontFamily: montserratBold }} isRateCount label={RATING} mytext={`${providerprofile['OverallRating']}/5`} />
+                  <RatingWithLabel style={{ backgroundColor: WHITE }} labelStyle={{ fontFamily: interBold }} isRateCount label={RATING} mytext={`${providerprofile['OverallRating']}/5`} />
                   {providerprofile?.['Reviews']?.map((item, index) => {
                     return (
                       <MyView key={index}>
@@ -626,7 +626,7 @@ const SpDetail = ({ navigation, route }) => {
                                 paddingHorizontal: dynamicSize(25),
                                 fontSize: getFontSize(14),
                                 color: BLACK,
-                                fontFamily: montserratMedium,
+                                fontFamily: interMedium,
                               }}>
                               {'No services found for this profession'}
                             </MyText>

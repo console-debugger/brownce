@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../components/helper";
 import { LIGHT_BROWN, LIGHT_GRAY, MID_LIGHT_GRAY, THEME } from "../../utils/colors";
-import { montserratBold, montserratMedium } from "../../utils/fontFamily";
+import { interBold, interMedium } from "../../utils/fontFamily";
 import { dynamicSize, getFontSize } from "../../utils/responsive";
 
 const styles = StyleSheet.create({
@@ -31,10 +31,10 @@ const styles = StyleSheet.create({
     },
     nameStyle: {
         fontSize: getFontSize(14),
-        fontFamily: montserratBold
+        fontFamily: interBold
     },
     priceStyle: {
-        fontFamily: montserratMedium,
+        fontFamily: interMedium,
         fontSize: getFontSize(14),
     },
     address: {

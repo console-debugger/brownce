@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Button, Loader, MyImage, MyText, MyView, RatingWithLabel, SafeArea, SecondaryButton, Touchable, Triangle, WeekDayTimings } from '../../components/customComponent'
 import { isAndroid, locationMapping, SCREEN_HEIGHT, SCREEN_WIDTH, validateUrl } from '../../components/helper'
 import { LIGHT_WHITE, THEME } from '../../utils/colors'
-import { montserratBold, montserratSemiBold } from '../../utils/fontFamily'
+import { interBold, interSemiBold } from '../../utils/fontFamily'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
 import styles from './styles'
 import { getMyProductListAction, getProviderProfileAction, getServicesListAction } from '../../redux/action'
@@ -178,12 +178,12 @@ const ProviderCompleteProfile = ({ navigation }) => {
                                 <Loader isVisible={loading} />
                                 <MyText onPress={_navToEditProfile} style={[styles['editText'], styles['absoluteEditText']]}>{EDIT}</MyText>
                                 <MyImage source={{ uri: providerprofile.ProfilePic }} style={styles['image']} />
-                                <MyText style={[styles['name'], { fontFamily: montserratBold }]}>{providerprofile?.FirstName ? providerprofile.FirstName : LOADING}</MyText>
+                                <MyText style={[styles['name'], { fontFamily: interBold }]}>{providerprofile?.FirstName ? providerprofile.FirstName : LOADING}</MyText>
                                 <MyText style={[styles['name'], { fontSize: getFontSize(14) }]}>{providerprofile?.Username ? providerprofile.Username : LOADING}</MyText>
                                 {/* <MyText onPress={() => setmodalVisible(true)} style={[styles['detail'], { textDecorationLine: "underline", color: THEME }]}>{"View License"}</MyText> */}
                                 <MyText style={styles['detail']}>{`${LOCATION}:  ${locationMapping(providerprofile)}`}</MyText>
                                 {providerprofile?.['Weblink'] ? <MyText onPress={_openLink} style={[styles['detail'], { textDecorationLine: 'underline' }]}>{providerprofile?.['Weblink'] || ''}</MyText> : null}
-                                <MyText style={{ fontSize: 12, alignSelf: 'center', fontFamily: montserratSemiBold, marginTop: 10 }}>{HOURS_OF_OPERATION}</MyText>
+                                <MyText style={{ fontSize: 12, alignSelf: 'center', fontFamily: interSemiBold, marginTop: 10 }}>{HOURS_OF_OPERATION}</MyText>
                                 {/* ${providerprofile?.['OpeningTime'] === null ? '--' : providerprofile['OpeningTime']} To ${providerprofile?.['ClosingTime'] === null ? '--' : providerprofile['ClosingTime']}` */}
                                 <WeekDayTimings
                                     jumpToPreviousWeek={jumpToPreviousWeek}
@@ -191,12 +191,12 @@ const ProviderCompleteProfile = ({ navigation }) => {
                                     text={selectedWeekDay}
                                 />
                                 <MyView style={[styles['lowerInnerCurve']]}>
-                                    <RatingWithLabel style={{ marginTop: dynamicSize(7), }} labelStyle={{ fontFamily: montserratBold }} isRateCount label={RATING} mytext={`${providerprofile['OverallRating']}/5`} />
+                                    <RatingWithLabel style={{ marginTop: dynamicSize(7), }} labelStyle={{ fontFamily: interBold }} isRateCount label={RATING} mytext={`${providerprofile['OverallRating']}/5`} />
 
                                     {providerprofile?.['Reviews']?.map((item, index) => {
                                         return (
                                             <MyView key={index}>
-                                                <RatingWithLabel style={{ marginTop: dynamicSize(7), }} labelStyle={{ fontFamily: montserratBold }} isRateCount label={item.RatingTypeName} mytext={`${item.UserRating}/5`} />
+                                                <RatingWithLabel style={{ marginTop: dynamicSize(7), }} labelStyle={{ fontFamily: interBold }} isRateCount label={item.RatingTypeName} mytext={`${item.UserRating}/5`} />
                                             </MyView>
                                         )
                                     })}

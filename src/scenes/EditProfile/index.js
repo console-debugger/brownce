@@ -7,7 +7,7 @@ import { TRANSPARENT_LIGHT_BLACK, BLACK, LIGHT_WHITE, THEME, WHITE } from '../..
 import { useDispatch, useSelector } from 'react-redux'
 import { dismissKeyboard, locationMapping, SCREEN_HEIGHT, showToast } from '../../components/helper'
 import { dynamicSize } from '../../utils/responsive'
-import { montserratBold, montserratSemiBold } from '../../utils/fontFamily'
+import { interBold, interSemiBold } from '../../utils/fontFamily'
 import ImagePickerSelection from '../../components/imagePickerSelection'
 import { getCityListAction, getCountryListAction, getGenderAction, getStateListAction, saveProfileAction, updateEmailAction } from '../../redux/action'
 import MyListPicker from '../../components/myListPicker'
@@ -162,7 +162,7 @@ const EditProfile = ({ navigation }) => {
             <KeyboardAwareScroll contentContainerStyle={{ alignItems: 'center' }}>
                 <CurveView />
                 <Loader isVisible={loading} />
-                <MyText style={{ fontSize: 19, fontFamily: montserratBold, marginTop: 10 }}>{ACCOUNT}</MyText>
+                <MyText style={{ fontSize: 19, fontFamily: interBold, marginTop: 10 }}>{ACCOUNT}</MyText>
                 <NewThemeInput
                     mainContainerStyle={{ marginTop: 10 }}
                     value={firstname}
@@ -220,7 +220,7 @@ const EditProfile = ({ navigation }) => {
                     rightLabelStyle={{ fontSize: 14 }}
                     onRightPress={openMapModal}
                 />
-                <MyText style={{ fontSize: 19, fontFamily: montserratBold, marginVertical: 15 }}>{PRIVACY_AND_SECURITY}</MyText>
+                <MyText style={{ fontSize: 19, fontFamily: interBold, marginVertical: 15 }}>{PRIVACY_AND_SECURITY}</MyText>
                 <NewThemeInput
                     containerStyle={{ alignItems: 'center' }}
                     source={lockIcon}

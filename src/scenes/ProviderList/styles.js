@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
-import { montserratBold, montserratMedium } from '../../utils/fontFamily'
+import { interBold, interMedium } from '../../utils/fontFamily'
 import { MID_LIGHT_GRAY, THEME, LIGHT_GRAY, LIGHT_BROWN, WHITE } from '../../utils/colors'
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from '../../components/helper'
 
@@ -31,10 +31,10 @@ const styles = StyleSheet.create({
     },
     nameStyle: {
         fontSize: getFontSize(14),
-        fontFamily: montserratBold
+        fontFamily: interBold
     },
     priceStyle: {
-        fontFamily: montserratMedium,
+        fontFamily: interMedium,
         fontSize: getFontSize(14),
     },
     address: {
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     noprovider: {
         marginVertical: SCREEN_WIDTH * 0.6,
         fontSize: getFontSize(12),
-        fontFamily: montserratBold
+        fontFamily: interBold
     },
     filterContainer: {
         backgroundColor: THEME,
@@ -80,12 +80,12 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start'
     },
     label: {
-        fontFamily: montserratBold
+        fontFamily: interBold
     },
     value: {
         position: 'absolute',
         fontSize: getFontSize(12),
-        fontFamily: montserratMedium,
+        fontFamily: interMedium,
         top: dynamicSize(-5)
     },
     priceItem: {
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     },
     decoration: {
         marginHorizontal: dynamicSize(35),
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         textDecorationLine: 'underline',
         textDecorationStyle: 'solid',
         textDecorationColor: THEME,

@@ -33,10 +33,10 @@ import { dismissKeyboard, SCREEN_HEIGHT, SCREEN_WIDTH, isIOS, checkDialCodePlusS
 import { getFontSize, dynamicSize } from '../utils/responsive';
 import { useSelector } from 'react-redux';
 import {
-  montserrat,
-  montserratBold,
-  montserratSemiBold,
-  montserratMedium,
+  inter,
+  interBold,
+  interSemiBold,
+  interMedium,
 } from '../utils/fontFamily';
 import {
   arrowForeward,
@@ -175,7 +175,7 @@ export const MyText = (props) => {
       ref={textRefs}
       onTextlayout={onTextlayout}
       onPress={onPress}
-      style={[{ fontFamily: montserrat, fontSize: getFontSize(12) }, style]}>
+      style={[{ fontFamily: inter, fontSize: getFontSize(12) }, style]}>
       {children}
     </Text>
   );
@@ -487,7 +487,7 @@ export const DrawerTile = (props) => {
         style,
       ]}>
       <MyText
-        style={{ fontFamily: montserratSemiBold, fontSize: getFontSize(16) }}>
+        style={{ fontFamily: interSemiBold, fontSize: getFontSize(16) }}>
         {text}
       </MyText>
       <MyImage source={source ? source : arrowForeward} />
@@ -542,12 +542,12 @@ export const CustomDropDown = (props) => {
       placeholderTextColor={placeholderTextColor || LIGHT_GRAY}
       value={value}
       dropdownOffset={{ top: topOffset || SCREEN_WIDTH * 0.014, left: 0 }}
-      labelTextStyle={{ fontFamily: montserratSemiBold, color: LIGHT_GRAY }}
-      itemTextStyle={{ fontFamily: montserratSemiBold }}
+      labelTextStyle={{ fontFamily: interSemiBold, color: LIGHT_GRAY }}
+      itemTextStyle={{ fontFamily: interSemiBold }}
       containerStyle={[commonStyle['dropDownContainer'], style]}
       labelFontSize={label ? getFontSize(12) : 0}
       fontSize={getFontSize(14)}
-      fontFamily={montserratSemiBold}
+      fontFamily={interSemiBold}
       baseColor={BLACK}
       label={label || ''}
       itemColor={BLACK}
@@ -638,7 +638,7 @@ export const QuestionsView = (props) => {
         </MyView>
         <MyText style={commonStyle['questionsDate']}>{name}</MyText>
         <Touchable onPress={onReplyPress} style={{ flexDirection: 'row' }}>
-          <MyText style={{ fontFamily: montserratMedium }} numberOfLines={1}>
+          <MyText style={{ fontFamily: interMedium }} numberOfLines={1}>
             {`${replyCount} Replies`}{' '}
           </MyText>
           <MyImage source={arrowForeward} />
@@ -658,7 +658,7 @@ export const QuestionsView = (props) => {
           />
           <MyText
             style={{
-              fontFamily: montserratMedium,
+              fontFamily: interMedium,
               fontSize: getFontSize(16),
               marginHorizontal: dynamicSize(5),
             }}
@@ -671,7 +671,7 @@ export const QuestionsView = (props) => {
                         imageStyle={{ height: '100%', width: '100%' }}
                         onPress={onDisLikePress}
                     />
-                    <MyText style={{ fontFamily: montserratMedium, fontSize: getFontSize(16), marginHorizontal: dynamicSize(5), }} numberOfLines={1} >{dislikeCount || 0} </MyText> */}
+                    <MyText style={{ fontFamily: interMedium, fontSize: getFontSize(16), marginHorizontal: dynamicSize(5), }} numberOfLines={1} >{dislikeCount || 0} </MyText> */}
         </MyView>
       </MyView>
       {showDelete && (
@@ -954,9 +954,9 @@ export const MultiSelectDropdown = forwardRef((props, ref) => {
         selectText={selectText}
         searchInputPlaceholderText={SEARCH}
         onChangeInput={onChangeInput}
-        altFontFamily={montserrat}
-        selectedItemFontFamily={montserrat}
-        itemFontFamily={montserrat}
+        altFontFamily={inter}
+        selectedItemFontFamily={inter}
+        itemFontFamily={inter}
         tagRemoveIconColor={THEME}
         tagBorderColor={THEME}
         tagTextColor={THEME}
@@ -1023,7 +1023,7 @@ export const MobileInput = forwardRef((props, ref) => {
       <MyView style={[commonStyle['textField'], fieldstyle]}>
         {source && <MyImage resizeMode={'contain'} source={source} />}
         {!!countryCode && <Touchable onPress={onPress} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: isIOS ? dynamicSize(7) : 0 }}>
-          <MyText style={[{ marginLeft: 8, fontFamily: montserratSemiBold, fontSize: getFontSize(14) }, countryCodeTextStyle]}>{checkDialCodePlusSymbol(countryCode)}</MyText>
+          <MyText style={[{ marginLeft: 8, fontFamily: interSemiBold, fontSize: getFontSize(14) }, countryCodeTextStyle]}>{checkDialCodePlusSymbol(countryCode)}</MyText>
           <MyImage style={{ margin: 5 }} source={downArrow} />
         </Touchable>
         }
@@ -1153,16 +1153,16 @@ export const NewThemeInput = forwardRef((props, ref) => {
         {textOnly ?
           <MyText
             onPress={onTextPress}
-            style={[{ flex: 1, fontFamily: montserratSemiBold, fontSize: 13 }, inputStyle]}
+            style={[{ flex: 1, fontFamily: interSemiBold, fontSize: 13 }, inputStyle]}
           >{value}</MyText>
           :
           <TextInput
             ref={ref}
-            style={[{ flex: 1, borderBottomColor: 'transparent', fontFamily: montserratSemiBold, fontSize: 14 }, inputStyle]}
+            style={[{ flex: 1, borderBottomColor: 'transparent', fontFamily: interSemiBold, fontSize: 14 }, inputStyle]}
             {...props}
           />
         }
-        <MyText onPress={onRightPress} style={[{ marginLeft: 10, fontSize: 13, fontFamily: montserratMedium }, rightLabelStyle]}>{rightLabel}</MyText>
+        <MyText onPress={onRightPress} style={[{ marginLeft: 10, fontSize: 13, fontFamily: interMedium }, rightLabelStyle]}>{rightLabel}</MyText>
       </MyView>
       {!!errorMessage && (
         <MyView style={{ width: SCREEN_WIDTH - dynamicSize(70) }}>
@@ -1222,14 +1222,14 @@ export const NewThemeDropdown = (props) => {
           placeholderTextColor={placeholderTextColor || LIGHT_GRAY}
           value={value}
           dropdownOffset={{ top: topOffset || SCREEN_WIDTH * 0.014, left: 0 }}
-          labelTextStyle={{ fontFamily: montserratSemiBold, color: LIGHT_GRAY }}
-          itemTextStyle={{ fontFamily: montserratSemiBold }}
+          labelTextStyle={{ fontFamily: interSemiBold, color: LIGHT_GRAY }}
+          itemTextStyle={{ fontFamily: interSemiBold }}
           containerStyle={[commonStyle['dropDownContainer'], { width: null, flex: 1 }, style]}
           labelFontSize={label ? getFontSize(12) : 0}
           // pickerStyle={{ width: SCREEN_WIDTH - dynamicSize(70) }}
           dropdownPosition={0}
           fontSize={getFontSize(14)}
-          fontFamily={montserratSemiBold}
+          fontFamily={interSemiBold}
           baseColor={BLACK}
           label={label || null}
           itemColor={BLACK}

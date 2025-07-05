@@ -45,7 +45,7 @@ import SelectService from '../scenes/SelectService';
 import InProgressAppointment from '../scenes/Appointments/inProgress';
 import PastAppointment from '../scenes/Appointments/past';
 import Upcoming from '../scenes/Appointments/upcoming';
-import { montserratSemiBold } from '../utils/fontFamily';
+import { interSemiBold } from '../utils/fontFamily';
 import Settings from '../scenes/Settings';
 import MyQuestions from '../scenes/MyQuestions';
 import ForumList from '../scenes/ForumList';
@@ -483,7 +483,7 @@ const MyAppointments = () => {
         labelStyle: {
           fontSize: getFontSize(13),
           color: WHITE,
-          fontFamily: montserratSemiBold,
+          fontFamily: interSemiBold,
         },
         style: { backgroundColor: THEME },
         activeTintColor: WHITE,
@@ -675,7 +675,7 @@ const Request = ({ navigation }) => {
           labelStyle: {
             fontSize: getFontSize(13),
             color: WHITE,
-            fontFamily: montserratSemiBold,
+            fontFamily: interSemiBold,
           },
           style: { backgroundColor: THEME },
           activeTintColor: WHITE,

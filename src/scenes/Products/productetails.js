@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Button, CurveView, Loader, MyImage, MyText, MyView, SafeArea, Touchable } from "../../components/customComponent"
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styles from './styles'
-import { montserratSemiBold } from "../../utils/fontFamily"
+import { interSemiBold } from "../../utils/fontFamily"
 import { BLACK, LIGHT_BROWN, LIGHT_WHITE, THEME } from "../../utils/colors"
 import { isCustomer, isIOS, SCREEN_HEIGHT, SCREEN_WIDTH, showToast } from "../../components/helper"
 import { SliderBox } from "react-native-image-slider-box";
@@ -232,8 +232,8 @@ const ProductDetails = ({ navigation, route }) => {
         />
         <MyView style={{ width: SCREEN_WIDTH * 0.85 }}>
           <MyView style={styles.rowContainer}>
-            <MyText style={{ fontFamily: montserratSemiBold, fontSize: 15, marginLeft: 30 }}>{route.params.item.ProductName}</MyText>
-            <MyText style={{ color: THEME, fontFamily: montserratSemiBold, fontSize: 15, marginRight: 30 }}>{`$${route.params.item.Price}`}</MyText>
+            <MyText style={{ fontFamily: interSemiBold, fontSize: 15, marginLeft: 30 }}>{route.params.item.ProductName}</MyText>
+            <MyText style={{ color: THEME, fontFamily: interSemiBold, fontSize: 15, marginRight: 30 }}>{`$${route.params.item.Price}`}</MyText>
           </MyView>
           <MyText style={{ color: BLACK, fontSize: 15, marginLeft: 32, marginTop: 4 }}>{route.params.item.BrandName}</MyText>
           <MyText style={{ lineHeight: 22, color: BLACK, fontSize: 15, marginLeft: 32, marginTop: 4 }}>{`${SELLER} - `}

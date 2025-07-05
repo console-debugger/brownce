@@ -1,13 +1,13 @@
 import { StyleSheet } from 'react-native'
 import { getFontSize, dynamicSize } from '../../utils/responsive'
-import { montserratBold, montserratSemiBold, montserratMedium } from '../../utils/fontFamily'
+import { interBold, interSemiBold, interMedium } from '../../utils/fontFamily'
 import { SCREEN_HEIGHT, SCREEN_WIDTH, isAndroid } from '../../components/helper'
 import { LIGHT_BROWN, LIGHT_WHITE, LIGHT_GRAY, WHITE, MID_GRAY, BLACK, THEME, GRAY } from '../../utils/colors'
 
 const styles = StyleSheet.create({
     title: {
         fontSize: getFontSize(22),
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         paddingHorizontal: dynamicSize(35)
     },
     hairTypeFlatList: {
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     },
     uploadText: {
         color: BLACK,
-        fontFamily: montserratSemiBold,
+        fontFamily: interSemiBold,
         marginVertical: SCREEN_HEIGHT * 0.015
     },
     description: {
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
         fontSize: getFontSize(9),
         color: BLACK,
         borderWidth: 0,
-        fontFamily: montserratSemiBold
+        fontFamily: interSemiBold
     },
     seperatorStyle: {
         height: dynamicSize(20)
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginVertical: SCREEN_HEIGHT * 0.01,
         width: '50%',
-        fontFamily: montserratMedium,
+        fontFamily: interMedium,
         borderBottomWidth: 0.5,
         borderBottomColor: LIGHT_GRAY,
         marginBottom: 0
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     value: {
         position: 'absolute',
         fontSize: getFontSize(12),
-        fontFamily: montserratMedium,
+        fontFamily: interMedium,
         top: dynamicSize(-5)
     },
     addCustomService: {
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     },
     addText: {
         color: WHITE,
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         fontSize: getFontSize(12)
     },
     addCircle: {
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
     },
     tabText: {
         fontSize: 8,
-        fontFamily: montserratSemiBold
+        fontFamily: interSemiBold
     },
     hoursOfOperationContainer: {
         flex: 1,
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     },
     drowpdownmText: {
         fontSize: 8,
-        fontFamily: montserratMedium
+        fontFamily: interMedium
     },
     dropdownContainer: {
         borderWidth: 1,

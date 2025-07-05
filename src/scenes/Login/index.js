@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux'
 import messaging from '@react-native-firebase/messaging';
 import AsyncStorage from '@react-native-community/async-storage'
@@ -17,7 +16,7 @@ import { ApprovalPopup } from '../../components/alert'
 import { useFocusEffect } from '@react-navigation/native';
 import { LOGIN_PAGE } from '../../components/eventName';
 import { dynamicSize, getFontSize } from '../../utils/responsive';
-import { montserratSemiBold } from '../../utils/fontFamily';
+import { interSemiBold } from '../../utils/fontFamily';
 import MyCountryPicker from '../../components/countryCodePicker';
 
 // @ types of input field
@@ -271,7 +270,7 @@ const Login = ({ navigation }) => {
                         <MobileInput
                             style={{
                                 height: null,
-                                fontFamily: montserratSemiBold
+                                fontFamily: interSemiBold
                             }}
                             mainContainerStyle={{ marginBottom: dynamicSize(15) }}
                             fieldstyle={{ borderBottomColor: focus === 1 ? BLACK : LIGHT_GRAY, }}

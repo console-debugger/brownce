@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { SCREEN_HEIGHT } from '../../components/helper'
-import { montserratBold } from '../../utils/fontFamily'
+import { interBold } from '../../utils/fontFamily'
 import { getFontSize, dynamicSize } from '../../utils/responsive'
 
 const styles = StyleSheet.create({
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     title: {
         marginTop: SCREEN_HEIGHT * 0.1,
         fontSize: getFontSize(30),
-        fontFamily: montserratBold
+        fontFamily: interBold
     }
 })
 

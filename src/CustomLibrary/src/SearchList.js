@@ -23,7 +23,7 @@ import Theme from './components/Theme';
 import SearchService from './SearchService';
 import HighlightableText from './components/HighlightableText';
 import { BLACK, LIGHT_WHITE } from '../../utils/colors';
-import { montserratBold } from '../../utils/fontFamily';
+import { interBold } from '../../utils/fontFamily';
 import { SCREEN_HEIGHT } from '../../components/helper';
 import { SearchInput } from '../../components/customComponent';
 
@@ -213,7 +213,7 @@ export default class SearchList extends Component {
             justifyContent: 'center',
             height: sectionHeaderHeight
           }}>
-          <Text style={[styles.sectionTitle,{color:BLACK,fontFamily:montserratBold}]}>{title}</Text>
+          <Text style={[styles.sectionTitle,{color:BLACK,fontFamily:interBold}]}>{title}</Text>
         </View>
       </View>
     );

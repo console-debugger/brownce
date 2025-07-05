@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
-import { montserratSemiBold } from '../../utils/fontFamily'
+import { interSemiBold } from '../../utils/fontFamily'
 import { MID_LIGHT_GRAY } from '../../utils/colors'
 
 const styles = StyleSheet.create({
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     },
     name: {
         fontSize: getFontSize(16),
-        fontFamily: montserratSemiBold,
+        fontFamily: interSemiBold,
         flex:1
     },
     text: {

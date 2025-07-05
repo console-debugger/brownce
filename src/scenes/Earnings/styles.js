@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native'
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../components/helper'
 import { BLACK, LIGHT_BROWN, LIGHT_WHITE, THEME, WHITE } from '../../utils/colors'
-import { montserratBold, montserratMedium } from '../../utils/fontFamily'
+import { interBold, interMedium } from '../../utils/fontFamily'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
 
 const CIRCLE_WIDTH = SCREEN_WIDTH / 2.4
@@ -31,15 +31,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     earningText: {
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         fontSize: getFontSize(25)
     },
     totalEarnings: {
         marginTop: SCREEN_HEIGHT * 0.02,
-        fontFamily: montserratMedium
+        fontFamily: interMedium
     },
     amount: {
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         fontSize: getFontSize(35),
         marginBottom: SCREEN_HEIGHT * 0.02
     },

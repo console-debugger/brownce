@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 import { SCREEN_HEIGHT } from '../../components/helper'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
 import { THEME, LIGHT_GRAY } from '../../utils/colors'
-import { montserratBold, montserratSemiBold } from '../../utils/fontFamily'
+import { interBold, interSemiBold } from '../../utils/fontFamily'
 
 const styles = StyleSheet.create({
     parentContainer: {
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
         marginVertical: dynamicSize(10),
         alignSelf: 'center',
         color: THEME,
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         fontSize: getFontSize(16)
     },
     input: {
@@ -29,11 +29,11 @@ const styles = StyleSheet.create({
         paddingVertical: dynamicSize(7),
         alignSelf: 'flex-end',
         color: LIGHT_GRAY,
-        fontFamily: montserratSemiBold
+        fontFamily: interSemiBold
     },
     sendAgain: {
         color: THEME,
-        fontFamily: montserratSemiBold
+        fontFamily: interSemiBold
     },
     buttonStyle: {
         marginVertical: SCREEN_HEIGHT * 0.1

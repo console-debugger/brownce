@@ -3,7 +3,7 @@ import { MyText, Touchable } from "../../components/customComponent"
 import { BLACK, GRAY, LIGHT_WHITE, THEME, WHITE } from "../../utils/colors"
 import React, { useState } from 'react';
 import { View, Platform, StyleSheet, ScrollView, TextInput } from 'react-native';
-import { montserratBold } from "../../utils/fontFamily";
+import { interBold } from "../../utils/fontFamily";
 import { SCREEN_WIDTH, showToast } from "../../components/helper";
 import { dynamicSize } from "../../utils/responsive";
 import { useDispatch } from "react-redux";
@@ -38,7 +38,7 @@ const AddBrand = () => {
                     </TextInput>
                 </View>
                 <Touchable onPress={submit} style={styles.AddHolder}>
-                    <MyText style={{ color: WHITE, fontFamily: montserratBold, fontSize: 15 }}>{"Submit"}</MyText>
+                    <MyText style={{ color: WHITE, fontFamily: interBold, fontSize: 15 }}>{"Submit"}</MyText>
                 </Touchable>
             </ScrollView>
         </View>
@@ -86,7 +86,7 @@ const styles = StyleSheet.create(
             fontSize: 10.5,
             alignSelf: 'center',
             textAlign: 'center',
-            fontFamily: montserratBold,
+            fontFamily: interBold,
             width: '45%'
         },
         btn: {

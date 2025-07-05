@@ -37,7 +37,7 @@ import Swiper from 'react-native-swiper';
 import { LicensePopup } from '../../components/alert';
 import { productImg2 } from '../../components/icons';
 import { navigateToScreen } from '../../navigation/rootNav';
-import { montserratMedium } from '../../utils/fontFamily';
+import { interMedium } from '../../utils/fontFamily';
 import { generateDynamicLink } from '../../utils/dynamicLinkHelper';
 
 // Provider detail UI
@@ -387,7 +387,7 @@ const ProviderDetail = (props) => {
                           paddingHorizontal: dynamicSize(25),
                           fontSize: getFontSize(14),
                           color: BLACK,
-                          fontFamily: montserratMedium,
+                          fontFamily: interMedium,
                         }}>
                         {'No services found for this profession'}
                       </MyText>

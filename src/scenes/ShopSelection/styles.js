@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native'
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../components/helper'
 import { THEME, WHITE } from '../../utils/colors'
-import { montserratBold, montserratSemiBold } from '../../utils/fontFamily'
+import { interBold, interSemiBold } from '../../utils/fontFamily'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
 
 const styles = StyleSheet.create({
@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     },
     shoptext: {
         fontSize: getFontSize(20),
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         marginTop: '20%'
     },
     button: {
@@ -26,12 +26,12 @@ const styles = StyleSheet.create({
     },
     customerText: {
         color: WHITE,
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         fontSize: getFontSize(14)
     },
     providerText: {
         color: WHITE,
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         fontSize: getFontSize(14)
     },
     headerView: {
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     },
     userName: {
         color: WHITE,
-        fontFamily: montserratSemiBold,
+        fontFamily: interSemiBold,
         fontSize: getFontSize(16)
     },
     starView: {
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     },
     ratingText: {
         marginTop: 2,
-        fontFamily: montserratSemiBold,
+        fontFamily: interSemiBold,
         color: WHITE,
         fontSize: getFontSize(10),
         marginLeft: dynamicSize(5)

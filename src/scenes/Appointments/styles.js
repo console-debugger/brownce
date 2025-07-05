@@ -12,9 +12,9 @@ import {
   GRAY,
 } from '../../utils/colors';
 import {
-  montserratMedium,
-  montserratBold,
-  montserratSemiBold,
+  interMedium,
+  interBold,
+  interSemiBold,
 } from '../../utils/fontFamily';
 
 const styles = StyleSheet.create({
@@ -35,11 +35,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   bookingId: {
-    fontFamily: montserratMedium,
+    fontFamily: interMedium,
     color: MID_LIGHT_GRAY,
   },
   idvalue: {
-    fontFamily: montserratBold,
+    fontFamily: interBold,
   },
   itemMainContainer: {
     marginTop: SCREEN_HEIGHT * 0.015,
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: getFontSize(14),
-    fontFamily: montserratBold,
+    fontFamily: interBold,
     marginBottom: dynamicSize(8),
   },
   innerContainer: {
@@ -108,13 +108,13 @@ const styles = StyleSheet.create({
   spname: {
     alignSelf: 'center',
     fontSize: getFontSize(16),
-    fontFamily: montserratSemiBold,
+    fontFamily: interSemiBold,
     marginBottom: dynamicSize(8),
   },
   detail: {
     fontSize: getFontSize(12),
     marginBottom: dynamicSize(5),
-    fontFamily: montserratSemiBold,
+    fontFamily: interSemiBold,
   },
   lowerInnerCurve: {
     borderTopLeftRadius: isAndroid ? dynamicSize(25) : dynamicSize(25),
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   portFolioText: {
     alignSelf: 'flex-start',
     marginLeft: dynamicSize(25),
-    fontFamily: montserratBold,
+    fontFamily: interBold,
     fontSize: getFontSize(13),
   },
   portfolioImage: {
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
   },
   price: {
     color: THEME,
-    fontFamily: montserratBold,
+    fontFamily: interBold,
     marginTop: 10,
     width: '50%',
   },
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     marginTop: dynamicSize(20),
     marginLeft: dynamicSize(20),
     color: THEME,
-    fontFamily: montserratSemiBold,
+    fontFamily: interSemiBold,
     fontSize: getFontSize(16),
   },
   dotStyle: {
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
   },
   tabText: {
     fontSize: 9,
-    fontFamily: montserratBold
+    fontFamily: interBold
   },
   curveMain: {
     marginTop: SCREEN_HEIGHT * 0.04,

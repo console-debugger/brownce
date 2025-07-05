@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../components/helper'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
 import { THEME, LIGHT_GRAY, LIGHT_WHITE } from '../../utils/colors'
-import { montserrat, montserratBold, montserratSemiBold } from '../../utils/fontFamily'
+import { inter, interBold, interSemiBold } from '../../utils/fontFamily'
 
 const styles = StyleSheet.create({
     parentContainer: {
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
         marginVertical: dynamicSize(10),
         alignSelf: 'center',
         color: THEME,
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         fontSize: getFontSize(16)
     },
     input: {
@@ -29,11 +29,11 @@ const styles = StyleSheet.create({
         paddingVertical: dynamicSize(7),
         alignSelf: 'flex-end',
         color: LIGHT_GRAY,
-        fontFamily: montserratSemiBold
+        fontFamily: interSemiBold
     },
     sendAgain: {
         color: THEME,
-        fontFamily: montserratSemiBold
+        fontFamily: interSemiBold
     },
     buttonStyle: {
         marginVertical: SCREEN_HEIGHT * 0.1
@@ -59,13 +59,13 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2
     },
     tabText: {
-        fontFamily: montserratSemiBold
+        fontFamily: interSemiBold
     },
     selectedTabText: {
-        fontFamily: montserratSemiBold
+        fontFamily: interSemiBold
     },
     unSelectedTabText: {
-        fontFamily: montserrat
+        fontFamily: inter
     }
 })
 

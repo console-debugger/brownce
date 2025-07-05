@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key></key>
-	<string></string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -50,8 +48,8 @@
 		<string>https://brownceapp.page.link</string>
 		<string>http://brownceapp.page.link</string>
 	</array>
-  <key>NSUserTrackingUsageDescription</key>
-    <string>App using ads</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Your data will be used to measure advertising efficiency.</string>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-6632433436195884~8263097893</string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -83,8 +81,6 @@
 	<string>Give $(PRODUCT_NAME) permission to use your microphone. Your record wont be shared without your permission.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like access to your photo gallery for profile/product image.</string>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>Your data will be used to measure advertising efficiency.</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>
@@ -238,15 +234,14 @@
 	</array>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Montserrat-Bold.ttf</string>
-		<string>Montserrat-BoldItalic.ttf</string>
-		<string>Montserrat-Italic.ttf</string>
-		<string>Montserrat-Medium.ttf</string>
-		<string>Montserrat-MediumItalic.ttf</string>
-		<string>Montserrat-Regular.ttf</string>
-		<string>Montserrat-SemiBold.ttf</string>
-		<string>Montserrat-SemiBoldItalic.ttf</string>
-		<string>MaterialCommunityIcons.ttf</string>
+		<string>Inter-Bold.ttf</string>
+		<string>Inter-BoldItalic.ttf</string>
+		<string>Inter-Italic.ttf</string>
+		<string>Inter-Medium.ttf</string>
+		<string>Inter-MediumItalic.ttf</string>
+		<string>Inter-Regular.ttf</string>
+		<string>Inter-SemiBold.ttf</string>
+		<string>Inter-SemiBoldItalic.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

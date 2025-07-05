@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../components/helper'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
 import { LIGHT_GRAY, MID_LIGHT_GRAY } from '../../utils/colors'
-import { montserratSemiBold, montserratMedium, montserratBold } from '../../utils/fontFamily'
+import { interSemiBold, interMedium, interBold } from '../../utils/fontFamily'
 
 const styles = StyleSheet.create({
     mainContainer: {
@@ -32,17 +32,17 @@ const styles = StyleSheet.create({
     },
     name: {
         width: '65%',
-        fontFamily: montserratSemiBold
+        fontFamily: interSemiBold
     },
     date: {
         fontSize: getFontSize(10),
-        fontFamily: montserratMedium,
+        fontFamily: interMedium,
         color: LIGHT_GRAY
     },
     noquestion:{
         marginVertical:SCREEN_WIDTH * 0.6,
         fontSize: getFontSize(12),
-          fontFamily:montserratBold
+          fontFamily:interBold
     }
 })
 

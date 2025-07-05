@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../components/helper';
 import {BLACK, LIGHT_GRAY, THEME, WHITE} from '../../utils/colors';
 import {dynamicSize, getFontSize} from '../../utils/responsive';
-import {montserratSemiBold} from '../../utils/fontFamily';
+import {interSemiBold} from '../../utils/fontFamily';
 
 const styles = StyleSheet.create({
   headerView: {
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
   userName: {
     color: WHITE,
-    fontFamily: montserratSemiBold,
+    fontFamily: interSemiBold,
     fontSize: getFontSize(16),
   },
   email: {
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   },
   labelStyle: {
     fontSize: getFontSize(13),
-    fontFamily: montserratSemiBold,
+    fontFamily: interSemiBold,
     color: BLACK,
     marginLeft: dynamicSize(10),
   },
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   },
   ratingText: {
     marginTop: 2,
-    fontFamily: montserratSemiBold,
+    fontFamily: interSemiBold,
     color: WHITE,
     fontSize: getFontSize(10),
     marginLeft: dynamicSize(5),

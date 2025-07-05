@@ -1,7 +1,7 @@
 import { StyleSheet, Dimensions } from 'react-native'
 import { WHITE, THEME, BLACK, LIGHT_GRAY, LIGHT_WHITE, MID_GRAY, LIGHT_BROWN, PLACEHOLDER_COLOR } from '../utils/colors'
 import { dynamicSize, getFontSize } from '../utils/responsive'
-import { montserratBold, montserratSemiBold, montserrat, montserratMedium } from '../utils/fontFamily'
+import { interBold, interSemiBold, inter, interMedium } from '../utils/fontFamily'
 import { SCREEN_WIDTH, SCREEN_HEIGHT, isAndroid, isIOS } from './helper'
 
 const { width } = Dimensions.get('window')
@@ -27,7 +27,7 @@ const commonStyle = StyleSheet.create({
     commonButtonText: {
         fontSize: getFontSize(13),
         color: WHITE,
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         textAlign: 'center'
     },
     textFieldContainer: {
@@ -56,7 +56,7 @@ const commonStyle = StyleSheet.create({
     },
     textInput: {
         color: BLACK,
-        fontFamily: montserratSemiBold,
+        fontFamily: interSemiBold,
         paddingRight: dynamicSize(10),
         width: SCREEN_WIDTH - dynamicSize(70),
         fontSize: getFontSize(14),
@@ -65,18 +65,18 @@ const commonStyle = StyleSheet.create({
     note: {
         marginTop: dynamicSize(7),
         width: SCREEN_WIDTH - dynamicSize(70),
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         color: THEME,
         fontSize: getFontSize(12)
     },
     noteText: {
-        fontFamily: montserrat,
+        fontFamily: inter,
         fontSize: getFontSize(12),
         color: BLACK
     },
     errorMessage: {
         paddingVertical: dynamicSize(2),
-        fontFamily: montserratMedium,
+        fontFamily: interMedium,
         color: THEME,
         fontSize: getFontSize(12),
     },
@@ -85,23 +85,23 @@ const commonStyle = StyleSheet.create({
         alignItems: 'center',
     },
     selectionText: {
-        fontFamily: montserratSemiBold,
+        fontFamily: interSemiBold,
         color: MID_GRAY,
         marginLeft: dynamicSize(5)
     },
     dontHaveAccount: {
         color: MID_GRAY,
-        fontFamily: montserratSemiBold,
+        fontFamily: interSemiBold,
         textAlign: 'center',
         marginBottom: dynamicSize(10)
     },
     signUpText: {
         color: BLACK,
-        fontFamily: montserratBold
+        fontFamily: interBold
     },
     extraBoldText: {
         fontSize: getFontSize(25),
-        fontFamily: montserratBold
+        fontFamily: interBold
     },
     profileTitle: {
         alignSelf: 'flex-start',
@@ -145,7 +145,7 @@ const commonStyle = StyleSheet.create({
     datePlaceholder: {
         color: LIGHT_GRAY,
         fontSize: getFontSize(14),
-        fontFamily: montserratSemiBold
+        fontFamily: interSemiBold
     },
     secondaryButton: {
         borderRadius: dynamicSize(50),
@@ -208,7 +208,7 @@ const commonStyle = StyleSheet.create({
         paddingVertical: isIOS ? dynamicSize(13) : dynamicSize(5),
         backgroundColor: WHITE,
         fontSize: getFontSize(14),
-        fontFamily: montserratSemiBold,
+        fontFamily: interSemiBold,
         borderRadius: dynamicSize(50)
     },
     questionsMainContainer: {
@@ -230,11 +230,11 @@ const commonStyle = StyleSheet.create({
     },
     questionsName: {
         width: '65%',
-        fontFamily: montserratSemiBold
+        fontFamily: interSemiBold
     },
     questionsDate: {
         fontSize: getFontSize(10),
-        fontFamily: montserratMedium,
+        fontFamily: interMedium,
         color: LIGHT_GRAY
     },
     alertContainer: {
@@ -270,7 +270,7 @@ const commonStyle = StyleSheet.create({
     },
     alertText: {
         fontSize: getFontSize(14),
-        fontFamily: montserratMedium,
+        fontFamily: interMedium,
         textAlign: 'left'
     },
     alertButtonContainer: {
@@ -302,11 +302,11 @@ const commonStyle = StyleSheet.create({
         textAlign: 'center',
         width: '100%',
         fontSize: getFontSize(40),
-        fontFamily: montserratBold
+        fontFamily: interBold
     },
     countryName: {
         color: THEME,
-        fontFamily: montserratMedium,
+        fontFamily: interMedium,
         fontSize: getFontSize(14),
     },
     countryView: {
@@ -324,7 +324,7 @@ const commonStyle = StyleSheet.create({
         textAlign: 'center',
         color: THEME,
         fontSize: getFontSize(14),
-        fontFamily: montserratMedium
+        fontFamily: interMedium
     },
     ratingRow: {
         flexDirection: 'row',
@@ -341,11 +341,11 @@ const commonStyle = StyleSheet.create({
     },
     labelText: {
         fontSize: getFontSize(12),
-        fontFamily: montserratSemiBold
+        fontFamily: interSemiBold
     },
     ratingCount: {
         marginLeft: dynamicSize(5),
-        fontFamily: montserratSemiBold,
+        fontFamily: interSemiBold,
         fontSize: getFontSize(12)
     },
     starView: {
@@ -375,7 +375,7 @@ const commonStyle = StyleSheet.create({
         alignSelf: 'center',
         color: WHITE,
         fontSize: getFontSize(15),
-        fontFamily: montserratSemiBold,
+        fontFamily: interSemiBold,
     },
     notiPopupContainer: {
         alignItems: 'center',
@@ -403,7 +403,7 @@ const commonStyle = StyleSheet.create({
     },
     notiCount: {
         color: WHITE,
-        fontFamily: montserratSemiBold,
+        fontFamily: interSemiBold,
         fontSize: getFontSize(14)
     },
     multiMainWrapperStyle: {
@@ -455,7 +455,7 @@ const commonStyle = StyleSheet.create({
         paddingHorizontal: 10
     },
     weekdayText: {
-        fontFamily: montserratSemiBold,
+        fontFamily: interSemiBold,
         fontSize: 11
     },
     profileVettedIcon: {

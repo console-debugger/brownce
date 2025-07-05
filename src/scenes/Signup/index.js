@@ -33,7 +33,7 @@ import {
   showToast,
 } from '../../components/helper';
 import { dynamicSize, getFontSize } from '../../utils/responsive';
-import { montserrat, montserratSemiBold } from '../../utils/fontFamily';
+import { inter, interSemiBold } from '../../utils/fontFamily';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import commonStyle from '../../components/commonStyle';
 import {
@@ -333,7 +333,7 @@ const Signup = ({ navigation, route }) => {
           {selectedTab == LOGIN_TYPE.PHONE && <MobileInput
             style={{
               height: null,
-              fontFamily: phone ? montserratSemiBold : montserrat
+              fontFamily: phone ? interSemiBold : inter
             }}
             mainContainerStyle={{ marginTop: isIOS ? 20 : 0 }}
             fieldstyle={{ borderBottomColor: focus === 2 ? BLACK : LIGHT_GRAY, }}
@@ -409,7 +409,7 @@ const Signup = ({ navigation, route }) => {
             />
           </>}
           <Selection
-            labelStyle={{ fontFamily: montserrat, color: BLACK }}
+            labelStyle={{ fontFamily: inter, color: BLACK }}
             style={{
               flexDirection: 'row',
               width: SCREEN_WIDTH - dynamicSize(70),

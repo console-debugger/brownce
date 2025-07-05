@@ -5,7 +5,7 @@ import { MyImage, MyText, MyView, SafeArea, Touchable, Loader, EmptyMessage } fr
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import styles from './style'
 import { GRAY, WHITE } from '../../utils/colors'
-import { montserratMedium } from '../../utils/fontFamily'
+import { interBold, interMedium } from '../../utils/fontFamily'
 import { markAsDeliveredAction, orderStatusAction, paymentSaveAction, providerOrderAction, refreshDataAction } from '../../redux/action'
 import { SCREEN_HEIGHT, SCREEN_WIDTH, convertToLocal } from '../../components/helper'
 import { useFocusEffect } from '@react-navigation/native'
@@ -113,7 +113,7 @@ const NewOrders = ({ navigation }) => {
             <Touchable activeOpacity={1} style={styles.cardView}>
                 <View style={styles.topView}>
                     <View style={styles.insideView} >
-                        <Text numberOfLines={1} ellipsizeMode='tail' style={[styles.id, { color: GRAY, fontFamily: montserratMedium }]}>{`${'Order Id: '}`}
+                        <Text numberOfLines={1} ellipsizeMode='tail' style={[styles.id, { color: GRAY, fontFamily: interMedium }]}>{`${'Order Id: '}`}
                             <Text numberOfLines={1} ellipsizeMode={'tail'} style={styles.id}>{item['Id']}</Text></Text>
                         <MyText style={styles.date}>{`${moment(convertToLocal(item['CreatedAt']),'YYYY-MM-DD').format('MMM Do, YYYY')}`}</MyText>
                     </View>
@@ -123,24 +123,24 @@ const NewOrders = ({ navigation }) => {
                     <View style={styles.contentContainer}>
                         <MyText style={styles.title}>{item['ProductDetails']['ProductName']}</MyText>
                         <MyView style={styles.middleRow}>
-                            <MyText onPress={() => navigation.navigate('customerDetail', { id: item.CustomerUserId })} style={{ fontWeight: '500', marginVertical: 3 }}>{'By '}
-                                <MyText style={{ fontWeight: '700', fontSize: 13 }}>{item['CustomerName']}</MyText></MyText>
+                            <MyText onPress={() => navigation.navigate('customerDetail', { id: item.CustomerUserId })} style={{ fontFamily: interMedium, marginVertical: 3 }}>{'By '}
+                                <MyText style={{ fontFamily: interBold, fontSize: 13 }}>{item['CustomerName']}</MyText></MyText>
                             <MyText style={[styles.price, { marginLeft: item['PaymentMethod'] ? SCREEN_WIDTH * 0.0 : SCREEN_WIDTH * 0.1 }]}>{`$${item['ProductDetails']['Price']}`}</MyText>
                         </MyView>
                         <MyView style={styles.bottomRow}>
                             <MyText style={{ fontSize: 12 }}>{'Qty '}
-                                <MyText style={{ fontSize: 13, fontWeight: '700' }}>{item['Quantity']}</MyText> </MyText>
+                                <MyText style={{ fontSize: 13, fontFamily: interBold, }}>{item['Quantity']}</MyText> </MyText>
                             {
                                 item['Status'] === 2 ?
                                     <Touchable onPress={() => _markasprepared(item)} style={[styles.complete, { marginLeft: 50 }]}>
-                                        <MyText style={{ color: WHITE, fontWeight: '500' }}>{'Mark as Prepared'}</MyText>
+                                        <MyText style={{ color: WHITE, fontFamily: interMedium, }}>{'Mark as Prepared'}</MyText>
                                     </Touchable> :
                                     item['Status'] === 3 ?
                                         <Touchable onPress={() => _markasdispatch(item)} style={[styles.complete]}>
-                                            <MyText style={{ color: WHITE, fontWeight: '500' }}>{'Mark as Dispatch'}</MyText>
+                                            <MyText style={{ color: WHITE, fontFamily: interMedium, }}>{'Mark as Dispatch'}</MyText>
                                         </Touchable> :
                                         <Touchable onPress={() => _markasdelivered(item)} style={[styles.complete, { marginLeft: item['PaymentMethod'] === 2 ? 20 : 50 }]}>
-                                            <MyText style={{ color: WHITE, fontWeight: '500' }}>{item['PaymentMethod'] === 2 ? 'Cash/Mark as delivered' : 'Mark as Delivered '}</MyText>
+                                            <MyText style={{ color: WHITE, fontFamily: interMedium, }}>{item['PaymentMethod'] === 2 ? 'Cash/Mark as delivered' : 'Mark as Delivered '}</MyText>
                                         </Touchable>
                             }
                         </MyView>

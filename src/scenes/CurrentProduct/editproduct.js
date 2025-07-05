@@ -12,7 +12,7 @@ import { getBrandCategoryAction, addProductAction } from '../../redux/action'
 import { useFocusEffect } from '@react-navigation/native'
 import MultipleImagePickerSelection from '../../components/multipleImageSelection'
 import MyListPicker from '../../components/myListPicker'
-import { montserratSemiBold } from '../../utils/fontFamily'
+import { interSemiBold } from '../../utils/fontFamily'
 import commonStyle from '../../components/commonStyle'
 
 const TYPES = { USERNAME: 'username', NAME: 'name', DES: 'description', PRICE: 'price', QUANTITY: 'quantity', EMAIL: 'email', GENDER: 'gender', COUNTRY: 'country', CITY: 'city', STATE: 'state' }
@@ -204,11 +204,11 @@ const EditProduct = ({ navigation, route }) => {
                         errorMessage={nameError || null}
                         errorStyle={{ marginLeft: 33 }}
                     />
-                    <MyListPicker textStyle={{ fontFamily: montserratSemiBold, color: BLACK }} style={{ alignSelf: 'center', marginVertical: null, marginTop: dynamicSize(0), borderBottomColor: BLACK }} message={'Please wait while fetching brand list'} value={selectedbrand} placeholder={'Choose brand'} data={brandList} selectedItem={_selectedBrand} />
+                    <MyListPicker textStyle={{ fontFamily: interSemiBold, color: BLACK }} style={{ alignSelf: 'center', marginVertical: null, marginTop: dynamicSize(0), borderBottomColor: BLACK }} message={'Please wait while fetching brand list'} value={selectedbrand} placeholder={'Choose brand'} data={brandList} selectedItem={_selectedBrand} />
                     <MyView style={{ width: SCREEN_WIDTH - dynamicSize(70) }}>
                         <MyText style={[commonStyle['errorMessage'], { width: '88%', marginLeft: 33 }]}>{brandError}</MyText>
                     </MyView>
-                    <MyListPicker textStyle={{ fontFamily: montserratSemiBold, color: BLACK }} style={{ alignSelf: 'center', marginVertical: null, marginTop: dynamicSize(15), borderBottomColor: BLACK }} message={'Please wait while fetching category list'} value={selectedcategory} placeholder={'Choose Category'} data={categoryList} selectedItem={_selectedCategory} />
+                    <MyListPicker textStyle={{ fontFamily: interSemiBold, color: BLACK }} style={{ alignSelf: 'center', marginVertical: null, marginTop: dynamicSize(15), borderBottomColor: BLACK }} message={'Please wait while fetching category list'} value={selectedcategory} placeholder={'Choose Category'} data={categoryList} selectedItem={_selectedCategory} />
                     <MyView style={{ width: SCREEN_WIDTH - dynamicSize(70) }}>
                         <MyText style={[commonStyle['errorMessage'], { width: '88%', marginLeft: 33 }]}>{categoryError}</MyText>
                     </MyView>

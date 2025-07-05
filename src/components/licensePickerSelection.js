@@ -3,7 +3,7 @@ import { CustomModal, Touchable, MyView, MyText } from './customComponent'
 import { useSelector } from 'react-redux'
 import { BLACK, THEME } from '../utils/colors'
 import { getFontSize, dynamicSize } from '../utils/responsive'
-import { montserratBold } from '../utils/fontFamily'
+import { interBold } from '../utils/fontFamily'
 import commonStyle from './commonStyle'
 import { SCREEN_WIDTH } from './helper'
 import { openCamera, imagePicker } from './imagePicker'
@@ -39,7 +39,7 @@ const LicensePickerSelection = props => {
                     <MyText style={{ color: BLACK, fontSize: getFontSize(20) }} >{CHOOSE_FROM_LIBRARY}</MyText>
                 </Touchable>
                 <Touchable onPress={onCancelPress} style={commonStyle['cancelButton']}>
-                    <MyText style={{ color: THEME, fontSize: getFontSize(20), fontFamily: montserratBold }} >{CANCEL}</MyText>
+                    <MyText style={{ color: THEME, fontSize: getFontSize(20), fontFamily: interBold }} >{CANCEL}</MyText>
                 </Touchable>
             </MyView>
         </CustomModal>

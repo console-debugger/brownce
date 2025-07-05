@@ -11,7 +11,7 @@ import { BLACK, LIGHT_WHITE, THEME } from '../../utils/colors'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
 import styles from './styles'
 import { GET_ALL_SERVIES_SUCCESS_ACTION, GET_SERVICES_BY_PROFESSION_SUCCESS_ACTION } from '../../redux/action/type'
-import { montserratBold, montserratMedium } from '../../utils/fontFamily'
+import { interBold, interMedium } from '../../utils/fontFamily'
 
 let timeout
 // All services UI
@@ -118,7 +118,7 @@ const AllServices = ({ navigation, route }) => {
     const _renderServies = ({ item, index }) => {
         return (
             <MyView>
-                <MyText style={{ fontSize: getFontSize(14), color: THEME, fontFamily: montserratBold }}>{item['Name']}</MyText>
+                <MyText style={{ fontSize: getFontSize(14), color: THEME, fontFamily: interBold }}>{item['Name']}</MyText>
                 <MyView style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', marginTop: dynamicSize(10) }}>
                     {
                         item['Services']?.length
@@ -134,7 +134,7 @@ const AllServices = ({ navigation, route }) => {
                             })
                             :
                             <MyView>
-                                <MyText style={{ fontSize: getFontSize(14), color: BLACK, fontFamily: montserratMedium }}>{'No services found for this profession'}</MyText>
+                                <MyText style={{ fontSize: getFontSize(14), color: BLACK, fontFamily: interMedium }}>{'No services found for this profession'}</MyText>
                             </MyView>
                     }
                 </MyView>

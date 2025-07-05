@@ -6,7 +6,7 @@ import { dynamicSize, getFontSize } from '../../utils/responsive'
 import { FlatList, StyleSheet } from 'react-native'
 import { THEME, LIGHT_WHITE, LIGHT_BROWN, WHITE, LIGHT_GRAY, BLACK } from '../../utils/colors'
 import { loaderAction, getCategorySearchAction, SearchloaderAction } from '../../redux/action'
-import { montserratBold, montserratMedium, montserratSemiBold } from '../../utils/fontFamily';
+import { interBold, interMedium, interSemiBold } from '../../utils/fontFamily';
 import { navigateToScreen } from '../../navigation/rootNav';
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     },
     helpText: {
         fontSize: getFontSize(14),
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         marginVertical: SCREEN_HEIGHT * 0.025
     },
     buttonStyle: {
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
         marginTop: SCREEN_HEIGHT * 0.02,
         textAlign: 'center',
         fontSize: getFontSize(20),
-        fontFamily: montserratSemiBold,
+        fontFamily: interSemiBold,
         marginLeft: SCREEN_WIDTH * 0.25
     },
     themeTitle: {
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
         color: THEME,
         textAlign: 'center',
         fontSize: getFontSize(20),
-        fontFamily: montserratBold
+        fontFamily: interBold
     },
     crousel: {
         width: SCREEN_WIDTH,
@@ -155,12 +155,12 @@ const styles = StyleSheet.create({
     selectedText: {
         fontSize: getFontSize(10),
         color: WHITE,
-        fontFamily: montserratMedium
+        fontFamily: interMedium
     },
     unselectedText: {
         fontSize: getFontSize(10),
         color: BLACK,
-        fontFamily: montserratMedium
+        fontFamily: interMedium
     },
     dotStyle: {
         backgroundColor: LIGHT_GRAY,
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     value: {
         position: 'absolute',
         fontSize: getFontSize(12),
-        fontFamily: montserratMedium,
+        fontFamily: interMedium,
         top: dynamicSize(-5)
     },
     mapMarkerStyle: {
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     },
     userName: {
         color: WHITE,
-        fontFamily: montserratSemiBold,
+        fontFamily: interSemiBold,
         fontSize: getFontSize(16)
     },
     headerView: {

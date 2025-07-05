@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../components/helper'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
 import { BLACK, MID_LIGHT_GRAY, THEME, WHITE } from '../../utils/colors'
-import { montserratBold, montserratMedium } from '../../utils/fontFamily'
+import { interBold, interMedium } from '../../utils/fontFamily'
 
 const styles = StyleSheet.create({
     flatList: {
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     noquestion: {
         marginVertical: SCREEN_WIDTH * 0.6,
         fontSize: getFontSize(12),
-        fontFamily: montserratBold
+        fontFamily: interBold
     },
     tabContaiber: {
         marginHorizontal: dynamicSize(15),
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
         borderRadius: dynamicSize(100),
     },
     bold: {
-        fontFamily: montserratMedium
+        fontFamily: interMedium
     },
     notiFontSize: {
         fontSize: getFontSize(14)
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
         textDecorationLine: 'underline',
         paddingVertical: dynamicSize(15),
         width: SCREEN_WIDTH / 4.5,
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         color: THEME
     }
 })

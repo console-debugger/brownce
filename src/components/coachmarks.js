@@ -3,7 +3,7 @@ import { Modal, LayoutAnimation, View, Image, StyleSheet, TouchableOpacity } fro
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from './helper';
 import { Button, MyImage, MyText, TouchableIcon } from './customComponent';
 import { BLACK, LIGHT_BROWN, LIGHT_THEME_34, OFF_THEME, THEME, TRANSPARENT_BLACK } from '../utils/colors';
-import { montserrat, montserratBold, montserratSemiBold } from '../utils/fontFamily';
+import { inter, interBold, interSemiBold } from '../utils/fontFamily';
 import { crossBold } from './icons';
 
 const MyCoachMarks = (props) => {
@@ -84,7 +84,7 @@ const MyCoachMarks = (props) => {
                     {crossIcon ? <TouchableIcon onPress={onCrossPress} source={crossIcon} style={styles.crossContainer} imageStyle={styles.cross} resizeMode='contain' /> : null}
                     {data[selectedIndex]?.title ? <MyText style={[styles.centeringTxt, styles.title]}>{data[selectedIndex]?.title}</MyText> : null}
                     {data[selectedIndex]?.icon ? <MyImage source={data[selectedIndex]?.icon} style={{ marginVertical: 10 }} /> : null}
-                    {data[selectedIndex]?.description ? <MyText style={[styles.centeringTxt, styles.description, { fontFamily: montserratBold }]}>{data[selectedIndex]?.description}</MyText> : null}
+                    {data[selectedIndex]?.description ? <MyText style={[styles.centeringTxt, styles.description, { fontFamily: interBold }]}>{data[selectedIndex]?.description}</MyText> : null}
                     <Button
                         text={data[selectedIndex]?.buttonTitle}
                         style={styles.startButton}
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     },
     title: {
         color: THEME,
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         fontSize: 20,
     },
     centeringTxt: {
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
         marginVertical: 15
     },
     subDescription: {
-        fontFamily: montserratSemiBold
+        fontFamily: interSemiBold
     },
     startButton: {
         marginVertical: 15,
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     },
     startButtonText: {
         fontSize: 14,
-        fontFamily: montserrat,
+        fontFamily: inter,
     },
     crossContainer: {
         position: 'absolute',

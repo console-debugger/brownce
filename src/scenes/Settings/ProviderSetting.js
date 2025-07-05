@@ -13,7 +13,7 @@ import { useFocusEffect } from '@react-navigation/native'
 import { apiKey } from '../../services/serviceConstant'
 import MultipleImagePickerSelection from '../../components/multipleImageSelection'
 import ImagePickerSelection from '../../components/imagePickerSelection'
-import { montserratBold, montserratSemiBold } from '../../utils/fontFamily'
+import { interBold, interSemiBold } from '../../utils/fontFamily'
 import moment from 'moment'
 
 let timeout
@@ -450,7 +450,7 @@ const ProviderSetting = ({ navigation }) => {
                             return (
                                 <MyView key={index.toString()} style={styles.hoursOfOperationContainer}>
                                     <MyView style={{ width: '20%' }}>
-                                        <MyText style={{ fontFamily: montserratBold }}>{item.WeekDay}</MyText>
+                                        <MyText style={{ fontFamily: interBold }}>{item.WeekDay}</MyText>
                                     </MyView>
                                     <MyView style={{ width: '50%', flexDirection: 'row', justifyContent: 'space-between' }}>
 

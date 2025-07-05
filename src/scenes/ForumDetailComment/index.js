@@ -11,7 +11,7 @@ import { THEME, WHITE } from '../../utils/colors'
 import Header from '../../components/header'
 import { commentAction, getCommentsHistoryAction, deleteCommentAction, likeDislikeCommentAction, getSuggestionsAction, getSuggestionsSuccessAction, refreshDataAction, getProviderProfileSuccessAction } from '../../redux/action'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
-import { montserratMedium } from '../../utils/fontFamily'
+import { interBold, interMedium } from '../../utils/fontFamily'
 import { MentionInput, replaceMentionValues } from 'react-native-controlled-mentions'
 import debounce from 'lodash.debounce';
 import { ROLE_TYPES } from '../../utils/roleType'
@@ -196,7 +196,7 @@ const ForumDetail = ({ navigation, route }) => {
                             partTypes={[
                                 {
                                     trigger: '@',
-                                    textStyle: { fontWeight: 'bold', color: THEME },
+                                    textStyle: { fontWeight: 'bold',fontFamily:interBold, color: THEME },
                                 },
                             ]}
                         />
@@ -209,15 +209,15 @@ const ForumDetail = ({ navigation, route }) => {
                         imageStyle={{ height: '100%', width: '100%' }}
                         onPress={() => likeDislikeComment(item, index)}
                     />
-                    <MyText style={{ fontFamily: montserratMedium, fontSize: getFontSize(14), marginHorizontal: dynamicSize(5), }} numberOfLines={1} >{item?.LikeCount || 0} </MyText>
+                    <MyText style={{ fontFamily: interMedium, fontSize: getFontSize(14), marginHorizontal: dynamicSize(5), }} numberOfLines={1} >{item?.LikeCount || 0} </MyText>
                     {/* <TouchableIcon
                         source={item?.likebyMe?.Status == 0 ? dislikeBlack : dislike}
                         style={{ height: dynamicSize(15), aspectRatio: 1 }}
                         imageStyle={{ height: '100%', width: '100%' }}
                         onPress={() => likeDislikeComment(item?.QuestionCommentId, item?.likebyMe?.Status, "dislike")}
                     />
-                    <MyText style={{ fontFamily: montserratMedium, fontSize: getFontSize(14), marginHorizontal: dynamicSize(5), }} numberOfLines={1} >{item?.DisLikeCount || 0} </MyText> */}
-                    <MyText onPress={() => _showHideReplies(index)} style={{ fontFamily: montserratMedium, fontSize: getFontSize(12), marginHorizontal: dynamicSize(5), textDecorationLine: 'underline' }} numberOfLines={1} >{item?.CommentReplies?.length || 0} Replies</MyText>
+                    <MyText style={{ fontFamily: interMedium, fontSize: getFontSize(14), marginHorizontal: dynamicSize(5), }} numberOfLines={1} >{item?.DisLikeCount || 0} </MyText> */}
+                    <MyText onPress={() => _showHideReplies(index)} style={{ fontFamily: interMedium, fontSize: getFontSize(12), marginHorizontal: dynamicSize(5), textDecorationLine: 'underline' }} numberOfLines={1} >{item?.CommentReplies?.length || 0} Replies</MyText>
                     {item?.UserId == user && <TouchableIcon
                         source={deleteIcon}
                         style={{ height: dynamicSize(15), aspectRatio: 1, marginLeft: dynamicSize(5) }}
@@ -241,7 +241,7 @@ const ForumDetail = ({ navigation, route }) => {
                                 {
                                     trigger: '@',
                                     renderSuggestions: (props) => <RenderSuggestions {...props} reply />,
-                                    textStyle: { fontWeight: 'bold', color: THEME },
+                                    textStyle: { fontWeight: 'bold',fontFamily:interBold, color: THEME },
                                 },
                             ]}
                             // onSubmitEditing={() => submitComment(item?.QuestionCommentId, index)}
@@ -275,7 +275,7 @@ const ForumDetail = ({ navigation, route }) => {
                                         partTypes={[
                                             {
                                                 trigger: '@',
-                                                textStyle: { fontWeight: 'bold', color: THEME },
+                                                textStyle: { fontWeight: 'bold',fontFamily:interBold, color: THEME },
                                             },
                                         ]}
                                     />
@@ -288,14 +288,14 @@ const ForumDetail = ({ navigation, route }) => {
                                     imageStyle={{ height: '100%', width: '100%' }}
                                     onPress={() => likeDislikeComment(item, index, itemm, eachIndex)}
                                 />
-                                <MyText style={{ fontFamily: montserratMedium, fontSize: getFontSize(14), marginHorizontal: dynamicSize(5), }} numberOfLines={1} >{itemm?.LikeCount || 0} </MyText>
+                                <MyText style={{ fontFamily: interMedium, fontSize: getFontSize(14), marginHorizontal: dynamicSize(5), }} numberOfLines={1} >{itemm?.LikeCount || 0} </MyText>
                                 {/* <TouchableIcon
                                     source={itemm?.likebyMe?.Status == 0 ? dislikeBlack : dislike}
                                     style={{ height: dynamicSize(15), aspectRatio: 1 }}
                                     imageStyle={{ height: '100%', width: '100%' }}
                                     onPress={() => likeDislikeComment(itemm?.QuestionCommentId, itemm?.likebyMe?.Status, "dislike")}
                                 />
-                                <MyText style={{ fontFamily: montserratMedium, fontSize: getFontSize(14), marginHorizontal: dynamicSize(5), }} numberOfLines={1} >{itemm?.DisLikeCount || 0} </MyText> */}
+                                <MyText style={{ fontFamily: interMedium, fontSize: getFontSize(14), marginHorizontal: dynamicSize(5), }} numberOfLines={1} >{itemm?.DisLikeCount || 0} </MyText> */}
                                 {itemm?.UserId == user && <TouchableIcon
                                     source={deleteIcon}
                                     style={{ height: dynamicSize(15), aspectRatio: 1, marginLeft: dynamicSize(5) }}
@@ -407,7 +407,7 @@ const ForumDetail = ({ navigation, route }) => {
                                 {
                                     trigger: '@',
                                     renderSuggestions: (props) => <RenderSuggestions {...props} />,
-                                    textStyle: { fontWeight: 'bold', color: THEME },
+                                    textStyle: { fontWeight: 'bold',fontFamily:interBold, color: THEME },
                                 },
                             ]}
                             // onSubmitEditing={() => submitComment(null)}

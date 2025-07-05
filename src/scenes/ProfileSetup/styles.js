@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native'
 import { SCREEN_HEIGHT, SCREEN_WIDTH, isAndroid } from '../../components/helper'
 import { GRAY, BLACK, LIGHT_BROWN, WHITE, LIGHT_GRAY, MID_GRAY, LIGHT_WHITE, THEME } from '../../utils/colors'
-import { montserratBold, montserratMedium, montserratSemiBold } from '../../utils/fontFamily'
+import { interBold, interMedium, interSemiBold } from '../../utils/fontFamily'
 import { dynamicSize, getFontSize } from '../../utils/responsive'
 
 const styles = StyleSheet.create({
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     },
     uploadText: {
         color: BLACK,
-        fontFamily: montserratSemiBold,
+        fontFamily: interSemiBold,
         marginVertical: SCREEN_HEIGHT * 0.015
     },
     buttonStyle: {
@@ -138,12 +138,12 @@ const styles = StyleSheet.create({
         backgroundColor: LIGHT_WHITE
     },
     subscriptionPrice: {
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         fontSize: getFontSize(20)
     },
     subscriptionPeriod: {
         marginTop: SCREEN_HEIGHT * 0.001,
-        fontFamily: montserratMedium,
+        fontFamily: interMedium,
         fontSize: getFontSize(14)
     },
     subscriptionDescription: {
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
         fontSize: getFontSize(9),
         color: BLACK,
         borderWidth: 0,
-        fontFamily: montserratSemiBold
+        fontFamily: interSemiBold
     },
     input: {
         paddingVertical: dynamicSize(3),
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginVertical: SCREEN_HEIGHT * 0.01,
         width: '50%',
-        fontFamily: montserratMedium,
+        fontFamily: interMedium,
         borderBottomWidth: 0.5,
         borderBottomColor: LIGHT_GRAY,
         marginBottom: 0
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         flex: 1,
         fontSize: getFontSize(16),
-        fontFamily: montserratBold
+        fontFamily: interBold
     },
     addCustomService: {
         width: SCREEN_WIDTH * 0.4,
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
     },
     addText: {
         color: WHITE,
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         fontSize: getFontSize(12)
     },
     addCircle: {
@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
     value: {
         position: 'absolute',
         fontSize: getFontSize(12),
-        fontFamily: montserratMedium,
+        fontFamily: interMedium,
         top: dynamicSize(-5)
     },
     picker: {
@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
     },
     professionText: {
         color: WHITE,
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         fontSize: getFontSize(15)
     },
     searchBox: {

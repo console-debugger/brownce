@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native'
 import { dynamicSize } from '../../utils/responsive'
 import { THEME, LIGHT_GREY } from '../../utils/colors'
-import { montserratBold } from '../../utils/fontFamily'
+import { interBold } from '../../utils/fontFamily'
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../components/helper'
 
 const styles = StyleSheet.create({
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     mediumBoldText: {
         marginVertical: SCREEN_HEIGHT * 0.01,
         alignSelf: 'center',
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         fontSize: SCREEN_HEIGHT * 0.025,
     },
     messageText: {
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     },
     messageTextBold: {
         color: THEME,
-        fontFamily: montserratBold,
+        fontFamily: interBold,
         fontSize: SCREEN_HEIGHT * 0.02
     },
     otpView: {

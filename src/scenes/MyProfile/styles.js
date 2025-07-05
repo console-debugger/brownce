@@ -10,9 +10,9 @@ import {
   GRAY,
 } from '../../utils/colors';
 import {
-  montserratSemiBold,
-  montserratMedium,
-  montserratBold,
+  interSemiBold,
+  interMedium,
+  interBold,
 } from '../../utils/fontFamily';
 import { getFontSize, dynamicSize } from '../../utils/responsive';
 import { SCREEN_HEIGHT, isAndroid, SCREEN_WIDTH } from '../../components/helper';
@@ -28,13 +28,13 @@ const styles = StyleSheet.create({
   shareText: {
     marginLeft: dynamicSize(20),
     color: THEME,
-    fontFamily: montserratSemiBold,
+    fontFamily: interSemiBold,
     fontSize: getFontSize(16),
   },
   editText: {
     marginRight: dynamicSize(20),
     color: THEME,
-    fontFamily: montserratSemiBold,
+    fontFamily: interSemiBold,
     fontSize: getFontSize(16),
   },
   image: {
@@ -45,13 +45,13 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: getFontSize(14),
-    fontFamily: montserratBold,
+    fontFamily: interBold,
     marginBottom: dynamicSize(8),
   },
   detail: {
     fontSize: getFontSize(12),
     marginBottom: dynamicSize(5),
-    fontFamily: montserratSemiBold,
+    fontFamily: interSemiBold,
   },
   curveMain: {
     marginTop: SCREEN_HEIGHT * 0.04,
@@ -72,11 +72,11 @@ const styles = StyleSheet.create({
   },
   hairType: {
     marginLeft: dynamicSize(35),
-    fontFamily: montserratMedium,
+    fontFamily: interMedium,
     marginBottom: dynamicSize(10),
   },
   value: {
-    fontFamily: montserratBold,
+    fontFamily: interBold,
   },
   cardStyle: {
     borderWidth: 0.5,
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   },
   uploadText: {
     color: BLACK,
-    fontFamily: montserratSemiBold,
+    fontFamily: interSemiBold,
     marginVertical: SCREEN_HEIGHT * 0.015,
   },
   description: {
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   subscriptionTitle: {
     marginLeft: dynamicSize(35),
     fontSize: getFontSize(14),
-    fontFamily: montserratSemiBold,
+    fontFamily: interSemiBold,
   },
   subscriptionContainer: {
     marginVertical: SCREEN_HEIGHT * 0.02,
@@ -120,22 +120,22 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
   },
   subscriptionPrice: {
-    fontFamily: montserratBold,
+    fontFamily: interBold,
     fontSize: getFontSize(20),
   },
   subscriptionPeriod: {
     marginVertical: SCREEN_HEIGHT * 0.01,
-    fontFamily: montserratMedium,
+    fontFamily: interMedium,
     fontSize: getFontSize(14),
   },
   subscriptionDescription: {
-    fontFamily: montserratMedium,
+    fontFamily: interMedium,
     textAlign: 'center',
     fontSize: getFontSize(10),
   },
   subscriptionBuyDescription: {
     marginVertical: SCREEN_HEIGHT * 0.01,
-    fontFamily: montserratMedium,
+    fontFamily: interMedium,
     textAlign: 'center',
     fontSize: getFontSize(15),
   },
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     // marginVertical: dynamicSize(20),
     alignSelf: 'flex-start',
     marginLeft: dynamicSize(25),
-    fontFamily: montserratBold,
+    fontFamily: interBold,
     fontSize: getFontSize(13),
   },
   portfolioImage: {
@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
   },
   price: {
     color: THEME,
-    fontFamily: montserratBold,
+    fontFamily: interBold,
     marginTop: 10,
   },
   desc: {
@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10
   },
   weekdayText: {
-    fontFamily: montserratSemiBold,
+    fontFamily: interSemiBold,
     fontSize: 11
   },
   topTabContainer: {
@@ -270,7 +270,7 @@ const styles = StyleSheet.create({
   },
   tabText: {
     fontSize: 9,
-    fontFamily: montserratBold
+    fontFamily: interBold
   },
 });
 

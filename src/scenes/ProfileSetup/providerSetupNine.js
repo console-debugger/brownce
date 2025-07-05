@@ -12,7 +12,7 @@ import styles from './styles'
 import { useFocusEffect } from '@react-navigation/native'
 import DateTimePicker from '../../components/datePicker'
 import { timeIcon } from '../../components/icons'
-import { montserratMedium } from '../../utils/fontFamily'
+import { interMedium } from '../../utils/fontFamily'
 import { dynamicSize } from '../../utils/responsive'
 import { navigateToScreen } from '../../navigation/rootNav'
 
@@ -116,7 +116,7 @@ const ProviderProfileSetupNine = ({ navigation }) => {
                     placeholder={'Open Time'}
                     selectedTime={_selectedTime}
                     textStyle={{
-                        color: time ? BLACK : PLACEHOLDER_COLOR, right: 10, fontFamily: montserratMedium,
+                        color: time ? BLACK : PLACEHOLDER_COLOR, right: 10, fontFamily: interMedium,
                     }}
                 >
                     <MyImage source={timeIcon} />
@@ -129,7 +129,7 @@ const ProviderProfileSetupNine = ({ navigation }) => {
                     placeholder={'Close Time'}
                     selectedTime={_selectedCloseTime}
                     textStyle={{
-                        color: time ? BLACK : PLACEHOLDER_COLOR, right: 10, fontFamily: montserratMedium,
+                        color: time ? BLACK : PLACEHOLDER_COLOR, right: 10, fontFamily: interMedium,
                     }}
                 >
                     <MyImage source={timeIcon} />
