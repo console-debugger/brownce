@@ -237,16 +237,16 @@ const Subscriptions = ({ navigation }) => {
                                 console.log('validateAndroidReceipt==>1', validateAndroidReceipt)
                                 const { packageNameAndroid, productId, purchaseToken, transactionId } = purchase
                                 // if (validateAndroidReceipt) {
-                                    const param = {
-                                        "PackageName": purchase.productId,
-                                        "PlatFormType": Platform.OS == "ios" ? 2 : 1,
-                                        "TnxId": purchase?.transactionId,
-                                        "Price": selectedIAPPayment?.priceAmountMicros,
-                                        "SubscriptionStart": purchase?.transactionDate,
-                                        "RecieptData": receipt,
-                                    }
-                                    console.log("Subscription Data =>>", { ...param })
-                                    dispatch(saveSubscriptionAction(param, route.name == "providerProfileSetupSix" ? false : true))
+                                const param = {
+                                    "PackageName": purchase.productId,
+                                    "PlatFormType": Platform.OS == "ios" ? 2 : 1,
+                                    "TnxId": purchase?.transactionId,
+                                    "Price": selectedIAPPayment?.priceAmountMicros,
+                                    "SubscriptionStart": purchase?.transactionDate,
+                                    "RecieptData": receipt,
+                                }
+                                console.log("Subscription Data =>>", { ...param })
+                                dispatch(saveSubscriptionAction(param, route.name == "providerProfileSetupSix" ? false : true))
                                 // }
                                 // else {
                                 //     showToast('Error in validating android receipt', 'danger')
@@ -295,8 +295,10 @@ const Subscriptions = ({ navigation }) => {
                 });
                 console.log("resres==>", res)
             } catch (error) {
-                console.log("selectedPlan===>2", JSON.stringify(error))
-                showToast(error.message, 'info')
+                if (error?.code != 'E_USER_CANCELLED') {
+                    console.log("selectedPlan===>2", JSON.stringify(error))
+                    showToast(error.message, 'info')
+                }
             }
         }
     };
@@ -310,9 +312,10 @@ const Subscriptions = ({ navigation }) => {
     const _keyExtractor = (item, index) => item + index
 
     const renderPrice = (ppl) => {
-        const isFree = ppl.priceAmountMicros == 0 && ppl.formattedPrice == 'Free'
-        if (isFree) return (<MyText key={ppl.formattedPrice} style={{ ...styless.subscriptionPrice, color: WHITE }}>{`${ppl.formattedPrice} for 7 days`}</MyText>)
-        else return (<MyText key={ppl.formattedPrice} style={{ ...styless.subscriptionPrice, color: WHITE }}>{`Subscribe now for ${ppl.formattedPrice}`}</MyText>)
+        // const isFree = ppl.priceAmountMicros == 0 && ppl.formattedPrice == 'Free'
+        // if (isFree) return (<MyText key={ppl.formattedPrice} style={{ ...styless.subscriptionPrice, color: WHITE }}>{`${ppl.formattedPrice} for 7 days`}</MyText>)
+        // else 
+        return (<MyText key={ppl.formattedPrice} style={{ ...styless.subscriptionPrice, color: WHITE }}>{`Subscribe now for ${ppl.formattedPrice}`}</MyText>)
     }
 
     const _renderNormalList = ({ item, index }) => {
