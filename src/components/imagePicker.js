@@ -3,7 +3,7 @@ import { Platform, PixelRatio } from 'react-native';
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from './helper';
 import { THEME } from '../utils/colors';
 
-export const imagePicker = async () => {
+export const imagePicker = async (props) => {
     return new Promise((resolve, reject) => ImagePicker.openPicker({
         cropping: true,
         width: SCREEN_WIDTH * PixelRatio.get(),
@@ -11,7 +11,8 @@ export const imagePicker = async () => {
         cropperStatusBarColor: THEME,
         cropperToolbarColor: THEME,
         smartAlbums: Platform.OS === 'ios' && ['UserLibrary', 'PhotoStream', 'Bursts', 'Screenshots'],
-        mediaType: 'photo'
+        mediaType: 'photo',
+        cropperCircleOverlay: props?.isCircularCrop ? true : false
     }).then(image => {
         const fileName = image.path.split('/').filter(item => {
             if (item.includes('.jpeg') || item.includes('.jpg') || item.includes('.png'))
@@ -54,7 +55,7 @@ export const multipleimagePicker = async () => {
     )
 }
 
-export const openCamera = async () => {
+export const openCamera = async (props) => {
     return new Promise((resolve, reject) => ImagePicker.openCamera({
         cropping: true,
         width: SCREEN_WIDTH * PixelRatio.get(),
@@ -62,7 +63,8 @@ export const openCamera = async () => {
         cropperStatusBarColor: THEME,
         cropperToolbarColor: THEME,
         smartAlbums: Platform.OS === 'ios' && ['UserLibrary', 'PhotoStream', 'Bursts', 'Screenshots'],
-        mediaType: 'photo'
+        mediaType: 'photo',
+        cropperCircleOverlay: props?.isCircularCrop ? true : false
     }).then(image => {
         const fileName = image.path.split('/').filter(item => {
             if (item.includes('.jpeg') || item.includes('.jpg') || item.includes('.png'))

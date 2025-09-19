@@ -8,30 +8,30 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* BrownceCustomerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* BrownceCustomerTests.m */; };
+		00F7DC510F1742B586879EB9 /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A302232DF4A413884508541 /* Inter-Medium.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		17AAF15ABF1F40EC94BF1C0C /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 71834F8087164CE184187478 /* Inter-Regular.ttf */; };
+		1C5C1C4143C540E2B832BF4B /* Inter-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 86879066C56C494984F931EA /* Inter-Italic.ttf */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* BrownceCustomerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* BrownceCustomerTests.m */; };
 		2E1FC1322992675B004C65A1 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 2E1FC1312992675B004C65A1 /* assets */; };
+		4C20B3712CB644E5A6FD0703 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 647679DE6DFE4C9CAC9ECEFE /* Inter-Bold.ttf */; };
 		615DE95228BE155800E27BB0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 615DE95128BE155800E27BB0 /* GoogleService-Info.plist */; };
 		619ED16F28C85388001E9429 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619ED16E28C85388001E9429 /* NotificationService.swift */; };
 		619ED17328C85388001E9429 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 619ED16C28C85387001E9429 /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		67B3D76CFBA43D60E4FBF0EF /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F104066D2317BEC38AD16EA8 /* libPods-OneSignalNotificationServiceExtension.a */; };
+		6A7E4C081B674C3084EE12D8 /* Inter-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 05D1C567032F4B06B109473E /* Inter-SemiBoldItalic.ttf */; };
+		714EA1E0C8C644379C80FF97 /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 46D9B041AAA342FA940EDF98 /* Inter-SemiBold.ttf */; };
 		7728E76C275F2809008322D2 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7728E76B275F2809008322D2 /* StoreKit.framework */; };
 		7728E772275F2EFB008322D2 /* NonConsumables.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 7728E771275F2EFB008322D2 /* NonConsumables.storekit */; };
-		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		F7BB44F49AF9A3B391A2EE77 /* libPods-BrownceCustomer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F2528A9A0894D69173AC8B9 /* libPods-BrownceCustomer.a */; };
-		4C20B3712CB644E5A6FD0703 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 647679DE6DFE4C9CAC9ECEFE /* Inter-Bold.ttf */; };
-		9C1A6065370F40D482FA38B1 /* Inter-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE36BF61DCAF40F1A1701EFD /* Inter-BoldItalic.ttf */; };
-		1C5C1C4143C540E2B832BF4B /* Inter-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 86879066C56C494984F931EA /* Inter-Italic.ttf */; };
-		00F7DC510F1742B586879EB9 /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A302232DF4A413884508541 /* Inter-Medium.ttf */; };
 		79CE65E7FDFC4A47BC645EDF /* Inter-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0E0A164CA11486A80F40AC6 /* Inter-MediumItalic.ttf */; };
-		17AAF15ABF1F40EC94BF1C0C /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 71834F8087164CE184187478 /* Inter-Regular.ttf */; };
-		714EA1E0C8C644379C80FF97 /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 46D9B041AAA342FA940EDF98 /* Inter-SemiBold.ttf */; };
-		6A7E4C081B674C3084EE12D8 /* Inter-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 05D1C567032F4B06B109473E /* Inter-SemiBoldItalic.ttf */; };
+		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		9C1A6065370F40D482FA38B1 /* Inter-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE36BF61DCAF40F1A1701EFD /* Inter-BoldItalic.ttf */; };
+		F7BB44F49AF9A3B391A2EE77 /* libPods-BrownceCustomer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F2528A9A0894D69173AC8B9 /* libPods-BrownceCustomer.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,12 +76,14 @@
 		00E356EE1AD99517003FC87E /* BrownceCustomerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BrownceCustomerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* BrownceCustomerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrownceCustomerTests.m; sourceTree = "<group>"; };
+		05D1C567032F4B06B109473E /* Inter-SemiBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-SemiBoldItalic.ttf"; path = "../src/assets/fonts/Inter-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Brownce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Brownce.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = BrownceCustomer/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = BrownceCustomer/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = BrownceCustomer/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = BrownceCustomer/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = BrownceCustomer/main.m; sourceTree = "<group>"; };
+		1A302232DF4A413884508541 /* Inter-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Medium.ttf"; path = "../src/assets/fonts/Inter-Medium.ttf"; sourceTree = "<group>"; };
 		1BE6E933DDEC7788D3B8C24E /* Pods-BrownceCustomer-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BrownceCustomer-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-BrownceCustomer-OneSignalNotificationServiceExtension/Pods-BrownceCustomer-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		1F2528A9A0894D69173AC8B9 /* libPods-BrownceCustomer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BrownceCustomer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FDE4B68209648B0A8FB5F5E /* Montserrat-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-MediumItalic.ttf"; path = "../src/assets/fonts/Montserrat-MediumItalic.ttf"; sourceTree = "<group>"; };
@@ -94,18 +96,24 @@
 		3F60E117A1A74B06AEBE3611 /* Montserrat-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-BoldItalic.ttf"; path = "../src/assets/fonts/Montserrat-BoldItalic.ttf"; sourceTree = "<group>"; };
 		40D0CF240AB0842A53BB1D05 /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
 		4408FD130990124C8F5A1254 /* Pods-BrownceCustomer-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BrownceCustomer-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-BrownceCustomer-OneSignalNotificationServiceExtension/Pods-BrownceCustomer-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
+		46D9B041AAA342FA940EDF98 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-SemiBold.ttf"; path = "../src/assets/fonts/Inter-SemiBold.ttf"; sourceTree = "<group>"; };
 		615DE95128BE155800E27BB0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		619ED16C28C85387001E9429 /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		619ED16E28C85388001E9429 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		619ED17028C85388001E9429 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		619ED17828C854E7001E9429 /* OneSignalNotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtension.entitlements; sourceTree = "<group>"; };
 		619ED17928C85519001E9429 /* OneSignalNotificationServiceExtensionRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtensionRelease.entitlements; sourceTree = "<group>"; };
+		647679DE6DFE4C9CAC9ECEFE /* Inter-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Bold.ttf"; path = "../src/assets/fonts/Inter-Bold.ttf"; sourceTree = "<group>"; };
 		6E8A0E28ACBE44478CF08E0D /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = ../src/assets/fonts/MaterialCommunityIcons.ttf; sourceTree = "<group>"; };
+		71834F8087164CE184187478 /* Inter-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Regular.ttf"; path = "../src/assets/fonts/Inter-Regular.ttf"; sourceTree = "<group>"; };
 		7728E76B275F2809008322D2 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		7728E771275F2EFB008322D2 /* NonConsumables.storekit */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NonConsumables.storekit; sourceTree = "<group>"; };
 		8050640B64803E0EDE45B537 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = BrownceCustomer/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		86879066C56C494984F931EA /* Inter-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Italic.ttf"; path = "../src/assets/fonts/Inter-Italic.ttf"; sourceTree = "<group>"; };
+		A0E0A164CA11486A80F40AC6 /* Inter-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-MediumItalic.ttf"; path = "../src/assets/fonts/Inter-MediumItalic.ttf"; sourceTree = "<group>"; };
 		C07BA361407144EC8D980DDD /* Montserrat-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Italic.ttf"; path = "../src/assets/fonts/Montserrat-Italic.ttf"; sourceTree = "<group>"; };
+		CE36BF61DCAF40F1A1701EFD /* Inter-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-BoldItalic.ttf"; path = "../src/assets/fonts/Inter-BoldItalic.ttf"; sourceTree = "<group>"; };
 		D0F4CD72259AED04002A3484 /* Brownce.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Brownce.entitlements; path = BrownceCustomer/Brownce.entitlements; sourceTree = "<group>"; };
 		E7F21AFBF788448AAE90901A /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Bold.ttf"; path = "../src/assets/fonts/Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		EBB78241414A0B4B01B4FA4B /* Pods-BrownceCustomer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BrownceCustomer.release.xcconfig"; path = "Target Support Files/Pods-BrownceCustomer/Pods-BrownceCustomer.release.xcconfig"; sourceTree = "<group>"; };
@@ -114,14 +122,6 @@
 		F02D7BA906A6456E9A16E2D7 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Medium.ttf"; path = "../src/assets/fonts/Montserrat-Medium.ttf"; sourceTree = "<group>"; };
 		F0F86C2FC8E04560A46B4639 /* Montserrat-SemiBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-SemiBoldItalic.ttf"; path = "../src/assets/fonts/Montserrat-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
 		F104066D2317BEC38AD16EA8 /* libPods-OneSignalNotificationServiceExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OneSignalNotificationServiceExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		647679DE6DFE4C9CAC9ECEFE /* Inter-Bold.ttf */ = {isa = PBXFileReference; name = "Inter-Bold.ttf"; path = "../src/assets/fonts/Inter-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		CE36BF61DCAF40F1A1701EFD /* Inter-BoldItalic.ttf */ = {isa = PBXFileReference; name = "Inter-BoldItalic.ttf"; path = "../src/assets/fonts/Inter-BoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		86879066C56C494984F931EA /* Inter-Italic.ttf */ = {isa = PBXFileReference; name = "Inter-Italic.ttf"; path = "../src/assets/fonts/Inter-Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		1A302232DF4A413884508541 /* Inter-Medium.ttf */ = {isa = PBXFileReference; name = "Inter-Medium.ttf"; path = "../src/assets/fonts/Inter-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		A0E0A164CA11486A80F40AC6 /* Inter-MediumItalic.ttf */ = {isa = PBXFileReference; name = "Inter-MediumItalic.ttf"; path = "../src/assets/fonts/Inter-MediumItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		71834F8087164CE184187478 /* Inter-Regular.ttf */ = {isa = PBXFileReference; name = "Inter-Regular.ttf"; path = "../src/assets/fonts/Inter-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		46D9B041AAA342FA940EDF98 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; name = "Inter-SemiBold.ttf"; path = "../src/assets/fonts/Inter-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		05D1C567032F4B06B109473E /* Inter-SemiBoldItalic.ttf */ = {isa = PBXFileReference; name = "Inter-SemiBoldItalic.ttf"; path = "../src/assets/fonts/Inter-SemiBoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -955,7 +955,7 @@
 				INFOPLIST_FILE = BrownceCustomer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.44;
+				MARKETING_VERSION = 2.45;
 				OTHER_CODE_SIGN_FLAGS = "--generate-entitlement-der";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -983,12 +983,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LAZ53ZV878;
+				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = arm64;
 				"EXCLUDED_ARCHS[sdk=iphoneos*]" = "";
 				INFOPLIST_FILE = BrownceCustomer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.44;
+				MARKETING_VERSION = 2.45;
 				OTHER_CODE_SIGN_FLAGS = "--generate-entitlement-der";
 				OTHER_LDFLAGS = (
 					"$(inherited)",

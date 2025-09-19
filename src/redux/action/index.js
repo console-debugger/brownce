@@ -883,3 +883,7 @@ export const getProviderAllServicesListAction = (payload, callBack) => ({
 export const getProviderAllProductsAction = (payload) => ({
     type: TYPES.GET_PROVIDER_PRODUCT_LIST_ACTION, payload
 })
+
+export const updateInlineProfileAction = (payload, callBack) => ({
+    type: TYPES.UPDATE_INLINE_PROFILE_ACTION, payload, callBack
+})

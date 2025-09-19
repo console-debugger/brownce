@@ -114,4 +114,7 @@ export const pointerMask = require('../assets/icons/mask.png')
 export const pointerFinger = require('../assets/icons/fingerPointer.png')
 export const coachmarkBeautyBooker = require('../assets/icons/coachmarkBeautyBooker.png')
 export const vettedIcon = require('../assets/icons/isVetted.png')
+export const shareThemeIcon = require('../assets/icons/shareTheme.png')
+export const profileSmallCamera = require('../assets/icons/profileSmallCamera.png')
+export const pencil = require('../assets/icons/pencil.png')
 

@@ -17,3 +17,5 @@ export const DARK_GRAY = "#979797"
 export const LIGHT_THEME_34 = '#8e554e34'
 export const OFF_THEME = '#F6F1EE'
 export const THEME_OFFSET = '#A2837F'
+export const BLACK_30 = '#00000030'
+export const BLACK_50 = '#00000050'

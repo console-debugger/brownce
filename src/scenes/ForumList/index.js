@@ -136,11 +136,18 @@ const ForumList = ({ navigation }) => {
 
   const _fetchFeed = () => {
     setRefreshState(true);
+    let queryParams = ''
+    if (search) {
+      queryParams = `searchString=${search}&PageNo=${feedPaginationOffset.current}&RecordsPerPage=7`
+    }
+    else {
+      queryParams = `PageNo=${feedPaginationOffset.current}&RecordsPerPage=7`
+    }
     dispatch(
-      getAllQuestionAction(search, (data) => {
+      getAllQuestionAction(queryParams, (data) => {
 
         if (data) {
-          if (notiPaginationOffset.current == 1) {
+          if (feedPaginationOffset.current == 1) {
             setAllFeeds([...data]);
           } else {
             setAllFeeds([...allFeeds, ...data]);
@@ -416,8 +423,10 @@ const ForumList = ({ navigation }) => {
   };
 
   const _onEndReachedFeeds = () => {
-    if (isCallNextApi.current && callNextRecordStatus.current) {
-      callNextRecordStatus.current = false;
+    console.log("herer===>")
+    if (callNextRecordStatus.current == true) {
+      console.log("herer===>1")
+      callNextRecordStatus.current == false
       feedPaginationOffset.current++;
       feedFooterIndicator.current = true;
       _fetchFeed();

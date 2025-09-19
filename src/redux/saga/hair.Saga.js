@@ -21,23 +21,33 @@ function* hairTypes(param) {
         const hairRes = yield apiRequest({}, GET_HAIR_TYPE_URL, method['GET'])
         if (hairRes['status'] === 200) {
             if (param['payload']) {
-                const newResult = yield hairRes['result'].map(item => { return { ...item, status: param['payload'] == item['HairTypeName'] ? true : false } })
+                const newResult = yield hairRes['result'].map(item => {
+                    return {
+                        ...item,
+                        status: param['payload'] == item['HairTypeName'] ? true : false,
+                        localStatus: param['payload'] == item['HairTypeName'] ? true : false
+                    }
+                })
                 yield put(getHairTypeSuccessAction(newResult))
+                delay(600)
                 yield put(loaderAction(false))
             }
             else {
-                const newResult = yield hairRes['result'].map(item => { return { ...item, status: false } })
+                const newResult = yield hairRes['result'].map(item => { return { ...item, status: false, localStatus:false } })
                 yield put(getHairTypeSuccessAction(newResult))
+                delay(600)
                 yield put(loaderAction(false))
             }
         }
         else {
             yield put(loaderAction(false))
+            delay(600)
             showToast(hairRes['message'])
         }
 
     } catch (err) {
         yield put(loaderAction(false))
+        delay(600)
         yield put(showToast(serviceError['CATCH_ERROR']))
     }
 }

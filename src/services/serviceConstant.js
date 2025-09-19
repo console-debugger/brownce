@@ -174,7 +174,7 @@ export const CANCEL_APPOINTMENT = `${BASE_URL}/api/customer/CancelAppointment`
 
 export const ALL_QUESTION_URL = `${BASE_URL}/API/qa/GetAllQuestions?`
 
-export const ALL_QUESTION_SEARCH_URL = `${BASE_URL}/api/common/getallquestions?searchString=`
+export const ALL_QUESTION_SEARCH_URL = `${BASE_URL}/api/common/getallquestions?`
 
 export const COMMON_QUESTION_URL = `${BASE_URL}/api/account/GetMyQuestions`
 
@@ -335,3 +335,5 @@ export const GET_SP_PROFILE_NEW_URL = `${BASE_URL}/api/customer/sp-profile?useri
 export const GET_SERVICES_NEW_URL = `${BASE_URL}/api/customer/sp-profile-services?userid=`
 export const GET_PROVIDER_ALL_SERVICES_URL = `${BASE_URL}/api/customer/sp-complete-Profile-services?userid=`
 export const GET_PROVIDER_PRODUCT_LIST_URL = `${BASE_URL}/api/products/GetProducts`
+
+export const EDIT_INLINE_PROFILE_URL = `${BASE_URL}/api/customer/editInlineProfile`

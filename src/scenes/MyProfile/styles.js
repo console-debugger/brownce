@@ -8,6 +8,8 @@ import {
   LIGHT_BROWN,
   LIGHT_GRAY,
   GRAY,
+  BLACK_30,
+  BLACK_50,
 } from '../../utils/colors';
 import {
   interSemiBold,
@@ -32,10 +34,10 @@ const styles = StyleSheet.create({
     fontSize: getFontSize(16),
   },
   editText: {
-    marginRight: dynamicSize(20),
+    marginLeft: dynamicSize(3),
     color: THEME,
-    fontFamily: interSemiBold,
-    fontSize: getFontSize(16),
+    fontFamily: interMedium,
+    fontSize: getFontSize(14),
   },
   image: {
     alignSelf: 'center',
@@ -44,8 +46,12 @@ const styles = StyleSheet.create({
     borderRadius: (isAndroid ? SCREEN_HEIGHT * 0.11 : SCREEN_HEIGHT * 0.11) / 2,
   },
   name: {
+    fontSize: getFontSize(18),
+    fontFamily: interMedium
+  },
+  userName: {
     fontSize: getFontSize(14),
-    fontFamily: interBold,
+    fontFamily: interMedium,
     marginBottom: dynamicSize(8),
   },
   detail: {
@@ -54,24 +60,28 @@ const styles = StyleSheet.create({
     fontFamily: interSemiBold,
   },
   curveMain: {
-    marginTop: SCREEN_HEIGHT * 0.04,
+    marginTop: SCREEN_HEIGHT * 0.02,
     backgroundColor: LIGHT_WHITE,
   },
   innerStyle: {
     backgroundColor: WHITE,
   },
   shareContainer: {
-    width: SCREEN_WIDTH,
+    paddingVertical: dynamicSize(5),
+    paddingHorizontal: dynamicSize(20),
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    alignItems: 'center',
+    alignSelf: 'flex-end'
   },
   lowerContainer: {
     flex: 1,
+    paddingHorizontal: dynamicSize(20),
     width: SCREEN_WIDTH,
     backgroundColor: WHITE,
+    paddingBottom: SCREEN_HEIGHT * 0.02
   },
   hairType: {
-    marginLeft: dynamicSize(35),
+    // marginLeft: dynamicSize(35),
     fontFamily: interMedium,
     marginBottom: dynamicSize(10),
   },
@@ -80,25 +90,25 @@ const styles = StyleSheet.create({
   },
   cardStyle: {
     borderWidth: 0.5,
-    borderColor: MID_GRAY,
+    borderColor: GRAY,
     borderRadius: dynamicSize(5),
-    width: SCREEN_WIDTH - dynamicSize(70),
     paddingHorizontal: dynamicSize(15),
     paddingVertical: SCREEN_HEIGHT * 0.015,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   uploadText: {
     color: BLACK,
-    fontFamily: interSemiBold,
+    fontFamily: interMedium,
     marginVertical: SCREEN_HEIGHT * 0.015,
   },
   description: {
-    color: MID_GRAY,
+    color: BLACK_50,
     marginTop: SCREEN_HEIGHT * 0.01,
   },
   flatList: {
     paddingVertical: SCREEN_HEIGHT * 0.02,
-    width: SCREEN_WIDTH,
-    paddingHorizontal: dynamicSize(35),
   },
   seperator: {
     height: SCREEN_HEIGHT * 0.02,
@@ -193,7 +203,8 @@ const styles = StyleSheet.create({
   },
   hairTypeFlatList: {
     paddingVertical: SCREEN_HEIGHT * 0.02,
-    width: SCREEN_WIDTH,
+    // justifyContent:'space-between',
+    // width: SCREEN_WIDTH,
     paddingHorizontal: dynamicSize(35),
   },
   selected: {
@@ -272,6 +283,33 @@ const styles = StyleSheet.create({
     fontSize: 9,
     fontFamily: interBold
   },
+  absoluteCamera: {
+    position: 'absolute',
+    zIndex: 10,
+    bottom: 0,
+    right: 0
+  },
+  nameContainer: {
+    marginTop: 10,
+    alignSelf: 'center',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  eachProfileDetailCard: {
+    flexDirection: 'row',
+    width: SCREEN_WIDTH - 40,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: BLACK_30
+  },
+  detailLabel: {
+    flex: 1,
+    fontSize: getFontSize(13),
+    fontFamily: interMedium
+  },
+  mapView: {
+    ...StyleSheet.absoluteFillObject,
+  }
 });
 
 export default styles;

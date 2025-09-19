@@ -16,12 +16,12 @@ const ImagePickerSelection = props => {
     const { pickerModal, onCancelPress, selectedImage } = props
 
     const _openCamera = async () => {
-        const imageUrl = await openCamera()
+        const imageUrl = await openCamera({ isCircularCrop: props?.isCircularCrop ? true : false })
         if (imageUrl?.['uri']) selectedImage(imageUrl)
     }
 
     const _openPicker = async () => {
-        const imageUrl = await imagePicker()
+        const imageUrl = await imagePicker({ isCircularCrop: props?.isCircularCrop ? true : false })
         if (imageUrl?.['uri']) selectedImage(imageUrl)
     }
 
